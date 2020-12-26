@@ -60,7 +60,7 @@
 
 \begin{abstract}
 
-We estimate the effect of Medicaid expansion on the adult uninsurance rates in states that did not expand Medicaid in 2014 (ETC) using a novel extension of the synthetic controls approach (\cite{abadie2010synthetic}). Previous literature estimates treatment effects on states that expanded Medicaid (ETT). We hypothesize these effects differ: evidence suggests that Medicaid take-up rates are lower among conservative states, and Republicans were more likely to govern non-expansion states. We hypothesize that the ETC is closer to zero than the ETT. Using data from the American Communities Survey (ACS), we estimate the effect on non-expansion states by re-weighting expansion regions to approximately balance the covariates from non-expansion regions. We contribute to the literature on balancing weights by accounting for hierarchical data and measurement error in the covariates in our estimation. We find that Medicaid expansion would have changed the uninsurance rate by -1.89 percentage points (-2.54, -1.24). These results are smaller in absolute magnitude than existing estimates of the ETT. We provide evidence that factors associated with Republican governance may drive this difference.
+We estimate the effect of Medicaid expansion on the adult uninsurance rates in states that did not expand Medicaid in 2014 (ETC) using a novel extension of the synthetic controls approach (\cite{abadie2010synthetic}). Previous literature estimates treatment effects on states that expanded Medicaid (ETT). We hypothesize these effects differ: evidence suggests that Medicaid take-up rates are lower among conservative states, and Republicans were more likely to govern non-expansion states. We hypothesize that the ETC is closer to zero than the ETT. Using data from the American Communities Survey (ACS), we estimate the effect on non-expansion states by re-weighting expansion regions to approximately balance the covariates from non-expansion regions. We contribute to the literature on balancing weights by accounting for hierarchical data and measurement error in the covariates in our estimation. We find that Medicaid expansion would have changed the uninsurance rate by -2.14 percentage points (-3.57, -0.71). These results are smaller in absolute magnitude than existing estimates of the ETT. We provide evidence that factors associated with Republican governance may drive this difference.
 
 \end{abstract}
 
@@ -309,7 +309,9 @@ Figure \ref{oateimbalance} displays the sum of the weights within each state by 
 \end{center}
 \end{figure}
 
-We find similar results to our primary analysis: within the overlap region we find an estimated treatment effect of -1.64 (-2.41 -0.88) when including all treatment states in our primary analysis, and of -1.81 when excluding ``early expansion'' states. We again find a negative association between the estimated contrast and the Republican governance indicators, which decrease the estimated effect size by 0.96 percentage points on the primary dataset and by 0.72 percentage points when removing early expansion states. Additional results are available in Appendix D, Tables \ref{oateprimary} and \ref{oatesensitive}.
+We find similar results to our primary analysis: within the overlap region we find an estimated treatment effect of -1.64 (-2.41 -0.88) when including all treatment states in our primary analysis, and of -1.81 when excluding ``early expansion'' states. We again find a negative association between the estimated contrast and the Republican governance indicators, which decrease the estimated effect size by 0.96 percentage points on the primary dataset and by 0.72 percentage points when removing early expansion states. The primary results are most sensitive to the inclusion of Ohio, Maine, New Jersey, Wisconsin, and Arkansas. Removing any of these first four states decreases the point estimate by 0.13 to 0.22 percentage points, while removing Arkansas increases the estimate by 0.11 percentage points. The estimates when removing the Republican governance indicators are most sensitive to Kentucky. Excluding this state increases the point estimate by 0.37 percentage points. The results when rerunning the entire covariate adjustment procedure (rather than simply omitting each state) are largely similar. Additional point estimates and confidence intervals are available in Appendix D, Tables \ref{oateprimary} and \ref{oatesensitive}. Additional leave-one-state-out sensitivity analyses are available in REF and REF.
+
+Finally, we consider potential violations of our parametric modeling assumptions. We therefore use trajectory balancing to again estimate this effect. The assumption here is that our model for the potential outcome is approximable in an RHKS feature expansion. We 
 
 \section{Discussion}
 
@@ -679,25 +681,25 @@ Table \ref{oatearea} displays all point estimates and corresponding confidence i
 \centering
 \begin{tabular}{rlrll}
   \hline
-Psihat & Sigma Estimate & Variables Subset & CI Data & CI Proc \\ 
+Psihat & Sigma Estimate & Variables Excluded & CI Data & CI Proc \\ 
   \hline
--1.64 & sigma\_uu\_i & 0 & (-2.41, -0.88) & (-2.51, -0.77) \\ 
-  -1.58 & sigma\_avg & 0 & (-2.18, -0.98) & (-2.42, -0.74) \\ 
+-1.64 & sigma\_uu\_i & 0 & (-2.41, -0.88) & (-5.75, 2.46) \\ 
+  -1.58 & sigma\_avg & 0 & (-2.18, -0.98) & (-2.39, -0.78) \\ 
   -1.80 & sigma\_zero & 0 & (-2.49, -1.1) & (-2.49, -1.1) \\ 
-  -2.60 & sigma\_uu\_i & 1 & (-3.57, -1.64) & (-3.74, -1.47) \\ 
-  -2.62 & sigma\_avg & 1 & (-3.67, -1.57) & (-3.83, -1.42) \\ 
+  -2.60 & sigma\_uu\_i & 1 & (-3.57, -1.64) & (-3.76, -1.45) \\ 
+  -2.62 & sigma\_avg & 1 & (-3.67, -1.57) & (-3.84, -1.41) \\ 
   -2.55 & sigma\_zero & 1 & (-3.44, -1.66) & (-3.44, -1.66) \\ 
-  -2.96 & sigma\_uu\_i & 2 & (-5.41, -0.51) & (-6.16, 0.24) \\ 
-  -2.85 & sigma\_avg & 2 & (-5.28, -0.42) & (-5.61, -0.09) \\ 
+  -2.96 & sigma\_uu\_i & 2 & (-5.41, -0.51) & (-5.79, -0.13) \\ 
+  -2.85 & sigma\_avg & 2 & (-5.28, -0.42) & (-5.6, -0.1) \\ 
   -3.11 & sigma\_zero & 2 & (-5.59, -0.63) & (-5.59, -0.63) \\ 
-  -1.86 & sigma\_uu\_i & 3 & (-2.98, -0.74) & (-3.18, -0.54) \\ 
-  -1.76 & sigma\_avg & 3 & (-3.03, -0.48) & (-3.06, -0.45) \\ 
+  -1.86 & sigma\_uu\_i & 3 & (-2.98, -0.74) & (-3.23, -0.49) \\ 
+  -1.76 & sigma\_avg & 3 & (-3.03, -0.48) & (-3.06, -0.46) \\ 
   -1.98 & sigma\_zero & 3 & (-2.71, -1.24) & (-2.71, -1.24) \\ 
-  -1.86 & sigma\_uu\_i & 4 & (-2.52, -1.21) & (-2.93, -0.8) \\ 
-  -1.76 & sigma\_avg & 4 & (-2.55, -0.98) & (-2.7, -0.83) \\ 
+  -1.86 & sigma\_uu\_i & 4 & (-2.52, -1.21) & (-2.83, -0.9) \\ 
+  -1.76 & sigma\_avg & 4 & (-2.55, -0.98) & (-2.68, -0.85) \\ 
   -1.94 & sigma\_zero & 4 & (-2.7, -1.18) & (-2.7, -1.18) \\ 
-  -1.77 & sigma\_uu\_i & 5 & (-3.05, -0.5) & (-11.85, 8.3) \\ 
-  -1.78 & sigma\_avg & 5 & (-2.67, -0.88) & (-2.69, -0.86) \\ 
+  -1.77 & sigma\_uu\_i & 5 & (-3.05, -0.5) & (-5.55, 2) \\ 
+  -1.78 & sigma\_avg & 5 & (-2.67, -0.88) & (-2.7, -0.85) \\ 
   -1.83 & sigma\_zero & 5 & (-2.61, -1.04) & (-2.61, -1.04) \\ 
    \hline
 \end{tabular}
@@ -711,31 +713,77 @@ Table \ref{oatesensitive} presents all point estimates calculate using the overl
 \centering
 \begin{tabular}{lrrr}
   \hline
-Sigma Estimate & Variables Subset & Early Expansion Removed & Preferred \\ 
+Sigma Estimate & Variables Excluded & Early Expansion Removed & Preferred \\
   \hline
-sigma\_uu\_i & 0 & -1.81 & -1.64 \\ 
-  sigma\_avg & 0 & -1.74 & -1.58 \\ 
+sigma\_uu\_i & 0 & -1.73 & -1.64 \\ 
+  sigma\_avg & 0 & -1.76 & -1.58 \\ 
   sigma\_zero & 0 & -1.95 & -1.80 \\ 
-  sigma\_uu\_i & 1 & -2.53 & -2.60 \\ 
-  sigma\_avg & 1 & -2.54 & -2.62 \\ 
+  sigma\_uu\_i & 1 & -2.35 & -2.60 \\ 
+  sigma\_avg & 1 & -2.40 & -2.62 \\ 
   sigma\_zero & 1 & -2.51 & -2.55 \\ 
-  sigma\_uu\_i & 2 & -3.10 & -2.96 \\ 
-  sigma\_avg & 2 & -3.00 & -2.85 \\ 
+  sigma\_uu\_i & 2 & -3.25 & -2.96 \\ 
+  sigma\_avg & 2 & -3.19 & -2.85 \\ 
   sigma\_zero & 2 & -3.25 & -3.11 \\ 
   sigma\_uu\_i & 3 & -2.18 & -1.86 \\ 
-  sigma\_avg & 3 & -2.10 & -1.76 \\ 
+  sigma\_avg & 3 & -2.14 & -1.76 \\ 
   sigma\_zero & 3 & -2.12 & -1.98 \\ 
-  sigma\_uu\_i & 4 & -2.04 & -1.86 \\ 
-  sigma\_avg & 4 & -1.96 & -1.76 \\ 
+  sigma\_uu\_i & 4 & -2.06 & -1.86 \\ 
+  sigma\_avg & 4 & -2.09 & -1.76 \\ 
   sigma\_zero & 4 & -2.10 & -1.94 \\ 
-  sigma\_uu\_i & 5 & -1.96 & -1.77 \\ 
-  sigma\_avg & 5 & -1.95 & -1.78 \\ 
+  sigma\_uu\_i & 5 & -1.91 & -1.77 \\ 
+  sigma\_avg & 5 & -1.90 & -1.78 \\ 
   sigma\_zero & 5 & -2.00 & -1.83 \\ 
    \hline
 \end{tabular}
 \caption{OATE sensitivity analyses}
 \label{oatesensitive}
 \end{table}
+
+Table \ref{oateloostate} presents the leave-one-out state analysis for the OATE. The primary estimate is in the left-hand column. The point estimate when leaving the state out conditional on the variable adjustment is the ``State Excl'' column, while the point estimate when re-running the entire procedure is in the ``Est Process'' column. Notice that these estimates are identical when the ``Sigma Estimate'' column is equal to ``sigma zero'' because this dataset did not adjust the covariate values. The dataset is filtered to only include the states that had the largest absolute magnitude change in point estimate for each specification. We also only include results for the first three variable groups. Additional results are available on request.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{llrlll}
+  \hline
+Main Estimate & Sigma Estimate & Variables Excl & Stae Exl & Est Process & Est State \\ 
+  \hline
+-1.58 & sigma\_avg & 0 & OH & -1.8 & -1.72 \\ 
+  -1.58 & sigma\_avg & 0 & ME & -1.77 & -1.75 \\ 
+  -1.58 & sigma\_avg & 0 & FL & -1.73 & NA \\ 
+  -1.58 & sigma\_avg & 0 & NJ & NA & -1.74 \\ 
+  -1.64 & sigma\_uu\_i & 0 & OK & 0.41 & NA \\ 
+  -1.64 & sigma\_uu\_i & 0 & FL & -1.89 & NA \\ 
+  -1.64 & sigma\_uu\_i & 0 & OH & -1.86 & -1.86 \\ 
+  -1.64 & sigma\_uu\_i & 0 & ME & NA & -1.82 \\ 
+  -1.64 & sigma\_uu\_i & 0 & NJ & NA & -1.81 \\ 
+  -1.8 & sigma\_zero & 0 & WI & -2 & -2 \\ 
+  -1.8 & sigma\_zero & 0 & NJ & -1.95 & -1.95 \\ 
+  -1.8 & sigma\_zero & 0 & AR & -1.66 & -1.66 \\ 
+  -2.62 & sigma\_avg & 1 & KY & -2.12 & -2.19 \\ 
+  -2.62 & sigma\_avg & 1 & FL & -2.81 & -2.76 \\ 
+  -2.62 & sigma\_avg & 1 & WI & -2.79 & -2.77 \\ 
+  -2.6 & sigma\_uu\_i & 1 & KY & -2.15 & -2.24 \\ 
+  -2.6 & sigma\_uu\_i & 1 & FL & -2.76 & -2.74 \\ 
+  -2.6 & sigma\_uu\_i & 1 & WI & -2.76 & -2.77 \\ 
+  -2.55 & sigma\_zero & 1 & KY & -2.27 & -2.27 \\ 
+  -2.55 & sigma\_zero & 1 & WI & -2.76 & -2.76 \\ 
+  -2.55 & sigma\_zero & 1 & TX & -2.42 & -2.42 \\ 
+  -2.85 & sigma\_avg & 2 & OH & -3.73 & -3.61 \\ 
+  -2.85 & sigma\_avg & 2 & AZ & -2.23 & -2.33 \\ 
+  -2.85 & sigma\_avg & 2 & FL & -2.34 & -2.23 \\ 
+  -2.96 & sigma\_uu\_i & 2 & OH & -3.77 & -3.75 \\ 
+  -2.96 & sigma\_uu\_i & 2 & AZ & -2.31 & -2.4 \\ 
+  -2.96 & sigma\_uu\_i & 2 & FL & -2.49 & -2.38 \\ 
+  -3.11 & sigma\_zero & 2 & OH & -3.82 & -3.82 \\ 
+  -3.11 & sigma\_zero & 2 & FL & -2.49 & -2.49 \\ 
+  -3.11 & sigma\_zero & 2 & AZ & -2.58 & -2.58 \\ 
+   \hline
+\end{tabular}
+\caption{OATE leave-one-state-out analysis}
+\label{oateloostate}
+\end{table}
+
+Finally, Figure XXX displays a heatmap visualizing these results for our preferred estimates and covariate groups of interest. EXPLAIN MORE HERE.
 
 
 \subsection{Appendix E: SBW Program Details}
