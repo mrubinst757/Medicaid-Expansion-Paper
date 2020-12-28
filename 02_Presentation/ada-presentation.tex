@@ -1,0 +1,359 @@
+\documentclass[hyperref={pdfpagelabels=false}]{beamer}
+\setbeamercolor{block title}{bg=red!30,fg=black}
+\usepackage{bm}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage[autostyle]{csquotes}
+\usepackage{tikz}
+%\usepackage{authblk}
+\usepackage{float}
+\usetikzlibrary{positioning, calc, shapes.geometric, shapes, shapes.multipart, arrows.meta, arrows, decorations.markings, external, trees}
+
+
+\newlength\myindent
+\setlength\myindent{2em}
+\newcommand\bindent{%
+  \begingroup
+  \setlength{\itemindent}{\myindent}
+  \addtolength{\algorithmicindent}{\myindent}
+}
+\newcommand\eindent{\endgroup}
+
+\tikzstyle{Arrow} = [
+	thick, 
+	decoration={
+		markings,
+		mark=at position 1 with {
+			\arrow[thick]{latex}
+			}
+		}, 
+	shorten >= 3pt, preaction = {decorate}
+	]
+
+\usetheme{Frankfurt}
+\usepackage[usenames, dvipsnames]{color}
+\newcommand{\backupbegin}{
+   \newcounter{finalframe}
+   \setcounter{finalframe}{\value{framenumber}}
+}
+\setbeamertemplate{footline}[frame number]
+
+\newcommand{\backupend}{
+   \setcounter{framenumber}{\value{finalframe}}
+}
+
+\setbeamercovered{dynamic}% see beamer documentation p 190
+%\beamerdefaultoverlayspecification{<+>}
+\title{The Effect of Medicaid Expansion on Adult Uninsurance Rates: Estimating the Treatment Effect on Non-expansion States}  
+%\author{\large{Rahul Ladhania}, \small{CMU} \\ \large{Amelia Haviland}, \small{CMU} \\ \large{Neeraj Sood}, \small{USC} \\ \large{Ateev Mehrotra}, \small{Harvard Medical School}}
+\author[shortname]{Max Rubinstein \\}
+\institute[]{\and \vspace{-0.26in} \and \vspace{-0.1in}}%\vspace{0ex} 
+%\small{Carnegie Mellon University}}
+%\subtitle{NBER Machine Learning in Healthcare Meeting}
+\date{}
+
+\expandafter\def\expandafter\insertshorttitle\expandafter{%
+  \insertshorttitle\hfill%
+  \insertframenumber\,/\,\inserttotalframenumber}
+  \setbeamertemplate{navigation symbols}{}
+  \begin{document}
+% \logo{\includegraphics[scale=0.15]{CMU_Logo_Horiz_Red}}
+
+\begin{frame}
+\titlepage
+\centering 
+\vspace{-0.5in}
+\textbf{January 19, 2021}
+\end{frame} 
+
+\section{Introduction}
+\subsection{Background}
+\begin{frame}{Background}
+\begin{itemize}
+    \item Medicaid is a state-administered program that provides health insurance to low-income Americans \bigskip 
+    
+    \item The 2010 Affordable Care Act mandated that all states cover low-income childless adults up to 138 percent of the federal poverty line (FPL) \bigskip
+    
+    \item A 2012 Supreme Court ruling made expansion optional for states \bigskip
+    
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Background}
+INSERT MEDICAID EXPANSION MAP
+\end{frame}
+
+\begin{frame}{Background}
+    \begin{center}
+	\includegraphics[scale=0.6]{01_Plots/political-expansion-plot.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Contributions: Substantive}
+\begin{itemize}
+    \item We estimate the treatment effect of 2014 Medicaid expansion on non-expansion states \bigskip
+    
+    \begin{itemize}
+        \item We estimate -2.08 percentage point change, 34 percent lower magnitude than ETT from Courtenmanche et al. (2017) \bigskip 
+    \end{itemize}
+
+    \item We estimate the association of governance with the change in uninsurance rate \bigskip
+    
+    \begin{itemize}
+        \item We find a negative association between Republican governance and the estimated treatment effect, consistent with Sommers et al. (2012) \bigskip 
+    \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Contributions: Methdological}
+\begin{itemize}
+    \item We outline the assumptions necessary to estimate a ``synthetic treatment'' using longitudinal data \bigskip
+    
+    \item We generate weights that account for hierarchical data structure \bigskip
+    
+    \item We account for measurement error in our covariates \bigskip
+    \end{itemize}
+\end{frame}
+
+\subsection{Motivation}
+
+\begin{frame}{Motivation}
+
+    \begin{itemize}
+    
+    \item Insuring previously uninsured individuals mediates many effects of Medicaid expansion \bigskip
+    
+    \item To understand the magnitude of foregone coverage increases due to the 2012 Supreme Court decision \bigskip
+    
+    \item To understand the association between governance and Medicaid enrollment in 2014 
+    
+    \end{itemize} 
+
+\end{frame}
+
+\section{Data \& Methods}
+
+\subsection{Target estimand}
+
+\begin{frame}{Target estimand}
+\begin{center}$\phi = \mathbb{E}\{Y^{A = 1} - Y^{A = 0} | A = 0, T = 1, R = 2014\}$\end{center} \bigskip 
+    \begin{itemize}
+        \item $Y$ is the uninsurance rate (at the ``county'' level) \bigskip 
+        \item $A$ is the decision to expand Medicaid (at the state level) \bigskip 
+        \item Expansion happened concurrently with other reforms ($T$) \bigskip 
+        \item Interactions between Medicaid expansion and the ACA may change over time (limit to $R = 2014$)  
+    \end{itemize}
+\end{frame}
+
+\subsection{Treatment assignment}
+
+\begin{frame}{Treatment assignment}
+    \begin{center}
+	\includegraphics[scale=0.6]{medicaid-heterogeneity.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Treatment assignment}
+    \begin{center}
+	\includegraphics[scale=0.6]{ctrl-grps.png}  
+    \end{center}
+\end{frame}
+
+\subsection{Identification}
+
+\begin{frame}{Causal diagram}
+    \begin{center}
+	\includegraphics[scale=0.5]{Slide7.PNG}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Causal diagram}
+    \begin{center}
+	\includegraphics[scale=0.5]{Slide6.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Causal diagram}
+    \begin{center}
+	\includegraphics[scale=0.5]{Slide5.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Causal diagram}
+    \begin{center}
+	\includegraphics[scale=0.5]{Slide4.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Causal diagram}
+    \begin{center}
+	\includegraphics[scale=0.5]{Slide3.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Causal diagram}
+    \begin{center}
+	\includegraphics[scale=0.5]{Slide2.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Causal diagram}
+    \begin{center}
+	\includegraphics[scale=0.5]{Slide1.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Identifying Assumptions}
+
+\begin{itemize}
+    \item No unmeasured confounding
+    \begin{itemize}
+        \item $Y^a \perp A | X$ (where $P, D, E, Y_{pre} \subseteq X$) \bigskip 
+    \end{itemize}
+    \item Positivity
+    \begin{itemize}
+        \item $\mathbb{P}(A = 1 | X = x) > 0$  \bigskip 
+    \end{itemize}
+    \item Consistency
+    \begin{itemize}
+        \item $\mathbb{E}\{Y | A = a\} = \mathbb{E}\{Y^a\}$ \bigskip 
+    \end{itemize}
+    \item No anticipatory effects
+    \begin{itemize}
+        \item $\mathbb{E}\{Y_{pre} | X = x\} = \mathbb{E}\{Y^0_{pre} | X = x\}$ \bigskip 
+    \end{itemize}
+        \item No compositional changes
+\end{itemize}
+
+\end{frame}
+
+\subsection{Data}
+
+\begin{frame}{Data Source}
+    \begin{itemize}
+    \item American Community Survey (ACS) microdata from 2011-2014 \bigskip 
+    \item Approximately three million individuals surveyed annually from across the United States \bigskip 
+    \item Each individual has an associated survey weight and 80 sets of replicate survey weights \bigskip 
+    \item Aggregate data to consistent public use microdata area (CPUMA) level
+    \end{itemize}
+\end{frame}   
+
+\begin{frame}{ACS Covariates}
+\textbf{Main Effects}
+\begin{itemize}
+    \item Uninsurance rates (2011-13) 
+    \item Unemployment rates (2011-13) 
+    \item ``Time-invariant'' demographics (2011-13 averages)
+    \begin{itemize}
+        \item Age, race, sex, hispanic, disability, foreign born, citizenship, education, income-to-poverty ratio, urban, married, number of children
+        \item Create three levels of coarseness for multi-valued and continuous variables 
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Problem}
+    \begin{itemize}
+        \item All of our covariates are estimates
+        \item This is a measurement error problem
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Parametric assumptions}
+    \begin{itemize}
+        \item Linearity of outcome model \bigskip
+        \item Linearity of $X_{cs}$ in $W_{cs}$ 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Estimation}
+
+\end{frame}
+
+\subsection{Inference}
+
+\begin{frame}{Inference}
+
+\end{frame}
+
+\section{Results}
+
+\subsection{Covariate Balance}
+
+\begin{frame}{Covariate Balance}
+    \begin{center}
+	\includegraphics[scale=0.5]{01_Plots/balance-plot-etu.png}
+    \end{center}
+\end{frame}
+
+\subsection{Primary Results}
+
+\begin{frame}{Results}
+
+\end{frame}
+
+\begin{frame}{Heterogeneity across covariate groups}
+\begin{center}
+	\includegraphics[scale=0.5]{01_Plots/loo-covariates-main-c1.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Leave-one-out-state estimates}
+    \begin{center}
+	\includegraphics[scale=0.5]{01_Plots/c1-loostate-sensitivity.png}
+    \end{center}
+\end{frame}
+
+\subsection{Sensitivity analyses: no anticipatory treatment effects}
+
+\begin{frame}{Sensitivity analysis: no anticipatory treatment effects}
+    \begin{center}
+	\includegraphics[scale=0.5]{01_Plots/point-estimates-c2.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Sensitivity analysis: no anticipatory treatment effects}
+    \begin{center}
+	\includegraphics[scale=0.5]{01_Plots/repub-diff-c1c2.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Sensitivity analysis: OATE}
+    \begin{center}
+	\includegraphics[scale=0.5]{01_Plots/oate-region-c1-a.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Sensitivity analysis: OATE}
+INSERT OATE TABLE
+\end{frame}
+
+\begin{frame}{Sensitivity analysis: OATE}
+    \begin{center}
+	\includegraphics[scale=0.5]{01_Plots/oate-comparison-repub-c1c2.png}
+    \end{center}
+\end{frame}
+
+\section{Discussion}
+
+\subsection{Discussion}
+
+\subsection{Discussion}
+
+\begin{frame}{Discussion}
+\begin{itemize}
+    \item Propose an extension to synthetic controls to estimate the ETU \bigskip
+    \item Had non-expansion states expanded Medicaid in 2014, uninsurance rates would have decreased by at most 2.08 percentage points (1.23, 2.82) \bigskip
+    \item This result is robust to the exclusion of early expansion states that might introduce bias \bigskip
+    \item Factors associated with Republican governance attenuate the predicted treatment effect
+\end{itemize}
+\end{frame}
+
+\subsection{Conclusion}
+\begin{frame}{Conclusion}
+\begin{center}
+Thank you for listening! \\ \newline \newline Any questions?
+\end{center}
+\end{frame}
+
+
+\end{document}

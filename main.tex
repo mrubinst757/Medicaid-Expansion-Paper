@@ -204,7 +204,7 @@ More formally, assume that $\mu_0(X_{sc})$ is linear in the covariates. We might
 We therefore estimate the ETC by using a variation of SBW that we call H-SBW.\footnote{Specifically, we use a modified implementation of Noah Griefer's ``optweight'' package in R, available on github.com/mrubinst757}. This procedure allows us to estimate the minimum variance weights that satisfy certain balance constraints. Let $\eta_a(W_{sc}) = \mathbb{E}\{X_{sc} \mid W_{sc}, A_s = a\}$, and $\hat{\eta}_1(W_1)$ be a matrix of estimates of $\eta(W_1)$. Let $\bar{W}_0$ be a vector of population-weighted estimates of the covariates for the non-expansion region.\footnote{Because $\bar{W}_0$ is in expectation equal to $\bar{X}_0$, the use of this target will not bias our estimator.} We generate weights that solve the following objective:
 
 $$
-\min_{\gamma \in \Gamma} \sum_{s: A_s = 1}^{M_1}(\sum_{c = 1}^{n_s} \gamma_{sc}^2 + \sum_{sc \ne sd}\rho \gamma_{sc}\gamma_{sd})
+\min_{\gamma \in \Gamma} \sum_{s: A_s = 1}^{M_1}(\sum_{c = 1}^{n_s} \gamma_{sc}^2 + \sum_{c \ne d}\rho \gamma_{sc}\gamma_{sd})
 $$
 
 $$
@@ -835,9 +835,9 @@ Finally, Figure~\ref{fig:oateheatmap} displays a heatmap showing show the point 
 \end{figure}
 
 
-\subsection{Appendix E: SBW Program Details}
+\subsection{Appendix E: Miscellaneous Program Details}
 
-We implement SBW using a modification of Noah Griefer's ``optweight'' package available in R. The modifications are available on ``github.com/mrubinst757'', but are not documented. We use this program to generate weights that balance the means of the following covariates in the treated group to the control group within an error tolerance, $\delta$. When estimating the weights on different subsets of the data, $\delta^\star$ is not guaranteed to converge. We therefore modify the program so that if it does converge, it relaxes some of the constraints until the program converges. The program is available on github.com/mrubinst757/Medicaid-Expansion-Project/03\_RPrograms/03\_Analysis/02\_model-estimation.R and all R programs used to complete this analysis are available in the parent directory.
+We implement Stable Balancing Weights using a modification of Noah Griefer's ``optweight'' package available in R. The modifications are available on ``github.com/mrubinst757'', but are not documented. We use this program to generate weights that balance the means of the following covariates in the treated group to the control group within an error tolerance, $\delta$. When estimating the weights on different subsets of the data, $\delta^\star$ is not guaranteed to converge. We therefore modify the program so that if it does not converge, it relaxes some of the constraints until convergence. The program is available on github.com/mrubinst757/Medicaid-Expansion-Project/03\_RPrograms/03\_Analysis/02\_model-estimation.R and all R programs used to complete this analysis are available in the parent directory.
 
 \end{document}
 
