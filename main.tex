@@ -301,7 +301,7 @@ The results are quite similar when recalculating the entire procedure are availa
 
 We examine the sensitivity of our estimates to violations of two key causal assumptions: (1) no anticipatory treatment effects, and (2) positivity violations. To the first point, several states had partial limited expansions prior to 2014. Following \cite{frean2017premium}, we consider these states to be California, Connecticut, Minnesota, New Jersey, and Washington. We rerun our analyses excluding CPUMAs from all five of these states. It is unclear how this should affect our estimates: on the one hand, states that expanded early might have a smaller treatment effect after 2014 because they already enrolled newly eligible individuals. This would bias our previously estimated treatment effect upwards. On the other hand, if these states were also more motivated to enroll people in Medicaid, they might have larger post-expansion coverage gains, leading to a downwards bias. When removing these states, we estimate an effect of -1.29 (-2.45, -0.12) using H-SBW weights and when we run the bias-corrected version we estimate -2.17 (-3.65, -0.68). Our leave-one-out covariate analysis shows similar associations to those in our primary analysis; however, we see a somewhat larger association between Republican governance indicators and our estimated contrast. Specifically, we find a 1.28 percentage point increase in absolute magnitude when for the H-SBW estimator and a 0.73 increase for BC-HSBW. Table \ref{pointesttablec2} in Appendix D displays these results. 
 
-We next consider positivity violations. To this point we have relied on either (1) retaining a potentially biased estimate from weights that do not provide exact balance, or (2) producing a more heavily model-dependent estimate that relies on extrapolation. Overall we found that the results didn't change substantially either way. Here we consider a third option: changing our target estimand. In particular, we consider the overlap average treatment effect (OATE), proposed by \cite{li2018balancing}. This is the treatment effect on the subset of the entire dataset where we have overlap. It is a data-dependent treatment effect, and is not the same as the treatment effect on the untreated; however, we believe that this effect will be more similar to the ETC than the ETT, since there were no Democratic controlled states that did not expand Medicaid. Indeed, after generating overlap weights on our primary dataset we find that across all covariates, the mean L1 distance from the overlap region to the untreated region is 2.5 and to the treated region is 7.8.\footnote{The distance is between the overlap region calculated as an unweighted mean on the adjusted datasets.} Figure \ref{oatearea} displays the distance between covariates with greater than one percentage point distance from the overlap region to either the control or treated region. We see that the overlap region is substantially more Republican than the treated region, as expected. This region is also less Hispanic, more white, less rural, and more educated than either the expansion or non-expansion region. Tables \ref{oatedist1} and \ref{oatedist2} in Appendix C show statistics on the OATE region versus the treatment and control regions for all covariates.
+We next consider positivity violations. To this point we have relied on either (1) retaining a potentially biased estimate from weights that do not provide exact balance, or (2) producing a more heavily model-dependent estimate that relies on extrapolation. Overall we found that the results didn't change substantially either way. Here we consider a third option: changing our target estimand. In particular, we consider the overlap average treatment effect (OATE), proposed by \cite{li2018balancing}. This is the treatment effect on the subset of the entire dataset where we have overlap. It is a data-dependent treatment effect, and is not the same as the treatment effect on the untreated; however, we believe that this effect will be more similar to the ETC than the ETT, since there were no Democratic controlled states that did not expand Medicaid. Indeed, after generating overlap weights on our primary dataset we find that across all covariates, the mean L1 distance from the overlap region to the untreated region is 2.9 and to the treated region is 7.8.\footnote{The distance is between the overlap region calculated as an unweighted mean on the adjusted datasets.} Figure \ref{oatearea} displays the distance between covariates with greater than one percentage point distance from the overlap region to either the control or treated region. We see that the overlap region is substantially more Republican than the treated region, as expected. This region is also less Hispanic, more white, less rural, and more educated than either the expansion or non-expansion region. Tables \ref{oatedist1} and \ref{oatedist2} in Appendix C show statistics on the OATE region versus the treatment and control regions for all covariates.
 
 \begin{figure}[]
 \begin{center}
@@ -465,133 +465,129 @@ One cost of this procedure is that this aggregation models all differences as a 
 
 \subsection{Appendix C: Complete Balance Tables}
 
-Tables \ref{baltab1} and \ref{baltab2} presents the differences between the population-weighted untreated mean covariate values and the weighted and unweighted non-expansion region (calculated on on our adjusted dataset). The weights presented here are from the H-SBW $(\rho = 0.2)$ estimator. Additional results are available on request.
+Table~\ref{tab:baltab1} and Table~\ref{tab:baltab2} display the differences between the population-weighted mean covariate values of the non-expansion region and the weighted mean of the expansion region (calculated on on our adjusted dataset). The weights presented here are from the H-SBW $(\rho = 0.2)$ estimator. Additional results are available on request.
 
 \begin{table}[ht]
-\centering
 \begin{tabular}{lrr}
-  \hline
-variable & Unweighted Difference & Weighted Difference \\ 
-  \hline
-age\_cat2\_19\_29\_pct & 0.51 & 0.26 \\ 
-  age\_cat2\_30\_39\_pct & 0.22 & 0.34 \\ 
-  age\_cat2\_40\_49\_pct & -0.09 & 0.59 \\ 
-  avg\_adult\_hh\_ratio & -10.11 & 0.25 \\ 
+  \toprule
+Variables & Unweighted Difference & Weighted Difference \\ 
+  \midrule
+age\_cat2\_19\_29\_pct & 0.51 & 0.50 \\ 
+  age\_cat2\_30\_39\_pct & 0.23 & 0.42 \\ 
+  age\_cat2\_40\_49\_pct & -0.10 & 0.50 \\ 
+  avg\_adult\_hh\_ratio & -10.11 & -0.15 \\ 
   citizenship\_pct & 2.19 & 2.00 \\ 
-  disability\_pct & 1.01 & -0.49 \\ 
-  educ\_hs\_degree\_pct & 2.38 & -1.40 \\ 
-  educ\_less\_than\_hs\_pct & 0.74 & -1.21 \\ 
-  educ\_some\_college\_pct & -0.01 & -0.83 \\ 
-  female\_pct & 0.34 & 0.76 \\ 
+  disability\_pct & 1.01 & -0.52 \\ 
+  educ\_hs\_degree\_pct & 2.38 & -1.54 \\ 
+  educ\_less\_than\_hs\_pct & 0.74 & -1.32 \\ 
+  educ\_some\_college\_pct & -0.01 & -0.75 \\ 
+  female\_pct & 0.34 & 0.72 \\ 
   foreign\_born\_pct & -5.26 & -2.00 \\ 
-  hins\_unins\_pct\_2011 & 4.33 & -0.05 \\ 
-  hins\_unins\_pct\_2012 & 4.08 & 0.01 \\ 
-  hins\_unins\_pct\_2013 & 3.90 & 0.05 \\ 
+  hins\_unins\_pct\_2011 & 4.37 & -0.05 \\ 
+  hins\_unins\_pct\_2012 & 4.10 & -0.00 \\ 
+  hins\_unins\_pct\_2013 & 3.84 & 0.05 \\ 
   hispanic\_pct & -1.70 & -1.00 \\ 
-  inc\_pov2\_138\_pct & 1.93 & -0.67 \\ 
-  inc\_pov2\_139\_299\_pct & 2.42 & -0.74 \\ 
-  inc\_pov2\_300\_499\_pct & 0.26 & 0.08 \\ 
+  inc\_pov2\_138\_pct & 1.92 & -0.57 \\ 
+  inc\_pov2\_139\_299\_pct & 2.43 & -0.83 \\ 
+  inc\_pov2\_300\_499\_pct & 0.27 & -0.03 \\ 
   inc\_pov2\_500\_plus\_pct & -5.01 & 2.00 \\ 
-  married\_pct & 0.67 & 0.94 \\ 
-  missing\_children\_pct & 0.00 & -2.13 \\ 
-  one\_child\_pct & 88.28 & 89.04 \\ 
-  pop\_growth\_2012 & 0.93 & -0.89 \\ 
-  pop\_growth\_2013 & -82.44 & -84.69 \\ 
-   \hline
-\end{tabular}
-\caption{Balance Table (1)}
-\label{baltab1}
+  married\_pct & 0.68 & 0.74 \\ 
+  missing\_children\_pct & 3.63 & 2.08 \\ 
+  one\_child\_pct & -0.53 & 0.15 \\ 
+  pop\_growth\_2012 & 2.55 & 0.25 \\ 
+  pop\_growth\_2013 & 2.49 & -0.23 \\ 
+   \bottomrule
+    \end{tabular}
+    \caption{Balance Table (1)}
+    \label{tab:baltab1}
 \end{table}
 
 \begin{table}[ht]
-\centering
 \begin{tabular}{lrr}
-  \hline
-variable & Unweighted Difference & Weighted Difference \\ 
-  \hline
+  \toprule
+Variables & Unweighted Difference & Weighted Difference \\ 
+  \midrule
   race\_white\_pct & 1.49 & -1.00 \\ 
-  repub\_gov & 65.02 & 16.91 \\ 
-  repub\_lower\_control & 74.91 & 18.41 \\ 
+  repub\_gov & 65.02 & 17.40 \\ 
+  repub\_lower\_control & 74.91 & 19.37 \\ 
   repub\_total\_control & 73.72 & 20.00 \\ 
-  student\_pct & -0.18 & 0.61 \\ 
-  three\_plus\_child\_pct & 0.00 & 0.10 \\ 
-  two\_child\_pct & -0.63 & 0.40 \\ 
-  unemployed\_pct\_2011 & -0.83 & -0.10 \\ 
+  student\_pct & -0.18 & 0.77 \\ 
+  three\_plus\_child\_pct & 0.00 & 0.07 \\ 
+  two\_child\_pct & -0.63 & 0.35 \\ 
+  unemployed\_pct\_2011 & -0.81 & -0.10 \\ 
   unemployed\_pct\_2012 & -0.85 & 0.10 \\ 
   unemployed\_pct\_2013 & -0.61 & 0.10 \\ 
   urban\_pct & -6.52 & 2.00 \\ 
-   \hline
-\end{tabular}
-\caption{Balance Table (2)}
-\label{baltab2}
-\end{table}
-
-Tables \ref{oatedist1} and \ref{oatedist2} display the difference in means from the overlap region (calculated on our preferred adjusted datasets) and the treated and untreated regions (unweighted). 
-
-\begin{table}[ht]
-\centering
-\begin{tabular}{lrr}
-  \hline
-Variable & Distance from Control & Distance from Treatment \\ 
-  \hline
-age\_cat2\_19\_29\_pct & -1.41 & -1.03 \\ 
-  age\_cat2\_30\_39\_pct & -0.90 & -1.12 \\ 
-  age\_cat2\_40\_49\_pct & 0.31 & -0.06 \\ 
-  avg\_adult\_hh\_ratio & -3.99 & -14.93 \\ 
-  citizenship\_pct & 1.71 & 5.25 \\ 
-  disability\_pct & 0.27 & 1.72 \\ 
-  educ\_hs\_degree\_pct & 1.26 & 4.49 \\ 
-  educ\_less\_than\_hs\_pct & -1.76 & -1.25 \\ 
-  educ\_some\_college\_pct & 0.41 & 0.65 \\ 
-  female\_pct & -0.10 & 0.24 \\ 
-  foreign\_born\_pct & -2.29 & -9.74 \\ 
-  hins\_unins\_pct\_2011 & -0.98 & -0.06 \\ 
-  hins\_unins\_pct\_2012 & -3.55 & -0.19 \\ 
-  hins\_unins\_pct\_2013 & -5.43 & -0.66 \\ 
-  hispanic\_pct & -4.43 & -8.79 \\ 
-  inc\_pov2\_138\_pct & -1.44 & 0.63 \\ 
-  inc\_pov2\_139\_299\_pct & 0.34 & 2.12 \\ 
-  inc\_pov2\_300\_499\_pct & 0.11 & 1.68 \\ 
-  inc\_pov2\_500\_plus\_pct & 1.22 & -4.68 \\ 
-  married\_pct & 1.31 & 2.27 \\ 
-  missing\_children\_pct & -0.85 & 2.41 \\ 
-  one\_child\_pct & -0.12 & -1.09 \\ 
-  pop\_growth\_2012 & 5.40 & 1.15 \\ 
-  pop\_growth\_2013 & 4.73 & 1.24 \\ 
-   \hline
+   \bottomrule
     \end{tabular}
-    \caption{Overlap region distance from treated, control regions (1)}
-    \label{oatedist1}
+    \caption{Balance Table (2)}
+    \label{tab:baltab2}
+\end{table}
+
+Table~\ref{tab:oatedist1} and Table~\ref{tab:oatedist2} display the difference in means from the overlap region (calculated on our preferred adjusted datasets) and the treated and untreated regions (unweighted). 
+
+\begin{table}[ht]
+\begin{tabular}{lrr}
+  \toprule
+Variable & Dist from control & Dist from treatment \\ 
+  \midrule
+  age\_cat2\_19\_29\_pct & -1.38 & -1.09 \\ 
+  age\_cat2\_30\_39\_pct & -0.65 & -1.08 \\ 
+  age\_cat2\_40\_49\_pct & 0.01 & -0.07 \\ 
+  avg\_adult\_hh\_ratio & -3.62 & -14.95 \\ 
+  citizenship\_pct & 1.72 & 5.27 \\ 
+  disability\_pct & 0.31 & 1.77 \\ 
+  educ\_hs\_degree\_pct & 0.94 & 4.51 \\ 
+  educ\_less\_than\_hs\_pct & -1.54 & -1.26 \\ 
+  educ\_some\_college\_pct & 0.27 & 0.67 \\ 
+  female\_pct & -0.09 & 0.27 \\ 
+  foreign\_born\_pct & -2.17 & -9.75 \\ 
+  hins\_unins\_pct\_2011 & -6.76 & -0.03 \\ 
+  hins\_unins\_pct\_2012 & -3.11 & -0.21 \\ 
+  hins\_unins\_pct\_2013 & -0.93 & -0.81 \\ 
+  hispanic\_pct & -4.53 & -8.90 \\ 
+  inc\_pov2\_138\_pct & -1.37 & 0.62 \\ 
+  inc\_pov2\_139\_299\_pct & -1.32 & 2.19 \\ 
+  inc\_pov2\_300\_499\_pct & 2.42 & 1.68 \\ 
+  inc\_pov2\_500\_plus\_pct & 0.52 & -4.72 \\ 
+  married\_pct & 2.04 & 2.48 \\ 
+  missing\_children\_pct & -0.70 & 2.43 \\ 
+  one\_child\_pct & -0.88 & -1.09 \\ 
+  pop\_growth\_2012 & -9.23 & 1.76 \\ 
+  pop\_growth\_2013 & -7.66 & 1.90 \\ 
+   \bottomrule
+\end{tabular}
+    \caption{Overlap region distance from control, treatment regions (1)}
+    \label{tab:oatedist1}
 \end{table}
 
 \begin{table}[ht]
-\centering
 \begin{tabular}{lrr}
-  \hline
-Variable & Distance from Control & Distance from Treatment \\ 
-  \hline
-  race\_white\_pct & 4.47 & 8.34 \\ 
-  repub\_gov & -11.05 & 53.97 \\ 
-  repub\_lower\_control & -4.99 & 69.92 \\ 
-  repub\_total\_control & -16.04 & 57.68 \\ 
-  student\_pct & -0.39 & -0.75 \\ 
-  three\_plus\_child\_pct & -0.12 & -0.21 \\ 
-  two\_child\_pct & -0.38 & -0.85 \\ 
-  unemployed\_pct\_2011 & 0.23 & -0.53 \\ 
-  unemployed\_pct\_2012 & 0.41 & -0.69 \\ 
-  unemployed\_pct\_2013 & -0.60 & -0.65 \\ 
-  urban\_pct & -4.64 & -12.72 \\ 
-   \hline
+  \toprule
+Variable & Dist from control & Dist from treatment \\ 
+  \midrule
+  race\_white\_pct & 4.41 & 8.25 \\ 
+  repub\_gov & -12.46 & 52.56 \\ 
+  repub\_lower\_control & -5.28 & 69.63 \\ 
+  repub\_total\_control & -17.73 & 55.98 \\ 
+  student\_pct & -0.72 & -0.82 \\ 
+  three\_plus\_child\_pct & -0.37 & -0.21 \\ 
+  two\_child\_pct & 0.40 & -0.80 \\ 
+  unemployed\_pct\_2011 & -0.25 & -0.58 \\ 
+  unemployed\_pct\_2012 & -0.72 & -0.71 \\ 
+  unemployed\_pct\_2013 & 0.25 & -0.68 \\ 
+  urban\_pct & -5.34 & -13.42 \\ 
+   \bottomrule
 \end{tabular}
-\caption{Overlap region distance from treated, control regions (2)}
-\label{oatedist2}
+    \caption{Overlap region distance from control, treatment regions (2)}
+    \label{tab:oatedist2}
 \end{table}
 
-\subsection{Appendix D: Complete Results}
+\subsection{Appendix D: Additional Results}
 
-Table \ref{maintable1} displays the point estimates from all estimators as well as confidence intervals calculated either (a) leave-one-state-out jackknife on the adjusted dataset (CI (states)); (b) leave-one-state-out jackknife repeating the entire adjusted leaving each state out (CI (proc)). 
+Table~\ref{tab:confintmain} displays the point estimates from all estimators as well as confidence intervals calculated either (a) leave-one-state-out jackknife on the adjusted dataset (CI (states)); (b) leave-one-state-out jackknife repeating the entire adjusted leaving each state out (CI (proc)). 
 
-This table also includes the Oaxaca-Blinder weights (OB and H-OB), and also all analyses calculated on a second version of the adjusted data where we use a common $\kappa$ for all values (sigma\_uu\_avg), which is the imputation suggested by \cite{carroll2006measurement}. Notice that they are identical for ``sigma\_zero'' because this is the unadjusted dataset. ``sigma\_uu\_i'' is our preferred covariate adjustment, though the results are quite similar to using the averaging suggested in \cite{gleser1992importance}.
+This table also includes the Oaxaca-Blinder weights (OB and H-OB), and also all analyses calculated on a second version of the adjusted data where we use a common $\kappa$ for all values (sigma\_uu\_avg), which is the adjustment suggested by \cite{carroll2006measurement}. Notice that they are identical for ``sigma\_zero'' because this is the unadjusted dataset. ``sigma\_uu\_i'' is our preferred covariate adjustment.
 
 \begin{table}[ht]
 \begin{tabular}{llrll}
@@ -619,15 +615,15 @@ BC-HSBW & sigma\_uu\_i & -2.14 & (-3.57, -0.71) & (-4.03, -0.26) \\
    \bottomrule
 \end{tabular}
 \caption{Primary point estimates and confidence intervals}
-\label{maintable1}
+\label{tab:confintmain}
 \end{table}
 
-Table \ref{pointesttable} presents all versions of the estimators that we calculated. The variables excluded column indicates which variables were excluded from the estimation: 0 includes all variables; 1 removes Republican governance indicators; 2 pre-treatment uninsurance and unemployment rates; 3 urban, age, education, citizenship, marital status, student, disability, or female; 4 race, ethnicity, income, foreign born; 5 children, population growth, and household to person ratio.
+Table~\ref{tab:ptests} presents all versions of the estimators that we calculated. The ``Var subset`` column indicates which variables were excluded from the estimation: 0 excludes no variables; 1 removes Republican governance indicators; 2 pre-treatment uninsurance and unemployment rates; 3 urban, age, education, citizenship, marital status, student, disability, or female; 4 race, ethnicity, income, foreign born; 5 children, population growth, and household to person ratio.
 
 \begin{table}[ht]
 \begin{tabular}{rlrrrrrr}
   \toprule
-Variable subset & Sigma estimate & BC-HSBW & H-SBW & BC-SBW & SBW & H-OB & OB \\ 
+Var subset & Sigma estimate & BC-HSBW & H-SBW & BC-SBW & SBW & H-OB & OB \\ 
   \midrule
 0 & sigma\_uu\_i & -2.14 & -2.00 & -1.89 & -1.81 & -2.30 & -2.11 \\ 
   0 & sigma\_uu\_avg & -2.10 & -2.08 & -1.96 & -1.98 & -2.20 & -2.08 \\ 
@@ -649,16 +645,16 @@ Variable subset & Sigma estimate & BC-HSBW & H-SBW & BC-SBW & SBW & H-OB & OB \\
   5 & sigma\_zero & -2.44 & -2.14 & -2.44 & -2.23 & -2.64 & -2.58 \\ 
    \bottomrule
 \end{tabular}
-\label{pointesttable}
 \caption{Point estimates by estimator, primary dataset}
+\label{tab:ptests}
 \end{table}
 
-Table \ref{pointesttablec2} is identical to the structure of Table \ref{pointesttable} except we exclude the ``early expansion states.''
+Table~\ref{tab:secondaryptests} is identical to the structure of Table~\ref{tab:ptests} except we exclude the ``early expansion states'' from the pool of expansion state matches.
 
 \begin{table}[ht]
 \begin{tabular}{rlrrrrrr}
   \toprule
-Variable subset & Sigma estimate & BC-HSBW & H-SBW & BC-SBW & SBW & H-OB & OB \\ 
+Var subset & Sigma estimate & BC-HSBW & H-SBW & BC-SBW & SBW & H-OB & OB \\ 
   \midrule
 0 & sigma\_uu\_i & -2.17 & -1.29 & -1.93 & -1.12 & -2.45 & -2.32 \\ 
   0 & sigma\_uu\_avg & -2.70 & -1.64 & -2.57 & -1.53 & -1.22 & -1.71 \\ 
@@ -680,11 +676,11 @@ Variable subset & Sigma estimate & BC-HSBW & H-SBW & BC-SBW & SBW & H-OB & OB \\
   5 & sigma\_zero & -2.27 & -1.73 & -2.14 & -1.58 & -2.53 & -2.49 \\ 
    \bottomrule
 \end{tabular}
-   \label{pointesttablec2}
    \caption{Point estimates for all specifications, early expansion excluded}
+    \label{tab:secondaryptests}
 \end{table}
 
-Finally Table \ref{sensitivityc1} displays the point estimates when leaving out each state compared to the original point estimates. We display the changes relative to the full covariate set (`Psihat (0)`) and the covariate set excluding the Republican governance indicators (`Psihat (1)`). We display the point estimates both when leaving out the state conditional on the covariate adjustment and when rerunning the entire adjustment procedure (`(states, proc)`). Additional results for other estimators are available on request.
+Finally, Table~\ref{tab:sensitivityc1} displays the point estimates when leaving out each state compared to the original point estimates. We display the changes relative to the full covariate set (``Psihat (0)'') and the covariate set excluding the Republican governance indicators (``Psihat (1)''). We display the point estimates both when leaving out the state conditional on the covariate adjustment and when rerunning the entire adjustment procedure (``(states, proc)''). Additional results for other estimators are available on request.
 
 \begin{table}[ht]
 \begin{tabular}{lrlrl}
@@ -715,11 +711,11 @@ AR & -2.14 & (-2.47, -2.39) & -2.66 & (-2.82, -2.78) \\
   WV & -2.14 & (-2.13, -2.2) & -2.66 & (-2.6, -2.6) \\ 
    \bottomrule
 \end{tabular}
-   \label{sensitivityc1}
    \caption{Leave-one-out-state analysis (BC-HSBW estimator and preferred covariate adjustment)}
+   \label{tab:sensitivityc1}
 \end{table}
 
-Table \ref{oatesensitive} presents all point estimates calculate using the overlap weights. Dataset ``c1'' refers to the preferred dataset and dataset ``c2'' removes the early expansion states. The numeric column names refer to the covariate group excluded (covariate groups described above).
+Table~\ref{tab:oatesensitive} presents all point estimates calculate using the overlap weights. Dataset ``c1'' refers to the preferred dataset and dataset ``c2'' removes the early expansion states. The numeric column names refer to the covariate group excluded (covariate groups described above).
 
 \begin{table}[ht]
 \begin{tabular}{llrrrrrr}
@@ -735,10 +731,10 @@ sigma\_uu\_i & c1 & -1.64 & -2.60 & -2.96 & -1.86 & -1.86 & -1.77 \\
    \bottomrule
 \end{tabular}
 \caption{OATE point estimates}
-\label{oateptests}
+\label{tab:oatesensitive}
 \end{table}
 
-Table \ref{oateconfint} displays selected point estimates and confidence intervals calculated using both the leave-one-out-states conditional on the covariate adjustment and recalculating the covariate adjustment for the OATE. We only present results when including all covariates and when excluding the Republican governance indicators for the primary dataset (including early expansion states). Additional results are available on request.
+Table~\ref{tab:oateconfint} displays selected point estimates and confidence intervals calculated using both the leave-one-out-states conditional on the covariate adjustment and recalculating the covariate adjustment for the OATE. We only present results when including all covariates and when excluding the Republican governance indicators for the primary dataset (including early expansion states). Additional results are available on request.
 
 \begin{table}[ht]
 \begin{tabular}{rlrll}
@@ -754,13 +750,18 @@ Psihat & Sigma estimate & Variables subset & CI (states) & CI (proc) \\
    \bottomrule
 \end{tabular}
 \caption{OATE results inference}
-\label{oateconfint}
+\label{tab:oateconfint}
 \end{table}
 
-Finally, Figure XXX displays a heatmap showing show the point estimates change when removing each state, conditional on our preferred covariate adjustment. We present the results for all covariates and excluding the Republican governance indicators. Additional results are available on request. 
+Finally, Figure~\ref{fig:oateheatmap} displays a heatmap showing show the point estimates change when removing each state, conditional on our preferred covariate adjustment for both the primary dataset and when excluding early expansion states. We present the results for all covariates and excluding the Republican governance indicators. Additional results are available on request.  We see that our point estimates move closer to zero when removing Wisconsin or Ohio for all specifications. Removing Arkansas appears to generally move the point estimates further away from zero.
 
-
-
+\begin{figure}[]
+\begin{center}
+    \includegraphics[scale=0.6]{01_Plots/oate-loo-state-cov-group-heatmap-states.png}
+    \caption{OATE estimates, leave-one-out-states analysis}
+    \label{fig:oateheatmap}
+\end{center}
+\end{figure}
 
 \subsection{Appendix E: SBW Program Details}
 
