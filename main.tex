@@ -632,6 +632,15 @@ Variable & sigma\_uu\_avg & sigma\_uu\_i \\
 
 We conclude with Figure~\ref{fig:corrmatrix}, which displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset. The relationships are quite similar when using the ``sigma\_uu\_avg'' adjustment, but change quite a bit do to the outlying values on the third adjustment.
 
+\begin{figure}[]
+\begin{center}
+    \includegraphics[scale=0.8]{01_Plots/correlation-plot-c1-sigma-zero.png}
+    \caption{Correlation matrix (unadjusted covariates)}
+    \label{oatearea}
+\end{center}
+\end{figure}
+
+
 \subsection{Appendix D: Balance Tables}
 
 Table~\ref{tab:baltab1} and Table~\ref{tab:baltab2} display the differences between the population-weighted mean covariate values of the non-expansion region and the weighted mean of the expansion region (calculated on on our adjusted dataset). The weights presented here are from the H-SBW $(\rho = 0.2)$ estimator. Additional results are available on request.
@@ -959,6 +968,8 @@ AR & -2.00 & (-2.18, -2.21) & -2.62 & (-2.55, -2.55) \\
   WV & -2.00 & (-2, -2.02) & -2.62 & (-2.54, -2.54) \\ 
    \bottomrule
 \end{tabular}
+   \caption{Point estimates for all specifications, early expansion excluded}
+    \label{tab:sensitivityc1}
 \end{table}
 
 Table~\ref{tab:oateconfint} displays point estimates and confidence intervals for the primary point estimates. We display the confidence intervals calculated using both the leave-one-out-states conditional on the covariate adjustment (CI (states)) and recalculating the covariate adjustment for the OATE (CI (proc)). We note that when calculating these confidence intervals, on the rare occasions when logistic regression failed to converge, we used the probit link instead.
