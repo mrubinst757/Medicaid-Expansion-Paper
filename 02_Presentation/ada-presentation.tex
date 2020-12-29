@@ -81,7 +81,7 @@
 
 \begin{frame}{Background}
     \begin{center}
-	\includegraphics[scale=0.5]{01_Plots/political-expansion-plot.png}
+	\includegraphics[scale=0.5]{01_Plots/expansion-map.png}
     \end{center}
 \end{frame}
 
@@ -89,6 +89,14 @@
     \begin{center}
 	\includegraphics[scale=0.5]{01_Plots/political-expansion-plot.png}
     \end{center}
+\end{frame}
+
+\begin{frame}{Motivation}
+    \begin{itemize}
+    \item Insuring previously uninsured individuals mediates many effects of Medicaid expansion \bigskip
+    \item To understand the magnitude of foregone coverage increases due to the 2012 Supreme Court decision \bigskip
+    \item To understand the association between governance and Medicaid enrollment in 2014 
+    \end{itemize} 
 \end{frame}
 
 \begin{frame}{Contributions: Substantive}
@@ -117,34 +125,20 @@
     \end{itemize}
 \end{frame}
 
-\subsection{Motivation}
-
-\begin{frame}{Motivation}
-
-    \begin{itemize}
-    
-    \item Insuring previously uninsured individuals mediates many effects of Medicaid expansion \bigskip
-    
-    \item To understand the magnitude of foregone coverage increases due to the 2012 Supreme Court decision \bigskip
-    
-    \item To understand the association between governance and Medicaid enrollment in 2014 
-    
-    \end{itemize} 
-
-\end{frame}
-
 \section{Data \& Methods}
 
 \subsection{Target estimand}
 
 \begin{frame}{Target estimand}
-\begin{center}$\phi = \mathbb{E}\{Y^{A = 1} - Y^{A = 0} | A = 0, T = 1, R = 2014\}$\end{center} \bigskip 
-    \begin{itemize}
-        \item $Y$ is the uninsurance rate (at the ``county'' level) \bigskip 
-        \item $A$ is the decision to expand Medicaid (at the state level) \bigskip 
-        \item Expansion happened concurrently with other reforms ($T$) \bigskip 
-        \item Interactions between Medicaid expansion and the ACA may change over time (limit to $R = 2014$)  
-    \end{itemize}
+
+$$
+N_0^{-1}\sum_{s: A_s = 0} \sum_{c = 1}^{n_s} Y_{sc}^1 - Y_{sc}^0
+$$
+
+\begin{itemize}
+    \item $Y$ is the uninsurance rate (at the ``county'' level) \bigskip
+    \item $A$ is the decision to expand Medicaid (at the state level)   
+\end{itemize}
 \end{frame}
 
 \subsection{Treatment assignment}
@@ -163,73 +157,40 @@
 
 \subsection{Identification}
 
-\begin{frame}{Causal diagram}
-    \begin{center}
-	\includegraphics[scale=0.5]{Slide7.PNG}
-    \end{center}
-\end{frame}
-
-\begin{frame}{Causal diagram}
-    \begin{center}
-	\includegraphics[scale=0.5]{Slide6.png}
-    \end{center}
-\end{frame}
-
-\begin{frame}{Causal diagram}
-    \begin{center}
-	\includegraphics[scale=0.5]{Slide5.png}
-    \end{center}
-\end{frame}
-
-\begin{frame}{Causal diagram}
-    \begin{center}
-	\includegraphics[scale=0.5]{Slide4.png}
-    \end{center}
-\end{frame}
-
-\begin{frame}{Causal diagram}
-    \begin{center}
-	\includegraphics[scale=0.5]{Slide3.png}
-    \end{center}
-\end{frame}
-
-\begin{frame}{Causal diagram}
-    \begin{center}
-	\includegraphics[scale=0.5]{Slide2.png}
-    \end{center}
-\end{frame}
-
-\begin{frame}{Causal diagram}
-    \begin{center}
-	\includegraphics[scale=0.5]{Slide1.png}
-    \end{center}
-\end{frame}
-
 \begin{frame}{Identifying Assumptions}
 
 \begin{itemize}
-    \item No unmeasured confounding
+    \item Consistency \bigskip
     \begin{itemize}
-        \item $Y^a \perp A | X$ (where $P, D, E, Y_{pre} \subseteq X$) \bigskip 
+        \item $Y_{sc}^a = Y_{sc} \mid A_s = a$ \bigskip
     \end{itemize}
-    \item Positivity
+    \item No anticipatory effects \bigskip
     \begin{itemize}
-        \item $\mathbb{P}(A = 1 | X = x) > 0$  \bigskip 
+        \item For $t < T$, $Y_{sct}^0 = Y_{sct}$ \bigskip
     \end{itemize}
-    \item Consistency
+    \item Positivity \bigskip
+    \item No unmeasured confounding \bigskip
     \begin{itemize}
-        \item $\mathbb{E}\{Y | A = a\} = \mathbb{E}\{Y^a\}$ \bigskip 
+        \item $Y^a_{sc} \perp A_s | X_{sc}$ \bigskip 
     \end{itemize}
-    \item No anticipatory effects
-    \begin{itemize}
-        \item $\mathbb{E}\{Y_{pre} | X = x\} = \mathbb{E}\{Y^0_{pre} | X = x\}$ \bigskip 
-    \end{itemize}
-        \item No compositional changes
 \end{itemize}
 
 \end{frame}
 
-\subsection{Data}
+\begin{frame}{Covariates}
+\begin{itemize}
+    \item Uninsurance rates (2011-13) \bigskip
+    \item Unemployment rates (2011-13) \bigskip
+    \item ``Time-invariant'' demographics (2011-13 averages) \bigskip
+    \begin{itemize}
+        \item Age, sex, race, ethnicity, disability, foreign born, citizenship, education, income-to-poverty ratio, urban residence, married, children \bigskip
+    \end{itemize}
+    \item Political partisan composition \bigskip
+    \begin{itemize}
+        \item Republican governor, Republican lower chamber control, Republican total control
+    \end{itemize}
+\end{itemize}
+\end{frame}
 
 \begin{frame}{Data Source}
     \begin{itemize}
@@ -240,22 +201,13 @@
     \end{itemize}
 \end{frame}   
 
-\begin{frame}{ACS Covariates}
-\textbf{Main Effects}
-\begin{itemize}
-    \item Uninsurance rates (2011-13) 
-    \item Unemployment rates (2011-13) 
-    \item ``Time-invariant'' demographics (2011-13 averages)
+\begin{frame}{Problem: measurement error in covariates}
     \begin{itemize}
-        \item Age, race, sex, hispanic, disability, foreign born, citizenship, education, income-to-poverty ratio, urban, married, number of children
-        \item Create three levels of coarseness for multi-valued and continuous variables 
-    \end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Problem}
-    \begin{itemize}
-        \item All of our covariates are estimates
+        \item All of our covariates are estimates \bigskip
+        \begin{itemize}
+            \item We observe $W_{sc}$ \bigskip
+            \item We need $X_{sc}$ \bigskip
+        \end{itemize}
         \item This is a measurement error problem
     \end{itemize}
 \end{frame}
@@ -291,11 +243,32 @@
 
 \begin{frame}{Results}
 
+\begin{table}[ht]
+\begin{tabular}{llrll}
+  \toprule
+Estimator & Estimate & 95 percent CI (lower, upper)\\ 
+  \midrule
+  BC-HSBW & -2.14 & (-3.57, -0.71) \\ 
+  H-SBW & -2.00 & (-3.59, -0.40) \\ 
+  BC-SBW & -1.89 & (-3.06, -0.73) \\ 
+  SBW & -1.81 & (-3.60, -0.02) \\ 
+   \bottomrule
+\end{tabular}
+\caption{Primary point estimates and confidence intervals}
+\label{tab:confintmain}
+\end{table}
+
 \end{frame}
 
 \begin{frame}{Heterogeneity across covariate groups}
 \begin{center}
 	\includegraphics[scale=0.5]{01_Plots/loo-covariates-main-c1.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Heterogeneity across covariate groups}
+\begin{center}
+	\includegraphics[scale=0.5]{01_Plots/repub-diff-c1.png}
 \end{center}
 \end{frame}
 
