@@ -243,7 +243,7 @@ We present the following results using our preferred covariate adjustment $\hat{
 \end{center}
 \end{figure}
 
-As discussed above, we use a ridge-augmentation to extrapolate from the data in order to reduce all imbalances within 0.1 percentage points. Figure~\ref{fig:statewghts} shows the total weights summed across states for each estimator: HSBW and BC-HSBW. This figure sums the negative weights separately from the positive weights to make clear the extent of the extrapolation. We see that BC-HSBW does extrapolate somewhat heavily in order to generate estimates of the counterfactuals, particularly for CPUMAS in California. 
+As discussed above, we then use ridge-regression augmentation to extrapolate from the data in order to reduce all imbalances within 0.1 percentage points. Figure~\ref{fig:statewghts} shows the total weights summed across states for each estimator: H-SBW and BC-HSBW. This figure sums the negative weights separately from the positive weights to make clear the extent of the extrapolation. We see that BC-HSBW extrapolates heavily in order to estimate the counterfactual, particularly for CPUMAS in California. Due to this extensive extrapolation, we therefore prefer the H-SBW estimator, though we compare results against BC-HSBW as a robustness check.
 
 \begin{figure}[B]
 \begin{center}
@@ -253,7 +253,7 @@ As discussed above, we use a ridge-augmentation to extrapolate from the data in 
 \end{center}
 \end{figure}
 
-Our H-SBW estimator yields an estimated effect of -2.00 (-3.59, -0.40). The bias-correction makes little substantive difference, yielding an estimate of -2.14 (-3.57, -0.71). In other words, we estimate that had states that did not expand Medicaid in 2014 done so, they would have seen a 2.14 percentage point reduction in their uninsurance rates that year. These estimates differ somewhat from the estimates we find running the procedure on the observed values $W_{sc}$: here H-SBW gives an estimated effect of -2.26 (-3.23, -1.29), and the bias corrected estimator yields -2.50 (-3.41, -1.58). Using the adjusted dataset appears to both move our estimate closer in absolute magnitude towards zero and increase the width of the estimated confidence intervals. Figure~\ref{fig:estimators} displays the point estimates from these weighting estimators, as well as estimators using SBW, on the adjusted and unadjusted datasets. We also calculate estimates using Oaxaca-Blinder (regression) weights and using a second covariate adjustment; these results are substantively similar and are available in Appendix D. 
+Our H-SBW estimator yields an estimated effect of -2.00 (-3.59, -0.40). The bias-correction makes little substantive difference, yielding an estimate of -2.14 (-3.57, -0.71). In other words, we estimate that had states that did not expand Medicaid in 2014 done so, they would have seen a 2 percentage point reduction in their uninsurance rates that year. These estimates differ somewhat from the estimates we find running the procedure on our unadjusted covariate estimates: here H-SBW gives an estimated effect of -2.26 (-3.23, -1.29), and the bias corrected estimator yields -2.50 (-3.41, -1.58). Using the adjusted covariate set appears to both move our estimate closer in absolute magnitude towards zero and increase the width of the estimated confidence intervals. Figure~\ref{fig:estimators} displays the point estimates from these weighting estimators, as well as estimators using SBW, on the adjusted and unadjusted datasets. We also calculate estimates using Oaxaca-Blinder (regression) weights and using a second covariate adjustment; these results are substantively similar and are available in Appendix D. 
 
 \begin{figure}[B]
 \begin{center}
@@ -273,11 +273,11 @@ We next examine how removing specific covariate groups in the weighting procedur
 \end{center}
 \end{figure}
 
-Figure~\ref{fig:loocovariates} displays the estimated treatment effects when removing each covariate group for our preferred set of weights and the bias corrected version of these same weights. We find that all our estimates are very sensitive to the removal of pre-treatment uninsurance and pre-treatment unemployment rates. When we fail to control for these covariates, our estimated contrast increases substantially in absolute magnitude.  
+Figure~\ref{fig:loocovariates} displays the estimated treatment effects when removing each covariate group for our preferred set of weights and the bias corrected version of these same weights. We find that all our estimates are very sensitive to the removal of pre-treatment uninsurance and pre-treatment unemployment rates. When we fail to control for these covariates, our estimated contrast increases substantially in absolute magnitude. A full comparison of the difference in estimates across covariate groups is available in Appendix D, Table~\ref{tab:ptests}.
 
-More importantly for our research hypothesis, we also see an increase in absolute magnitude of our estimated contrast when removing the Republican governance indicators. Specifically, we find that our estimated contrast increases in absolute magnitude by 0.62 for H-SBW and by 0.51 BC-HSBW. We see similar differentials on our unadjusted dataset (0.64 and 0.49, respectively). These results are consistent with our hypothesis that Republican governance drives heterogeneity in the treatment effects. However, we caveat that all of these changes fall well within the margin of error of our estimates. Figure~\ref{fig:repub} in Section~\ref{sssec:sensitivity} shows the difference in our estimates for both our primary dataset and when excluding early expansion states (discussed below). A full comparison of the difference in estimates across covariate groups is available in Appendix D, Tables~\ref{tab:ptests} and \ref{tab:secondaryptests}.
+We also see an increase in absolute magnitude of our estimated contrast when removing the Republican governance indicators. Specifically, we find that our estimated contrast increases in absolute magnitude by 0.62 for H-SBW and by 0.51 BC-HSBW. We see similar differentials on our unadjusted dataset (0.64 and 0.49, respectively). These results are consistent with our hypothesis that Republican governance drives heterogeneity in the treatment effects. When we use the leave-one-out jackknife to calculate the standard errors of these differences, we are unable to conclude that these differences are statistically significant. Even so, we find that these differences are negative for all estimators we consider when removing each state. That is, the sign of the differences in the contrasts remains negative for every specification that we run -- conditional on the adjustment. When we re-run the entire adjustment procedure when removing each state, we do find that removing California results in a positive contrast between these estimates for BC-HSBW and BC-SBW and Illinois for BC-SBW for our adjusted dataset. However, this result does not occur with any set of weights that does not extrapolate beyond the support of the data. Figure REF displays the differences in these contrasts for our preferred adjustment dataset and our unadjusted dataset, conditional on the adjustment. Additional results are available in Appendix D, Table REF.
 
-Finally, we consider the robustness of BC-HSBW to the removal of individual states. Figure~\ref{fig:loostateplot} shows how the point estimates for the BC-HSBW leave-one-state-out jackknife confidence intervals, conditional on the adjusted dataset for both the full covariate set and when removing the Republican governance indicators. We see that removing Ohio and Arkansas tends to increase the absolute magnitude of the point estimate for the full covariate set. By contrast, removing California decreases the absolute magnitude of the estimators that are not bias-corrected, but increases the absolute magnitude of the estimator when including the bias correction. When excluding the Republican governance indicators, we see that the point estimates for all estimators are somewhat sensitive to the exclusion of Kentucky: when removing this state, the point estimates all move towards zero. By contrast, removing Ohio and Arkansas again appears to increase the point estimate in absolute magnitude for at least two estimators. The results are quite similar when using different covariate adjustments and when recalculating the entire procedure; some of these results are available in Appendix D, Table~\ref{tab:sensitivityc1}. Additional results are available on request.
+Finally, we consider the robustness of our estimators to the removal of individual states. Figure~\ref{fig:loostateplot} shows how the point estimates change for leave-one-state-out jackknife procedure for both the adjusted and unadjusted datasets. We see very similar results in both cases: removing Ohio and Arkansas tends to increase the absolute magnitude of the point estimates. By contrast, removing California decreases the absolute magnitude of the estimators that are not bias-corrected, but this goes away or even reverses when including the bias correction. The results are quite similar when using different covariate adjustments and when recalculating the entire procedure; some are available in Appendix D, Table~\ref{tab:sensitivityc1}. 
 
 \begin{figure}[]
 \begin{center}
@@ -289,7 +289,9 @@ Finally, we consider the robustness of BC-HSBW to the removal of individual stat
 
 \subsection{Sensitivity Analyses} \label{sssec:sensitivity}
 
-We examine the sensitivity of our estimates to violations of two key causal assumptions: (1) no anticipatory treatment effects, and (2) positivity violations. To the first point, several states had partial limited expansions prior to 2014. Following \cite{frean2017premium}, we consider these states to be California, Connecticut, Minnesota, New Jersey, and Washington. We rerun our analyses excluding CPUMAs from all five of these states. It is unclear how removing these states might affect our estimates: on the one hand, states that expanded early might have a smaller treatment effect after 2014 because they already enrolled newly eligible individuals. On the other hand, if these states were also more motivated to enroll people in Medicaid, they might have larger post-expansion coverage gains. When removing these states, we estimate an effect of -1.29 (-2.45, -0.12) using H-SBW weights and when we run the bias-corrected version we estimate -2.17 (-3.65, -0.68). Our leave-one-out covariate analysis shows similar associations to those in our primary analysis; however, we see a somewhat larger association between Republican governance indicators and our estimated contrast. Specifically, we find a 1.28 percentage point increase in absolute magnitude when for the H-SBW estimator and a 0.73 increase for BC-HSBW. Table~\ref{tab:secondaryptests} in Appendix D displays additional results. 
+We examine the sensitivity of our estimates to violations of two key causal assumptions: (1) no anticipatory treatment effects, and (2) positivity violations. To the first point, several states had partial limited expansions prior to 2014. Following \cite{frean2017premium}, we consider these states to be California, Connecticut, Minnesota, New Jersey, and Washington. We rerun our analyses excluding CPUMAs from all five of these states. It is unclear how removing these states might affect our estimates: on the one hand, states that expanded early might have a smaller treatment effect after 2014 because they already enrolled newly eligible individuals. On the other hand, if these states were also more motivated to enroll people in Medicaid, they might have larger post-expansion coverage gains. When removing these states, we estimate an effect of -1.29 (-2.45, -0.12) using H-SBW weights and when we run the bias-corrected version we estimate -2.17 (-3.65, -0.68). While these point estimates are quite a bit different but the confidence intervals largely overlap. Table~\ref{tab:secondaryptests} in Appendix D displays additional results. 
+
+Our leave-one-out covariate analysis shows similar associations to those in our primary analysis; however, we see a somewhat larger association between Republican governance indicators and our estimated contrast. Specifically, we find a 1.28 percentage point increase in absolute magnitude when for the H-SBW estimator and a 0.73 increase for BC-HSBW. Figure~\ref{fig:repub} displays these differences in the contrasts against those from our preferred dataset. 
 
 \begin{figure}[]
 \begin{center}
@@ -299,7 +301,9 @@ We examine the sensitivity of our estimates to violations of two key causal assu
 \end{center}
 \end{figure}
 
-We next consider an alternative method to account for positivity violations. To this point we have relied on either (1) retaining a potentially biased estimate from weights that do not provide exact balance, or (2) producing a more heavily model-dependent estimate that relies on extrapolation. Overall we found that the results didn't change substantially either way. Here we consider a third option: changing our target estimand. In particular, we consider the overlap average treatment effect (OATE), proposed by \cite{li2018balancing}. This is the treatment effect on the subset of the entire dataset where we have overlap. It is a data-dependent treatment effect, and is not the same as the treatment effect on the untreated; however, we believe that this effect will be more similar to the ETC than the ETT, since there were no Democratic controlled states that did not expand Medicaid. Indeed, after generating overlap weights on our primary dataset we find that across all covariates, the mean average absolute distance from the overlap region to the untreated region is 2.9 and to the treated region is 7.8.\footnote{The distance is between the overlap region calculated as an unweighted mean on the adjusted datasets.} Figure~\ref{fig:oatearea} displays the distance between covariates with greater than one percentage point distance from the overlap region to either the control or treated region. We see that the overlap region is substantially more Republican than the treated region, as expected. This region is also less Hispanic, more white, less rural, and more educated than either the expansion or non-expansion region. Table~\ref{tab:oatedist1} and Table~\ref{tab:oatedist2} in Appendix C show statistics on the OATE region versus the treatment and control regions for all covariates.
+When we compute the leave-one-out jackknife standard errors, we find that the estimates for H-SBW and SBW are statistically significantly different from zero on both the adjusted and unadjusted datasets (H-SBW (-2.19, -0.35); SBW (-2.30, -0.75)). This result also holds when calculating these contrasts when recalculating the entire procedure. We again find that for all estimators (including the Oaxaca-Blinder weights), the difference between the leave-one-out-states estimated contrasts are negative conditional on the preferred covariate adjustment. When we rerun the entire adjustment procedure, we again find that the only estimators that have positive differences between these contrasts are ones that allow for negative weights. For our preferred covariate adjustment, BC-HSBW and BC-SBW are only sensitive to the removal of Kentucky. Additional results are available in Appendix D, Table BLAH. 
+
+We next consider an alternative method to account for positivity violations. To this point we have relied on either (1) retaining a potentially biased estimate from weights that do not provide exact balance, or (2) producing a a more model-dependent estimate that relies on extrapolation. Overall we found that the results didn't change substantially either way. Here we consider a third option: changing our target estimand. In particular, we consider the overlap average treatment effect (OATE), proposed by \cite{li2018balancing}. This is the treatment effect on the subset of the entire dataset where we have overlap. It is a data-dependent treatment effect, and is not the same as the treatment effect on the untreated; however, we believe that this effect will be more similar to the ETC than the ETT, since there were no Democratic controlled states that did not expand Medicaid. Indeed, after generating overlap weights on our primary dataset we find that across all covariates, the mean average absolute distance from the overlap region to the untreated region is 2.9 and to the treated region is 7.8.\footnote{The distance is between the overlap region calculated as an unweighted mean on the adjusted datasets.} Figure~\ref{fig:oatearea} displays the distance between covariates with greater than one percentage point distance from the overlap region to either the control or treated region. We see that the overlap region is substantially more Republican than the treated region, as expected. This region is also less Hispanic, more white, less rural, and more educated than either the expansion or non-expansion region. Table~\ref{tab:oatedist1} and Table~\ref{tab:oatedist2} in Appendix C show statistics on the OATE region versus the treatment and control regions for all covariates.
 
 \begin{figure}[]
 \begin{center}
@@ -319,7 +323,7 @@ Figure~\ref{fig:oateimbalance} displays the sum of the weights within each state
 \end{center}
 \end{figure}
 
-We find similar results to our primary analysis: within the overlap region we find an estimated treatment effect of -1.64 (-2.41 -0.89) when including all treatment states in our primary analysis, and of -1.76 when excluding ``early expansion'' states. We again find a negative association between the estimated contrast and the Republican governance indicators, which decrease the estimated effect size by 0.96 percentage points on the primary dataset and by 0.62 percentage points when removing early expansion states. Additional results are available in Appendix D, Table~\ref{tab:oateconfint} and Table~\ref{tab:oatesensitive}. 
+We find similar results to our primary analysis: within the overlap region we find an estimated treatment effect of -1.64 (-2.41 -0.89) when including all treatment states in our primary analysis, and of -1.76 when excluding ``early expansion'' states. We again find a negative association between the estimated contrast and the Republican governance indicators, which decrease the estimated effect size by 0.96 (0.81, 1.10) percentage points on the primary dataset and by 0.62 (0.78, 0.46) percentage points when removing early expansion states. Notice that both of these estimates were statistically significant; the confidence intervals increase only slightly when recomputing the entire adjustment when removing each state. Moreover, this negative difference in estimated contrasts holds for each state left outside, regardless of whether or not we conditioned on the adjustment or recalculated it. Additional results are available in Appendix D, Table~\ref{tab:oateconfint} and Table~\ref{tab:oatesensitive}. This again provides support for our hypothesis that Republican governance is an important predictor of treatment effect heterogeneity.
 
 \section{Discussion}
 
@@ -459,11 +463,181 @@ Again the benefit of using this estimator is that we account for unit-level hete
 
 One cost of this procedure is that this aggregation models all differences as a function of the sample sizes, and averages over any potential heterogeneity due to heteroskedasticity (ie the measurement error covariance matrix changes depending on the true value of $X_{ij}$). A second cost is that we do not account for the hierarchical nature of the data; if we did, we could likely improve the efficiency this estimation procedure. We leave this as future work.
 
-\subsection{Appendix C: Complete Balance Tables}
+\subsection{Appendix C: Summary Statistics}
+
+Table~\ref{tab:summarytable1}, Table~\ref{tab:summarytable2}, and Table~\ref{tab:summarytable3} display univariate summary statistics from the primary dataset. We display the mean, interquartile range, and the range (as defined by the maximum value minus the minimum value) for the unadjusted dataset (sigma\_zero), the preferred adjustment (sigma\_uu\_avg), and the secondary adjustment (sigma\_uu\_i). We see that in general the preferred adjustment reduces the variability in the data. The secondary adjustment reduces the interquartile range, but increases the overall variability (as measured by the range) by causing extreme values for particular CPUMAs. While we like that this adjustment accounts for the precision of the covariate values, because the secondary adjustment causes values to fall outside of the possible range of these variables, we prefer the standard adjustment. We also calculate these adjustments excluding the early expansion states and leaving out each state one at a time from the primary dataset and the early expansion states excluded dataset; we can make these results available on request.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rllll}
+  \toprule
+Treat & Variable & sigma\_zero & sigma\_uu\_avg & sigma\_uu\_i \\ 
+  \midrule
+0 & age\_cat2\_19\_29\_pct & (24.8, 5.5, 48.7) & (24.8, 5.4, 47.8) & (24.8, 5.4, 66) \\ 
+  1 & age\_cat2\_19\_29\_pct & (24.5, 6, 30.9) & (24.5, 5.9, 29) & (24.5, 5.9, 29) \\ 
+  0 & age\_cat2\_30\_39\_pct & (20.6, 2.6, 18.4) & (20.6, 2.5, 17.2) & (20.4, 2.6, 89) \\ 
+  1 & age\_cat2\_30\_39\_pct & (20.9, 3.4, 20.9) & (20.9, 3.2, 19.4) & (20.9, 3.1, 41.3) \\ 
+  0 & age\_cat2\_40\_49\_pct & (22, 2.5, 19.5) & (22, 2.3, 18.5) & (22.2, 2.4, 119.8) \\ 
+  1 & age\_cat2\_40\_49\_pct & (22.2, 2.5, 15.4) & (22.2, 2.3, 13.8) & (22.3, 2.3, 53.6) \\ 
+  0 & avg\_adult\_hh\_ratio & (139.7, 18.7, 156.8) & (139.7, 19, 154) & (139.5, 19.1, 202.9) \\ 
+  1 & avg\_adult\_hh\_ratio & (150.8, 27.1, 174.3) & (150.8, 27.1, 173.3) & (150.8, 27, 173.8) \\ 
+  0 & citizenship\_pct & (93.6, 5.9, 39.8) & (93.6, 5.9, 39.3) & (93.6, 5.8, 39.7) \\ 
+  1 & citizenship\_pct & (90, 11.8, 57.1) & (90, 11.7, 55.7) & (90, 11.8, 55.4) \\ 
+  0 & disability\_pct & (11.9, 5, 22.1) & (11.9, 4.8, 20.7) & (11.9, 4.9, 20.5) \\ 
+  1 & disability\_pct & (10.5, 5.3, 28.6) & (10.5, 5.4, 27.2) & (10.4, 5.2, 26.7) \\ 
+  0 & educ\_hs\_degree\_pct & (29.6, 8.8, 42.7) & (29.6, 8.8, 41.2) & (29.8, 8.8, 136.5) \\ 
+  1 & educ\_hs\_degree\_pct & (26.3, 10.6, 43.2) & (26.3, 10.7, 41.9) & (26.3, 10.5, 41.8) \\ 
+  0 & educ\_less\_than\_hs\_pct & (11.8, 7.1, 30) & (11.8, 7, 30.2) & (11.6, 7, 90.3) \\ 
+  1 & educ\_less\_than\_hs\_pct & (11.4, 7.6, 45.3) & (11.4, 7.3, 44.6) & (11.3, 7.4, 47.3) \\ 
+  0 & educ\_some\_college\_pct & (33.8, 5.6, 42.9) & (33.8, 5.1, 42.3) & (33.9, 5, 65.8) \\ 
+  1 & educ\_some\_college\_pct & (33.5, 7.8, 34.2) & (33.5, 7.3, 32.9) & (33.5, 7.4, 40.1) \\ 
+  0 & female\_pct & (50.5, 1.6, 15.8) & (50.5, 1.5, 15.1) & (50.5, 1.5, 14.9) \\ 
+  1 & female\_pct & (50.1, 1.6, 15.4) & (50.1, 1.5, 14.2) & (50.1, 1.4, 14.2) \\ 
+  0 & foreign\_born\_pct & (10.5, 8.8, 63.2) & (10.5, 8.9, 62.7) & (10.4, 8.8, 96.5) \\ 
+  1 & foreign\_born\_pct & (18, 22.2, 76) & (18, 22.2, 75.3) & (18, 22.2, 75.2) \\ 
+  0 & hins\_unins\_pct\_2011 & (22.7, 10.5, 51.4) & (22.7, 9.2, 50.3) & (26.1, 9.8, 2066.1) \\ 
+  1 & hins\_unins\_pct\_2011 & (19.6, 11.2, 59) & (19.6, 10.8, 52.3) & (19.4, 10.9, 154.1) \\ 
+  0 & hins\_unins\_pct\_2012 & (22.4, 9.3, 49.5) & (22.4, 9.1, 47.8) & (22.2, 9.4, 178.3) \\ 
+  1 & hins\_unins\_pct\_2012 & (19.4, 9.8, 50.6) & (19.4, 10.1, 50.1) & (19.3, 10.1, 96.9) \\ 
+  0 & hins\_unins\_pct\_2013 & (22, 10.1, 50.1) & (22, 9.4, 49.2) & (19.4, 9.4, 1580.6) \\ 
+  1 & hins\_unins\_pct\_2013 & (19, 11.1, 49.9) & (19, 10.4, 48.6) & (19.2, 10.5, 135.3) \\ 
+   \bottomrule
+\end{tabular}
+    \caption{Univariate summary statistics (1)}
+    \label{tab:summarytab1}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rllll}
+  \toprule
+Treat & Variable & sigma\_zero & sigma\_uu\_avg & sigma\_uu\_i \\ 
+  \midrule
+  0 & hispanic\_pct & (11.4, 10.2, 93.9) & (11.4, 10.2, 93.8) & (11.4, 10.2, 93.8) \\ 
+  1 & hispanic\_pct & (15.8, 17.7, 97.2) & (15.8, 17.7, 97) & (15.8, 17.7, 97) \\ 
+  0 & inc\_pov2\_138\_pct & (22, 8.8, 42.8) & (22, 8.7, 41.8) & (22, 8.7, 47.2) \\ 
+  1 & inc\_pov2\_138\_pct & (19.9, 11.9, 45.6) & (19.9, 11.7, 43.9) & (20, 11.8, 50.2) \\ 
+  0 & inc\_pov2\_139\_299\_pct & (27.4, 5.1, 27.9) & (27.4, 4.8, 26.7) & (28.4, 5, 611.1) \\ 
+  1 & inc\_pov2\_139\_299\_pct & (24.9, 8.4, 34.2) & (24.9, 7.8, 34.2) & (24.9, 7.9, 34.2) \\ 
+  0 & inc\_pov2\_300\_499\_pct & (24.2, 4.8, 21) & (24.2, 4.6, 18.4) & (22.8, 4.6, 819.1) \\ 
+  1 & inc\_pov2\_300\_499\_pct & (23.6, 5.5, 23) & (23.6, 4.8, 22.1) & (23.6, 5, 25) \\ 
+  0 & inc\_pov2\_500\_plus\_pct & (23.7, 9.9, 51.9) & (23.7, 9.7, 52.1) & (24.1, 9.8, 221.6) \\ 
+  1 & inc\_pov2\_500\_plus\_pct & (29.3, 18.4, 69.1) & (29.3, 18.5, 68) & (29.3, 18.4, 68) \\ 
+  0 & married\_pct & (51.5, 9.1, 59.7) & (51.5, 9.1, 59.5) & (51.2, 9.2, 198.5) \\ 
+  1 & married\_pct & (50.7, 9.4, 45.1) & (50.7, 9.1, 44.3) & (50.7, 9, 44.2) \\ 
+  0 & missing\_children\_pct & (13.7, 7.4, 36.2) & (13.7, 7.3, 35.6) & (13.7, 7.3, 59.6) \\ 
+  1 & missing\_children\_pct & (10.5, 6.6, 41) & (10.5, 6.6, 40.5) & (10.5, 6.6, 40.7) \\ 
+  0 & one\_child\_pct & (10.4, 2.5, 13) & (10.4, 2.1, 12.4) & (10.9, 2.3, 291.9) \\ 
+  1 & one\_child\_pct & (11.1, 3.1, 14.3) & (11.1, 2.9, 12.5) & (11.1, 2.8, 12.3) \\ 
+  0 & pop\_growth\_2012 & (100.4, 2.3, 29.4) & (100.4, 2.1, 12.4) & (109.1, 2.4, 5163.5) \\ 
+  1 & pop\_growth\_2012 & (100.2, 3.1, 27.8) & (100.2, 2.2, 15.4) & (98.1, 2.3, 1217.6) \\ 
+  0 & pop\_growth\_2013 & (100.3, 2.6, 20.5) & (100.3, 1.7, 13.1) & (107.6, 2, 4348.5) \\ 
+  1 & pop\_growth\_2013 & (100.3, 3.1, 30.1) & (100.3, 2.3, 12.4) & (98, 2.5, 1265.4) \\ 
+  0 & race\_white\_pct & (77.8, 22.2, 90.5) & (77.8, 22.1, 90.4) & (77.8, 22, 90.2) \\ 
+  1 & race\_white\_pct & (73.9, 25.4, 91.9) & (73.9, 25.5, 91.8) & (73.9, 25.6, 91.7) \\ 
+  0 & repub\_gov & (95.9, 0, 100) & (95.9, 0, 100) & (95.9, 0, 100) \\ 
+  1 & repub\_gov & (30.9, 100, 100) & (30.9, 100, 100) & (30.9, 100, 100) \\ 
+  0 & repub\_lower\_control & (98.8, 0, 100) & (98.8, 0, 100) & (98.8, 0, 100) \\ 
+  1 & repub\_lower\_control & (23.9, 0, 100) & (23.9, 0, 100) & (23.9, 0, 100) \\ 
+  0 & repub\_total\_control & (94.7, 0, 100) & (94.7, 0, 100) & (94.7, 0, 100) \\ 
+  1 & repub\_total\_control & (21, 0, 100) & (21, 0, 100) & (21, 0, 100) \\
+   \bottomrule
+\end{tabular}
+    \caption{Univariate summary statistics (2)}
+    \label{tab:summarytab2}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rllll}
+  \toprule
+Treat & Variable & sigma\_zero & sigma\_uu\_avg & sigma\_uu\_i \\ 
+  \midrule
+  0 & student\_pct & (11.5, 3.9, 41) & (11.5, 3.8, 41.3) & (11.6, 3.8, 92.7) \\ 
+  1 & student\_pct & (11.7, 3.4, 29.5) & (11.7, 3.4, 28) & (11.7, 3.4, 28.1) \\ 
+  0 & three\_plus\_child\_pct & (5.2, 2.2, 25.3) & (5.2, 2.2, 23.2) & (5.4, 2.2, 94.7) \\ 
+  1 & three\_plus\_child\_pct & (5.2, 2, 14.1) & (5.2, 1.7, 13.3) & (5.2, 1.7, 13.5) \\ 
+  0 & two\_child\_pct & (8.9, 2.8, 15) & (8.9, 2.5, 15.1) & (8.5, 2.5, 278.8) \\ 
+  1 & two\_child\_pct & (9.7, 3.5, 15) & (9.7, 3.2, 13.6) & (9.7, 3.2, 16.1) \\ 
+  0 & unemployed\_pct\_2011 & (9.4, 4.6, 21.7) & (9.4, 4.1, 18.7) & (9.7, 3.9, 189.1) \\ 
+  1 & unemployed\_pct\_2011 & (10.2, 4.6, 25.5) & (10.2, 4, 22.6) & (10.1, 3.9, 89.9) \\ 
+  0 & unemployed\_pct\_2012 & (8.8, 4.2, 22.4) & (8.8, 3.6, 18.7) & (9.4, 3.6, 370.1) \\ 
+  1 & unemployed\_pct\_2012 & (9.4, 4.5, 28.3) & (9.4, 4.3, 23.6) & (9.3, 4.4, 23.7) \\ 
+  0 & unemployed\_pct\_2013 & (8, 3.7, 19) & (8, 3.4, 17.6) & (7.4, 3.4, 319.9) \\ 
+  1 & unemployed\_pct\_2013 & (8.4, 3.7, 23.4) & (8.4, 3.5, 20.6) & (8.3, 3.5, 20.5) \\ 
+  0 & urban\_pct & (74.6, 39.2, 85.7) & (74.6, 39.2, 85.7) & (74.6, 39.2, 85.7) \\ 
+  1 & urban\_pct & (82.7, 31.5, 91.3) & (82.7, 31.5, 91.3) & (82.7, 31.5, 91.3) \\ 
+   \bottomrule
+\end{tabular}
+    \caption{Univariate summary statistics (3)}
+    \label{tab:summarytab3}
+\end{table}
+
+Table~\ref{tab:extreme} displays the frequency that the adjusted covariates fell outside of the support of the unadjusted dataset for the (control, treatment) groups. Note that for our ETT estimates, we only use the adjustments on the treatment data, while we use both for the OATE estimates. As a reminder there are 414 control group CPUMAs and 515 treatment group CPUMAs.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lll}
+  \toprule
+Variable & sigma\_uu\_avg & sigma\_uu\_i \\ 
+  \midrule
+age\_cat2\_19\_29\_pct & (0, 0) & (1, 0) \\ 
+  age\_cat2\_30\_39\_pct & (0, 0) & (1, 1) \\ 
+  age\_cat2\_40\_49\_pct & (0, 0) & (2, 1) \\ 
+  avg\_adult\_hh\_ratio & (0, 0) & (1, 0) \\ 
+  citizenship\_pct & (1, 0) & (3, 0) \\ 
+  disability\_pct & (0, 2) & (0, 2) \\ 
+  educ\_hs\_degree\_pct & (0, 0) & (1, 0) \\ 
+  educ\_less\_than\_hs\_pct & (2, 1) & (3, 2) \\ 
+  educ\_some\_college\_pct & (0, 0) & (1, 1) \\ 
+  female\_pct & (0, 0) & (0, 0) \\ 
+  foreign\_born\_pct & (0, 0) & (1, 1) \\ 
+  hins\_unins\_pct\_2011 & (0, 0) & (6, 1) \\ 
+  hins\_unins\_pct\_2012 & (0, 1) & (1, 1) \\ 
+  hins\_unins\_pct\_2013 & (1, 1) & (4, 1) \\ 
+  hispanic\_pct & (1, 0) & (1, 0) \\ 
+  inc\_pov2\_138\_pct & (2, 1) & (3, 2) \\ 
+  inc\_pov2\_139\_299\_pct & (1, 1) & (6, 1) \\ 
+  inc\_pov2\_300\_499\_pct & (0, 0) & (5, 1) \\ 
+  inc\_pov2\_500\_plus\_pct & (2, 0) & (4, 0) \\ 
+   \bottomrule
+\end{tabular}
+    \caption{Extreme covariate adjustments (1)}
+    \label{tab:extreme1}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lll}
+  \toprule
+Variable & sigma\_uu\_avg & sigma\_uu\_i \\ 
+  \midrule
+  married\_pct & (1, 0) & (3, 0) \\ 
+  missing\_children\_pct & (1, 0) & (2, 1) \\ 
+  one\_child\_pct & (0, 0) & (3, 0) \\ 
+  pop\_growth\_2012 & (0, 0) & (11, 6) \\ 
+  pop\_growth\_2013 & (0, 0) & (11, 4) \\ 
+  race\_white\_pct & (1, 1) & (1, 1) \\ 
+  student\_pct & (1, 0) & (3, 0) \\ 
+  three\_plus\_child\_pct & (2, 0) & (5, 2) \\ 
+  two\_child\_pct & (2, 1) & (5, 2) \\ 
+  unemployed\_pct\_2011 & (0, 0) & (3, 1) \\ 
+  unemployed\_pct\_2012 & (0, 0) & (5, 0) \\ 
+  unemployed\_pct\_2013 & (0, 0) & (3, 0) \\ 
+   \bottomrule
+\end{tabular}
+    \caption{Extreme covariate adjustments (2)}
+    \label{tab:extreme2}
+\end{table}
+
+We conclude with Figure~\ref{fig:corrmatrix}, which displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset. The relationships are quite similar when using the ``sigma\_uu\_avg'' adjustment, but change quite a bit do to the outlying values on the third adjustment.
+
+\subsection{Appendix D: Balance Tables}
 
 Table~\ref{tab:baltab1} and Table~\ref{tab:baltab2} display the differences between the population-weighted mean covariate values of the non-expansion region and the weighted mean of the expansion region (calculated on on our adjusted dataset). The weights presented here are from the H-SBW $(\rho = 0.2)$ estimator. Additional results are available on request.
 
 \begin{table}[ht]
+\centering
 \begin{tabular}{lrr}
   \toprule
 Variables & Unweighted Difference & Weighted Difference \\ 
@@ -499,6 +673,7 @@ age\_cat2\_19\_29\_pct & 0.51 & 0.50 \\
 \end{table}
 
 \begin{table}[ht]
+\centering
 \begin{tabular}{lrr}
   \toprule
 Variables & Unweighted Difference & Weighted Difference \\ 
@@ -523,6 +698,7 @@ Variables & Unweighted Difference & Weighted Difference \\
 Table~\ref{tab:oatedist1} and Table~\ref{tab:oatedist2} display the difference in means from the overlap region (calculated on our preferred adjusted datasets) and the treated and untreated regions (unweighted). 
 
 \begin{table}[ht]
+\centering
 \begin{tabular}{lrr}
   \toprule
 Variable & Dist from control & Dist from treatment \\ 
@@ -558,6 +734,7 @@ Variable & Dist from control & Dist from treatment \\
 \end{table}
 
 \begin{table}[ht]
+\centering
 \begin{tabular}{lrr}
   \toprule
 Variable & Dist from control & Dist from treatment \\ 
@@ -579,214 +756,10 @@ Variable & Dist from control & Dist from treatment \\
     \label{tab:oatedist2}
 \end{table}
 
-\subsection{Appendix D: Additional Results}
-
-Table~\ref{tab:confintmain} displays the point estimates from all estimators as well as confidence intervals calculated either (a) leave-one-state-out jackknife on the adjusted dataset (CI (states)); (b) leave-one-state-out jackknife repeating the entire adjusted leaving each state out (CI (proc)). 
-
-This table also includes the Oaxaca-Blinder weights (OB and H-OB), and also all analyses calculated on a second version of the adjusted data where we use a common $\kappa$ for all values (sigma\_uu\_avg), which is the adjustment suggested by \cite{carroll2006measurement}. Notice that they are identical for ``sigma\_zero'' because this is the unadjusted dataset. ``sigma\_uu\_i'' is our preferred covariate adjustment.
+Finally, Table ~\ref{tab:oatestateweights} displays the sum of CPUMA-level weights within each state for the OATE region, using the preferred covariate adjustment (``sigma\_uu\_i''), as well as no adjustment (``sigma\_zero'') and the secondary adjustment (``sigma\_uu\_avg''). We display all states where the total sum of weights within states is greater than one for any state. The total sum of weights for each set is standardized to sum to 100 for each set of weights.
 
 \begin{table}[ht]
-\begin{tabular}{llrll}
-  \toprule
-Weight type & Sigma estimate & Psihat & CI (states) & CI (proc) \\ 
-  \midrule
-BC-HSBW & sigma\_uu\_i & -2.14 & (-3.57, -0.71) & (-4.03, -0.26) \\ 
-  BC-HSBW & sigma\_uu\_avg & -2.10 & (-3.22, -0.99) & (-3.86, -0.35) \\ 
-  BC-HSBW & sigma\_zero & -2.50 & (-3.41, -1.58) & (-3.41, -1.58) \\ 
-  H-SBW & sigma\_uu\_i & -2.00 & (-3.59, -0.4) & (-3.74, -0.26) \\ 
-  H-SBW & sigma\_uu\_avg & -2.08 & (-3.16, -1) & (-4.14, -0.02) \\ 
-  H-SBW & sigma\_zero & -2.26 & (-3.23, -1.29) & (-3.23, -1.29) \\ 
-  BC-SBW & sigma\_uu\_i & -1.89 & (-3.06, -0.73) & (-3.6, -0.19) \\ 
-  BC-SBW & sigma\_uu\_avg & -1.96 & (-2.78, -1.14) & (-6.7, 2.78) \\ 
-  BC-SBW & sigma\_zero & -2.37 & (-3.1, -1.64) & (-3.1, -1.64) \\ 
-  SBW & sigma\_uu\_i & -1.81 & (-3.6, -0.02) & (-3.83, 0.21) \\ 
-  SBW & sigma\_uu\_avg & -1.98 & (-3.24, -0.72) & (-4.23, 0.27) \\ 
-  SBW & sigma\_zero & -2.25 & (-3.34, -1.16) & (-3.34, -1.16) \\ 
-  H-OB & sigma\_uu\_i & -2.30 & (-3.24, -1.35) & (-5.32, 0.73) \\ 
-  H-OB & sigma\_uu\_avg & -2.20 & (-3.19, -1.22) & (-8.69, 4.28) \\ 
-  H-OB & sigma\_zero & -2.55 & (-3.31, -1.78) & (-3.31, -1.78) \\ 
-  OB & sigma\_uu\_i & -2.11 & (-2.83, -1.39) & (-5.79, 1.57) \\ 
-  OB & sigma\_uu\_avg & -2.08 & (-2.9, -1.25) & (-9.6, 5.44) \\ 
-  OB & sigma\_zero & -2.47 & (-3.11, -1.83) & (-3.11, -1.83) \\ 
-   \bottomrule
-\end{tabular}
-\caption{Primary point estimates and confidence intervals}
-\label{tab:confintmain}
-\end{table}
-
-Table~\ref{tab:ptests} presents all versions of the estimators that we calculated. The ``Var subset`` column indicates which variables were excluded from the estimation: 0 excludes no variables; 1 removes Republican governance indicators; 2 pre-treatment uninsurance and unemployment rates; 3 urban, age, education, citizenship, marital status, student, disability, or female; 4 race, ethnicity, income, foreign born; 5 children, population growth, and household to person ratio.
-
-\begin{table}[ht]
-\begin{tabular}{rlrrrrrr}
-  \toprule
-Var subset & Sigma estimate & BC-HSBW & H-SBW & BC-SBW & SBW & H-OB & OB \\ 
-  \midrule
-0 & sigma\_uu\_i & -2.14 & -2.00 & -1.89 & -1.81 & -2.30 & -2.11 \\ 
-  0 & sigma\_uu\_avg & -2.10 & -2.08 & -1.96 & -1.98 & -2.20 & -2.08 \\ 
-  0 & sigma\_zero & -2.50 & -2.26 & -2.37 & -2.25 & -2.55 & -2.47 \\ 
-  1 & sigma\_uu\_i & -2.66 & -2.62 & -2.30 & -2.74 & -2.82 & -2.37 \\ 
-  1 & sigma\_uu\_avg & -2.66 & -2.68 & -2.27 & -2.77 & -2.63 & -2.19 \\ 
-  1 & sigma\_zero & -2.99 & -2.90 & -2.71 & -2.95 & -2.98 & -2.67 \\ 
-  2 & sigma\_uu\_i & -4.43 & -5.59 & -4.14 & -5.19 & -4.30 & -3.96 \\ 
-  2 & sigma\_uu\_avg & -4.41 & -5.67 & -4.13 & -5.34 & -4.25 & -3.91 \\ 
-  2 & sigma\_zero & -5.46 & -5.61 & -5.15 & -5.19 & -5.46 & -5.15 \\ 
-  3 & sigma\_uu\_i & -2.16 & -2.03 & -1.95 & -1.93 & -2.23 & -2.11 \\ 
-  3 & sigma\_uu\_avg & -2.08 & -2.03 & -1.89 & -1.91 & -2.20 & -2.10 \\ 
-  3 & sigma\_zero & -2.00 & -2.16 & -1.99 & -2.22 & -2.13 & -2.14 \\ 
-  4 & sigma\_uu\_i & -2.17 & -2.20 & -1.89 & -1.95 & -2.22 & -2.11 \\ 
-  4 & sigma\_uu\_avg & -2.13 & -2.42 & -2.05 & -2.36 & -2.18 & -2.13 \\ 
-  4 & sigma\_zero & -2.50 & -2.23 & -2.37 & -2.19 & -2.61 & -2.59 \\ 
-  5 & sigma\_uu\_i & -2.34 & -1.81 & -2.22 & -1.84 & -2.70 & -2.62 \\ 
-  5 & sigma\_uu\_avg & -2.48 & -2.03 & -2.42 & -2.06 & -2.62 & -2.62 \\ 
-  5 & sigma\_zero & -2.44 & -2.14 & -2.44 & -2.23 & -2.64 & -2.58 \\ 
-   \bottomrule
-\end{tabular}
-\caption{Point estimates by estimator, primary dataset}
-\label{tab:ptests}
-\end{table}
-
-Table ~\ref{tab:confintmainc2} and Table~\ref{tab:secondaryptests} are identical to the structure of the previous two tables except we exclude the ``early expansion states'' from the pool of expansion state matches. We note that some of the confidence intervals are extremely large when rerunning the entire procedure, particularly for estimators that require extrapolating from the observed data. This may be a function of both the extreme weights required to achieve balance and also of rare extreme covariate values that occasionally occur in the adjustment procedure. For example, for our preferred adjustment procedure, we find that the results are particularly sensitive to the exclusion of Illinois from the expansion-state group. On this dataset, we find that the variance of the H-SBW weights is approximately 15 while the variance of the BC-HSBW weights is over 5,000.
-
-\begin{table}[ht]
-\begin{tabular}{llrll}
-  \toprule
-Weight type & Sigma estimate & Psihat & CI (states) & CI (proc) \\ 
-  \midrule
-BC-HSBW & sigma\_uu\_i & -2.17 & (-3.65, -0.68) & (-33.17, 28.83) \\ 
-  BC-HSBW & sigma\_uu\_avg & -2.70 & (-4.26, -1.14) & (-11.82, 6.42) \\ 
-  BC-HSBW & sigma\_zero & -2.53 & (-3.66, -1.39) & (-3.66, -1.39) \\ 
-  H-SBW & sigma\_uu\_i & -1.29 & (-2.45, -0.12) & (-2.54, -0.03) \\ 
-  H-SBW & sigma\_uu\_avg & -1.64 & (-3.27, -0.01) & (-4.27, 0.99) \\ 
-  H-SBW & sigma\_zero & -1.83 & (-2.63, -1.03) & (-2.63, -1.03) \\ 
-  BC-SBW & sigma\_uu\_i & -1.93 & (-3.32, -0.54) & (-27.55, 23.69) \\ 
-  BC-SBW & sigma\_uu\_avg & -2.57 & (-4.14, -1) & (-9.41, 4.28) \\ 
-  BC-SBW & sigma\_zero & -2.42 & (-3.74, -1.11) & (-3.74, -1.11) \\ 
-  SBW & sigma\_uu\_i & -1.12 & (-2.23, -0.02) & (-2.49, 0.24) \\ 
-  SBW & sigma\_uu\_avg & -1.53 & (-3.22, 0.15) & (-4.15, 1.08) \\ 
-  SBW & sigma\_zero & -1.76 & (-2.64, -0.89) & (-2.64, -0.89) \\ 
-  H-OB & sigma\_uu\_i & -2.45 & (-4.15, -0.74) & (-41.48, 36.58) \\ 
-  H-OB & sigma\_uu\_avg & -1.22 & (-4.67, 2.22) & (-20.04, 17.6) \\ 
-  H-OB & sigma\_zero & -2.70 & (-3.82, -1.57) & (-3.82, -1.57) \\ 
-  OB & sigma\_uu\_i & -2.32 & (-4.35, -0.29) & (-35.53, 30.88) \\ 
-  OB & sigma\_uu\_avg & -1.71 & (-5.87, 2.46) & (-15.14, 11.73) \\ 
-  OB & sigma\_zero & -2.66 & (-3.65, -1.67) & (-3.65, -1.67) \\ 
-   \bottomrule
-\end{tabular}
-\caption{Early expansion excluded, point estimates and confidence intervals}
-\label{tab:confintmainc2}
-\end{table}
-
-\begin{table}[ht]
-\begin{tabular}{rlrrrrrr}
-  \toprule
-Var subset & Sigma estimate & BC-HSBW & H-SBW & BC-SBW & SBW & H-OB & OB \\ 
-  \midrule
-0 & sigma\_uu\_i & -2.17 & -1.29 & -1.93 & -1.12 & -2.45 & -2.32 \\ 
-  0 & sigma\_uu\_avg & -2.70 & -1.64 & -2.57 & -1.53 & -1.22 & -1.71 \\ 
-  0 & sigma\_zero & -2.53 & -1.83 & -2.42 & -1.76 & -2.70 & -2.66 \\ 
-  1 & sigma\_uu\_i & -2.90 & -2.56 & -2.66 & -2.65 & -2.89 & -2.83 \\ 
-  1 & sigma\_uu\_avg & -3.32 & -2.58 & -3.27 & -2.68 & -3.40 & -3.56 \\ 
-  1 & sigma\_zero & -3.14 & -2.87 & -2.83 & -2.83 & -3.05 & -2.91 \\ 
-  2 & sigma\_uu\_i & -5.30 & -5.53 & -5.09 & -4.98 & -5.13 & -5.08 \\ 
-  2 & sigma\_uu\_avg & -4.05 & -5.54 & -3.60 & -5.01 & -3.52 & -3.18 \\ 
-  2 & sigma\_zero & -5.31 & -5.53 & -5.14 & -5.01 & -5.04 & -5.13 \\ 
-  3 & sigma\_uu\_i & -1.58 & -1.10 & -1.57 & -1.06 & -2.15 & -2.16 \\ 
-  3 & sigma\_uu\_avg & -1.88 & -1.59 & -1.86 & -1.53 & -2.06 & -2.09 \\ 
-  3 & sigma\_zero & -1.82 & -1.77 & -1.75 & -1.75 & -2.20 & -2.11 \\ 
-  4 & sigma\_uu\_i & -1.84 & -1.52 & -1.47 & -1.45 & -2.48 & -2.13 \\ 
-  4 & sigma\_uu\_avg & -2.24 & -1.80 & -1.86 & -1.69 & -2.44 & -2.15 \\ 
-  4 & sigma\_zero & -2.55 & -1.93 & -2.41 & -1.95 & -2.81 & -2.68 \\ 
-  5 & sigma\_uu\_i & -1.43 & -1.18 & -1.29 & -1.04 & -1.89 & -1.77 \\ 
-  5 & sigma\_uu\_avg & -1.67 & -1.21 & -1.60 & -1.14 & -2.07 & -2.00 \\ 
-  5 & sigma\_zero & -2.27 & -1.73 & -2.14 & -1.58 & -2.53 & -2.49 \\ 
-   \bottomrule
-\end{tabular}
-   \caption{Point estimates for all specifications, early expansion excluded}
-    \label{tab:secondaryptests}
-\end{table}
-
-Finally, Table~\ref{tab:sensitivityc1} displays the point estimates when leaving out each state compared to the original point estimates. We display the changes relative to the full covariate set (``Psihat (0)'') and the covariate set excluding the Republican governance indicators (``Psihat (1)''). We display the point estimates both when leaving out the state conditional on the covariate adjustment and when rerunning the entire adjustment procedure (``(states, proc)''). Additional results for other estimators are available on request.
-
-\begin{table}[ht]
-\begin{tabular}{lrlrl}
-  \toprule
-State & Psihat (0) & None (states, proc) & Psihat (1) & Repub (states, proc) \\ 
-  \midrule
-AR & -2.14 & (-2.47, -2.39) & -2.66 & (-2.82, -2.78) \\ 
-  AZ & -2.14 & (-2.11, -1.93) & -2.66 & (-2.62, -2.58) \\ 
-  CA & -2.14 & (-1.99, -2.94) & -2.66 & (-2.71, -2.45) \\ 
-  CO & -2.14 & (-2.08, -2.08) & -2.66 & (-2.69, -2.65) \\ 
-  CT & -2.14 & (-2.22, -2.26) & -2.66 & (-2.7, -2.63) \\ 
-  HI & -2.14 & (-2.25, -2.28) & -2.66 & (-2.61, -2.6) \\ 
-  IA & -2.14 & (-2.01, -1.98) & -2.66 & (-2.67, -2.65) \\ 
-  IL & -2.14 & (-2.15, -2.04) & -2.66 & (-2.56, -2.53) \\ 
-  KY & -2.14 & (-2.14, -2.11) & -2.66 & (-2.51, -2.41) \\ 
-  MD & -2.14 & (-2.08, -2.28) & -2.66 & (-2.59, -2.52) \\ 
-  MI & -2.14 & (-1.87, -1.97) & -2.66 & (-2.63, -2.6) \\ 
-  MN & -2.14 & (-2.11, -2.05) & -2.66 & (-2.67, -2.67) \\ 
-  ND & -2.14 & (-2.2, -2.23) & -2.66 & (-2.63, -2.65) \\ 
-  NH & -2.14 & (-2.14, -2.17) & -2.66 & (-2.77, -2.75) \\ 
-  NJ & -2.14 & (-2.21, -2.25) & -2.66 & (-2.7, -2.73) \\ 
-  NM & -2.14 & (-2.13, -2.14) & -2.66 & (-2.52, -2.54) \\ 
-  NV & -2.14 & (-2.14, -2.19) & -2.66 & (-2.66, -2.66) \\ 
-  OH & -2.14 & (-2.69, -2.54) & -2.66 & (-2.82, -2.74) \\ 
-  OR & -2.14 & (-2.14, -2.2) & -2.66 & (-2.58, -2.55) \\ 
-  RI & -2.14 & (-2.17, -2.14) & -2.66 & (-2.65, -2.62) \\ 
-  WA & -2.14 & (-2.15, -2.14) & -2.66 & (-2.59, -2.6) \\ 
-  WV & -2.14 & (-2.13, -2.2) & -2.66 & (-2.6, -2.6) \\ 
-   \bottomrule
-\end{tabular}
-   \caption{Leave-one-out-state analysis (BC-HSBW estimator and preferred covariate adjustment)}
-   \label{tab:sensitivityc1}
-\end{table}
-
-Table~\ref{tab:oatesensitive} presents all point estimates calculate using the overlap weights. Dataset ``c1'' refers to the preferred dataset and dataset ``c2'' removes the early expansion states. The numeric column names refer to the covariate group excluded (covariate groups described above).
-
-\begin{table}[ht]
-\begin{tabular}{llrrrrrr}
-  \toprule
-Sigma estimate & Dataset & 0 & 1 & 2 & 3 & 4 & 5 \\ 
-  \midrule
-sigma\_uu\_i & c1 & -1.64 & -2.60 & -2.96 & -1.86 & -1.86 & -1.77 \\ 
-  sigma\_uu\_i & c2 & -1.73 & -2.35 & -3.25 & -2.18 & -2.06 & -1.91 \\ 
-  sigma\_avg & c1 & -1.58 & -2.62 & -2.85 & -1.76 & -1.76 & -1.78 \\ 
-  sigma\_avg & c2 & -1.76 & -2.40 & -3.19 & -2.14 & -2.09 & -1.90 \\ 
-  sigma\_zero & c1 & -1.80 & -2.55 & -3.11 & -1.98 & -1.94 & -1.83 \\ 
-  sigma\_zero & c2 & -1.95 & -2.51 & -3.25 & -2.12 & -2.10 & -2.00 \\ 
-   \bottomrule
-\end{tabular}
-\caption{OATE point estimates}
-\label{tab:oatesensitive}
-\end{table}
-
-Table~\ref{tab:oateconfint} displays selected point estimates and confidence intervals calculated using both the leave-one-out-states conditional on the covariate adjustment and recalculating the covariate adjustment for the OATE. When calculating these confidence intervals, on the rare occasions when logistic regression failed to converge, we used the probit link instead.
-
-\begin{table}[ht]
-\begin{tabular}{rlrlll}
-  \toprule
-Psihat & Sigma estimate & Variables subset & Dataset & CI (states) & CI (proc) \\ 
-  \midrule
--1.64 & sigma\_uu\_i & 0 & c1 & (-2.4, -0.89) & (-2.57, -0.72) \\ 
-  -1.58 & sigma\_avg & 0 & c1 & (-2.17, -1) & (-2.37, -0.79) \\ 
-  -1.80 & sigma\_zero & 0 & c1 & (-2.49, -1.1) & (-2.49, -1.1) \\ 
-  -2.60 & sigma\_uu\_i & 1 & c1 & (-3.57, -1.64) & (-3.76, -1.45) \\ 
-  -2.62 & sigma\_avg & 1 & c1 & (-3.67, -1.57) & (-3.84, -1.41) \\ 
-  -2.55 & sigma\_zero & 1 & c1 & (-3.44, -1.66) & (-3.44, -1.66) \\ 
-  -1.73 & sigma\_uu\_i & 0 & c2 & (-2.7, -0.76) & (-2.76, -0.7) \\ 
-  -1.76 & sigma\_avg & 0 & c2 & (-2.53, -0.99) & (-2.66, -0.86) \\ 
-  -1.95 & sigma\_zero & 0 & c2 & (-2.65, -1.25) & (-2.65, -1.25) \\ 
-  -2.35 & sigma\_uu\_i & 1 & c2 & (-3.27, -1.44) & (-3.49, -1.21) \\ 
-  -2.40 & sigma\_avg & 1 & c2 & (-3.38, -1.41) & (-3.68, -1.12) \\ 
-  -2.51 & sigma\_zero & 1 & c2 & (-3.4, -1.61) & (-3.4, -1.61) \\ 
-   \bottomrule
-\end{tabular}
-\caption{OATE results inference}
-\label{tab:oateconfint}
-\end{table}
-
-Table ~\ref{tab:oatestateweights} displays the sum of CPUMA-level weights within each state for the OATE region, using the preferred covariate adjustment (``sigma\_uu\_i''), as well as no adjustment (``sigma\_zero'') and the second adjustment (``sigma\_uu\_avg''). We display all states where the total sum of weights within states is greater than one for any state. The total sum of weights for each set is standardized to sum to 100 for each set of weights.
-
-\begin{table}[ht]
+\centering
 \begin{tabular}{lrrrr}
   \toprule
 State & Treatment & sigma\_uu\_i & sigma\_uu\_avg & sigma\_zero \\ 
@@ -824,7 +797,231 @@ OH & 1 & 33.98 & 35.10 & 36.75 \\
 \label{tab:oatestateweights}
 \end{table}
 
-Finally, Figure~\ref{fig:oateheatmap} displays a heatmap showing show the point estimates change when removing each state, conditional on our preferred covariate adjustment for both the primary dataset and when excluding early expansion states. We present the results for all covariates and excluding the Republican governance indicators. Additional results are available on request.  We see that our point estimates move closer to zero when removing Wisconsin or Ohio for all specifications. Removing Arkansas appears to generally move the point estimates further away from zero.
+\subsection{Appendix E: Additional Results}
+
+Table~\ref{tab:confintmain} displays the point estimates from all estimators as well as confidence intervals calculated either (a) leave-one-state-out jackknife on the adjusted dataset (CI (states)); (b) leave-one-state-out jackknife repeating the entire adjusted leaving each state out (CI (proc)). 
+
+This table also includes the Oaxaca-Blinder weights (OB and H-OB), and also all analyses calculated on a second version of the adjusted data where we use a common $\kappa$ for all values (sigma\_uu\_avg), which is the adjustment suggested by \cite{carroll2006measurement}. Notice that they are identical for ``sigma\_zero'' because this is the unadjusted dataset. ``sigma\_uu\_i'' is our preferred covariate adjustment.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{llrll}
+  \toprule
+Weight type & Sigma estimate & Psihat & CI (states) & CI (proc) \\ 
+  \midrule
+H-SBW & sigma\_uu\_i & -2.00 & (-3.59, -0.4) & (-3.74, -0.26) \\ 
+  H-SBW & sigma\_uu\_avg & -2.08 & (-3.16, -1) & (-4.14, -0.02) \\ 
+  H-SBW & sigma\_zero & -2.26 & (-3.23, -1.29) & (-3.23, -1.29) \\ 
+  BC-HSBW & sigma\_uu\_i & -2.14 & (-3.57, -0.71) & (-4.03, -0.26) \\ 
+  BC-HSBW & sigma\_uu\_avg & -2.10 & (-3.22, -0.99) & (-3.86, -0.35) \\ 
+  BC-HSBW & sigma\_zero & -2.50 & (-3.41, -1.58) & (-3.41, -1.58) \\ 
+  SBW & sigma\_uu\_i & -1.81 & (-3.6, -0.02) & (-3.83, 0.21) \\ 
+  SBW & sigma\_uu\_avg & -1.98 & (-3.24, -0.72) & (-4.23, 0.27) \\ 
+  SBW & sigma\_zero & -2.25 & (-3.34, -1.16) & (-3.34, -1.16) \\ 
+  BC-SBW & sigma\_uu\_i & -1.89 & (-3.06, -0.73) & (-3.6, -0.19) \\ 
+  BC-SBW & sigma\_uu\_avg & -1.96 & (-2.78, -1.14) & (-6.7, 2.78) \\ 
+  BC-SBW & sigma\_zero & -2.37 & (-3.1, -1.64) & (-3.1, -1.64) \\ 
+  H-OB & sigma\_uu\_i & -2.30 & (-3.24, -1.35) & (-5.32, 0.73) \\ 
+  H-OB & sigma\_uu\_avg & -2.20 & (-3.19, -1.22) & (-8.69, 4.28) \\ 
+  H-OB & sigma\_zero & -2.55 & (-3.31, -1.78) & (-3.31, -1.78) \\ 
+  OB & sigma\_uu\_i & -2.11 & (-2.83, -1.39) & (-5.79, 1.57) \\ 
+  OB & sigma\_uu\_avg & -2.08 & (-2.9, -1.25) & (-9.6, 5.44) \\ 
+  OB & sigma\_zero & -2.47 & (-3.11, -1.83) & (-3.11, -1.83) \\ 
+   \bottomrule
+\end{tabular}
+\caption{Primary point estimates and confidence intervals}
+\label{tab:confintmain}
+\end{table}
+
+Table~\ref{tab:ptests} presents all versions of the estimators that we calculated. The ``Var subset`` column indicates which variables were excluded from the estimation: 0 excludes no variables; 1 removes Republican governance indicators; 2 pre-treatment uninsurance and unemployment rates; 3 urban, age, education, citizenship, marital status, student, disability, or female; 4 race, ethnicity, income, foreign born; 5 children, population growth, and household to person ratio.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlrrrrrr}
+  \toprule
+Var subset & Sigma estimate & H-SBW & BC-HSBW & SBW & BC-SBW & H-OB & OB \\ 
+  \midrule
+0 & sigma\_uu\_i & -2.00 & -2.14 & -1.81 & -1.89 & -2.30 & -2.11 \\ 
+  0 & sigma\_uu\_avg & -2.08 & -2.10 & -1.98 & -1.96 & -2.20 & -2.08 \\ 
+  0 & sigma\_zero & -2.26 & -2.50 & -2.25 & -2.37 & -2.55 & -2.47 \\ 
+  1 & sigma\_uu\_i & -2.62 & -2.66 & -2.74 & -2.30 & -2.82 & -2.37 \\ 
+  1 & sigma\_uu\_avg & -2.68 & -2.66 & -2.77 & -2.27 & -2.63 & -2.19 \\ 
+  1 & sigma\_zero & -2.90 & -2.99 & -2.95 & -2.71 & -2.98 & -2.67 \\ 
+  2 & sigma\_uu\_i & -5.59 & -4.43 & -5.19 & -4.14 & -4.30 & -3.96 \\ 
+  2 & sigma\_uu\_avg & -5.67 & -4.41 & -5.34 & -4.13 & -4.25 & -3.91 \\ 
+  2 & sigma\_zero & -5.61 & -5.46 & -5.19 & -5.15 & -5.46 & -5.15 \\ 
+  3 & sigma\_uu\_i & -2.03 & -2.16 & -1.93 & -1.95 & -2.23 & -2.11 \\ 
+  3 & sigma\_uu\_avg & -2.03 & -2.08 & -1.91 & -1.89 & -2.20 & -2.10 \\ 
+  3 & sigma\_zero & -2.16 & -2.00 & -2.22 & -1.99 & -2.13 & -2.14 \\ 
+  4 & sigma\_uu\_i & -2.20 & -2.17 & -1.95 & -1.89 & -2.22 & -2.11 \\ 
+  4 & sigma\_uu\_avg & -2.42 & -2.13 & -2.36 & -2.05 & -2.18 & -2.13 \\ 
+  4 & sigma\_zero & -2.23 & -2.50 & -2.19 & -2.37 & -2.61 & -2.59 \\ 
+  5 & sigma\_uu\_i & -1.81 & -2.34 & -1.84 & -2.22 & -2.70 & -2.62 \\ 
+  5 & sigma\_uu\_avg & -2.03 & -2.48 & -2.06 & -2.42 & -2.62 & -2.62 \\ 
+  5 & sigma\_zero & -2.14 & -2.44 & -2.23 & -2.44 & -2.64 & -2.58 \\ 
+   \bottomrule
+\end{tabular}
+\caption{Point estimates for all specifications}
+\label{tab:ptests}
+\end{table}
+
+Table ~\ref{tab:confintmainc2} and Table~\ref{tab:secondaryptests} are identical to the structure of the previous two tables except we exclude the ``early expansion states'' from the pool of expansion state matches. We note that some of the confidence intervals are extremely large when rerunning the entire procedure, particularly for estimators that require extrapolating from the observed data. This may be a function of both the extreme weights required to achieve balance and also of rare extreme covariate values that occasionally occur in the adjustment procedure. For example, for our preferred adjustment procedure, we find that the results are particularly sensitive to the exclusion of Illinois from the expansion-state group. On this dataset, we find that the variance of the H-SBW weights is approximately 15 while the variance of the BC-HSBW weights is over 5,000.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{llrll}
+  \toprule
+Weight type & Sigma estimate & Psihat & CI (states) & CI (proc) \\ 
+  \midrule
+H-SBW & sigma\_uu\_i & -1.29 & (-2.45, -0.12) & (-2.54, -0.03) \\ 
+  H-SBW & sigma\_uu\_avg & -1.64 & (-3.27, -0.01) & (-4.27, 0.99) \\ 
+  H-SBW & sigma\_zero & -1.83 & (-2.63, -1.03) & (-2.63, -1.03) \\ 
+  BC-HSBW & sigma\_uu\_i & -2.17 & (-3.65, -0.68) & (-33.17, 28.83) \\ 
+  BC-HSBW & sigma\_uu\_avg & -2.70 & (-4.26, -1.14) & (-11.82, 6.42) \\ 
+  BC-HSBW & sigma\_zero & -2.53 & (-3.66, -1.39) & (-3.66, -1.39) \\ 
+  SBW & sigma\_uu\_i & -1.12 & (-2.23, -0.02) & (-2.49, 0.24) \\ 
+  SBW & sigma\_uu\_avg & -1.53 & (-3.22, 0.15) & (-4.15, 1.08) \\ 
+  SBW & sigma\_zero & -1.76 & (-2.64, -0.89) & (-2.64, -0.89) \\ 
+  BC-SBW & sigma\_uu\_i & -1.93 & (-3.32, -0.54) & (-27.55, 23.69) \\ 
+  BC-SBW & sigma\_uu\_avg & -2.57 & (-4.14, -1) & (-9.41, 4.28) \\ 
+  BC-SBW & sigma\_zero & -2.42 & (-3.74, -1.11) & (-3.74, -1.11) \\ 
+  H-OB & sigma\_uu\_i & -2.45 & (-4.15, -0.74) & (-41.48, 36.58) \\ 
+  H-OB & sigma\_uu\_avg & -1.22 & (-4.67, 2.22) & (-20.04, 17.6) \\ 
+  H-OB & sigma\_zero & -2.70 & (-3.82, -1.57) & (-3.82, -1.57) \\ 
+  OB & sigma\_uu\_i & -2.32 & (-4.35, -0.29) & (-35.53, 30.88) \\ 
+  OB & sigma\_uu\_avg & -1.71 & (-5.87, 2.46) & (-15.14, 11.73) \\ 
+  OB & sigma\_zero & -2.66 & (-3.65, -1.67) & (-3.65, -1.67) \\ 
+   \bottomrule
+\end{tabular}
+\caption{Early expansion excluded, point estimates and confidence intervals}
+\label{tab:confintmainc2}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlrrrrrr}
+  \toprule
+Variable subset & Sigma estimate & H-SBW & BC-HSBW & SBW & BC-SBW & H-OB & OB \\ 
+  \midrule
+0 & sigma\_uu\_i & -1.29 & -2.17 & -1.12 & -1.93 & -2.45 & -2.32 \\ 
+  0 & sigma\_uu\_avg & -1.64 & -2.70 & -1.53 & -2.57 & -1.22 & -1.71 \\ 
+  0 & sigma\_zero & -1.83 & -2.53 & -1.76 & -2.42 & -2.70 & -2.66 \\ 
+  1 & sigma\_uu\_i & -2.56 & -2.90 & -2.65 & -2.66 & -2.89 & -2.83 \\ 
+  1 & sigma\_uu\_avg & -2.58 & -3.32 & -2.68 & -3.27 & -3.40 & -3.56 \\ 
+  1 & sigma\_zero & -2.87 & -3.14 & -2.83 & -2.83 & -3.05 & -2.91 \\ 
+  2 & sigma\_uu\_i & -5.53 & -5.30 & -4.98 & -5.09 & -5.13 & -5.08 \\ 
+  2 & sigma\_uu\_avg & -5.54 & -4.05 & -5.01 & -3.60 & -3.52 & -3.18 \\ 
+  2 & sigma\_zero & -5.53 & -5.31 & -5.01 & -5.14 & -5.04 & -5.13 \\ 
+  3 & sigma\_uu\_i & -1.10 & -1.58 & -1.06 & -1.57 & -2.15 & -2.16 \\ 
+  3 & sigma\_uu\_avg & -1.59 & -1.88 & -1.53 & -1.86 & -2.06 & -2.09 \\ 
+  3 & sigma\_zero & -1.77 & -1.82 & -1.75 & -1.75 & -2.20 & -2.11 \\ 
+  4 & sigma\_uu\_i & -1.52 & -1.84 & -1.45 & -1.47 & -2.48 & -2.13 \\ 
+  4 & sigma\_uu\_avg & -1.80 & -2.24 & -1.69 & -1.86 & -2.44 & -2.15 \\ 
+  4 & sigma\_zero & -1.93 & -2.55 & -1.95 & -2.41 & -2.81 & -2.68 \\ 
+  5 & sigma\_uu\_i & -1.18 & -1.43 & -1.04 & -1.29 & -1.89 & -1.77 \\ 
+  5 & sigma\_uu\_avg & -1.21 & -1.67 & -1.14 & -1.60 & -2.07 & -2.00 \\ 
+  5 & sigma\_zero & -1.73 & -2.27 & -1.58 & -2.14 & -2.53 & -2.49 \\ 
+   \bottomrule
+\end{tabular}
+   \caption{Point estimates for all specifications, early expansion excluded}
+    \label{tab:secondaryptests}
+\end{table}
+
+Finally, Table~\ref{tab:sensitivityc1} displays the point estimates from the H-SBW estimator when leaving out each state compared to the original point estimates. We display the changes relative to the full covariate set (``Psihat (0)'') and the covariate set excluding the Republican governance indicators (``Psihat (1)''). We display the point estimates both when leaving out the state conditional on the covariate adjustment and when rerunning the entire adjustment procedure (``(states, proc)''). Additional results for other estimators are available on request.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrlrl}
+  \toprule
+State & Psihat (0) & None (states, proc) & Psihat (1) & Repub (states, proc) \\ 
+  \midrule
+AR & -2.00 & (-2.18, -2.21) & -2.62 & (-2.55, -2.55) \\ 
+  AZ & -2.00 & (-2.13, -2.06) & -2.62 & (-2.65, -2.65) \\ 
+  CA & -2.00 & (-1.46, -1.36) & -2.62 & (-2.57, -2.52) \\ 
+  CO & -2.00 & (-2, -2.01) & -2.62 & (-2.68, -2.66) \\ 
+  CT & -2.00 & (-2, -2) & -2.62 & (-2.62, -2.56) \\ 
+  HI & -2.00 & (-2, -1.97) & -2.62 & (-2.54, -2.56) \\ 
+  IA & -2.00 & (-1.87, -1.9) & -2.62 & (-2.64, -2.63) \\ 
+  IL & -2.00 & (-2.01, -1.94) & -2.62 & (-2.61, -2.62) \\ 
+  KY & -2.00 & (-1.92, -1.86) & -2.62 & (-2.39, -2.26) \\ 
+  MD & -2.00 & (-2.03, -2.12) & -2.62 & (-2.69, -2.72) \\ 
+  MI & -2.00 & (-1.62, -1.67) & -2.62 & (-2.61, -2.64) \\ 
+  MN & -2.00 & (-2, -1.94) & -2.62 & (-2.64, -2.65) \\ 
+  ND & -2.00 & (-2.05, -2.09) & -2.62 & (-2.62, -2.64) \\ 
+  NH & -2.00 & (-2, -2.03) & -2.62 & (-2.74, -2.72) \\ 
+  NJ & -2.00 & (-2.19, -2.14) & -2.62 & (-2.74, -2.78) \\ 
+  NM & -2.00 & (-1.95, -2.02) & -2.62 & (-2.5, -2.48) \\ 
+  NV & -2.00 & (-2, -2.08) & -2.62 & (-2.66, -2.66) \\ 
+  OH & -2.00 & (-2.38, -2.4) & -2.62 & (-2.83, -2.78) \\ 
+  OR & -2.00 & (-1.98, -2.07) & -2.62 & (-2.57, -2.58) \\ 
+  RI & -2.00 & (-2, -1.97) & -2.62 & (-2.6, -2.57) \\ 
+  WA & -2.00 & (-1.91, -1.94) & -2.62 & (-2.52, -2.45) \\ 
+  WV & -2.00 & (-2, -2.02) & -2.62 & (-2.54, -2.54) \\ 
+   \bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:oateconfint} displays point estimates and confidence intervals for the primary point estimates. We display the confidence intervals calculated using both the leave-one-out-states conditional on the covariate adjustment (CI (states)) and recalculating the covariate adjustment for the OATE (CI (proc)). We note that when calculating these confidence intervals, on the rare occasions when logistic regression failed to converge, we used the probit link instead.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rllll}
+  \toprule
+Psihat & Sigma estimate & Dataset & CI (states) & CI (proc) \\ 
+  \midrule
+-1.64 & sigma\_uu\_i & c1 & (-2.40, -0.89) & (-2.57, -0.72) \\ 
+  -1.58 & sigma\_avg & c1 & (-2.17, -1.00) & (-2.37, -0.79) \\ 
+  -1.80 & sigma\_zero & c1 & (-2.49, -1.10) & (-2.49, -1.10) \\ 
+  -1.73 & sigma\_uu\_i & c2 & (-2.7, -0.76) & (-2.76, -0.70) \\ 
+  -1.76 & sigma\_avg & c2 & (-2.53, -0.99) & (-2.66, -0.86) \\ 
+  -1.95 & sigma\_zero & c2 & (-2.65, -1.25) & (-2.65, -1.25) \\ 
+   \bottomrule
+\end{tabular}
+\caption{OATE results inference}
+\label{tab:oateconfint}
+\end{table}
+
+Table~\ref{tab:oatesensitive} presents all point estimates calculate using the overlap weights. Dataset ``c1'' refers to the preferred dataset and dataset ``c2'' removes the early expansion states. The numeric column names refer to the covariate group excluded (covariate groups described above).
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{llrrrrrr}
+  \toprule
+Sigma estimate & Dataset & 0 & 1 & 2 & 3 & 4 & 5 \\ 
+  \midrule
+sigma\_uu\_i & c1 & -1.64 & -2.60 & -2.96 & -1.86 & -1.86 & -1.77 \\ 
+  sigma\_uu\_i & c2 & -1.73 & -2.35 & -3.25 & -2.18 & -2.06 & -1.91 \\ 
+  sigma\_avg & c1 & -1.58 & -2.62 & -2.85 & -1.76 & -1.76 & -1.78 \\ 
+  sigma\_avg & c2 & -1.76 & -2.40 & -3.19 & -2.14 & -2.09 & -1.90 \\ 
+  sigma\_zero & c1 & -1.80 & -2.55 & -3.11 & -1.98 & -1.94 & -1.83 \\ 
+  sigma\_zero & c2 & -1.95 & -2.51 & -3.25 & -2.12 & -2.10 & -2.00 \\ 
+   \bottomrule
+\end{tabular}
+\caption{OATE point estimates}
+\label{tab:oatesensitive}
+\end{table}
+
+Table~\ref{tab:oaterepubdiff} displays the difference between the estimated contrasts when excluding Republican governance indicators and when including all covariates as well as the estimated confidence intervals, estimated both conditional on the imputation (CI (states)) and recalculating the entire covariate adjustment (CI (proc)).
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{llrll}
+  \toprule
+Sigma estimate & Dataset & Difference & CI (states) & CI (proc) \\ 
+  \midrule
+sigma\_uu\_i & c1 & -0.96 & (-1.1, -0.81) & (-1.12, -0.8) \\ 
+  sigma\_uu\_i & c2 & -0.62 & (-0.78, -0.46) & (-0.79, -0.45) \\ 
+  sigma\_avg & c1 & -1.04 & (-1.19, -0.89) & (-1.22, -0.86) \\ 
+  sigma\_avg & c2 & -0.64 & (-0.8, -0.48) & (-0.82, -0.46) \\ 
+  sigma\_zero & c1 & -0.75 & (-0.88, -0.63) & (-0.88, -0.63) \\ 
+  sigma\_zero & c2 & -0.56 & (-0.69, -0.43) & (-0.69, -0.43) \\ 
+   \bottomrule
+\end{tabular}
+\caption{OATE weights summed by state by covariate adjustment}
+\label{tab:oaterepubdiff}
+\end{table}
+
+Finally, Figure~\ref{fig:oateheatmap} displays a heatmap showing how the point estimates change when removing each state, conditional on our preferred covariate adjustment for both the primary dataset and when excluding early expansion states. We present the results for all covariates and excluding the Republican governance indicators. Additional results are available on request. We see that our point estimates move closer to zero when removing Wisconsin or Ohio for all specifications. Removing Arkansas appears to generally move the point estimates further away from zero.
 
 \begin{figure}[]
 \begin{center}
@@ -834,8 +1031,7 @@ Finally, Figure~\ref{fig:oateheatmap} displays a heatmap showing show the point 
 \end{center}
 \end{figure}
 
-
-\subsection{Appendix E: Miscellaneous Program Details}
+\subsection{Appendix F: Miscellaneous Program Details}
 
 We implement Stable Balancing Weights using a modification of Noah Griefer's ``optweight'' package available in R. The modifications are available on ``github.com/mrubinst757'', but are not documented. We use this program to generate weights that balance the means of the following covariates in the treated group to the control group within an error tolerance, $\delta$. When estimating the weights on different subsets of the data, $\delta^\star$ is not guaranteed to converge. We therefore modify the program so that if it does not converge, it relaxes some of the constraints until convergence. The program is available on github.com/mrubinst757/Medicaid-Expansion-Project/03\_RPrograms/03\_Analysis/02\_model-estimation.R and all R programs used to complete this analysis are available in the parent directory.
 
