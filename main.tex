@@ -226,7 +226,6 @@ $$
 $$
 
 where $\Omega$ is a block diagonal matrix with diagonal entries equal to one and the within-group off diagonals equal to $\rho$. We choose $\lambda$ so that the remaining imbalances all fall within 0.1 percentage points (see \cite{ben2018augmented} for more details on the connection between these weights and ridge-regression). The cost of this de-biasing procedure is that we must extrapolate from the support of the data, and therefore rely more heavily on our modeling assumptions. Finally, notice that we can also generate Oaxaca-Blinder weights ($\gamma^{ob}$) by setting $\gamma^{sbw} = 1/N_0$ and $\lambda = 0$. These are equivalent to running OLS (or GLS) on the observed outcomes among the treated units and imputing the missing counterfactual using these coefficient estimates. In our results we consider estimators using SBW ($\rho = 0$), $H-SBW$ ($\rho = 0.2$), and ridge-augmented versions of SBW and H-SBW that we call BC-SBW and HC-HSBW. We also generate Oaxaca-Blinder weights setting $\rho \in \{0, 0.2\}$ (OB and H-OB) and provide these results in Appendix D. We focus our discussion on our preferred estimators, H-SBW and the ridge augmented version BC-HSBW. 
-
 \subsection{Inference}
 
 We treat our estimate of $\psi^0$ as known, since the population-weighted CPUMA average of observed values is quite precisely estimated relative to the CPUMA-level averages. We then evaluate the uncertainty in our estimator with respect to our model-based estimates of $\psi^1$ and $\eta_1(W_{sc})$. We use the leave-one-state-out jackknife to estimate the standard error of our estimator of $\psi^1$ (\cite{cameron2015practitioner}). We compute standard errors both recalculating all of the estimators on the adjusted dataset using our estimates of $\eta_1(W_{sc})$, and also recalculating the estimators including the entire adjustment process. We expect that either of these estimators will be conservative: our target of inference is a finite-sample estimand while the bootstrapped standard errors give asymptotic coverage for imagined super-population effects (see, eg, \cite{imbens2015causal}). Moreover, it is not clear that resampling entire states to approximate the variability from our estimate of $\eta_1(W_{sc})$ is a sensible procedure when we view the underlying covariates as fixed, since, conditional on $X_{sc}$, it is reasonable to assume that the sampling variability is drawn independently at the CPUMA rather than the state-level. We therefore present the standard errors that are conditioned on the adjustment process in the paper, and leave the full-procedure jackknife confidence interval results to Appendix D. 
@@ -356,7 +355,7 @@ The authors gratefully aknowledge invaluable advice and comments from Zachary Br
 
 \subsection{Appendix A: Proofs}
 
-We prove that the bias of the SBW estimator under measurement error is equivalent to the bias of the OLS estimator under the classical errors-in-variables model. For the purposes of this proof we assume that the outcome model holds beyond the support of the data. We then prove the unbiasedness and asymptotic normality of the estimator when balancing on the adjusted covariates when balancing on using $\mathbb{E}\{X_i \mid W_i\}$ instead of $W_i$. This is not meant to be a comprehensive treatment of the properties of this estimator, but rather to introduce the idea that we can apply concepts in the regression-calibration literature in for balancing weights when the covariates are measured with error. We conclude by noting how our application differs from this stylized introduction; Appendix B provides details on how we applied these ideas for our application.
+We prove that the bias of the SBW estimator under measurement error is equivalent to the bias of the OLS estimator under the classical errors-in-variables model. We then prove the unbiasedness of the estimator when balancing on the adjusted covariates when balancing on $\mathbb{E}\{X_i \mid W_i, A_i = a\}$ instead of $W_i$. This is not meant to be a comprehensive treatment of the properties of this estimator, but rather to introduce the idea that we can apply concepts in the regression-calibration literature for balancing weights when the covariates are measured with mean-zero error that is independent of any measurement error in the outcome. We conclude by noting how our application differs from this stylized introduction; Appendix B provides details on how we applied these ideas for our application.
 
 We begin by outlining the classical errors-in-variables setup. Consider the linear model $Y_i^1 = \alpha + X_i^T\beta + \epsilon_i$ and assume we observe covariates $W_i \in \mathbb{R}^d$ which are a vector of mean-unbiased proxies for the true covariate $X_i$; ie $W_i = X_i + v_i$. Assume that $(\epsilon_i, v_i) \sim MVN((0,0), \Sigma_{uu})$ 
 
@@ -367,18 +366,35 @@ $$
 \end{pmatrix}
 $$ 
 
-In general we can either consider the case where $X_i$ are fixed (functional model) or random (structural model); the structural case typically motivates regression calibration, however, the ideas have desirable properties in the functional case as well \cite{gleser1992importance}. For motivating purposes, we therefore think of $X_i$ as random. In a slight departure from the classical setup, we also consider the binary treatment indicator $A_i$ and we let $(X_i, W_i \mid A_i = a)$ are drawn iid from $MVN((\mu_a, \mu_a), \Sigma)$ where 
+In general we can either consider the case where $X_i$ are fixed (functional model) or random (structural model); the structural case typically motivates regression calibration, however, the ideas have desirable properties in the functional case as well (see, eg, \cite{gleser1992importance}). While in our application we think of the $X_i$ as fixed, for motivating purposes, we consider the case where $X_i$ are random. In a slight departure from the classical setup, we also consider the binary treatment indicator $A_i$ and we let $(X_i, W_i \mid A_i = a)$ are drawn iid from $MVN((\mu_a, \mu_a), \Sigma)$ where 
 
 $$
 \Sigma = \begin{pmatrix} 
 \Sigma_{XX} & \Sigma_{XX} \\ 
-\Sigma_{XX} & \Sigma_{XX} + \Sigma_{vv} 
+\Sigma_{XX} & \Sigma_{WW}  
 \end{pmatrix}
 $$ 
 
-For simplicity we have assumed that $\Sigma_{WW \mid A = 1} = \Sigma_{WW \mid A = 0} = \Sigma_{WW}$ and $\Sigma_{XX \mid A = 1} = \Sigma_{XX \mid A = 0} = \Sigma_{XX}$. This is not a necessary assumption, but helps simplify notation. By the joint normality of $X_i$ and $W_i$, we know that that $\mathbb{E}\{X_i \mid W_i, A_i = 1\} = \mu_1 + \kappa^T(W_i - \mu_1)$, where $\kappa = \Sigma_{WW}^{-1}\Sigma_{XX}$.
+We note that $\Sigma_{WW} = \Sigma_{XX} + \Sigma_{vv}$. For simplicity we have also assumed that $\Sigma_{WW \mid A = 1} = \Sigma_{WW \mid A = 0} = \Sigma_{WW}$ and $\Sigma_{XX \mid A = 1} = \Sigma_{XX \mid A = 0} = \Sigma_{XX}$. This is not a necessary assumption, but helps simplify notation. By the joint normality of $X_i$ and $W_i$, we know that that $\mathbb{E}\{X_i \mid W_i, A_i = a\} = \mu_a + \kappa^T(W_i - \mu_a)$, where $\kappa = \Sigma_{WW}^{-1}\Sigma_{XX}$.
 
-Recall that the bias of the OLS estimator of $\beta$ is $\hat{\beta} - \beta = (\kappa - I_d)\beta$. Our goal is to estimate the treatment effect on the controls, so we can express our causal estimand as $\alpha + \mu_0^T\beta$; recalling that $\alpha = \mu_y - \mu_1^T\beta$, we see the bias of the linear combination is $(\mu_0 - \mu_1)^T(\kappa - I_d)\beta$. We now consider the SBW estimator that sets $\delta = 0$ and show that this estimator has the same bias. The intuition for this result is as follows: exact balancing weights estimate an implicit $\beta$ on a subset of the data where we have sufficient overlap. We can think of the implicit beta as the solution to some weighted-least squares problem. Because we assume that the outcome model holds on all of the data, WLS and OLS are estimating the same $\beta$; therefore, the bias that effects the least squares solution will have the same effect on the weighted least squares solution.
+Let $\psi^1 = \mathbb{E}\{Y_i^1 \mid X_i = x_i\}$ and $\mu_y = \mathbb{E}\{Y_i^1\}$. From our modeling assumptions we have that
+
+\begin{align*}
+    Y_i^1 &= \alpha + x_i^T\beta \\
+    &= \mu_y + (x_i - \mu_1)^T\beta
+\end{align*}
+
+We can then write that $\psi^1 = \mu_y + (\mu_0 - \mu_1)^T\beta$. Let $\hat{\beta}$ be the OLS estimator of $\beta$ run only on the treatment data. Recall that $\mathbb{E}(\hat{\beta}) = \kappa\beta$ (see, eg, \cite{gleser1992importance}). Then we have that: 
+
+\begin{align*}
+    \hat{\psi} - \psi &= \bar{Y} + (\bar{W}_0 - \bar{W}_1)^T\hat{\beta} - (\mu_y + (\mu_0 - \mu_1)^T\beta) \\
+    &= (\bar{Y} - \mu_y) + (\bar{W}_0 - \mu_0)^T\hat{\beta} - (\bar{W}_1 - \mu_1)^T\hat{\beta} + (\mu_0 - \mu_1)^T(\hat{\beta} - \beta) \\
+    \hat{\psi} - \psi &\to (\mu_0 - \mu_1)^T(\kappa - I_d)\beta
+\end{align*}
+
+The final result holds because in the second line, the first term is simply the estimation error from a sample average and has expectation zero. The second term is the product of the estimation error from a sample average and $\hat{\beta}$; this also has expectation zero because $\bar{X}_0$ is estimated on a different part of the sample than $\hat{\beta}$, so these errors are independent. The third term is more complicated because the estimation error of $\mu_1$ is not independent of $\hat{\beta}$ since they are typically estimated using the same sample. However, we know that the estimation error converges in probability to zero and $\hat{\beta} \to \kappa\beta$; therefore, by Slutsky's Theorem, this term also converges in probability to zero, and we are left with the asymptotic bias noted above. 
+
+We now consider the SBW estimator that sets $\delta = 0$ and show that this estimator has the same asymptotic bias. The intuition for this result is as follows: exact balancing weights estimate an implicit $\beta$ on a subset of the data where we have sufficient overlap. We can think of SBW as returning a solution to some implicit weighted-least squares problem. Because we assume that the outcome model holds on all of the data, WLS and OLS are estimating the same $\beta$; therefore, the bias that effects the least squares solution will have the same effect on the weighted least squares solution.
 
 More formally, define the SBW estimator as:
 
@@ -387,45 +403,59 @@ $$
 $$
 
 $$
-\Gamma := \{\gamma: W_1^T\gamma = W_0^T1, \gamma_i > 0, \gamma^T1 = 1\}
+\Gamma := \{\gamma: W_1^T\gamma = \bar{W}_0, \gamma_i > 0, \gamma^T1 = 1\}
+$$
+
+Now let $\tilde{\psi}^1$ be the sample average estimand; ie $N_0^{-1}\sum_{i: A_i = 0}Y_i^1$ and note that $\tilde{\psi}^1 \to \psi^1$. Then
+
+\begin{align*}
+    \hat{\psi} - \tilde{\psi} &= \sum_{i: A_i = 0}w_iY_i - \sum_{i: A_i = 0}Y_i^1 \\
+    &= \sum_i \gamma_i(X_i^T\beta + \epsilon_i) - \sum_{i: A_i = 1} X_i^T\beta + \epsilon_i \\
+    &= \sum_i \gamma_i(W_i - v_i)^T\beta + \gamma_i\epsilon_i) - \sum_{i: A_i = 1} (W_i - v_i)^T\beta + \epsilon_i \\
+    &= -\sum_{i: A_i = 1}\gamma_iv_i^T\beta - \sum_{i: A_i = 0} v_i^T\beta + \sum_{i: A_i = 1}\gamma_i\epsilon_i - \sum_{i: A_i = 0} \epsilon_i
+\end{align*}
+
+Conditioning on $W_i$, we can take expectations over $X_i$, and see that the third and fourth terms have expectation zero (noting that the weights, conditional on $W_i$, are independent of these errors). We also see that the second term also has expectation zero by again iterating expectations:
+
+\begin{align*}
+    \sum_{i: A_i = 0}\mathbb{E}\{v_i\mid W_i\}^T\beta &= \sum_{i: A_i = 0}\mathbb{E}\{W_i - X_i \mid W_i\}^T\beta \\
+    &= \bar{W}_0 - \sum_{i: A_i = 0} \mu_0 + \kappa^T(W_i - \mu_0) \\
+    &= (\bar{W}_0 - \mu_0) + \kappa^T(\bar{W}_0 - \mu_0)
+\end{align*}
+
+Taking expectations over $W_i$ this term is mean zero estimation error. We conclude by considering the first term and again take expectations over $X_i$ conditional on $W_i$: 
+
+\begin{align*}
+    \sum_{i: A_i = 1} \gamma_i\mathbb{E}\{X_i - W_i \mid W_i\}^T\beta &= \sum_{i: A_i = 1} \gamma_i (\mu_1 + \kappa^T(W_i - \mu_1))^T\beta - \sum_{i: A_i = 1}\gamma_i W_i^T\beta \\
+    &= (\mu_1 + \kappa^T(\bar{W}_0 - \mu_1))^T\beta - \bar{W}_0^T\beta \\
+    &= (\kappa^T(\bar{W}_0 - \mu_1))^T\beta - (\bar{W}_0 - \mu_1)^T\beta  \\
+    &= (\bar{W}_0 - \mu_1)^T(\kappa - I_d)\beta \\
+    &= (\mu_0 - \mu_1)^T(\kappa - I_d)\beta + (\bar{W}_0 - \mu_0)^T(\kappa - I_d)\beta \\
+\end{align*}
+
+Taking the expectation over $W_i$, the second term is simply a scaling of mean zero estimation error and has expectation zero. We therefore see that the asymptotic bias of the SBW estimator is equivalent to the OLS estimator.
+
+Finally, let $\eta_a(W_i) = \mathbb{E}\{X_i \mid W_i, A_i = a\}$. It is easy to see that balancing on $\eta_a(W_i)$ results in an unbiased estimate of $\tilde{\psi}^1$ (and therefor $\psi^1$). We make the simplifying assumptions that $\eta(W_i)$ is known and that there is no model error on $Y_i$. By linearity, we know that
+
+$$
+(Y_i^1 \mid A_i = a) = \eta_a(W_i)^T\beta + (X_i - \eta_a(W_i))^T\beta
 $$
 
 \begin{align*}
-    \mathbb{E}\{\hat{\psi}\} - \psi &= \sum_{i: A_i = 1}w_iY_i - \sum_{i: A_i = 0}Y_i^0 \\
-    &= \mathbb{E}\{\beta^T(\sum_{i: A_i = 1} \gamma_i (X_i - v_i) - \sum_{i: A_i = 0} (X_i - v_i))\} \\
-    &= \beta^T(\sum_{i: A_i = 1} \gamma_i\mathbb{E}\{v_i \mid W_i, A_i = 1\}) \\
-    &= \beta^T(\sum_{i: A_i = 1} \gamma_i\mathbb{E}\{(W_i - X_i) \mid W_i, A_i = 1\} \\
-    &= \beta^T(\sum_{i: A_i = 1} \gamma_iW_i - \sum_{i: A_i = 1} \gamma_i\mathbb{E}\{X_i \mid W_i, A_i = 1\})
+    \hat{\psi} - \tilde{\psi} &= \sum_{i: A_i = 1}\gamma_iY_i - \sum_{i: A_i = 0} Y_i^1 \\
+    &= \sum_{i: A_i = 1}\gamma_i\eta_1(W_i)^T\beta + \sum_{i: A_i = 1}\gamma_i(X_i - \eta_0(W_i))^T\beta - \sum_{i: A_i = 0}\eta_0(W_i)^T\beta - \sum_{i: A_i = 0}(X_i - \eta_0(W_i))^T\beta \\
+    &= \sum_{i: A_i = 1}\gamma_i(X_i - \eta_1(W_i))^T\beta - \sum_{i: A_i = 0}(X_i - \eta_0(W_i))^T\beta
 \end{align*}
 
-Substituting our expressions for the conditional distribution of $\mathbb{E}\{X_i \mid W_i, A_i = 1\}$, using the fact the in expectation, $\sum_{i: A_i = 1}\gamma_iW_i = \mu_0$, and taking expectations over $W_i$, we obtain the desired result.
+Since the weights are independent of the errors $X_i - \eta(W_i)$, and $\eta(W_i)$ is an unbiased estimate of $X_i$, these terms are both mean zero when taking expectations over $X_i$. Notice that even though we have assumed no model error, this estimator still has variance, conditional on $W_i$, equal to
 
-Correcting for this bias is a much studied topic. We propose using regression calibration techniques, which are discussed at length in the measurement error literature (see, eg, \cite{carroll2006measurement}). This allows us to adjust our covariates without using the outcomes, in the spirit of the design-based estimation strategy we use here. At its most broad, regression calibration seeks to learn the linear projection $\mathbb{E}\{X_i \mid W_i, A_i = 1\} = \mu_1 + (\kappa^T W_i - \mu_1) = \eta(W_i)$ by learning $\kappa$. Notice that $\kappa = \Sigma_{WW}^{-1}\Sigma_{XX}$, and $\Sigma_{WW} = \Sigma_{XX} + \Sigma_{uu}$. We can learn $\Sigma_{WW}$ directly from the data, and $\Sigma_{uu}$ using auxillary data. For our application, we use the replicate survey weights available on the ACS microdata, to estimate this matrix. 
+$$
+\sum_{i: A_i = 0} \gamma_i^2\beta^TCov(X_i \mid W_i)\beta
+$$
 
-We now show that balancing on $\eta(W_i)$ results in an unbiased estimate of $\psi$. We make the simplifying assumptions that $\eta(W_i)$ is known and that there is no model error on $Y_i$. By linearity, we know that
+where, assuming that $(X_i, W_i)$ are jointly normally distributed, $Cov(X_i \mid W_i) = \Sigma_{XX} - \Sigma_{XX}\Sigma_{WW}^{-1}\Sigma_{XX}$. Therefore, we see that the variance of this estimator is higher than if we knew the true $X_i$, even if we knew $\eta_a(W_i)$, unless $\Sigma_{WW} = \Sigma_{XX}$ (ie there is no error in $X_i$). Of course, in practice, we have to estimate $\eta(W_i)$ using our data, and depending on the structure of the data and the estimation procedure, $\gamma_i$ might also depend on this estimate. However, our goal here is primarily to show that the ideas developed in the regression-calibration literature can be used with balancing weights when we assume our covariates are measured with error without using any information about the outcomes. 
 
-\begin{align*}
-Y_i &= X_i^T\beta \\
-&= \eta(W_i)^T\beta + (X_i - \eta(W_i))^T\beta
-\end{align*}
-
-Now let $\gamma \in \Gamma$, where $\Gamma := \{\gamma \mid \sum_i \gamma_i \eta(W_i) = \sum_i X_i, \gamma^T1 = n\}$. Let $v_i = X_i - \eta(W_i)$. We then see that
-
-\begin{align*}
-    \frac{1}{n}\sum_{i}\gamma_{i}Y_{i} - \frac{1}{n}\sum_{i}Y_{i} &= \frac{1}{n}\beta^T\sum_{i}\gamma_{i}(\eta(W_i) - \sum_{i}X_{i}) + \frac{1}{n}\sum_i \gamma_iv_i^T\beta \\
-    &= \frac{1}{n}\sum_i \gamma_iv_i^T\beta
-\end{align*}
-
-Across repeated draws of $W$, this term is zero in expectation because we know $\eta$. For fixed $W$ and $X$, this term has no variance and only contributes to a finite-sample bias that vanishes at a $\sqrt{n}$ rate assuming there exists some constant $C$ such that $\max_i \gamma_i \le C\sqrt{n}$. We also see that this imputation increases the variance of the estimator across repeated draws of $W$:
-
-\begin{align*}
-    Var(\frac{1}{n}\sum_i \gamma_i Y_i \mid W_i) &= \frac{1}{n^2}\sum_i Var(\gamma_iv_i^T\beta) \\
-    &\le \frac{1}{n^2}\sum_i\mathbb{E}(\gamma_i^2)\beta^TCov(X_i \mid W_i)\beta 
-\end{align*}
-
-Our goal is again simply to show that many of the ideas developed in the regression-calibration literature can be used with balancing weights when we assume our covariates are measured with error without using any information about the outcomes. While the validity of this procedure relies on several strong modeling assumptions, perhaps the most crucial is the assumption that any measurement error in the covariates is uncorrelated with any measurement error in the outcome. 
-
-We conclude by noting several key departures in our applied setting to the framework we presented above: first, we view $X_i$ as fixed underlying parameters. Second, we don't know $\eta_a(W_i)$ and instead approximate it using an estimate $\Sigma_{vv}$ that we derive from the ACS replicate survey weights. Third, we do not believe that $X_i$ is linear in $W_i$; instead, we view this is an approximation. An extensive literature exists on regression calibration methods that considers the theory of these approximations under different conditions (see, eg, \cite{gleser1992importance}, \cite{carroll2006measurement}).
+We conclude by noting several key departures in our applied setting to the framework we presented above: first, we view $X_i$ as fixed underlying parameters. In this case the error terms we derived above lead to a finite-sample bias rather than contributing the estimator's variance. Second, we don't know $\eta_a(W_i)$ and instead approximate it using an estimate $\Sigma_{vv}$ that we derive from the ACS replicate survey weights. This leads to some dependence of $\gamma_i$ and $\hat{\eta}(W_i)$. Finally, we do not believe that $X_i$ is linear in $W_i$; in general view this adjustment as an approximation. An extensive literature exists on regression calibration methods that considers the theory of these approximations under different conditions (see, eg, \cite{gleser1992importance}, \cite{carroll2006measurement}). Further consideration of these issues is beyond the scope of this paper.
 
 \subsection{Appendix B: Calibration Details}
 
@@ -465,7 +495,7 @@ One cost of this procedure is that this aggregation models all differences as a 
 
 \subsection{Appendix C: Summary Statistics}
 
-Table~\ref{tab:summarytable1}, Table~\ref{tab:summarytable2}, and Table~\ref{tab:summarytable3} display univariate summary statistics from the primary dataset. We display the mean, interquartile range, and the range (as defined by the maximum value minus the minimum value) for the unadjusted dataset (sigma\_zero), the preferred adjustment (sigma\_uu\_avg), and the secondary adjustment (sigma\_uu\_i). We see that in general the preferred adjustment reduces the variability in the data. The secondary adjustment reduces the interquartile range, but increases the overall variability (as measured by the range) by causing extreme values for particular CPUMAs. While we like that this adjustment accounts for the precision of the covariate values, because the secondary adjustment causes values to fall outside of the possible range of these variables, we prefer the standard adjustment. We also calculate these adjustments excluding the early expansion states and leaving out each state one at a time from the primary dataset and the early expansion states excluded dataset; we can make these results available on request.
+Table~\ref{tab:summarytab1}, Table~\ref{tab:summarytab2}, and Table~\ref{tab:summarytab3} display univariate summary statistics from the primary dataset. We display the mean, interquartile range, and the range (as defined by the maximum value minus the minimum value) for the unadjusted dataset (sigma\_zero), the preferred adjustment (sigma\_uu\_avg), and the secondary adjustment (sigma\_uu\_i). We see that in general the preferred adjustment reduces the variability in the data. The secondary adjustment reduces the interquartile range, but increases the overall variability (as measured by the range) by causing extreme values for particular CPUMAs. While we like that this adjustment accounts for the precision of the covariate values, because the secondary adjustment causes values to fall outside of the possible range of these variables, we prefer the standard adjustment. We also calculate these adjustments excluding the early expansion states and leaving out each state one at a time from the primary dataset and the early expansion states excluded dataset; we can make these results available on request.
 
 \begin{table}[ht]
 \centering
@@ -573,7 +603,7 @@ Treat & Variable & sigma\_zero & sigma\_uu\_avg & sigma\_uu\_i \\
     \label{tab:summarytab3}
 \end{table}
 
-Table~\ref{tab:extreme} displays the frequency that the adjusted covariates fell outside of the support of the unadjusted dataset for the (control, treatment) groups. Note that for our ETT estimates, we only use the adjustments on the treatment data, while we use both for the OATE estimates. As a reminder there are 414 control group CPUMAs and 515 treatment group CPUMAs.
+Table~\ref{tab:extreme1} and Table~\ref{tab:extreme2} display the frequency that the adjusted covariates fell outside of the support of the unadjusted dataset for the (control, treatment) groups. Note that for our ETT estimates, we only use the adjustments on the treatment data, while we use both for the OATE estimates. As a reminder there are 414 control group CPUMAs and 515 treatment group CPUMAs.
 
 \begin{table}[ht]
 \centering
@@ -631,6 +661,14 @@ Variable & sigma\_uu\_avg & sigma\_uu\_i \\
 \end{table}
 
 We conclude with Figure~\ref{fig:corrmatrix}, which displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset. The relationships are quite similar when using the ``sigma\_uu\_avg'' adjustment, but change quite a bit do to the outlying values on the third adjustment.
+
+\begin{figure}[]
+\begin{center}
+    \includegraphics[scale=0.6]{01_Plots/correlation-plot-c1-sigma-zero.png}
+    \caption{Correlation matrix (unadjusted covariates)}
+    \label{fig:corrmatrix}
+\end{center}
+\end{figure}
 
 \subsection{Appendix D: Balance Tables}
 
@@ -959,6 +997,8 @@ AR & -2.00 & (-2.18, -2.21) & -2.62 & (-2.55, -2.55) \\
   WV & -2.00 & (-2, -2.02) & -2.62 & (-2.54, -2.54) \\ 
    \bottomrule
 \end{tabular}
+   \caption{Point estimates for all specifications, early expansion excluded}
+    \label{tab:sensitivityc1}
 \end{table}
 
 Table~\ref{tab:oateconfint} displays point estimates and confidence intervals for the primary point estimates. We display the confidence intervals calculated using both the leave-one-out-states conditional on the covariate adjustment (CI (states)) and recalculating the covariate adjustment for the OATE (CI (proc)). We note that when calculating these confidence intervals, on the rare occasions when logistic regression failed to converge, we used the probit link instead.
