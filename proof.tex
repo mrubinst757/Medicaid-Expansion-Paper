@@ -1,0 +1,136 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage{nips_2017}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{psfrag}
+\usepackage{epsf}
+\usepackage{enumerate}
+
+%\bibliographystyle{apalike}
+
+%\bibliographystyle{unsrt} % Use for unsorted references 
+\newcommand{\blind}{0}
+
+%\bibliographystyle{plainnat} % use this to have URLs listed in References
+
+% DON'T change margins - should be 1 inch all around.
+\addtolength{\oddsidemargin}{-.5in}%
+\addtolength{\evensidemargin}{-.5in}%
+\addtolength{\textwidth}{1in}%
+\addtolength{\textheight}{1.3in}%
+\addtolength{\topmargin}{-.8in}%
+
+% Title Page
+
+\bibliographystyle{natbib}
+
+\def\spacingset#1{\renewcommand{\baselinestretch}%
+{#1}\small\normalsize} \spacingset{1}
+\begin{document}
+
+\section{Proof}
+
+We prove that the asymptotic bias of the SBW estimator under measurement error is equivalent to the asymptotic bias of the OLS estimator under the classical errors-in-variables model. We then prove the unbiasedness of the estimator when balancing on the adjusted covariates when balancing on $\eta_a(W_i) = \mathbb{E}\{X_i \mid W_i, A_i = a\}$ instead of $W_i$. This is not meant to be a comprehensive treatment of the properties of this estimator, but rather to introduce the idea that we can apply concepts in the regression-calibration literature for balancing weights when the covariates are measured with mean-zero error that is independent of any measurement error in the outcome. We conclude by noting how our application differs from this stylized introduction; Appendix B provides details on how we used these ideas for our application.
+
+We begin by outlining the classical errors-in-variables setup. Consider the linear model $Y_i^1 = \alpha + X_i^T\beta + \epsilon_i$ and assume we observe covariates $W_i \in \mathbb{R}^d$ which are a vector of mean-unbiased proxies for the true covariate $X_i$; ie $W_i = X_i + v_i$. Assume that $(\epsilon_i, v_i) \sim MVN((0,0), \Sigma_{uu})$ 
+
+$$
+\Sigma_{uu} = \begin{pmatrix} 
+\Sigma_{\epsilon\epsilon} & 0 \\ 
+0 & \Sigma_{vv} 
+\end{pmatrix}
+$$ 
+
+In general we can either consider the case where $X_i$ are fixed (functional model) or random (structural model); the structural case typically motivates regression calibration, however, the ideas have desirable properties in the functional case as well (see, eg, \cite{gleser1992importance}). While in our application we think of the $X_i$ as fixed, for motivating purposes, we consider the case where $X_i$ are random. In a slight departure from the classical setup, we also consider the binary treatment indicator $A_i$ and we let $(X_i, W_i \mid A_i = a)$ are drawn iid from $MVN((\mu_a, \mu_a), \Sigma)$ where 
+
+$$
+\Sigma = \begin{pmatrix} 
+\Sigma_{XX} & \Sigma_{XX} \\ 
+\Sigma_{XX} & \Sigma_{WW}  
+\end{pmatrix}
+$$ 
+
+We note that $\Sigma_{WW} = \Sigma_{XX} + \Sigma_{vv}$. For simplicity we have also assumed that $\Sigma_{WW \mid A = 1} = \Sigma_{WW \mid A = 0} = \Sigma_{WW}$ and $\Sigma_{XX \mid A = 1} = \Sigma_{XX \mid A = 0} = \Sigma_{XX}$. This is not a necessary assumption, but helps simplify notation. By the joint normality of $X_i$ and $W_i$, we know that that $\mathbb{E}\{X_i \mid W_i, A_i = a\} = \mu_a + \kappa^T(W_i - \mu_a)$, where $\kappa = \Sigma_{WW}^{-1}\Sigma_{XX}$.
+
+Let $\psi^1 = \mathbb{E}\{Y_i^1 \mid A_i = 0\}$ and $\mu_y = \mathbb{E}\{Y_i^1\} = \mathbb{E}\{Y_i \mid A_i = 1\}$. From our modeling assumptions we have that
+
+\begin{align*}
+    \mathbb{E}\{Y_i^1 \mid X_i = x_i\} &= \alpha + x_i^T\beta \\
+    &= \mu_y + (x_i - \mu_1)^T\beta
+\end{align*}
+
+We can then write that $\psi^1 = \mu_y + (\mu_0 - \mu_1)^T\beta$. Let $\hat{\beta}$ be the OLS estimator of $\beta$ run only on the treatment data. Recall that $\mathbb{E}(\hat{\beta}) = \kappa\beta$ (see, eg, \cite{gleser1992importance}). Consider the estimator $\hat{\psi} = \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T\hat{\beta}$. We have that: 
+
+\begin{align*}
+    \hat{\psi} - \psi &= \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T\hat{\beta} - (\mu_y + (\mu_0 - \mu_1)^T\beta) \\
+    &= (\bar{Y}_1 - \mu_y) + (\bar{W}_0 - \mu_0)^T\hat{\beta} - (\bar{W}_1 - \mu_1)^T\hat{\beta} + (\mu_0 - \mu_1)^T(\hat{\beta} - \beta) \\
+    \hat{\psi} - \psi &\to (\mu_0 - \mu_1)^T(\kappa - I_d)\beta
+\end{align*}
+
+The final result holds because in the second line, the first term is simply the estimation error from a sample average and has expectation zero. The second term is the product of the estimation error from a sample average and $\hat{\beta}$; this also has expectation zero because $\bar{X}_0$ is estimated on a different part of the sample than $\hat{\beta}$, so these errors are independent. The third term is more complicated because the estimation error of $\mu_1$ is not independent of $\hat{\beta}$ since they are typically estimated using the same sample. However, we know that the estimation error converges in probability to zero and $\hat{\beta} \to \kappa\beta$; therefore, by Slutsky's Theorem, this term also converges in probability to zero, and we are left with the asymptotic bias noted above. 
+
+We now consider the SBW estimator that sets $\delta = 0$ and show that this estimator has the same asymptotic bias. The intuition for this result is as follows: exact balancing weights estimate an implicit $\beta$ on a subset of the data where we have sufficient overlap. We can think of SBW as returning a solution to some implicit weighted-least squares problem. Because we assume that the outcome model holds on all of the data, WLS and OLS are estimating the same $\beta$; therefore, the bias that effects the least squares solution will have the same effect on the weighted least squares solution.
+
+More formally, define the SBW estimator as:
+
+$$
+\arg\min_{\gamma \in \Gamma} \gamma_i^2
+$$
+
+$$
+\Gamma := \{\gamma: W_1^T\gamma = \bar{W}_0, \gamma_i > 0, \gamma^T1 = 1\}
+$$
+
+Then we can again consider the error of our estimator:
+
+\begin{align*}
+    \hat{\psi} - \psi &= \sum_{i: A_i = 0}w_iY_i - (\alpha + \mu_0^T\beta) \\
+    &= \sum_i \gamma_i(\alpha + X_i^T\beta + \epsilon_i) - (\alpha + \bar{W}_0^T\beta + (\mu_0 - \bar{W}_0)^T\beta) \\
+    &= \sum_i (\gamma_i(W_i - v_i)^T\beta + \gamma_i\epsilon_i) - \bar{W}_0^T\beta + (\mu_0 - \bar{W}_0)^T\beta \\
+    &= -\sum_{i: A_i = 1}\gamma_iv_i^T\beta + \sum_{i: A_i = 1}\gamma_i\epsilon_i  + (\mu_0 - \bar{W}_0)^T\beta
+\end{align*}
+
+Conditioning on $W_i$, we can take expectations over $X_i$, and see that the second term has expectation zero (noting that the weights, conditional on $W_i$, are independent of these errors). The third term is simply the scaled sum of mean zero estimation error and therefore has expectation zero. We conclude by considering the first term and again take expectations over $X_i$ conditional on $W_i$: 
+
+\begin{align*}
+    \sum_{i: A_i = 1} \gamma_i\mathbb{E}\{X_i - W_i \mid W_i\}^T\beta &= \sum_{i: A_i = 1} \gamma_i (\mu_1 + \kappa^T(W_i - \mu_1))^T\beta - \sum_{i: A_i = 1}\gamma_i W_i^T\beta \\
+    &= (\mu_1 + \kappa^T(\bar{W}_0 - \mu_1))^T\beta - \bar{W}_0^T\beta \\
+    &= (\kappa^T(\bar{W}_0 - \mu_1))^T\beta - (\bar{W}_0 - \mu_1)^T\beta  \\
+    &= (\bar{W}_0 - \mu_1)^T(\kappa - I_d)\beta \\
+    &= (\mu_0 - \mu_1)^T(\kappa - I_d)\beta + (\bar{W}_0 - \mu_0)^T(\kappa - I_d)\beta \\
+\end{align*}
+
+Taking the expectation over $W_i$, the second term is a scaled sum of mean zero estimation error and has expectation zero. We therefore see that the asymptotic bias of the SBW estimator is equivalent to the OLS estimator.
+
+We conclude by showing the unbiasedness of the estimator that reweights $\eta_1(W_i)$ rather than $W_i$. We make the simplifying assumptions that $\eta_a(W_i)$ and $\mu_0$ are known, and that there is no model error on $Y_i$. Assume that $\sum_{i: A_i = 1}\gamma_i\eta_1(W_i) = \mu_0$. By linearity, we know that
+
+$$
+(Y_i^1 \mid A_i = a) = \alpha + \eta_a(W_i)^T\beta + (X_i - \eta_a(W_i))^T\beta
+$$
+
+We then have that:
+
+\begin{align*}
+    \hat{\psi} - \psi &= \sum_{i: A_i = 1}\gamma_iY_i - (\alpha + \mu_0^T\beta) \\
+    &= \sum_{i: A_i = 1}\gamma_i\alpha + \sum_{i: A_i = 1}\gamma_i\eta_1(W_i)^T\beta + \sum_{i: A_i = 1}\gamma_i(X_i - \eta_0(W_i))^T\beta - (\alpha + \mu_0^T\beta) \\
+    &= \sum_{i: A_i = 1}\gamma_i(X_i - \eta_1(W_i))^T\beta
+\end{align*}
+
+Since the weights are independent of the errors $X_i - \eta_1(W_i)$, and $\eta_1(W_i)$ is an unbiased estimate of $X_i$, these terms are both mean zero when taking expectations over $X_i$. Notice that even though we have assumed no model error, this estimator still has variance, conditional on $W_i$, equal to
+
+$$
+\sum_{i: A_i = 0} \gamma_i^2\beta^TCov(X_i \mid W_i)\beta
+$$
+
+where, assuming that $(X_i, W_i)$ are jointly normally distributed, $Cov(X_i \mid W_i) = \Sigma_{XX} - \Sigma_{XX}\Sigma_{WW}^{-1}\Sigma_{XX}$. This shows that the variance of this estimator is higher than if we knew the true $X_i$, even if we knew $\eta_a(W_i)$, unless $\Sigma_{WW} = \Sigma_{XX}$ (ie there is no error in $X_i$). 
+
+We conclude by noting several key departures in our applied setting to the framework we presented above: first, our causal parameter is a sample-average estimand, and we therefore we view $X_i$ as fixed underlying parameters.\footnote{In this case the error terms we derived above lead to a finite-sample bias rather than contributing the estimator's variance.} Second, we don't know $\eta_a(W_i)$ and instead approximate it using an estimate of $\Sigma_{vv}$ using auxillary data and an estimate of $\Sigma_{WW}$ from the observed data. Finally, we do not believe that $X_i$ is linear in $W_i$; however, we can view this adjustment as the best linear predictor of $X_i$. An extensive literature exists on regression calibration methods that considers the theory of these approximations under different conditions (see, eg, \cite{gleser1992importance}, \cite{carroll2006measurement}). Further consideration of these issues is beyond the scope of this paper.
+
+\cleardoublepage
+\bibliography{research.bib} 
+
+\end{document}
