@@ -234,13 +234,13 @@ We treat our estimate of $\psi^0$ as known, since the population-weighted CPUMA 
 
 \section{Results}
 
-We present the following results using our preferred covariate adjustment $\hat{\eta}_1(W_{sc})$.  Figure~\ref{fig:loveplot} shows how our balancing weights reduce the imbalances among covariates with greater than one percentage point difference between the targeted mean in the expansion region and the mean values in the non-expansion region (we target the population-weighted mean of the untreated region). Before applying our weights, we see that there are substantial imbalances in the republican governance indicators, as well as pre-treatment uninsurance and unemployment rates. Our weights drastically reduce these differences; however, some imbalances remain. In particular, imbalances remain in the Republican governance indicators. A full balance table is available in Appendix D. 
+We present the following results using our preferred covariate adjustment $\hat{\eta}_1(W_{sc})$.  Figure~\ref{fig:loveplotc1} shows how our balancing weights reduce the imbalances among covariates with greater than one percentage point difference between the targeted mean in the expansion region and the mean values in the non-expansion region (we target the population-weighted mean of the untreated region). Before applying our weights, we see that there are substantial imbalances in the Republican governance indicators, as well as pre-treatment uninsurance and unemployment rates. Our weights drastically reduce these differences; however, some imbalances remain. In particular, imbalances remain in the Republican governance indicators. A complete balance table is available in Appendix D, Table~\ref{tab:baltab1} and Table~\ref{tab:baltab2}. 
 
 \begin{figure}[B]
 \begin{center}
     \includegraphics[scale=0.6]{01_Plots/balance-plot-etu.png}
-    \caption{Balance plot}
-    \label{fig:loveplot}
+    \caption{Balance plot, primary dataset}
+    \label{fig:loveplotc1}
 \end{center}
 \end{figure}
 
@@ -248,13 +248,13 @@ As discussed above, we then use ridge-regression augmentation to extrapolate fro
 
 \begin{figure}[B]
 \begin{center}
-    \includegraphics[scale=0.6]{01_Plots/weights-by-state-main.png}
+    \includegraphics[scale=0.6]{01_Plots/weights-by-state-hsbw-main.png}
     \caption{Total weights summed by state}
     \label{fig:statewghts}
 \end{center}
 \end{figure}
 
-Our H-SBW estimator yields an estimated effect of -2.00 (-3.59, -0.40). The bias-correction makes little substantive difference, yielding an estimate of -2.14 (-3.57, -0.71). In other words, we estimate that had states that did not expand Medicaid in 2014 done so, they would have seen a 2 percentage point reduction in their uninsurance rates that year. These estimates differ somewhat from the estimates we find running the procedure on our unadjusted covariate estimates: here H-SBW gives an estimated effect of -2.26 (-3.23, -1.29), and the bias corrected estimator yields -2.50 (-3.41, -1.58). Using the adjusted covariate set appears to both move our estimate closer in absolute magnitude towards zero and increase the width of the estimated confidence intervals. Figure~\ref{fig:estimators} displays the point estimates from these weighting estimators, as well as estimators using SBW, on the adjusted and unadjusted datasets. We also calculate estimates using Oaxaca-Blinder (regression) weights and using a second covariate adjustment; these results are substantively similar and are available in Appendix~\ref{ssec:allresults}. 
+Using H-SBW we calculate an estimated effect of -2.00 (-3.59, -0.40). The bias-correction makes little substantive difference, yielding an estimate of -2.14 (-3.57, -0.71). In other words, we estimate that had states that did not expand Medicaid in 2014 done so, they would have seen a 2 percentage point reduction in their uninsurance rates that year. These estimates differ somewhat from the estimates we find running the procedure on our unadjusted covariate estimates: here H-SBW gives an estimated effect of -2.26 (-3.23, -1.29), and the bias corrected estimator yields -2.50 (-3.41, -1.58). Using the adjusted covariate set appears to both move our estimate closer in absolute magnitude towards zero and increase the width of the estimated confidence intervals. Figure~\ref{fig:estimators} displays the point estimates from these weighting estimators, as well as estimators using SBW, on the adjusted and unadjusted datasets. We also calculate estimates using two versions of Oaxaca-Blinder (regression) weights and using a second covariate adjustment; these results are substantively similar and are available in Appendix~\ref{ssec:allresults}. 
 
 \begin{figure}[B]
 \begin{center}
@@ -264,35 +264,50 @@ Our H-SBW estimator yields an estimated effect of -2.00 (-3.59, -0.40). The bias
 \end{center}
 \end{figure}
 
-We next examine how removing specific covariate groups in the weighting procedure changes the estimated contrast between the weighted treatment and control regions' outcomes (ie the estimated treatment effect when all groups are included). We are especially interested in how this contrast changes when we remove the Republican governance indicators: because we hypothesize that regions under Republican governed administrations will have lower Medicaid take-up rates, we expect that removing these covariates will move this estimate farther away from zero. We divide our covariates into six separate groups: pre-treatment uninsurance rates and pre-treatment unemployment rates, Republican governance indicators, and three sets of different demographic indicators. Specifically, the first group includes: urban residence, age group, education, citizenship, student, disability, female; the second, white race, Hispanic ethnicity, foreign-born, and income-to-poverty ratio; the third, number of children, household to population ratio, and population growth. We then rerun the analyses excluding each group. 
+We examine the robustness of our point estimates to the removal of individual states (note that these are the point estimates used to calculate our confidence intervals). Figure~\ref{fig:loostateplot} shows how the point estimates change for both the adjusted (``sigma\_uu\_i\_modeled'') and unadjusted (``sigma\_zero'') datasets. We see similar results in either case: removing Ohio and Arkansas tends to increase the absolute magnitude of the point estimates. By contrast, removing California decreases the absolute magnitude of the estimators, particularly for estimators that are not bias-corrected. The results are quite similar when using different covariate adjustments and when recalculating the entire procedure; some are available in Appendix E, Table~\ref{tab:sensitivityc1}. 
 
 \begin{figure}[]
 \begin{center}
-    \includegraphics[scale=0.6]{01_Plots/loo-covariates-main-c1.png}
-    \caption{Estimates}
-    \label{fig:loocovariates}
-\end{center}
-\end{figure}
-
-Figure~\ref{fig:loocovariates} displays the estimated treatment effects when removing each covariate group for our preferred set of weights and the bias corrected version of these same weights. We find that all our estimates are very sensitive to the removal of pre-treatment uninsurance and pre-treatment unemployment rates. When we fail to control for these covariates, our estimated contrast increases substantially in absolute magnitude. A full comparison of the difference in estimates across covariate groups is available in Appendix~\ref{ssec:allresults}, Table~\ref{tab:ptests}.
-
-We also see an increase in absolute magnitude of our estimated contrast when removing the Republican governance indicators. Specifically, we find that our estimated contrast increases in absolute magnitude by 0.62 for H-SBW and by 0.51 BC-HSBW. We see similar differentials on our unadjusted dataset (0.64 and 0.49, respectively). These results are consistent with our hypothesis that Republican governance drives heterogeneity in the treatment effects. When we use the leave-one-out jackknife to calculate the standard errors of these differences, we are unable to conclude that these differences are statistically significant. Even so, we find that these differences are negative for all estimators we consider when removing each state. That is, the sign of the differences in the contrasts remains negative for every specification that we run -- conditional on the adjustment. When we re-run the entire adjustment procedure when removing each state, we do find that removing California results in a positive contrast between these estimates for BC-HSBW and BC-SBW and Illinois for BC-SBW for our adjusted dataset. However, this result does not occur with any set of weights that does not extrapolate beyond the support of the data. Figure REF displays the differences in these contrasts for our preferred adjustment dataset and our unadjusted dataset, conditional on the adjustment. Additional results are available in Appendix~\ref{ssec:allresults}, Table REF.
-
-Finally, we consider the robustness of our estimators to the removal of individual states. Figure~\ref{fig:loostateplot} shows how the point estimates change for leave-one-state-out jackknife procedure for both the adjusted and unadjusted datasets. We see very similar results in both cases: removing Ohio and Arkansas tends to increase the absolute magnitude of the point estimates. By contrast, removing California decreases the absolute magnitude of the estimators that are not bias-corrected, but this goes away or even reverses when including the bias correction. The results are quite similar when using different covariate adjustments and when recalculating the entire procedure; some are available in Appendix~\ref{ssec:allresults}, Table~\ref{tab:sensitivityc1}. 
-
-\begin{figure}[]
-\begin{center}
-    \includegraphics[scale=0.6]{01_Plots/c1-loostate-sensitivity.png}
+    \includegraphics[scale=0.6]{01_Plots/loostate-sensitivityc1-state-uu-i.png}
     \caption{Estimator sensitivity to states}
     \label{fig:loostateplot}
 \end{center}
 \end{figure}
 
+We now move to examining our second research question: whether Republican governance might be an important effect modifier for our estimates. We examine this by removing the Republican governance indicators and recalculating our point estimates and comparing this estimated contrast to our original point estimate (ie the estimated treatment effect when all groups are included). This difference is a function both of the model coefficients and the differences in the weighted imbalances between the covariates of the treated and control groups.
+
+More formally, let $\hat{\psi}_v$ be the estimator with covariates $V$ removed using weights $\gamma_v$; let $\beta_v$ be the model coefficients on those covariates; and let $\hat{\psi}_0$ be our primary estimator. This procedure approximately estimates the following quantity:\footnote{Notice that these final two lines are approximations rather than equalities for four reasons: one, error in the outcome model; two, estimation error from $\hat{\eta}(W_{sc})$; three, the difference between $\eta(W_{sc})$ and $X_{sc}$; and finally, because while we hold $\delta$ constant for all covariates not in $V$, the reweighting may affect some of the imbalances within that tolerance for non-binding constraints.}
+
+\begin{align*}
+    \hat{\Delta}_v &= \hat{\psi}_v - \hat{\psi}_0 \\
+    &= (\hat{\psi}^1_v - \hat{\psi}^0_1)  - (\hat{\psi}^1_0 - \hat{\psi}^1_0) \\
+    &= \hat{\psi}^1_v - \hat{\psi}^1_0 \\
+    &\approx (X_1^T(\gamma_v - \gamma_0))^T\beta \\
+    &\approx (V_1^T(\gamma_v - \gamma_0))^T\beta_v
+\end{align*}
+
+Let $\hat{\Delta}$ be this estimate with the Republican governance indicators removed. Because we hypothesize that regions under Republican governed administrations will have lower Medicaid take-up rates, we expect that removing these covariates will move this estimate farther away from zero.\footnote{Specifically, for these covariates we know that $V_1^T(\gamma_1 - \gamma_0)$ will be negative because the treated region is much more Democratic than the control region. Because we expect that Republican governance is positively associated with uninsurance rates, we expect that this overall quantity will be negative.} We also examine the influence of four other covariate groups: pre-treatment uninsurance rates and pre-treatment unemployment rates, and three sets of different demographic indicators. Specifically, the first group includes: urban residence, age group, education, citizenship, student, disability, female; the second, white race, Hispanic ethnicity, foreign-born, and income-to-poverty ratio; the third, number of children, household to population ratio, and population growth. We present and comment on these results in Appendix E, Table~\ref{tab:ptests}.
+
+For our H-SBW estimator we calculate $\hat{\Delta}$ equal to -0.62 (-2.05, -0.81) for BC-HSBW and -0.51 (-1.74, 0.71). We see similar differentials on our unadjusted dataset (0.64 (-1.62, 0.34) and 0.49 (-1.33, 0.34), respectively). These results are consistent with our hypothesis that Republican governance drives heterogeneity in the effect of Medicaid expansion. While our confidence intervals include zero, we find that these differences are negative for all estimators we consider when removing each state -- conditional on the covariate adjustment. That is, the sign of the differences in the contrasts remains negative for every specification that we run. When we re-run the entire adjustment procedure when removing each state, we find that removing California results in a positive contrast between these estimates for BC-HSBW and BC-SBW and Illinois for BC-SBW for our adjusted dataset. However, this result does not occur with any set of weights that does not extrapolate beyond the support of the data, or any set of weights calculated on the unadjusted data. Overall we view this as suggestive evidence consistent with our hypothesis.
+
+Appendix E  Figure~\ref{fig:rdiffc1state} and Figure~\ref{fig:rdiffc1proc} display all estimates $\hat{\Delta}$ with each state removed, both conditional on the covariate adjustment and recalculating the covariate adjustment, respectively. Additional results for different estimators are available in Appendix E, Table~\ref{tab:deltac1}.
+
 \subsection{Sensitivity Analyses} \label{sssec:sensitivity}
 
-We examine the sensitivity of our estimates to violations of two key causal assumptions: (1) no anticipatory treatment effects, and (2) positivity violations. To the first point, several states had partial limited expansions prior to 2014. Following \cite{frean2017premium}, we consider these states to be California, Connecticut, Minnesota, New Jersey, and Washington. We rerun our analyses excluding CPUMAs from all five of these states. It is unclear how removing these states might affect our estimates: on the one hand, states that expanded early might have a smaller treatment effect after 2014 because they already enrolled newly eligible individuals. On the other hand, if these states were also more motivated to enroll people in Medicaid, they might have larger post-expansion coverage gains. When removing these states, we estimate an effect of -1.29 (-2.45, -0.12) using H-SBW weights and when we run the bias-corrected version we estimate -2.17 (-3.65, -0.68). While these point estimates are quite a bit different but the confidence intervals largely overlap. Table~\ref{tab:secondaryptests} in Appendix~\ref{ssec:allresults} displays additional results. 
+We examine the sensitivity of our analysis to violations of two key causal assumptions: (1) no anticipatory treatment effects, and (2) positivity violations. To the first point, several states had partial limited expansions prior to 2014. Following \cite{frean2017premium}, we consider these states to be California, Connecticut, Minnesota, New Jersey, and Washington. We rerun our analyses excluding CPUMAs from all five of these states. It is unclear how removing these states might affect our estimates: on the one hand, states that expanded early might have a smaller treatment effect after 2014 because they already enrolled newly eligible individuals. On the other hand, if these states were also more motivated to enroll people in Medicaid, they might have larger post-expansion coverage gains. Figure XX displays the H-SBW weights summed by state along with BC-HSBW. We again see that the BC-HSBW estimator extrapolates heavily to reduce the imabalances. A complete balance table is available in Appendix D, Table~\ref{tab:baltab1} and Table~\ref{tab:baltab2}.
 
-Our leave-one-out covariate analysis shows similar associations to those in our primary analysis; however, we see a somewhat larger association between Republican governance indicators and our estimated contrast. Specifically, we find a 1.28 percentage point increase in absolute magnitude when for the H-SBW estimator and a 0.73 increase for BC-HSBW. Figure~\ref{fig:repub} displays these differences in the contrasts against those from our preferred dataset. 
+\begin{figure}[]
+\begin{center}
+    \includegraphics[scale=0.6]{01_Plots/}
+    \caption{Estimator sensitivity to states}
+    \label{fig:loostateplot}
+\end{center}
+\end{figure}
+
+
+On this dataset we estimate an effect of -1.29 (-2.45, -0.12) using H-SBW weights; BC-HSBW yields an estimate of -2.17 (-3.65, -0.68). Here we see that the bias correction makes a substantive difference to the point estimate; however, it is not substantively different from the original point estimate with all states included. Overall we view this as evidence that our primary point estimates are fairly robust to the exclusion of these states. Table~\ref{tab:confintmainc2} and Table~\ref{tab:secondaryptests} in Appendix E display additional results. 
+
+We further find that our estimates $\hat{\Delta}$ increase in absolute magnitude. Specifically, we find -1.28 (-2.20, -0.21) percentage point decrease for the H-SBW estimator when excluding the Republican governance indicators and a -0.73 (-2.40, 0.94) increase for BC-HSBW. Figure~\ref{fig:repub} displays these differences in the contrasts against those from our preferred dataset. On our unadjusted dataset we estimate contrasts of -1.04 (-2.01, -0.07) and -0.61 (-1.75, 0.52). 
 
 \begin{figure}[]
 \begin{center}
@@ -302,9 +317,9 @@ Our leave-one-out covariate analysis shows similar associations to those in our 
 \end{center}
 \end{figure}
 
-When we compute the leave-one-out jackknife standard errors, we find that the estimates for H-SBW and SBW are statistically significantly different from zero on both the adjusted and unadjusted datasets (H-SBW (-2.19, -0.35); SBW (-2.30, -0.75)). This result also holds when calculating these contrasts when recalculating the entire procedure. We again find that for all estimators (including the Oaxaca-Blinder weights), the difference between the leave-one-out-states estimated contrasts are negative conditional on the preferred covariate adjustment. When we rerun the entire adjustment procedure, we again find that the only estimators that have positive differences between these contrasts are ones that allow for negative weights. For our preferred covariate adjustment, BC-HSBW and BC-SBW are only sensitive to the removal of Kentucky. Additional results are available in Appendix~\ref{ssec:allresults}, Table BLAH. 
+Unlike in our primary analysis, both the confidence interval from the H-SBW and SBW estimators exclude zero; moreover, we again find that for all estimators (including the Oaxaca-Blinder weights), the difference between the leave-one-out-states estimated contrasts are negative conditional on the preferred covariate adjustment. When we rerun the entire adjustment procedure, we again find that the only estimators that have positive differences between these contrasts are ones that allow for negative weights. For our preferred covariate adjustment, BC-HSBW and BC-SBW are only sensitive to the removal of Kentucky. These results again support our hypothesis that factors associated with Republican governance reduce the effect size of Medicaid expansion. Additional results are available in Appendix E, Table~\ref{tab:deltac2}. 
 
-We next consider an alternative method to account for positivity violations. To this point we have relied on either (1) retaining a potentially biased estimate from weights that do not provide exact balance, or (2) producing a a more model-dependent estimate that relies on extrapolation. Overall we found that the results didn't change substantially either way. Here we consider a third option: changing our target estimand. In particular, we consider the overlap average treatment effect (OATE), proposed by \cite{li2018balancing}. This is the treatment effect on the subset of the entire dataset where we have overlap. It is a data-dependent treatment effect, and is not the same as the treatment effect on the untreated; however, we believe that this effect will be more similar to the ETC than the ETT, since there were no Democratic controlled states that did not expand Medicaid. Indeed, after generating overlap weights on our primary dataset we find that across all covariates, the mean average absolute distance from the overlap region to the untreated region is 2.9 and to the treated region is 7.8.\footnote{The distance is between the overlap region calculated as an unweighted mean on the adjusted datasets.} Figure~\ref{fig:oatearea} displays the distance between covariates with greater than one percentage point distance from the overlap region to either the control or treated region. We see that the overlap region is substantially more Republican than the treated region, as expected. This region is also less Hispanic, more white, less rural, and more educated than either the expansion or non-expansion region. Table~\ref{tab:oatedist1} and Table~\ref{tab:oatedist2} in Appendix D show statistics on the OATE region versus the treatment and control regions for all covariates.
+We next consider an alternative method to account for positivity violations. To this point we have relied on either (1) retaining a potentially biased estimate from weights that do not provide exact balance, or (2) producing a a more model-dependent estimate that relies on extrapolation. Overall we found that the results didn't change substantially either way. Here we consider a third option: changing our target estimand. In particular, we consider the overlap average treatment effect (OATE), proposed by \cite{li2018balancing}. This is the treatment effect on the subset of the entire dataset where we have overlap. It is a data-dependent treatment effect, and is not the same as the treatment effect on the untreated; however, we believe that this effect will be more similar to the ETC than the ETT, particularly because there were no Democratic controlled states that did not expand Medicaid. Indeed, after generating overlap weights on our primary dataset we find that across all covariates, the mean average absolute distance from the overlap region to the untreated region is 2.9 and to the treated region is 7.8.\footnote{The distance is between the overlap region calculated as an unweighted mean on the adjusted datasets.} Figure~\ref{fig:oatearea} displays the distance between covariates with greater than one percentage point distance from the overlap region to either the control or treated region. We see that the overlap region is substantially more Republican than the treated region, as expected. This region is also less Hispanic, more white, less rural, and more educated than either the expansion or non-expansion region. Table~\ref{tab:oatedist1} and Table~\ref{tab:oatedist2} in Appendix D show additional statistics on the OATE region versus the treatment and control regions for all covariates.
 
 \begin{figure}[]
 \begin{center}
@@ -324,25 +339,25 @@ Figure~\ref{fig:oateimbalance} displays the sum of the weights within each state
 \end{center}
 \end{figure}
 
-We find similar results to our primary analysis: within the overlap region we find an estimated treatment effect of -1.64 (-2.41 -0.89) when including all treatment states in our primary analysis, and of -1.76 when excluding ``early expansion'' states. We again find a negative association between the estimated contrast and the Republican governance indicators, which decrease the estimated effect size by 0.96 (0.81, 1.10) percentage points on the primary dataset and by 0.62 (0.78, 0.46) percentage points when removing early expansion states. Notice that both of these estimates were statistically significant; the confidence intervals increase only slightly when recomputing the entire adjustment when removing each state. Moreover, this negative difference in estimated contrasts holds for each state left outside, regardless of whether or not we conditioned on the adjustment or recalculated it. Additional results are available in Appendix~\ref{ssec:allresults}, Table~\ref{tab:oateconfint} and Table~\ref{tab:oatesensitive}. This again provides support for our hypothesis that Republican governance is an important predictor of treatment effect heterogeneity.
+We find similar results to our primary analysis: within the overlap region we estimate a treatment effect -1.64 (-2.41 -0.89) when including all treatment states in our primary analysis, and of -1.76 when excluding the early expansion states. We again find a negative difference when comparing an estimate excluding the Republican governance indicators against our primary estimate: specifically, we find that the estimate decreases by -0.96 (-0.81, -1.10) percentage points on the primary dataset and by -0.62 (-0.78, -0.46) percentage points when removing early expansion states.\footnote{Unlike the ETC, this contrast is a function of the differences in the weighted covariates among both the treated and control regions.} Notice that both of these estimates were statistically significant; the confidence intervals increase only slightly when recomputing the entire adjustment when removing each state. Moreover, this negative difference in estimated contrasts holds for each excluded state, regardless of whether or not we conditioned on the adjustment or recalculated it. Additional results are available in Appendix E, Table~\ref{tab:oateconfint} and Table~\ref{tab:oatesensitive}. Again provides support for our hypothesis that factor associated with Republican governance may decrease the absolute magnitude of the treatment effects.
 
 \section{Discussion}
 
-We estimate that had states that did not expand Medicaid in 2014 expanded their programs, they would have seen a -2.00 (-3.59, -0.40) percentage point change in the adult uninsurance rate. Existing estimates place the ETT between -3 and -6 percentage points; these estimates vary depending on the targeted sub-population of interest, the data used, and the modeling approach (see, eg, \cite{courtemanche2017early}, \cite{kaestner2017effects}, \cite{frean2017premium}). This ETC estimate is therefore closer to zero than these ETT papers, supporting our original hypothesis that the treatment effect on non-expansion states would be smaller in absolute magnitude. Moreover, we also find that we are likely to estimate treatment effects that are larger in absolute magnitude when allowing our comparison states to include states governed by the Democratic party. While the differences all lay within the estimated margins of error of the original point estimates, the consistency of this finding in all of our sensitivity analyses provides evidence that the differing political composition of the expansion versus the non-expansion states may explain these differences. 
+We estimate that had states that did not expand Medicaid in 2014 expanded their programs, they would have seen a -2.00 (-3.59, -0.40) percentage point change in the adult uninsurance rate. Existing estimates place the ETT between -3 and -6 percentage points; these estimates vary depending on the targeted sub-population of interest, the data used, and the modeling approach (see, eg, \cite{courtemanche2017early}, \cite{kaestner2017effects}, \cite{frean2017premium}). This ETC estimate is therefore closer to zero than these ETT papers, supporting our original hypothesis that the treatment effect on non-expansion states would be smaller in absolute magnitude. Moreover, we also find suggestive evidence that factors associated with Republican governance may drive this differential. While much of this evidence lay was statistically insignificant, we believe that the robustness of this finding to many of our modeling specifications supports this hypothesis.
 
-We also make several methodological contributions to the literature on balancing weights. First, we extend the synthetic controls literature to estimate the treatment effect on the controls. The key challenge is that we need to predict treatment response rather than the outcome absent treatment. Unlike when estimating the treatment effect on the treated, we cannot use pre-treatment outcomes to conduct variable selection, run placebo tests, or train our model in some other way. This is a fundamentally more difficult problem that requires greater modeling assumptions. Second, we extend the Stable Balancing Weights objective function for use with hierarchical data and measurement error. We modify the criterion to more evenly disperse the weights across states, and the constraint set to to balance on a linear approximation to the true covariate values using regression-calibration techniques (\cite{gleser1992importance}).
+We also make several methodological contributions to the literature on balancing weights. First, we extend the synthetic controls literature to estimate the treatment effect on the controls. The key challenge is that we need to predict treatment response rather than the outcome absent treatment. Unlike when estimating the treatment effect on the treated, we cannot use pre-treatment outcomes to conduct variable selection, run placebo tests, or train our model in some other way. This is a fundamentally more difficult problem that requires greater modeling assumptions. Second, we extend the Stable Balancing Weights objective function for use with hierarchical data and covariates measured with error. We modify the criterion to more evenly disperse the weights across states, and the constraint set to to balance on a linear approximation to the true covariate values using regression-calibration techniques (\cite{gleser1992importance}).
 
-Our study's approach also has bearing on estimating the ETT using a differences-in-differences analysis to study the 2014 effects of Medicaid expansion. If we believe that Republican governance is associated with changes in trends over time, then we need to control for this factor. However, there is likely insufficient overlap to control for these factors without significant extrapolation from the data. We see that the ETC requires less extrapolation than the ETT with respect to governance, and is in some sense a more estimable quantity.\footnote{We note, however, that the standard parallel trends assumption used to identify the ETT is different to the no unmeasured confounding assumption we made here.} Setting aside this problem, assume that we do have a reasonable estimate of the ETT for some outcome. Because almost every outcome of interest is largely mediated through increasing the number of insured individuals, and because we have shown that there is likely treatment effect heterogeneity across multiple variables with respect to uninsurance rates, projecting findings from an estimate of the ETT to the ETC would likely lead to inaccurate inferences. For example, \cite{miller2019medicaid} study the effect of Medicaid expansion on mortality. Using their estimate of the ETT they project that had all states expanded Medicaid, 15,600 deaths would have been avoided during their study's time-period. If we believe that the ETT were further away from zero than the ETC, we should expect that this number is too large. Directly estimating the ETC context can therefore also help us better model interesting downstream effects mediated through increasing the number of insured individuals. 
+Our study's approach also has bearing on estimating and understanding the ETT using a differences-in-differences design when estimating the 2014 effects of Medicaid expansion. If we believe that Republican governance is associated with changes in trends over time, then we need to control for this factor. However, there is likely insufficient overlap to control for these factors without significantly extrapolating from the data. We see that the ETC requires less extrapolation than the ETT with respect to governance, and is therefore in some sense a more estimable quantity.\footnote{We note, however, that the standard parallel trends assumption used to identify the ETT is different to the no unmeasured confounding assumption we made here.} Even putting aside this problem, assume that we do have a reasonable estimate of the ETT for some outcome. Our results also suggest that we should not use this estimate to make inferences about the ETC. Because almost every outcome of interest is largely mediated through increasing the number of insured individuals, and because we have shown that there is likely treatment effect heterogeneity with respect to governance, projecting findings from an estimate of the ETT to the ETC would lead to inaccurate inferences. For example, \cite{miller2019medicaid} study the effect of Medicaid expansion on mortality. Using their estimate of the ETT they project that had all states expanded Medicaid, 15,600 deaths would have been avoided during their study's time-period. If we believe that the ETT were further away from zero than the ETC, we should expect that this projection is an over-estimate. Directly estimating the ETC context can therefore also help us better model interesting downstream effects mediated through increasing the number of insured individuals. 
 
-Our results come with the following caveats: (1) we rely on parametric assumptions about the outcome model to estimate our causal effect; (2) our identification assumes no unmeasured confounding given the true covariates; (3) all of our estimated associations between Republican governance and the estimated contrast between treatment and control states fall within our estimated margins of error. 
+Our results come with three major caveats: (1) we rely on parametric assumptions about the outcome model to estimate our causal effect; (2) our identification assumes no unmeasured confounding given the true covariates; (3) many of our estimated associations between Republican governance and our estimated treatment effect fall within our estimated margins of error. 
 
-We conclude by discussing the policy implications of these findings. First, we note that a reduction of adult uninsurance rates by -2.14 percentage points represents approximately a 10 percent reduction in the uninsurance rate among non-expansion states. This estimated treatment effect is closer to zero than corresponding estimates of the ETT (see, eg, \cite{courtemanche2017early}). We may therefore expect that downstream effects that move away from zero monotonically with the number of uninsured are also closer to zero than estimates of the ETT. Second, we emphasize that the positive association we find between governance and the estimated treatment effect is only an association: this finding does not imply, for example, that states with Republican governments in general make Medicaid enrollment more difficult relative to Democratic states. However, this finding does not rule out this possibility either. Even if this causal story were true, then it is also a normative judgment whether this finding is a ``good'' or a ``bad'' result. To evaluate the policy implications, we compare this result against Congress's goal in implementing Medicaid expansion in the 2010 ACA, which was to increase health insurance coverage. Measured against this intent, this finding suggests that leaving states to implement individual enrollment schemes likely achieves sub-optimal results. Better federal policies should encourage states to adopt some form of automatic Medicaid enrollment, or to make Medicaid enrollment easier in some other way. On the other hand, Republican governed states in 2014 were also more culturally conservative, and people may have been less likely to enroll in Medicaid due to social stigma and/or personal beliefs about the welfare state (\cite{sommers2012understanding}). If this remains true today, then Republican governments that are committed to expanding access to health care to low-income individuals may again wish to consider policies such as automatic enrollment to help mitigate these effects. Lastly, for administrations that do not see coverage expansion as an important goal of Medicaid expansion, this finding may not represent a policy problem worth addressing.
+We conclude by discussing the policy implications of these findings. First, we note that a reduction of adult uninsurance rates by -2.00 percentage points represents approximately a 10 percent reduction in the uninsurance rate among non-expansion states. This estimated treatment effect is closer to zero than corresponding estimates of the ETT (see, eg, \cite{courtemanche2017early}). We may therefore expect that downstream effects that move away from zero monotonically with the number of uninsured are also closer to zero than estimates of the ETT. Second, we emphasize that the association we find between Republican governance and the estimated treatment effect is only an association: this finding does not imply, for example, that states with more conservative governments in general make Medicaid enrollment more difficult relative to Democratic states. However, this finding does not rule out this possibility either. Even if this causal story were true, it is also a normative judgment whether this finding is a ``good'' or a ``bad'' result. To evaluate the policy implications, we compare this result against Congress's goal in implementing Medicaid expansion in the 2010 ACA, which was to increase health insurance coverage. Measured against this intent, this finding suggests that leaving states to implement individual enrollment schemes likely achieves sub-optimal results. Better federal policies should encourage states to adopt some form of automatic Medicaid enrollment, or to make Medicaid enrollment easier in some other way. On the other hand, Republican governed states in 2014 were also more culturally conservative, and people may have been less likely to enroll in Medicaid due to social stigma and/or personal beliefs about the welfare state (\cite{sommers2012understanding}). If this remains true today, then Republican governments that are committed to expanding access to health care to low-income individuals may again wish to consider policies such as automatic enrollment to help mitigate these effects. 
 
 \section{Conclusion}
 
-This is the first study to directly estimate the foregone coverage expansions of Medicaid Expansion on states that did not expand Medicaid in 2014. We also contribute to the methodological literature on synthetic controls by clarifying the assumptions required to use longitudinal data to estimate the ETC rather than the ETT, and to the balancing weights literature more generally by considering the case where we have hierarchical data and covariates measured with error. We estimate that had states that did not expand Medicaid in 2014 done so, they would have seen a -2.14 (-3.57, -0.71) percentage point change in their uninsurance rate. This is substantially closer to zero than existing estimates of the ETT, which range between -3 and -6 percentage points. These estimates are also robust to sensitivity analyses examining potential violations of the assumptions of no anticipatory treatment effects and positivity violations. 
+This is the first study to directly estimate the foregone coverage expansions of Medicaid Expansion on states that did not expand Medicaid in 2014. We also contribute to the methodological literature on synthetic controls by clarifying the assumptions required to use longitudinal data to estimate the ETC rather than the ETT, and to the balancing weights literature more generally by considering the case where we have hierarchical data and covariates measured with error. We estimate that had states that did not expand Medicaid in 2014 done so, they would have seen a -2.00 (-3.59, -0.40) percentage point change in their uninsurance rate. This is substantially closer to zero than existing estimates of the ETT, which range between -3 and -6 percentage points. These estimates are robust to different model specifications and sensitivity analyses examining potential violations of the assumptions of no anticipatory treatment effects and positivity violations.
 
-We also find evidence that Republican governance is associated with estimated effect sizes closer to zero. This association is also robust our sensitivity analyses. Moreover, it is consistent with existing estimates of the ETT that are also farther away from zero, and the finding that Medicaid take-up rates are lower in Republican-governed states prior to Medicaid expansion in 2014 (\cite{sommers2012understanding}). If the goal of Medicaid expansion is to increase access to insurance for low-income adults, this suggests that state and federal governments may wish to adopt policies that make Medicaid enrollment automatic or at least easier.
+We also find evidence that Republican governance is associated with estimated effect sizes closer to zero. This association is also robust to our sensitivity analyses. Moreover, it is consistent with existing estimates of the ETT that are also farther away from zero, and the finding that Medicaid take-up rates are lower in Republican-governed states prior to Medicaid expansion in 2014 (\cite{sommers2012understanding}). If the goal of Medicaid expansion is to increase access to insurance for low-income adults, state and federal governments may wish to adopt policies that make Medicaid enrollment easier.
 
 \section{Acknowledgements}
 
@@ -667,43 +682,43 @@ Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for 
 \end{center}
 \end{figure}
 
-\subsection{Appendix D: Balance Tables}
+\subsection{Appendix D: Weight Diagnostics}
 \label{ssec:balancetables}
 
-Table~\ref{tab:baltab1} and Table~\ref{tab:baltab2} display the differences between the population-weighted mean covariate values of the non-expansion region and the weighted mean of the expansion region (calculated on on our adjusted dataset). The weights presented here are from the H-SBW $(\rho = 0.2)$ estimator. Additional results are available on request.
+Table~\ref{tab:baltab1} and Table~\ref{tab:baltab2} display the differences between the population-weighted mean covariate values of the non-expansion region and the weighted mean of the expansion region for our preferred dataset and with the early expansion states excluded (calculated using our covariate adjustments). The weights presented here are from the H-SBW estimator. The values under each column of ``Preferred'' and ``Early Excluded'' are in the following format: (unweighted difference, weighted difference). Additional results are available on request.
 
 \begin{table}[ht]
 \centering
-\begin{tabular}{lrr}
+\begin{tabular}{lll}
   \toprule
-Variables & Unweighted Difference & Weighted Difference \\ 
+Variables & Preferred & Early Excluded \\ 
   \midrule
-age\_cat2\_19\_29\_pct & 0.51 & 0.50 \\ 
-  age\_cat2\_30\_39\_pct & 0.23 & 0.42 \\ 
-  age\_cat2\_40\_49\_pct & -0.10 & 0.50 \\ 
-  avg\_adult\_hh\_ratio & -10.11 & -0.15 \\ 
-  citizenship\_pct & 2.19 & 2.00 \\ 
-  disability\_pct & 1.01 & -0.52 \\ 
-  educ\_hs\_degree\_pct & 2.38 & -1.54 \\ 
-  educ\_less\_than\_hs\_pct & 0.74 & -1.32 \\ 
-  educ\_some\_college\_pct & -0.01 & -0.75 \\ 
-  female\_pct & 0.34 & 0.72 \\ 
-  foreign\_born\_pct & -5.26 & -2.00 \\ 
-  hins\_unins\_pct\_2011 & 4.37 & -0.05 \\ 
-  hins\_unins\_pct\_2012 & 4.10 & -0.00 \\ 
-  hins\_unins\_pct\_2013 & 3.84 & 0.05 \\ 
-  hispanic\_pct & -1.70 & -1.00 \\ 
-  inc\_pov2\_138\_pct & 1.92 & -0.57 \\ 
-  inc\_pov2\_139\_299\_pct & 2.43 & -0.83 \\ 
-  inc\_pov2\_300\_499\_pct & 0.27 & -0.03 \\ 
-  inc\_pov2\_500\_plus\_pct & -5.01 & 2.00 \\ 
-  married\_pct & 0.68 & 0.74 \\ 
-  missing\_children\_pct & 3.63 & 2.08 \\ 
-  one\_child\_pct & -0.53 & 0.15 \\ 
-  pop\_growth\_2012 & 2.55 & 0.25 \\ 
-  pop\_growth\_2013 & 2.49 & -0.23 \\ 
+age\_cat2\_19\_29\_pct & (0.51, 0.50) & (0.80, -0.11) \\ 
+  age\_cat2\_30\_39\_pct & (0.23, 0.42) & (0.57, -0.14) \\ 
+  age\_cat2\_40\_49\_pct & (-0.10, 0.50) & (0.19, 0.65) \\ 
+  avg\_adult\_hh\_ratio & (-10.11, -0.15) & (-2.18, -0.25) \\ 
+  citizenship\_pct & (2.19, 2.00) & (-1.16, 1.69) \\ 
+  disability\_pct & (1.01, -0.52) & (-0.25, -0.43) \\ 
+  educ\_hs\_degree\_pct & (2.38, -1.54) & (0.04, -0.54) \\ 
+  educ\_less\_than\_hs\_pct & (0.74, -1.32) & (1.58, -0.78) \\ 
+  educ\_some\_college\_pct & (-0.01, -0.75) & (-0.69, -0.83) \\ 
+  female\_pct & (0.34, 0.72) & (0.24, 1.00) \\ 
+  foreign\_born\_pct & (-5.26, -2.00) & (1.29, -2.00) \\ 
+  hins\_unins\_pct\_2011 & (4.37, -0.05) & (4.63, 0.05) \\ 
+  hins\_unins\_pct\_2012 & (4.10, 0.00) & (4.39, -0.05) \\ 
+  hins\_unins\_pct\_2013 & (3.84, 0.05) & (4.56, 0.05) \\ 
+  hispanic\_pct & (-1.70, -1.00) & (4.11, -0.86) \\ 
+  inc\_pov2\_138\_pct & (1.92, -0.57) & (1.25, 0.30) \\ 
+  inc\_pov2\_139\_299\_pct & (2.43, -0.83) & (1.53, -0.17) \\ 
+  inc\_pov2\_300\_499\_pct & (0.27, -0.03) & (-0.65, 0.13) \\ 
+  inc\_pov2\_500\_plus\_pct & (-5.01, 2.00) & (-2.36, 1.09) \\ 
+  married\_pct & (0.68, 0.74) & (0.13, 1.00) \\ 
+  missing\_children\_pct & (3.63, 2.08) & (2.35, 0.03) \\ 
+  one\_child\_pct & (-0.53, 0.15) & (0.07, 0.41) \\ 
+  pop\_growth\_2012 & (2.55, 0.25) & (0.90, 0.25) \\ 
+  pop\_growth\_2013 & (2.49, -0.23) & (0.76, -0.25) \\ 
    \bottomrule
-    \end{tabular}
+\end{tabular}
     \caption{Balance Table (1)}
     \label{tab:baltab1}
 \end{table}
@@ -712,57 +727,57 @@ age\_cat2\_19\_29\_pct & 0.51 & 0.50 \\
 \centering
 \begin{tabular}{lrr}
   \toprule
-Variables & Unweighted Difference & Weighted Difference \\ 
+Variables & Preferred & Early Excluded \\ 
   \midrule
-  race\_white\_pct & 1.49 & -1.00 \\ 
-  repub\_gov & 65.02 & 17.40 \\ 
-  repub\_lower\_control & 74.91 & 19.37 \\ 
-  repub\_total\_control & 73.72 & 20.00 \\ 
-  student\_pct & -0.18 & 0.77 \\ 
-  three\_plus\_child\_pct & 0.00 & 0.07 \\ 
-  two\_child\_pct & -0.63 & 0.35 \\ 
-  unemployed\_pct\_2011 & -0.81 & -0.10 \\ 
-  unemployed\_pct\_2012 & -0.85 & 0.10 \\ 
-  unemployed\_pct\_2013 & -0.61 & 0.10 \\ 
-  urban\_pct & -6.52 & 2.00 \\ 
+  race\_white\_pct & (1.49, -1.00) & (-2.66, -1.00) \\ 
+  repub\_gov & (65.02, 17.40) & (55.02, 15.14) \\ 
+  repub\_lower\_control & (74.91, 19.37) & (57.24, 14.67) \\ 
+  repub\_total\_control & (73.72, 20) & (58.2, 20) \\ 
+  student\_pct & (-0.18, 0.77) & (-0.04, -0.10) \\ 
+  three\_plus\_child\_pct & (0.00, 0.07) & (0.17, -0.02) \\ 
+  two\_child\_pct & (-0.63, 0.35) & (-0.05, 0.23) \\ 
+  unemployed\_pct\_2011 & (-0.81, -0.01) & (-0.75, -0.10) \\ 
+  unemployed\_pct\_2012 & (-0.85, 0.10) & (-0.71, 0.10) \\ 
+  unemployed\_pct\_2013 & (-0.61, 0.10) & (-0.36, 0.06) \\ 
+  urban\_pct & (-6.52, 2.0) & (-0.96, 0.50) \\ 
    \bottomrule
     \end{tabular}
     \caption{Balance Table (2)}
     \label{tab:baltab2}
 \end{table}
 
-Table~\ref{tab:oatedist1} and Table~\ref{tab:oatedist2} display the difference in means from the overlap region (calculated on our preferred adjusted datasets) and the treated and untreated regions (unweighted). 
+Table~\ref{tab:oatedist1} and Table~\ref{tab:oatedist2} display the difference in means from the overlap region from the control and treated regions on the preferred dataset and with the early expansion states excluded. The numbers are displayed as (absolute distance from control region, absolute distance from treated region). These distances are computed using our adjusted datasets. Additional results are available on request.
 
 \begin{table}[ht]
 \centering
-\begin{tabular}{lrr}
+\begin{tabular}{lll}
   \toprule
-Variable & Dist from control & Dist from treatment \\ 
+Variable & Preferred & Early Excluded \\ 
   \midrule
-  age\_cat2\_19\_29\_pct & -1.38 & -1.09 \\ 
-  age\_cat2\_30\_39\_pct & -0.65 & -1.08 \\ 
-  age\_cat2\_40\_49\_pct & 0.01 & -0.07 \\ 
-  avg\_adult\_hh\_ratio & -3.62 & -14.95 \\ 
-  citizenship\_pct & 1.72 & 5.27 \\ 
-  disability\_pct & 0.31 & 1.77 \\ 
-  educ\_hs\_degree\_pct & 0.94 & 4.51 \\ 
-  educ\_less\_than\_hs\_pct & -1.54 & -1.26 \\ 
-  educ\_some\_college\_pct & 0.27 & 0.67 \\ 
-  female\_pct & -0.09 & 0.27 \\ 
-  foreign\_born\_pct & -2.17 & -9.75 \\ 
-  hins\_unins\_pct\_2011 & -6.76 & -0.03 \\ 
-  hins\_unins\_pct\_2012 & -3.11 & -0.21 \\ 
-  hins\_unins\_pct\_2013 & -0.93 & -0.81 \\ 
-  hispanic\_pct & -4.53 & -8.90 \\ 
-  inc\_pov2\_138\_pct & -1.37 & 0.62 \\ 
-  inc\_pov2\_139\_299\_pct & -1.32 & 2.19 \\ 
-  inc\_pov2\_300\_499\_pct & 2.42 & 1.68 \\ 
-  inc\_pov2\_500\_plus\_pct & 0.52 & -4.72 \\ 
-  married\_pct & 2.04 & 2.48 \\ 
-  missing\_children\_pct & -0.70 & 2.43 \\ 
-  one\_child\_pct & -0.88 & -1.09 \\ 
-  pop\_growth\_2012 & -9.23 & 1.76 \\ 
-  pop\_growth\_2013 & -7.66 & 1.90 \\ 
+age\_cat2\_19\_29\_pct & (-1.38, -1.09) & (-1.31, -0.73) \\ 
+  age\_cat2\_30\_39\_pct & (-0.65, -1.08) & (-0.60, -0.70) \\ 
+  age\_cat2\_40\_49\_pct & (0.01, -0.07) & (0.02, 0.23) \\ 
+  avg\_adult\_hh\_ratio & (-3.62, -14.95) & (-3.37, -6.76) \\ 
+  citizenship\_pct & (1.72, 5.27) & (1.86, 2.06) \\ 
+  disability\_pct & (0.31, 1.77) & (0.13, 0.34) \\ 
+  educ\_hs\_degree\_pct & (0.94, 4.51) & (0.42, 1.65) \\ 
+  educ\_less\_than\_hs\_pct & (-1.54, -1.26) & (-1.77, -0.65) \\ 
+  educ\_some\_college\_pct & (0.27, 0.67) & (0.81, 0.54) \\ 
+  female\_pct & (-0.09, 0.27) & (-0.24, 0.01) \\ 
+  foreign\_born\_pct & (-2.17, -9.75) & (-2.43, -3.47) \\ 
+  hins\_unins\_pct\_2011 & (-6.76, -0.03) & (-7.4, -0.43) \\ 
+  hins\_unins\_pct\_2012 & (-3.11, -0.21) & (-3.48, -0.29) \\ 
+  hins\_unins\_pct\_2013 & (-0.93, -0.81) & (-1.23, -0.38) \\ 
+  hispanic\_pct & (-4.53, -8.90) & (-4.44, -3.00) \\ 
+  inc\_pov2\_138\_pct & (-1.37, 0.62) & (-1.86, -0.54) \\ 
+  inc\_pov2\_139\_299\_pct & (-1.32, 2.19) & (-1.53, 1.08) \\ 
+  inc\_pov2\_300\_499\_pct & (2.42, 1.68) & (2.78, 1.12) \\ 
+  inc\_pov2\_500\_plus\_pct & (0.52, -4.72) & (0.95, -1.65) \\ 
+  married\_pct & (2.04, 2.48) & (2.66, 2.56) \\ 
+  missing\_children\_pct & (-0.7, 2.43) & (-0.76, 1.09) \\ 
+  one\_child\_pct & (-0.88, -1.09) & (-0.87, -0.48) \\ 
+  pop\_growth\_2012 & (-9.23, 1.76) & (-9.31, 0.03) \\ 
+  pop\_growth\_2013 & (-7.66, 1.9) & (-7.78, 0.05) \\ 
    \bottomrule
 \end{tabular}
     \caption{Overlap region distance from control, treatment regions (1)}
@@ -773,26 +788,26 @@ Variable & Dist from control & Dist from treatment \\
 \centering
 \begin{tabular}{lrr}
   \toprule
-Variable & Dist from control & Dist from treatment \\ 
+Variable & Preferred & Early Excluded \\ 
   \midrule
-  race\_white\_pct & 4.41 & 8.25 \\ 
-  repub\_gov & -12.46 & 52.56 \\ 
-  repub\_lower\_control & -5.28 & 69.63 \\ 
-  repub\_total\_control & -17.73 & 55.98 \\ 
-  student\_pct & -0.72 & -0.82 \\ 
-  three\_plus\_child\_pct & -0.37 & -0.21 \\ 
-  two\_child\_pct & 0.40 & -0.80 \\ 
-  unemployed\_pct\_2011 & -0.25 & -0.58 \\ 
-  unemployed\_pct\_2012 & -0.72 & -0.71 \\ 
-  unemployed\_pct\_2013 & 0.25 & -0.68 \\ 
-  urban\_pct & -5.34 & -13.42 \\ 
+  race\_white\_pct & (4.41, 8.25) & (6.23, 5.93) \\ 
+  repub\_gov & (-12.46, 52.56) & (-11.62, 43.39) \\ 
+  repub\_lower\_control & (-5.28, 69.63) & (-3.82, 53.42) \\ 
+  repub\_total\_control & (-17.73, 55.98) & (-15.45, 42.75) \\ 
+  student\_pct & (-0.72, -0.82) & (-0.59, -0.56) \\ 
+  three\_plus\_child\_pct & (-0.37, -0.21) & (-0.26, 0.07) \\ 
+  two\_child\_pct & (0.40, -0.80) & (0.55, -0.07) \\ 
+  unemployed\_pct\_2011 & (-0.25, -0.58) & (-0.56, -0.84) \\ 
+  unemployed\_pct\_2012 & (-0.72, -0.71) & (-0.93, -0.79) \\ 
+  unemployed\_pct\_2013 & (0.25, -0.68) & (0.08, -0.60) \\ 
+  urban\_pct & (-5.34, -13.42) & (-4.88, -7.40) \\ 
    \bottomrule
 \end{tabular}
     \caption{Overlap region distance from control, treatment regions (2)}
     \label{tab:oatedist2}
 \end{table}
 
-Finally, Table ~\ref{tab:oatestateweights} displays the sum of CPUMA-level weights within each state for the OATE region, using the preferred covariate adjustment (``sigma\_uu\_i''), as well as no adjustment (``sigma\_zero'') and the secondary adjustment (``sigma\_uu\_avg''). We display all states where the total sum of weights within states is greater than one for any state. The total sum of weights for each set is standardized to sum to 100 for each set of weights.
+Table ~\ref{tab:oatestateweightsc1} displays the sum of CPUMA-level weights within each state for the OATE region, using the preferred covariate adjustment (``sigma\_uu\_i''), as well as no adjustment (``sigma\_zero'') and the secondary adjustment (``sigma\_uu\_avg''). We display all states where the total sum of weights within states is greater than one for any state. The total sum of weights for each set is standardized to sum to 100 for each set of weights. Table ~\ref{tab:oatestateweightsc2} displays the same results with the early expansion states excluded.
 
 \begin{table}[ht]
 \centering
@@ -829,16 +844,52 @@ OH & 1 & 33.98 & 35.10 & 36.75 \\
   SC & 0 & 0.47 & 0.47 & 1.00 \\ 
   \bottomrule
 \end{tabular}
-\caption{OATE weights summed by state by covariate adjustment}
-\label{tab:oatestateweights}
+\caption{OATE weights summed by state by covariate adjustment, preferred dataset}
+\label{tab:oatestateweightsc1}
 \end{table}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrrrr}
+  \toprule
+State & Treatment & sigma\_uu\_i & sigma\_uu\_avg & sigma\_zero \\ 
+  \midrule
+OH & 1 & 31.42 & 33.16 & 36.92 \\ 
+  MI & 1 & 29.64 & 28.32 & 28.43 \\ 
+  AR & 1 & 15.73 & 15.32 & 12.56 \\ 
+  WI & 0 & 15.57 & 15.12 & 14.51 \\ 
+  MO & 0 & 15.31 & 14.93 & 11.87 \\ 
+  PA & 0 & 13.89 & 13.71 & 17.60 \\ 
+  FL & 0 & 10.68 & 12.31 & 10.52 \\ 
+  AZ & 1 & 9.66 & 7.96 & 8.88 \\ 
+  IA & 1 & 6.37 & 6.82 & 6.15 \\ 
+  TN & 0 & 5.25 & 5.88 & 5.83 \\ 
+  NE & 0 & 5.21 & 5.37 & 4.34 \\ 
+  ME & 0 & 5.03 & 5.96 & 4.92 \\ 
+  NC & 0 & 4.97 & 4.42 & 4.94 \\ 
+  IN & 0 & 4.19 & 3.36 & 5.95 \\ 
+  KS & 0 & 3.91 & 3.15 & 3.12 \\ 
+  NV & 1 & 3.66 & 4.13 & 2.96 \\ 
+  VA & 0 & 2.91 & 2.33 & 1.45 \\ 
+  AL & 0 & 2.75 & 2.72 & 2.54 \\ 
+  TX & 0 & 2.56 & 1.96 & 3.17 \\ 
+  UT & 0 & 2.31 & 1.21 & 2.13 \\ 
+  ND & 1 & 2.16 & 2.44 & 2.14 \\ 
+  AK & 0 & 1.59 & 2.27 & 1.34 \\ 
+  NM & 1 & 1.37 & 1.83 & 1.95 \\ 
+  OK & 0 & 1.07 & 2.38 & 0.82 \\ 
+  SC & 0 & 0.67 & 0.68 & 1.09 \\ 
+   \bottomrule
+\end{tabular}
+\caption{OATE weights summed by state by covariate adjustment, early expansion excluded}
+\label{tab:oatestateweightsc2}
+\end{table}
+
 
 \subsection{Appendix E: Additional Results}
 \label{ssec:allresults}
 
-Table~\ref{tab:confintmain} displays the point estimates from all estimators as well as confidence intervals calculated either (a) leave-one-state-out jackknife on the adjusted dataset (CI (states)); (b) leave-one-state-out jackknife repeating the entire adjusted leaving each state out (CI (proc)). 
-
-This table also includes the Oaxaca-Blinder weights (OB and H-OB), and also all analyses calculated on a second version of the adjusted data where we use a common $\kappa$ for all values (sigma\_uu\_avg), which is the adjustment suggested by \cite{carroll2006measurement}. Notice that they are identical for ``sigma\_zero'' because this is the unadjusted dataset. ``sigma\_uu\_i'' is our preferred covariate adjustment.
+Table~\ref{tab:confintmain} displays the point estimates from all estimators as well as confidence intervals calculated either (a) leave-one-state-out jackknife on the adjusted dataset (CI (states)); (b) leave-one-state-out jackknife repeating the entire adjusted leaving each state out (CI (proc)). This table also includes the Oaxaca-Blinder weights (OB and H-OB), and also all analyses calculated on a second version of the adjusted data where we use a common $\kappa$ for all values (sigma\_uu\_avg), which is the adjustment suggested by \cite{carroll2006measurement}. Notice that they are identical for ``sigma\_zero'' because this is the unadjusted dataset. ``sigma\_uu\_i'' is our preferred covariate adjustment.
 
 \begin{table}[ht]
 \centering
@@ -870,7 +921,37 @@ H-SBW & sigma\_uu\_i & -2.00 & (-3.59, -0.4) & (-3.74, -0.26) \\
 \label{tab:confintmain}
 \end{table}
 
-Table~\ref{tab:ptests} presents all versions of the estimators that we calculated. The ``Var subset`` column indicates which variables were excluded from the estimation: 0 excludes no variables; 1 removes Republican governance indicators; 2 pre-treatment uninsurance and unemployment rates; 3 urban, age, education, citizenship, marital status, student, disability, or female; 4 race, ethnicity, income, foreign born; 5 children, population growth, and household to person ratio.
+Table ~\ref{tab:deltac1} presents the difference in the estimated contrast when excluding the Republican governance indicators along with inferential estimates. Table~\ref{tab:ptests} presents all point estimates from estimators that we calculated. The ``Var subset`` column indicates which variables were excluded from the estimation: 0 excludes no variables; 1 removes Republican governance indicators; 2 pre-treatment uninsurance and unemployment rates; 3 urban, age, education, citizenship, marital status, student, disability, or female; 4 race, ethnicity, income, foreign born; 5 children, population growth, and household to person ratio. We see that the largest changes generally occur when excluding the pre-treatment uninsurance and unemployment rates. This is not surprising: controlling for the other covariates, the pre-treatment uninsurance rate was substantially lower in the treated region compared to the control region. Given that pre-treatment uninsurance rates are highly correlated with post-treatment rates, we find that this comparison leads to a larger absolute magnitude point estimate, highlighting the need to control for these covariates.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{llrll}
+  \toprule
+Weight type & Sigma estimate & $\hat{\Delta}$ & CI state & CI proc \\ 
+  \midrule
+SBW & sigma\_uu\_i & -0.92 & (-2.52, 0.67) & (-2.71, 0.86) \\ 
+  H-SBW & sigma\_uu\_i & -0.62 & (-2.05, 0.81) & (-2.21, 0.97) \\ 
+  BC-SBW & sigma\_uu\_i & -0.41 & (-1.64, 0.82) & (-2.33, 1.51) \\ 
+  BC-HSBW & sigma\_uu\_i & -0.51 & (-1.74, 0.71) & (-2.6, 1.58) \\ 
+  OB & sigma\_uu\_i & -0.26 & (-1.03, 0.51) & (-3.97, 3.46) \\ 
+  H-OB & sigma\_uu\_i & -0.52 & (-1.22, 0.18) & (-4.35, 3.31) \\ 
+  SBW & sigma\_uu\_avg & -0.79 & (-1.94, 0.37) & (-2.91, 1.34) \\ 
+  H-SBW & sigma\_uu\_avg & -0.60 & (-1.54, 0.35) & (-2.42, 1.22) \\ 
+  BC-SBW & sigma\_uu\_avg & -0.32 & (-1.16, 0.53) & (-5.02, 4.39) \\ 
+  BC-HSBW & sigma\_uu\_avg & -0.56 & (-1.44, 0.32) & (-2.84, 1.72) \\ 
+  OB & sigma\_uu\_avg & -0.11 & (-0.75, 0.52) & (-7.29, 7.07) \\ 
+  H-OB & sigma\_uu\_avg & -0.43 & (-1.16, 0.3) & (-8.23, 7.37) \\ 
+  SBW & sigma\_zero & -0.69 & (-1.67, 0.28) & (-1.67, 0.28) \\ 
+  H-SBW & sigma\_zero & -0.64 & (-1.62, 0.34) & (-1.62, 0.34) \\ 
+  BC-SBW & sigma\_zero & -0.34 & (-0.98, 0.29) & (-0.98, 0.29) \\ 
+  BC-HSBW & sigma\_zero & -0.49 & (-1.33, 0.34) & (-1.33, 0.34) \\ 
+  OB & sigma\_zero & -0.20 & (-0.83, 0.42) & (-0.83, 0.42) \\ 
+  H-OB & sigma\_zero & -0.43 & (-1.07, 0.21) & (-1.07, 0.21) \\ 
+   \bottomrule
+\end{tabular}
+\caption{$\hat{\Delta}$ estimates primary dataset}
+\label{tab:deltac1}
+\end{table}
 
 \begin{table}[ht]
 \centering
@@ -902,7 +983,7 @@ Var subset & Sigma estimate & H-SBW & BC-HSBW & SBW & BC-SBW & H-OB & OB \\
 \label{tab:ptests}
 \end{table}
 
-Table ~\ref{tab:confintmainc2} and Table~\ref{tab:secondaryptests} are identical to the structure of the previous two tables except we exclude the ``early expansion states'' from the pool of expansion state matches. We note that some of the confidence intervals are extremely large when rerunning the entire procedure, particularly for estimators that require extrapolating from the observed data. This may be a function of both the extreme weights required to achieve balance and also of rare extreme covariate values that occasionally occur in the adjustment procedure. For example, for our preferred adjustment procedure, we find that the results are particularly sensitive to the exclusion of Illinois from the expansion-state group. On this dataset, we find that the variance of the H-SBW weights is approximately 15 while the variance of the BC-HSBW weights is over 5,000.
+Table ~\ref{tab:confintmainc2}, Table~\ref{tab:deltac2}, and Table~\ref{tab:secondaryptests} are identical to the structure of the previous two tables except we exclude the ``early expansion states'' from the pool of expansion state matches. We note that some of the confidence intervals are extremely large when rerunning the entire procedure, particularly for estimators that require extrapolating from the observed data. This may be a function of both the extreme weights required to achieve balance and also of rare extreme covariate values that occasionally occur in the adjustment procedure. For example, for our preferred adjustment procedure, we find that the results are particularly sensitive to the exclusion of Illinois from the expansion-state group. On this dataset, we find that the variance of the H-SBW weights is approximately 15 while the variance of the BC-HSBW weights is over 5,000.
 
 \begin{table}[ht]
 \centering
@@ -936,6 +1017,36 @@ H-SBW & sigma\_uu\_i & -1.29 & (-2.45, -0.12) & (-2.54, -0.03) \\
 
 \begin{table}[ht]
 \centering
+\begin{tabular}{llrll}
+  \toprule
+Weight type & Sigma estimate & $\hat{\Delta}$ & CI state & CI proc \\ 
+  \midrule
+SBW & sigma\_uu\_i & -1.53 & (-2.31, -0.76) & (-2.57, -0.49) \\ 
+  H-SBW & sigma\_uu\_i & -1.28 & (-2.2, -0.36) & (-2.34, -0.21) \\ 
+  BC-SBW & sigma\_uu\_i & -0.73 & (-2.29, 0.82) & (-25.45, 23.98) \\ 
+  BC-HSBW & sigma\_uu\_i & -0.73 & (-2.4, 0.94) & (-30.95, 29.49) \\ 
+  OB & sigma\_uu\_i & -0.51 & (-2.44, 1.43) & (-32.84, 31.82) \\ 
+  H-OB & sigma\_uu\_i & -0.44 & (-1.87, 0.98) & (-38.79, 37.9) \\ 
+  SBW & sigma\_uu\_avg & -1.15 & (-2.69, 0.39) & (-3.41, 1.12) \\ 
+  H-SBW & sigma\_uu\_avg & -0.94 & (-2.41, 0.52) & (-3.18, 1.3) \\ 
+  BC-SBW & sigma\_uu\_avg & -0.70 & (-2.16, 0.76) & (-7.34, 5.94) \\ 
+  BC-HSBW & sigma\_uu\_avg & -0.62 & (-2.09, 0.85) & (-8.53, 7.29) \\ 
+  OB & sigma\_uu\_avg & -1.86 & (-6.13, 2.42) & (-16.8, 13.09) \\ 
+  H-OB & sigma\_uu\_avg & -2.18 & (-5.53, 1.18) & (-20.36, 16.01) \\ 
+  SBW & sigma\_zero & -1.06 & (-2.12, 0) & (-2.12, 0) \\ 
+  H-SBW & sigma\_zero & -1.04 & (-2.01, -0.07) & (-2.01, -0.07) \\ 
+  BC-SBW & sigma\_zero & -0.40 & (-1.92, 1.11) & (-1.92, 1.11) \\ 
+  BC-HSBW & sigma\_zero & -0.61 & (-1.75, 0.52) & (-1.75, 0.52) \\ 
+  OB & sigma\_zero & -0.26 & (-1.41, 0.9) & (-1.41, 0.9) \\ 
+  H-OB & sigma\_zero & -0.36 & (-1.31, 0.6) & (-1.31, 0.6) \\ 
+   \bottomrule
+\end{tabular}
+\caption{$\hat{\Delta}$ estimates, early expansion excluded}
+\label{tab:deltac2}
+\end{table}
+
+\begin{table}[ht]
+\centering
 \begin{tabular}{rlrrrrrr}
   \toprule
 Variable subset & Sigma estimate & H-SBW & BC-HSBW & SBW & BC-SBW & H-OB & OB \\ 
@@ -964,7 +1075,7 @@ Variable subset & Sigma estimate & H-SBW & BC-HSBW & SBW & BC-SBW & H-OB & OB \\
     \label{tab:secondaryptests}
 \end{table}
 
-Finally, Table~\ref{tab:sensitivityc1} displays the point estimates from the H-SBW estimator when leaving out each state compared to the original point estimates. We display the changes relative to the full covariate set (``Psihat (0)'') and the covariate set excluding the Republican governance indicators (``Psihat (1)''). We display the point estimates both when leaving out the state conditional on the covariate adjustment and when rerunning the entire adjustment procedure (``(states, proc)''). Additional results for other estimators are available on request.
+Table~\ref{tab:sensitivityc1} displays the point estimates from the H-SBW estimator when leaving out each state compared to the original point estimates. We display the changes relative to the full covariate set (``Psihat (0)'') and the covariate set excluding the Republican governance indicators (``Psihat (1)''). We display the point estimates both when leaving out the state conditional on the covariate adjustment and when rerunning the entire adjustment procedure (``(states, proc)''). Additional results for other estimators are available on request.
 
 \begin{table}[ht]
 \centering
@@ -1000,7 +1111,41 @@ AR & -2.00 & (-2.18, -2.21) & -2.62 & (-2.55, -2.55) \\
     \label{tab:sensitivityc1}
 \end{table}
 
-Table~\ref{tab:oateconfint} displays point estimates and confidence intervals for the primary point estimates. We display the confidence intervals calculated using both the leave-one-out-states conditional on the covariate adjustment (CI (states)) and recalculating the covariate adjustment for the OATE (CI (proc)). We note that when calculating these confidence intervals, on the rare occasions when logistic regression failed to converge, we used the probit link instead.
+Finally, Figure~\ref{fig:rdiffc1state}, Figure~\ref{fig:rdiffc1proc}, Figure~\ref{fig:rdiffc2state}, and Figure~\ref{fig:rdiffc2proc} display heatmaps showing the estimates of $\Delta$ for all of our primary estimators when leaving out each state. We see that this contrast is overwhelmingly negative; we only estimate positive contrasts for estimators calculated on the adjusted datasets where the adjustment was recalculated excluding that state and that extrapolate beyond the support of the data.
+
+\begin{figure}[]
+\begin{center}
+    \includegraphics[scale=0.6]{01_Plots/loostate-repub-sensitivityc1-state-full.png}
+    \caption{$\hat{\Delta}$ leave-one-out state, primary dataset, covariate adjustment constant}
+    \label{fig:rdiffc1state}
+\end{center}
+\end{figure}
+
+\begin{figure}[]
+\begin{center}
+    \includegraphics[scale=0.6]{01_Plots/loostate-repub-sensitivityc1-proc-full.png}
+    \caption{$\hat{\Delta}$ leave-one-out state, primary dataset, covariate adjustment recalculated}
+    \label{fig:rdiffc1proc}
+\end{center}
+\end{figure}
+
+\begin{figure}[]
+\begin{center}
+    \includegraphics[scale=0.6]{01_Plots/loostate-repub-sensitivityc2-state-full.png}
+    \caption{$\hat{\Delta}$ leave-one-out state, early expansion excluded, covariate adjustment constant}
+    \label{fig:rdiffc2state}
+\end{center}
+\end{figure}
+
+\begin{figure}[]
+\begin{center}
+    \includegraphics[scale=0.6]{01_Plots/loostate-repub-sensitivityc2-proc-full.png}
+    \caption{$\hat{\Delta}$ leave-one-out state, early expansion excluded, covariate adjustment recalculated}
+    \label{fig:rdiffc2proc}
+\end{center}
+\end{figure}
+
+Table~\ref{tab:oateconfint} displays point estimates and confidence intervals for the primary point estimates for the OATE. We display the confidence intervals calculated using both the leave-one-out-states conditional on the covariate adjustment (CI (states)) and recalculating the covariate adjustment for the OATE (CI (proc)). We note that when calculating these confidence intervals, on the rare occasions when logistic regression failed to converge, we used the probit link instead.
 
 \begin{table}[ht]
 \centering
@@ -1016,8 +1161,28 @@ Psihat & Sigma estimate & Dataset & CI (states) & CI (proc) \\
   -1.95 & sigma\_zero & c2 & (-2.65, -1.25) & (-2.65, -1.25) \\ 
    \bottomrule
 \end{tabular}
-\caption{OATE results inference}
+\caption{OATE primary results inference}
 \label{tab:oateconfint}
+\end{table}
+
+Table~\ref{tab:oaterepubdiff} displays the difference between the estimated contrasts when excluding Republican governance indicators and when including all covariates as well as the estimated confidence intervals, estimated both conditional on the imputation (CI (states)) and recalculating the entire covariate adjustment (CI (proc)).
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{llrll}
+  \toprule
+Sigma estimate & Dataset & $\hat{\Delta}$ & CI (states) & CI (proc) \\ 
+  \midrule
+sigma\_uu\_i & c1 & -0.96 & (-1.1, -0.81) & (-1.12, -0.8) \\ 
+  sigma\_uu\_i & c2 & -0.62 & (-0.78, -0.46) & (-0.79, -0.45) \\ 
+  sigma\_avg & c1 & -1.04 & (-1.19, -0.89) & (-1.22, -0.86) \\ 
+  sigma\_avg & c2 & -0.64 & (-0.80, -0.48) & (-0.82, -0.46) \\ 
+  sigma\_zero & c1 & -0.75 & (-0.88, -0.63) & (-0.88, -0.63) \\ 
+  sigma\_zero & c2 & -0.56 & (-0.69, -0.43) & (-0.69, -0.43) \\ 
+   \bottomrule
+\end{tabular}
+\caption{OATE $\hat{\Delta}$ estimates}
+\label{tab:oaterepubdiff}
 \end{table}
 
 Table~\ref{tab:oatesensitive} presents all point estimates calculate using the overlap weights. Dataset ``c1'' refers to the preferred dataset and dataset ``c2'' removes the early expansion states. The numeric column names refer to the covariate group excluded (covariate groups described above).
@@ -1036,31 +1201,11 @@ sigma\_uu\_i & c1 & -1.64 & -2.60 & -2.96 & -1.86 & -1.86 & -1.77 \\
   sigma\_zero & c2 & -1.95 & -2.51 & -3.25 & -2.12 & -2.10 & -2.00 \\ 
    \bottomrule
 \end{tabular}
-\caption{OATE point estimates}
+\caption{OATE all point estimates}
 \label{tab:oatesensitive}
 \end{table}
 
-Table~\ref{tab:oaterepubdiff} displays the difference between the estimated contrasts when excluding Republican governance indicators and when including all covariates as well as the estimated confidence intervals, estimated both conditional on the imputation (CI (states)) and recalculating the entire covariate adjustment (CI (proc)).
-
-\begin{table}[ht]
-\centering
-\begin{tabular}{llrll}
-  \toprule
-Sigma estimate & Dataset & Difference & CI (states) & CI (proc) \\ 
-  \midrule
-sigma\_uu\_i & c1 & -0.96 & (-1.1, -0.81) & (-1.12, -0.8) \\ 
-  sigma\_uu\_i & c2 & -0.62 & (-0.78, -0.46) & (-0.79, -0.45) \\ 
-  sigma\_avg & c1 & -1.04 & (-1.19, -0.89) & (-1.22, -0.86) \\ 
-  sigma\_avg & c2 & -0.64 & (-0.80, -0.48) & (-0.82, -0.46) \\ 
-  sigma\_zero & c1 & -0.75 & (-0.88, -0.63) & (-0.88, -0.63) \\ 
-  sigma\_zero & c2 & -0.56 & (-0.69, -0.43) & (-0.69, -0.43) \\ 
-   \bottomrule
-\end{tabular}
-\caption{OATE weights summed by state by covariate adjustment}
-\label{tab:oaterepubdiff}
-\end{table}
-
-Finally, Figure~\ref{fig:oateheatmap} displays a heatmap showing how the point estimates change when removing each state, conditional on our preferred covariate adjustment for both the primary dataset and when excluding early expansion states. We present the results for all covariates and excluding the Republican governance indicators. Additional results are available on request. We see that our point estimates move closer to zero when removing Wisconsin or Ohio for all specifications. Removing Arkansas appears to generally move the point estimates further away from zero.
+Figure~\ref{fig:oateheatmap} displays a heatmap showing how the OATE point estimates change when removing each state, conditional on our preferred covariate adjustment for both the primary dataset and when excluding early expansion states. We present the results for all covariates and excluding the Republican governance indicators. Additional results are available on request. We see that our point estimates move closer to zero when removing Wisconsin or Ohio for all specifications. Removing Arkansas appears to generally move the point estimates further away from zero.
 
 \begin{figure}[]
 \begin{center}

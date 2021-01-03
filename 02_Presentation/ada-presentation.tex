@@ -165,15 +165,15 @@ $$
 
 \end{frame}
 
-\begin{frame}{Treatment assignment}
+\begin{frame}{Treatment assignment: non-expansion states}
     \begin{center}
-	\includegraphics[scale=0.5]{01_Plots/expansion-heterogeneity.png}
+	\includegraphics[scale=0.5]{01_Plots/expansion-heterogeneity-ctonly.png}
     \end{center}
 \end{frame}
 
-\begin{frame}{Treatment assignment}
+\begin{frame}{Treatment assignment: expansion states}
     \begin{center}
-	\includegraphics[scale=0.5]{01_Plots/expansion-heterogeneity-classification.png}  
+	\includegraphics[scale=0.5]{01_Plots/expansion-heterogeneity-txonly.png}
     \end{center}
 \end{frame}
 
@@ -203,12 +203,12 @@ $$
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Data Source}
+\begin{frame}{Primary Data Source}
     \begin{itemize}
     \item American Community Survey (ACS) microdata from 2011-2014 \bigskip 
     \item Approximately three million individuals surveyed annually from across the United States \bigskip 
-    \item Each individual has an associated survey weight and 80 sets of replicate survey weights \bigskip 
-    \item Aggregate data to consistent public use microdata area (CPUMA) level
+    \item Aggregate data to consistent public use microdata area (CPUMA) level \bigskip
+    \item CPUMAs per state range from 1 to 123, median of 15
     \end{itemize}
 \end{frame}   
 
@@ -220,7 +220,7 @@ $$
             \item $Y_{sc}^a \perp A_{sc} \mid X_{sc} \centernot\implies Y_{sc}^a \perp A_{sc} \mid W_{sc}$ \bigskip
         \end{itemize}
         \item $W_{sc} = X_{sc} + v_{sc}$, where $v_{sc} \sim N(0, \Sigma_{vv, sc})$ \bigskip
-        \item Sample sizes range from [X, Z] \bigskip
+        \item Annual sample sizes range from 350 to 22,000, median of 1,000 \bigskip
     \end{itemize}
 \end{frame}
 
@@ -398,8 +398,11 @@ BC-SBW & -1.93 & (-3.32, -0.54) \\
         \end{itemize}
         \item Let $\hat{\psi}_1$ be estimate excluding covariates, $\hat{\psi}_0$ be the original estimate using weights $\gamma_1$ and $\gamma_2$ \bigskip
         \item $\Delta = \hat{\psi}^1_1 - \hat{\psi}^1_0$ \bigskip
-        \item $\mathbb{E}\{\Delta\} = (X_1^T\gamma_1 - X_1^T\gamma_0)^T\beta_X \approx (V_1^T\gamma_1 - V_1^T\gamma_0)^T\beta_V$
     \end{itemize}
+\begin{align*}
+\mathbb{E}\{\Delta\} &\approx (X_1^T(\gamma_1 - \gamma_0))^T\beta \\ &\approx (V_1^T(\gamma_1 - \gamma_0))^T\beta_V
+\end{align*}
+
 \end{frame}
 
 \begin{frame}{Heterogeneity across covariate groups}
