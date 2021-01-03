@@ -9,7 +9,8 @@
 %\usepackage{authblk}
 \usepackage{float}
 \usetikzlibrary{positioning, calc, shapes.geometric, shapes, shapes.multipart, arrows.meta, arrows, decorations.markings, external, trees}
-
+\usepackage{biblatex}
+\addbibresource{Bibliography-MM-MC.bib}
 
 \newlength\myindent
 \setlength\myindent{2em}
@@ -73,7 +74,7 @@
 \begin{itemize}
     \item Medicaid is a state-administered program that provides health insurance to low-income Americans \bigskip 
     
-    \item The 2010 Affordable Care Act mandated that all states cover low-income childless adults up to 138 percent of the federal poverty line (FPL) \bigskip
+    \item The 2010 Affordable Care Act mandated that all states expand their eligibility requirements to cover all childless adults up to 138 percent of the federal poverty line (FPL) \bigskip
     
     \item A 2012 Supreme Court ruling made expansion optional for states \bigskip
     
@@ -91,10 +92,10 @@
     \item Insuring previously uninsured individuals mediates many effects of Medicaid expansion \bigskip
     \item Existing literature primarily targets the ETT; the ETC has rarely been directly studied \bigskip
     \begin{itemize}
-        \item \cite{wherry2016early} predict that 15,000 deaths would have been avoided had non-expansion states expanded Medicaid \bigskip
+        \item Miller et al (2019) predict that 15,000 deaths would have been avoided had non-expansion states expanded Medicaid \bigskip
         \item If treatment effect heterogeneity, we cannot simply use existing estimates of ETT to understand the ETC \bigskip
     \end{itemize}
-    \item We believe that the association between governance and Medicaid enrollment would make it likely these effects are smaller in absolute magnitude (see, eg, \cite{daw2018matching}) \bigskip
+    \item We believe that the association between governance and Medicaid enrollment would make it likely these effects are smaller in absolute magnitude (see, eg, Sommers (2012)) \bigskip
     \end{itemize} 
 \end{frame}
 
@@ -112,10 +113,10 @@
         \item We estimate -2 percentage point change, over 35 percent lower in absolute magnitude than ETT from Courtenmanche et al. (2017) \bigskip 
     \end{itemize}
 
-    \item We estimate the association of governance with the change in uninsurance rate \bigskip
+    \item We examine how factors associated with Republican governance might drive this difference \bigskip
     
     \begin{itemize}
-        \item We find a consistent negative association between Republican governance and the estimated treatment effect \bigskip 
+        \item We find a consistent positive association between Republican governance and our predicted uninsurance rates under treatment \bigskip 
     \end{itemize}
     \end{itemize}
 \end{frame}
@@ -130,14 +131,14 @@
     \end{itemize}
 \end{frame}
 
-\section{Data \& Methods}
+\section{Identification}
 
 \subsection{Target estimand}
 
 \begin{frame}{Target estimand}
 
 $$
-\frac{\sum_{s: A_s = 0} \sum_{c = 1}^{n_s} (Y_{scT}^1 - Y_{scT}^0)p_{scT}}{\sum_{s, c : A_s = 0}p_{scT}}
+N_c^{-1}\sum_{s: A_s = 0} \sum_{c = 1}^{n_s} (Y_{scT}^1 - Y_{scT}^0)
 $$
 
 \begin{itemize}
@@ -154,7 +155,7 @@ $$
 \begin{itemize}
     \item SUTVA \bigskip
     \begin{itemize}
-        \item Only one version of treatment; no spillovers \bigskip
+        \item No spillovers; only one version of treatment \bigskip
     \end{itemize}
     \item No anticipatory treatment effects \bigskip
     \begin{itemize}
@@ -215,7 +216,7 @@ $$
     \begin{itemize}
         \item All ACS generated covariates are estimates \bigskip
         \begin{itemize}
-            \item We observe $W_{sc}$, but we observe $X_{sc}$ \bigskip
+            \item We observe $W_{sc}$, but we need $X_{sc}$ \bigskip
             \item $Y_{sc}^a \perp A_{sc} \mid X_{sc} \centernot\implies Y_{sc}^a \perp A_{sc} \mid W_{sc}$ \bigskip
         \end{itemize}
         \item $W_{sc} = X_{sc} + v_{sc}$, where $v_{sc} \sim N(0, \Sigma_{vv, sc})$ \bigskip
@@ -316,6 +317,8 @@ $$
 
 \section{Results}
 
+\subsection{Question One}
+
 \begin{frame}{Question One}
     \begin{itemize}
         \item What is our estimate of $\psi$? \bigskip
@@ -381,16 +384,11 @@ BC-SBW & -1.93 & (-3.32, -0.54) \\
 \begin{frame}{Robustness plot}
 
 \begin{center}
-	\includegraphics[scale=0.5]{01_Plots/point-estimates-sigmai-c1c2-comparison.png}
+	\includegraphics[scale=0.5]{01_Plots/all-estimates-c1c2.png}
 \end{center}
 \end{frame}
 
-\begin{frame}{Robustness plot}
-
-Plot of different specifications of $\eta$
-
-\end{frame}
-
+\subsection{Question Two}
 
 \begin{frame}{Question Two}
     \begin{itemize}
@@ -399,8 +397,8 @@ Plot of different specifications of $\eta$
             \item Primarily interested in Republican governance indicators \bigskip
         \end{itemize}
         \item Let $\hat{\psi}_1$ be estimate excluding covariates, $\hat{\psi}_0$ be the original estimate using weights $\gamma_1$ and $\gamma_2$ \bigskip
-        \item $\Delta \hat{\psi} = \hat{\psi}^1_1 - \hat{\psi}^1_0$ \bigskip
-        \item $\Delta = (X_1^T\gamma_1 - X_0^T\gamma_0)^T\beta_X \approx (V_1^T\gamma_1 - V_0^T\gamma_0)^T\beta_V$
+        \item $\Delta = \hat{\psi}^1_1 - \hat{\psi}^1_0$ \bigskip
+        \item $\mathbb{E}\{\Delta\} = (X_1^T\gamma_1 - X_1^T\gamma_0)^T\beta_X \approx (V_1^T\gamma_1 - V_1^T\gamma_0)^T\beta_V$
     \end{itemize}
 \end{frame}
 
@@ -416,23 +414,19 @@ Plot of different specifications of $\eta$
 \end{center}
 \end{frame}
 
-\subsection{Sensitivity analyses: no anticipatory treatment effects}
-
-\begin{frame}{Sensitivity analysis: no anticipatory treatment effects}
-    \begin{center}
-	\includegraphics[scale=0.5]{01_Plots/point-estimates-sigmai-c1c2-comparison.png}
-    \end{center}
-\end{frame}
-
 \begin{frame}{Sensitivity analysis: no anticipatory treatment effects}
     \begin{center}
 	\includegraphics[scale=0.5]{01_Plots/repub-diff-c1c2.png}
     \end{center}
 \end{frame}
 
-\begin{frame}{Question Three: OATE}
+\subsection{Sensitivity Analysis: OATE}
+
+\begin{frame}{Robustness Check: OATE}
     \begin{itemize}
-        \item What if we target a different causal estimand?
+        \item What if we target a different causal estimand? \bigskip
+        \item OATE is data-dependent treatment effect defined where there is sufficient overlap to estimate this difference \bigskip
+        \item Logistic regression weights to find a region where the means of the covariates are balanced \bigskip
     \end{itemize}
 \end{frame}
 
@@ -477,7 +471,7 @@ Psihat & Sigma estimate & Dataset & CI (states) \\
 \end{table}
 \end{frame}
 
-\begin{frame}{OATE $\Delta\hat{\psi}$}
+\begin{frame}{OATE $\Delta$}
 \begin{table}[ht]
 \centering
 \begin{tabular}{llrll}
