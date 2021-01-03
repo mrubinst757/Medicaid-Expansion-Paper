@@ -248,8 +248,8 @@ As discussed above, we then use ridge-regression augmentation to extrapolate fro
 
 \begin{figure}[B]
 \begin{center}
-    \includegraphics[scale=0.6]{01_Plots/weights-by-state-hsbw-main.png}
-    \caption{Total weights summed by state}
+    \includegraphics[scale=0.6]{01_Plots/weights-by-state-hsbw-c1.png}
+    \caption{Total weights summed by state, primary dataset}
     \label{fig:statewghts}
 \end{center}
 \end{figure}
@@ -294,13 +294,13 @@ Appendix E  Figure~\ref{fig:rdiffc1state} and Figure~\ref{fig:rdiffc1proc} displ
 
 \subsection{Sensitivity Analyses} \label{sssec:sensitivity}
 
-We examine the sensitivity of our analysis to violations of two key causal assumptions: (1) no anticipatory treatment effects, and (2) positivity violations. To the first point, several states had partial limited expansions prior to 2014. Following \cite{frean2017premium}, we consider these states to be California, Connecticut, Minnesota, New Jersey, and Washington. We rerun our analyses excluding CPUMAs from all five of these states. It is unclear how removing these states might affect our estimates: on the one hand, states that expanded early might have a smaller treatment effect after 2014 because they already enrolled newly eligible individuals. On the other hand, if these states were also more motivated to enroll people in Medicaid, they might have larger post-expansion coverage gains. Figure XX displays the H-SBW weights summed by state along with BC-HSBW. We again see that the BC-HSBW estimator extrapolates heavily to reduce the imabalances. A complete balance table is available in Appendix D, Table~\ref{tab:baltab1} and Table~\ref{tab:baltab2}.
+We examine the sensitivity of our analysis to violations of two key causal assumptions: (1) no anticipatory treatment effects, and (2) positivity violations. To the first point, several states had partial limited expansions prior to 2014. Following \cite{frean2017premium}, we consider these states to be California, Connecticut, Minnesota, New Jersey, and Washington. We rerun our analyses excluding CPUMAs from all five of these states. It is unclear how removing these states might affect our estimates: on the one hand, states that expanded early might have a smaller treatment effect after 2014 because they already enrolled newly eligible individuals. On the other hand, if these states were also more motivated to enroll people in Medicaid, they might have larger post-expansion coverage gains. Figure~\ref{fig:weightsbystatec2} displays the H-SBW weights summed by state alongside BC-HSBW. We again see that the BC-HSBW estimator extrapolates heavily to reduce the imbalances. A complete balance table is available in Appendix D, Table~\ref{tab:baltab1} and Table~\ref{tab:baltab2}.
 
 \begin{figure}[]
 \begin{center}
-    \includegraphics[scale=0.6]{01_Plots/}
-    \caption{Estimator sensitivity to states}
-    \label{fig:loostateplot}
+    \includegraphics[scale=0.6]{01_Plots/weights-by-state-hsbw-c2.png}
+    \caption{Total weights summed by state, early expansion removed}
+    \label{fig:weightsbystatec2}
 \end{center}
 \end{figure}
 
