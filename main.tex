@@ -88,7 +88,7 @@ We predict that the treatment effect on non-expansion effect will be smaller in 
     \end{center}
 \end{figure}
 
-This paper makes two methodological contributions to the literature on balancing weights. First, we extend the ``synthetic controls'' framework to estimate the treatment effect on the controls (ETC) using longitudinal data and we clarify the required assumptions. In brief, while balancing on pre-treatment outcomes alone arguably suffices for some synthetic control applications (see, eg, \cite{botosaru2017role}), because our goal in this setting is to estimate treatment response, we must therefore balance on all covariates that predict treatment response, not just the outcome level absent treatemnt. Moreoever, we cannot simply leverage pre-treatment data to conduct variable selection in this setting. We instead use an implementation of Stable Balancing Weights (\cite{zubizarreta2015stable}) to estimate a set of positive weights to weight the expansion regions to approximately match the covariate distribution of the non-expansion regions. 
+This paper makes two methodological contributions to the literature on balancing weights. First, we extend the ``synthetic controls'' framework to estimate the treatment effect on the controls (ETC) using longitudinal data and we clarify the required assumptions. In brief, while balancing on pre-treatment outcomes alone arguably suffices for some synthetic control applications (see, eg, \cite{botosaru2017role}), because our goal in this setting is to estimate treatment response, we must therefore balance on all covariates that predict treatment response, not just the outcome level absent treatment. Moreover, we cannot simply leverage pre-treatment data to conduct variable selection in this setting. We instead use an implementation of Stable Balancing Weights (\cite{zubizarreta2015stable}) to estimate a set of positive weights to weight the expansion regions to approximately match the covariate distribution of the non-expansion regions. 
 
 Our second contribution is to modify the Stable Balancing Weights (SBW) objective function to account for our data, which is both hierarchical and has several covariates measured with error. Specifically, we use data from the American Communities Survey (ACS) aggregated to the consistent public use microdata area (CPUMA) level. These regions nest within states, and using these smaller regions allows us to get better covariate balance. However, as a result our data both has a hierarchical structure (regions within states) and, because our region-level covariates are estimated from underlying survey data, the sampling variability from our covariate estimates is a form of measurement error which may bias our treatment effect estimates. We first propose a modification of the SBW criterion to account for the hierarchical nature of the data, which disperses the weights more evenly across states. We then leverage the replicate survey weights provided in the ACS microdata to estimate the covariance matrix associated with the sampling variability and use this information to correct for this bias, following the regression calibration literature (see, eg, \cite{gleser1992importance}). This is the first study we are aware of that attempts to adjust for hierarchical data structure and measurement error in the covariates when using balancing weights. 
 
@@ -865,31 +865,47 @@ OH & 1 & 33.98 & 35.10 & 36.75 \\
   \toprule
 State & Treatment & sigma\_uu\_i & sigma\_uu\_avg & sigma\_zero \\ 
   \midrule
-OH & 1 & 31.42 & 33.16 & 36.92 \\ 
-  MI & 1 & 29.64 & 28.32 & 28.43 \\ 
-  AR & 1 & 15.73 & 15.32 & 12.56 \\ 
-  WI & 0 & 15.57 & 15.12 & 14.51 \\ 
-  MO & 0 & 15.31 & 14.93 & 11.87 \\ 
-  PA & 0 & 13.89 & 13.71 & 17.60 \\ 
-  FL & 0 & 10.68 & 12.31 & 10.52 \\ 
-  AZ & 1 & 9.66 & 7.96 & 8.88 \\ 
-  IA & 1 & 6.37 & 6.82 & 6.15 \\ 
-  TN & 0 & 5.25 & 5.88 & 5.83 \\ 
-  NE & 0 & 5.21 & 5.37 & 4.34 \\ 
-  ME & 0 & 5.03 & 5.96 & 4.92 \\ 
-  NC & 0 & 4.97 & 4.42 & 4.94 \\ 
-  IN & 0 & 4.19 & 3.36 & 5.95 \\ 
-  KS & 0 & 3.91 & 3.15 & 3.12 \\ 
-  NV & 1 & 3.66 & 4.13 & 2.96 \\ 
-  VA & 0 & 2.91 & 2.33 & 1.45 \\ 
-  AL & 0 & 2.75 & 2.72 & 2.54 \\ 
-  TX & 0 & 2.56 & 1.96 & 3.17 \\ 
-  UT & 0 & 2.31 & 1.21 & 2.13 \\ 
-  ND & 1 & 2.16 & 2.44 & 2.14 \\ 
-  AK & 0 & 1.59 & 2.27 & 1.34 \\ 
-  NM & 1 & 1.37 & 1.83 & 1.95 \\ 
-  OK & 0 & 1.07 & 2.38 & 0.82 \\ 
-  SC & 0 & 0.67 & 0.68 & 1.09 \\ 
+OH & 1 & 34.61 & 35.55 & 36.92 \\ 
+  MI & 1 & 27.67 & 27.01 & 28.43 \\ 
+  AR & 1 & 16.60 & 16.27 & 12.56 \\ 
+  MO & 0 & 16.01 & 15.56 & 11.87 \\ 
+  PA & 0 & 15.63 & 16.22 & 17.60 \\ 
+  WI & 0 & 13.88 & 14.02 & 14.51 \\ 
+  FL & 0 & 10.04 & 11.09 & 10.52 \\ 
+  AZ & 1 & 9.39 & 8.58 & 8.88 \\ 
+  TN & 0 & 7.17 & 7.80 & 5.83 \\ 
+  IA & 1 & 4.92 & 5.73 & 6.15 \\ 
+  ME & 0 & 4.90 & 5.05 & 4.92 \\ 
+  NC & 0 & 4.80 & 4.02 & 4.94 \\ 
+  IN & 0 & 4.54 & 4.15 & 5.95 \\ 
+  NE & 0 & 4.37 & 5.24 & 4.34 \\ 
+  KS & 0 & 3.83 & 2.74 & 3.12 \\ 
+  AL & 0 & 2.91 & 2.14 & 2.54 \\ 
+  NV & 1 & 2.83 & 2.45 & 2.96 \\ 
+  TX & 0 & 2.81 & 2.23 & 3.17 \\ 
+  UT & 0 & 2.62 & 1.98 & 2.13 \\ 
+  VA & 0 & 2.10 & 1.41 & 1.45 \\ 
+  NM & 1 & 2.07 & 2.60 & 1.95 \\ 
+  ND & 1 & 1.92 & 1.81 & 2.14 \\ 
+  OK & 0 & 1.39 & 2.29 & 0.82 \\ 
+  AK & 0 & 0.68 & 0.99 & 1.34 \\ 
+  MT & 0 & 0.59 & 0.72 & 0.68 \\ 
+  SC & 0 & 0.57 & 0.61 & 1.09 \\ 
+  MS & 0 & 0.36 & 0.45 & 0.79 \\ 
+  LA & 0 & 0.26 & 0.37 & 0.43 \\ 
+  GA & 0 & 0.21 & 0.25 & 0.70 \\ 
+  SD & 0 & 0.14 & 0.25 & 0.33 \\ 
+  WY & 0 & 0.12 & 0.33 & 0.65 \\ 
+  ID & 0 & 0.06 & 0.09 & 0.25 \\ 
+  OR & 1 & 0.00 & 0.00 & 0.00 \\ 
+  IL & 1 & 0.00 & 0.00 & 0.00 \\ 
+  MD & 1 & 0.00 & 0.00 & 0.00 \\ 
+  KY & 1 & 0.00 & 0.00 & 0.00 \\ 
+  CO & 1 & 0.00 & 0.00 & 0.00 \\ 
+  HI & 1 & 0.00 & 0.00 & 0.00 \\ 
+  RI & 1 & 0.00 & 0.00 & 0.00 \\ 
+  NH & 1 & 0.00 & 0.00 & 0.00 \\ 
+  WV & 1 & 0.00 & 0.00 & 0.00 \\ 
    \bottomrule
 \end{tabular}
 \caption{OATE weights summed by state by covariate adjustment, early expansion excluded}
@@ -1106,17 +1122,17 @@ State & Psihat (0) & None (states, proc) & Psihat (1) & Repub (states, proc) \\
   \midrule
 AR & -1.48 & (-1.53, -1.48) & -2.63 & (-2.49, -2.48) \\ 
   AZ & -1.48 & (-1.64, -1.59) & -2.63 & (-2.67, -2.66) \\ 
-  CO & -1.48 & (-1.48, -1.42) & -2.63 & (-2.64, -2.6) \\ 
-  HI & -1.48 & (-1.48, -1.49) & -2.63 & (-2.5, -2.52) \\ 
+  CO & -1.48 & (-1.48, -1.42) & -2.63 & (-2.64, -2.60) \\ 
+  HI & -1.48 & (-1.48, -1.49) & -2.63 & (-2.50, -2.52) \\ 
   IA & -1.48 & (-1.36, -1.39) & -2.63 & (-2.65, -2.64) \\ 
   IL & -1.48 & (-1.43, -1.55) & -2.63 & (-2.55, -2.53) \\ 
-  KY & -1.48 & (-1.44, -1.1) & -2.63 & (-2.4, -2.28) \\ 
-  MD & -1.48 & (-1.76, -1.66) & -2.63 & (-2.7, -2.69) \\ 
+  KY & -1.48 & (-1.44, -1.10) & -2.63 & (-2.40, -2.28) \\ 
+  MD & -1.48 & (-1.76, -1.66) & -2.63 & (-2.70, -2.69) \\ 
   MI & -1.48 & (-1.04, -1.01) & -2.63 & (-2.62, -2.64) \\ 
   ND & -1.48 & (-1.84, -1.85) & -2.63 & (-2.63, -2.63) \\ 
   NH & -1.48 & (-1.48, -1.66) & -2.63 & (-2.77, -2.76) \\ 
-  NM & -1.48 & (-1.48, -1.35) & -2.63 & (-2.4, -2.38) \\ 
-  NV & -1.48 & (-1.61, -1.6) & -2.63 & (-2.78, -2.77) \\ 
+  NM & -1.48 & (-1.48, -1.35) & -2.63 & (-2.40, -2.38) \\ 
+  NV & -1.48 & (-1.61, -1.60) & -2.63 & (-2.78, -2.77) \\ 
   OH & -1.48 & (-1.83, -1.87) & -2.63 & (-2.83, -2.81) \\ 
   OR & -1.48 & (-1.48, -1.63) & -2.63 & (-2.6, -2.61) \\ 
   RI & -1.48 & (-1.48, -1.51) & -2.63 & (-2.61, -2.61) \\ 
@@ -1127,11 +1143,13 @@ AR & -1.48 & (-1.53, -1.48) & -2.63 & (-2.49, -2.48) \\
     \label{tab:loostatec2}
 \end{table}
 
-Finally, Figure~\ref{fig:rdiffc1state}, Figure~\ref{fig:rdiffc1proc}, Figure~\ref{fig:rdiffc2state}, and Figure~\ref{fig:rdiffc2proc} display heatmaps showing the estimates of $\hat{\Delta}$ for all of our estimators when removing each state. We see that these estimates are overwhelmingly negative. In fact we only estimate positive contrasts when recalculating the covariate adjustment excluding that state and when the estimator could extrapolate beyond the support of the data. As we noted in Appendix C, the covariate adjustments can result in estimates that are outside of the support of the data, or even possible values. While quite rare, these bad imputations occur more frequently when less data is used to calculate the adjustment. In general, we expect estimators that do not extrapolate to be less affected by these adjustments, since they will get close to no weight; however, estimators that extrapolate are more likely to use the data from these CPUMAs, resulting in estimates that we caution against over-interpreting. For the primary dataset, this occurred with California and Illinois. When removing early expansion states this only occurred when removing Hawaii and Ohio for our less preferred covariate adjustment.
+Finally, Figure~\ref{fig:rdiffc1state}, Figure~\ref{fig:rdiffc1proc}, Figure~\ref{fig:rdiffc2state}, and Figure~\ref{fig:rdiffc2proc} display heatmaps showing the estimates of $\hat{\Delta}$ for all of our estimators when removing each state. We see that these estimates are overwhelmingly negative. In fact we only estimate positive contrasts when recalculating the covariate adjustment excluding that state and when the estimator could extrapolate beyond the support of the data. For the primary dataset, this occurred with California and Illinois. When removing early expansion states this only occurred when removing Hawaii and Ohio for our less preferred covariate adjustment.
+
+We also caution against over-interpreting those particular estimates: as we noted in Appendix C, the covariate adjustments can result in estimates that are outside of the support of the data, or even possible values. While quite rare on our primary dataset, these bad estimates occur more frequently when we recalculate the adjustment when removing each state. In general, we expect estimators that do not extrapolate to be less affected by these bad adjustments, since they will likely get close to no weight; however, estimators that extrapolate are more likely to use the data from these CPUMAs, resulting in dubious estimates. 
 
 \begin{figure}[]
 \begin{center}
-    \includegraphics[scale=0.6]{01_Plots/loostate-repub-sensitivityc1-state-full.png}
+    \includegraphics[scale=0.6]{01_Plots/loostate-repub-sensitivityc1-state-main.png}
     \caption{$\hat{\Delta}$ leave-one-out state, primary dataset, covariate adjustment constant}
     \label{fig:rdiffc1state}
 \end{center}
@@ -1139,7 +1157,7 @@ Finally, Figure~\ref{fig:rdiffc1state}, Figure~\ref{fig:rdiffc1proc}, Figure~\re
 
 \begin{figure}[]
 \begin{center}
-    \includegraphics[scale=0.6]{01_Plots/loostate-repub-sensitivityc1-proc-full.png}
+    \includegraphics[scale=0.6]{01_Plots/loostate-repub-sensitivityc1-proc-main.png}
     \caption{$\hat{\Delta}$ leave-one-out state, primary dataset, covariate adjustment recalculated}
     \label{fig:rdiffc1proc}
 \end{center}
@@ -1147,7 +1165,7 @@ Finally, Figure~\ref{fig:rdiffc1state}, Figure~\ref{fig:rdiffc1proc}, Figure~\re
 
 \begin{figure}[]
 \begin{center}
-    \includegraphics[scale=0.6]{01_Plots/loostate-repub-sensitivityc2-state-full.png}
+    \includegraphics[scale=0.6]{01_Plots/loostate-repub-sensitivityc2-state-main.png}
     \caption{$\hat{\Delta}$ leave-one-out state, early expansion excluded, covariate adjustment constant}
     \label{fig:rdiffc2state}
 \end{center}
@@ -1155,7 +1173,7 @@ Finally, Figure~\ref{fig:rdiffc1state}, Figure~\ref{fig:rdiffc1proc}, Figure~\re
 
 \begin{figure}[]
 \begin{center}
-    \includegraphics[scale=0.6]{01_Plots/loostate-repub-sensitivityc2-proc-full.png}
+    \includegraphics[scale=0.6]{01_Plots/loostate-repub-sensitivityc2-proc-main.png}
     \caption{$\hat{\Delta}$ leave-one-out state, early expansion excluded, covariate adjustment recalculated}
     \label{fig:rdiffc2proc}
 \end{center}
@@ -1169,11 +1187,11 @@ Table~\ref{tab:oateconfint} displays point estimates and confidence intervals fo
   \toprule
 Psihat & Sigma estimate & Dataset & CI (states) & CI (proc) \\ 
   \midrule
--1.64 & sigma\_uu\_i & c1 & (-2.40, -0.89) & (-2.57, -0.72) \\ 
-  -1.58 & sigma\_avg & c1 & (-2.17, -1.00) & (-2.37, -0.79) \\ 
-  -1.80 & sigma\_zero & c1 & (-2.49, -1.10) & (-2.49, -1.10) \\ 
-  -1.73 & sigma\_uu\_i & c2 & (-2.70, -0.76) & (-2.76, -0.70) \\ 
-  -1.76 & sigma\_avg & c2 & (-2.53, -0.99) & (-2.66, -0.86) \\ 
+-1.64 & sigma\_uu\_i & c1 & (-2.54, -0.75) & (-2.57, -0.72) \\ 
+  -1.58 & sigma\_avg & c1 & (-2.32, -0.85) & (-2.37, -0.79) \\ 
+  -1.80 & sigma\_zero & c1 & (-2.66, -0.94) & (-2.49, -1.1) \\ 
+  -1.81 & sigma\_uu\_i & c2 & (-2.47, -1.15) & (-2.63, -0.98) \\ 
+  -1.74 & sigma\_avg & c2 & (-2.28, -1.2) & (-2.44, -1.04) \\ 
   -1.95 & sigma\_zero & c2 & (-2.65, -1.25) & (-2.65, -1.25) \\ 
    \bottomrule
 \end{tabular}
@@ -1187,12 +1205,12 @@ Table~\ref{tab:oaterepubdiff} displays the difference between the estimated cont
 \centering
 \begin{tabular}{llrll}
   \toprule
-Sigma estimate & Dataset & $\hat{\Delta}$ & CI (states) & CI (proc) \\ 
+Sigma estimate & Dataset & Difference & CI (states) & CI (proc) \\ 
   \midrule
-sigma\_uu\_i & c1 & -0.96 & (-1.1, -0.81) & (-1.12, -0.8) \\ 
-  sigma\_uu\_i & c2 & -0.62 & (-0.78, -0.46) & (-0.79, -0.45) \\ 
+sigma\_uu\_i & c1 & -0.96 & (-1.10, -0.81) & (-1.12, -0.80) \\ 
+  sigma\_uu\_i & c2 & -0.72 & (-0.87, -0.57) & (-0.89, -0.55) \\ 
   sigma\_avg & c1 & -1.04 & (-1.19, -0.89) & (-1.22, -0.86) \\ 
-  sigma\_avg & c2 & -0.64 & (-0.80, -0.48) & (-0.82, -0.46) \\ 
+  sigma\_avg & c2 & -0.80 & (-0.98, -0.63) & (-0.99, -0.61) \\ 
   sigma\_zero & c1 & -0.75 & (-0.88, -0.63) & (-0.88, -0.63) \\ 
   sigma\_zero & c2 & -0.56 & (-0.69, -0.43) & (-0.69, -0.43) \\ 
    \bottomrule
@@ -1210,9 +1228,9 @@ Table~\ref{tab:oatesensitive} presents all point estimates calculate using the o
 Sigma estimate & Dataset & 0 & 1 & 2 & 3 & 4 & 5 \\ 
   \midrule
 sigma\_uu\_i & c1 & -1.64 & -2.60 & -2.96 & -1.86 & -1.86 & -1.77 \\ 
-  sigma\_uu\_i & c2 & -1.73 & -2.35 & -3.25 & -2.18 & -2.06 & -1.91 \\ 
+  sigma\_uu\_i & c2 & -1.81 & -2.53 & -3.10 & -2.18 & -2.04 & -1.96 \\ 
   sigma\_avg & c1 & -1.58 & -2.62 & -2.85 & -1.76 & -1.76 & -1.78 \\ 
-  sigma\_avg & c2 & -1.76 & -2.40 & -3.19 & -2.14 & -2.09 & -1.90 \\ 
+  sigma\_avg & c2 & -1.74 & -2.54 & -3.00 & -2.10 & -1.96 & -1.95 \\ 
   sigma\_zero & c1 & -1.80 & -2.55 & -3.11 & -1.98 & -1.94 & -1.83 \\ 
   sigma\_zero & c2 & -1.95 & -2.51 & -3.25 & -2.12 & -2.10 & -2.00 \\ 
    \bottomrule
