@@ -61,7 +61,7 @@
 
 \begin{abstract}
 
-We estimate the effect of Medicaid expansion on the adult uninsurance rates in states that did not expand Medicaid in 2014 using a novel extension of the synthetic controls approach (\cite{abadie2010synthetic}). The existing literature primarily estimates treatment effects on states that expanded Medicaid. We hypothesize these effects differ: evidence suggests that Medicaid take-up rates are lower among conservative states (\cite{sommers2012understanding}), and Republicans were more likely to govern non-expansion states. We therefore hypothesize that the treatment effect on states that did not expand Medicaid would have been closer to zero than for states that did expand Medicaid. Using data from the American Communities Survey (ACS), we estimate the effect on non-expansion states by re-weighting expansion regions to approximately balance the covariates from non-expansion regions. We contribute to the literature on balancing weights by accounting for hierarchical data and measurement error in the covariates when calculating our weights. We estimate that Medicaid expansion would have changed the uninsurance rate by -2.00 percentage points (-3.59, -0.40). These results are smaller in absolute magnitude than existing estimates of the ETT (see, eg, \cite{courtemanche2017early}). We provide evidence that factors associated with Republican governance may drive this difference.
+We estimate the effect of Medicaid expansion on the adult uninsurance rate in states that did not expand Medicaid in 2014 using a novel extension of the synthetic controls approach (\cite{abadie2010synthetic}). The existing literature primarily estimates treatment effects on states that expanded Medicaid. We hypothesize these effects differ: prior to the 2014 expansion, evidence suggested that Medicaid take-up rates are lower among conservative states (\cite{sommers2012understanding}), and Republicans were more likely to govern non-expansion states. We therefore hypothesize that the treatment effect on states that did not expand Medicaid would have been closer to zero than for states that did expand Medicaid. Using data from the American Communities Survey (ACS), we estimate the effect on non-expansion states by re-weighting expansion regions to approximately balance the covariates from non-expansion regions. We contribute to the literature on balancing weights by accounting for hierarchical data and measurement error in the covariates when calculating the weights. We estimate that Medicaid expansion would have changed the uninsurance rate by -2.00 percentage points (-3.59, -0.40). These results are smaller in absolute magnitude than existing estimates of the ETT (see, eg, \cite{courtemanche2017early}). We provide evidence that factors associated with Republican governance may drive this difference.
 
 \end{abstract}
 
@@ -76,9 +76,9 @@ We estimate the effect of Medicaid expansion on the adult uninsurance rates in s
 
 \section{Introduction}
 
-The 2010 Affordable Care Act (ACA) required states to expand their Medicaid eligibility requirements by 2014 to offer coverage to all adults with incomes at or below 138 percent of the federal poverty level (FPL). The United States Supreme Court ruled this requirement unconstitutional in 2012, allowing states to decide whether to expand Medicaid coverage. In 2014, twenty-six states and the District of Columbia expanded their Medicaid programs. From 2015 through 2019 an additional ten states elected to expanded their Medicaid programs (\cite{KFF}). This first wave of expansions in 2014 enabled researchers to examine the effects of Medicaid expansion by using expansion states as ``treated'' states, and non-expansion states as ``control'' states. Our goal is to model the effect of 2014 Medicaid expansion on non-elderly adult uninsurance rates among states that did not expand Medicaid.
+The 2010 Affordable Care Act (ACA) required states to expand their Medicaid eligibility requirements by 2014 to offer coverage to all adults with incomes at or below 138 percent of the federal poverty level (FPL). The United States Supreme Court ruled this requirement unconstitutional in 2012, allowing states to decide whether to expand Medicaid coverage. In 2014, twenty-six states and the District of Columbia expanded their Medicaid programs. From 2015 through 2019 an additional ten states elected to expand their Medicaid programs (\cite{KFF}). This first wave of expansions in 2014 enabled researchers to examine the effects of Medicaid expansion by using expansion states as ``treated'' states, and non-expansion states as ``control'' states. Our primary goal in this paper is to estimate the effect of 2014 Medicaid expansion on non-elderly adult uninsurance rates among states that did not expand Medicaid.
 
-We predict that the treatment effect on non-expansion effect will be smaller in absolute magnitude than in states that expanded Medicaid in 2014. Medicaid take-up rates are lower than 100 percent and historically have varied across states. This variation is partly a function of state discretion in administering programs: for example, program outreach, citizenship verification policies, and application processes differ across states (\cite{courtemanche2017early}). Here we consider how political composition may have driven differences in take-up rates between states. Prior to the 2014 Medicaid expansion, \cite{sommers2012understanding} found that conservative political ideology was associated with lower Medicaid enrollment take-up rates, even after controlling for a variety of correlated policies. Most importantly, political ideology appears to have largely driven a state's decision to expand Medicaid in 2014. Figure~\ref{fig:stateideology} plots a measure of each state's 2013 institutional ideology by their Medicaid expansion status (\cite{fording}). Higher values of this score correspond to more liberal government institutions. The red dashed line indicates the mean expansion state score and the gray dashed line indicates the mean non-expansion state score. Figure~\ref{fig:stateideology} illustrates that non-expansion states are more conservative than expansion states.  If these differential take-up rates observed by \cite{sommers2012understanding} continue to hold post-expansion, we should expect treatment effects on non-expansion states to be smaller in absolute magnitude than treatment effects on expansion states. 
+We predict that the treatment effect on non-expansion effect will be smaller in absolute magnitude than in states that expanded Medicaid in 2014. Medicaid take-up rates are lower than 100 percent and historically have varied across states. This variation is partly a function of state discretion in administering programs: for example, program outreach, citizenship verification policies, and application processes differ across states (\cite{courtemanche2017early}). Here we consider how political composition may have driven differences in take-up rates between states. Prior to the 2014 Medicaid expansion, \cite{sommers2012understanding} found that conservative political ideology was associated with lower Medicaid enrollment rates, even after controlling for a variety of other policies. Most importantly, political ideology appears to have largely driven a state's decision to expand Medicaid in 2014. Figure~\ref{fig:stateideology} plots a measure of each state's 2013 institutional ideology by their Medicaid expansion status (\cite{fording}). Higher values of this score correspond to more liberal government institutions. The red dashed line indicates the mean expansion state score and the gray dashed line indicates the mean non-expansion state score. Figure~\ref{fig:stateideology} illustrates that non-expansion states are more conservative than expansion states. If the differential take-up rates observed by \cite{sommers2012understanding} continue to hold post-expansion, we should expect treatment effects on non-expansion states to be smaller in absolute magnitude than treatment effects on expansion states. 
 
 \begin{figure}
     \begin{center}
@@ -88,67 +88,58 @@ We predict that the treatment effect on non-expansion effect will be smaller in 
     \end{center}
 \end{figure}
 
-This paper makes several methodological contributions. First, we extend the ``synthetic controls'' framework to estimate the treatment effect on the controls (ETC) and clarify the required assumptions. While balancing on pre-treatment outcomes alone arguably suffices for some synthetic control applications (see, eg, \cite{botosaru2017role}), here our goal is to estimate treatment response. We assume no unmeasured confounding given a rich covariate set and a linear and additive outcome model that accounts for all interactions between treatment and the covariates. Secondly, we use an implementation of Stable Balancing Weights (\cite{zubizarreta2015stable}) to estimate a set of positive weights to weight the expansion regions to approximately match the covariate distribution of the non-expansion regions. To account for remaining imbalances in the covariates, we also augment these weights with a regression-model following \cite{ben2018augmented}.
+This paper makes two methodological contributions to the literature on balancing weights. First, we extend the ``synthetic controls'' framework to estimate the treatment effect on the controls (ETC) using longitudinal data and we clarify the required assumptions. In brief, while balancing on pre-treatment outcomes alone arguably suffices for some synthetic control applications (see, eg, \cite{botosaru2017role}), because our goal in this setting is to estimate treatment response, we must therefore balance on all covariates that predict treatment response, not just the outcome level absent treatemnt. Moreoever, we cannot simply leverage pre-treatment data to conduct variable selection in this setting. We instead use an implementation of Stable Balancing Weights (\cite{zubizarreta2015stable}) to estimate a set of positive weights to weight the expansion regions to approximately match the covariate distribution of the non-expansion regions. 
 
-Our second contribution is to modify Stable Balancing Weights (SBW) for this setting. In particular, the SBW objective performs well assuming independent data with no measurement error. However, we use data from the American Communities Survey (ACS) aggregated to the consistent public use microdata area (CPUMA) level. These regions nest within states, and using these smaller regions allows us to get better balance on our covariates. However, as a result, our data both has a hierarchical structure (regions within states) and, because our region-level covariates are estimated from underlying survey data, the sampling variability used to estimate our covariates is a form of measurement error which may bias our treatment effect estimates. We propose a modification of the SBW objective function to account for the hierarchical nature of the data. We leverage the replicate survey weights provided in the ACS data to estimate the covariance matrix associated with the sampling variability and use this information to correct for this bias, following the regression calibration literature (see, eg, \cite{gleser1992importance}). This is the first study we are aware of that attempts to adjust for hierarchical data structure and measurement error in the covariates when using balancing weights. 
+Our second contribution is to modify the Stable Balancing Weights (SBW) objective function to account for our data, which is both hierarchical and has several covariates measured with error. Specifically, we use data from the American Communities Survey (ACS) aggregated to the consistent public use microdata area (CPUMA) level. These regions nest within states, and using these smaller regions allows us to get better covariate balance. However, as a result our data both has a hierarchical structure (regions within states) and, because our region-level covariates are estimated from underlying survey data, the sampling variability from our covariate estimates is a form of measurement error which may bias our treatment effect estimates. We first propose a modification of the SBW criterion to account for the hierarchical nature of the data, which disperses the weights more evenly across states. We then leverage the replicate survey weights provided in the ACS microdata to estimate the covariance matrix associated with the sampling variability and use this information to correct for this bias, following the regression calibration literature (see, eg, \cite{gleser1992importance}). This is the first study we are aware of that attempts to adjust for hierarchical data structure and measurement error in the covariates when using balancing weights. 
 
 The remainder of this paper has the following structure. Section II provides an overview of the data and defines the study period, outcome, covariates, and treatment. Section III discusses our methods, beginning by defining our target estimand, and then outlining our identification, estimation, and inferential procedures. Section IV presents our primary results and sensitivity analyses. Section V provides a brief discussion of the policy relevance of our findings, and Section VI contains a brief concluding summary of the paper. Supplemental materials may be found in the Appendices.
 
 \section{Data}
 
-Our data source is the annual household and person public use microdata files from the American Community Survey (ACS) from 2011 through 2014. The ACS is an annual survey of approximately three million individuals across the United States. The public use microdata files include information on individuals in geographic areas greater than 65,000 people. The smallest geographic unit contained in these data are public-use microdata areas (PUMAs), arbitrary boundaries that nest within states but not within counties or other more commonly used geographic units. One limitation of these data is a 2012 change in the PUMA boundaries, which do not overlap well with the previous boundaries. As a result, the smallest possible geographic areas that nest both PUMA coding systems are known as consistent PUMAs (CPUMAs). The United States contain 1,075 total CPUMAs, with states ranging from having one CPUMA (South Dakota, Montana, and Idaho) to 123 CPUMAs (New York). The average total number of sampled individuals per CPUMA across the four years within our primary dataset of 929 CPUMAs (discussed in Section \ref{sssec:txassign}) is 1,001; the minimum number of people sampled was 334 and the maximum is 23,990.
+Our primary data source is the annual household and person public use microdata files from the American Community Survey (ACS) from 2011 through 2014. The ACS is an annual survey of approximately three million individuals across the United States. The public use microdata files include information on individuals in geographic areas greater than 65,000 people. The smallest geographic unit contained in these data are public-use microdata areas (PUMAs), arbitrary boundaries that nest within states but not within counties or other more commonly used geographic units. One limitation of these data is a 2012 change in the PUMA boundaries, which do not overlap well with the previous boundaries. As a result, the smallest possible geographic areas that nest both PUMA coding systems are known as consistent PUMAs (CPUMAs). The United States contain 1,075 total CPUMAs, with states ranging from having one CPUMA (South Dakota, Montana, and Idaho) to 123 CPUMAs (New York). The average total number of sampled individuals per CPUMA across the four years within our primary dataset of 929 CPUMAs (discussed in Section \ref{sssec:txassign}) is 1,001; the minimum number of people sampled was 334 and the maximum is 23,990. Importantly, this survey does not follow specific individuals over time but rather reflects a different sample of individuals each year.
 
 \subsection{Study period}
 
-We begin our analysis in 2011 following \cite{courtemanche2017early}, who note that several other aspects of the ACA were implemented in 2010 -- including the provision allowing for dependent coverage until age 26, and the elimination of co-payments for preventative care -- likely induced differential shocks across states. We also restrict our post-treatment period to 2014 only: several additional states expanded Medicaid in 2015, including Indiana, Michigan, and Pennsylvania. However, these states did not expand Medicaid contemporaneously with the 2014 ACA provisions. Without additional assumptions, this second-year expansion cannot help us estimate the effect of the 2014 expansion. 
+We begin our analysis in 2011 following \cite{courtemanche2017early}, who note that several other aspects of the ACA were implemented in 2010 -- including the provision allowing for dependent coverage until age 26, and the elimination of co-payments for preventative care -- and likely induced differential shocks across states. We also restrict our post-treatment period to 2014: several additional states expanded Medicaid in 2015, including Indiana, Michigan, and Pennsylvania. However, these states did not expand Medicaid contemporaneously with the 2014 ACA provisions. Without additional assumptions, this second-year expansion cannot help us estimate the effect of the 2014 expansion. 
 
 \subsection{Covariates}
 
-We use the underlying individual-level ACS survey data and accompanying survey weights to aggregate the data at the CPUMA level. We choose our covariates to approximately align with those considered in \cite{courtemanche2017early} and that are likely to be believe are potential confounders. Because we are ultimately interested in calculating rates, these variables include both the numerator and denominator counts.\footnote{We note that these ratio estimators will in general be biased; however, this bias decreases quickly with the sample size; given that our CPUMA sample sizes are all over 300 we treat these estimates as unbiased.}
+We use the underlying individual-level ACS survey data and accompanying survey weights to aggregate the data at the CPUMA level. We choose our covariates to approximately align with those considered in \cite{courtemanche2017early} and that are likely to be potential confounders. Because we are ultimately interested in calculating rates, these variables include both the numerator and denominator counts.\footnote{When viewing the denominator variables as random, these ratio estimators will in general be biased; however, this bias decreases quickly with the sample size (is $O(n^{-1})$); given that our CPUMA sample sizes are all over 300 we treat these estimates as unbiased in our analysis.}
 
-Using the ACS survey weights, we first estimate: the total non-elderly adult population for each year 2011-2014; the total labor force population (among non-elderly adults) for each year 2011-2013; and the total number of households averaged from 2011-2013. We also construct an average of the total non-elderly adult population from 2011-2013. These are our denominator variables. For our numerator counts, we then estimate the total number of: females; whites; people born outside of the United States; citizens; people with less than high school education, high school degrees, some college, or college graduates or higher; people living under 138 percent of the FPL, between 139 and 299 percent, 300 and 499 percent, more than 500 percent, and who did not respond to the income survey question; total number aged 19-29, 30-39, 40-49, 50-64; households with one or more children, and who did not respond about children in their household. We average these estimated counts using the ACS survey weights from 2011-2013. For each individual year from 2011-2013, we also estimate the total number of people who were unemployed and uninsured at the time of the survey (calculated among all non-elderly adults and all non-elderly adult within the labor force, respectively). We divide the numerator counts by the corresponding denominator counts to estimate the percentage in each category. For the demographics, these include the average number of non-elderly adults from 2011-2013. For the time-varying variables, we use the corresponding year (where uninsurance rates are calculated as a fraction of the labor force rather than the non-elderly adult population). We also calculate the 2011-2012 and 2012-2013 population growth, and the average number of households to adult from 2011-2013. 
+Using the ACS survey weights, we first estimate: the total non-elderly adult population for each year 2011-2014; the total labor force population (among non-elderly adults) for each year 2011-2013; and the total number of households averaged from 2011-2013. We also construct an average of the total non-elderly adult population from 2011-2013. These are our denominator variables. For our numerator counts, we estimate the total number of: females; whites; people of Hispanic ethnicity; people born outside of the United States; citizens; people with disabilities; married individuals; people with less than high school education, high school degrees, some college, or college graduates or higher; people living under 138 percent of the FPL, between 139 and 299 percent, 300 and 499 percent, more than 500 percent, and who did not respond to the income survey question; people aged 19-29, 30-39, 40-49, 50-64; households with one, two, or three or more children, and households that did not respond about the number of children.\footnote{Number of children and income to poverty ratio were the only two variables with missing data in the underlying microdata.} We average these estimated counts using the ACS survey weights from 2011-2013. For each individual year from 2011-2013, we estimate the total number of people who were unemployed and uninsured at the time of the survey (calculated among all non-elderly adults and all non-elderly adults within the labor force, respectively). We divide the numerator counts by the corresponding denominator counts to estimate the percentage in each category. For the demographics, these include the average number of non-elderly adults from 2011-2013. For the time-varying variables, we use the corresponding year (where uninsurance rates are calculated as a fraction of the labor force rather than the non-elderly adult population). We also calculate the 2011-2012 and 2012-2013 non-elderly adult population growth, and the average number of households to adults across 2011-2013. 
 
-In addition to the ACS microdata, we use Census data to calculate the approximate percentage of people living within an ``urban'' area for each CPUMA (\cite{census}). Finally, we include three state-level covariates reflecting the partisan composition of each state's government in 2013. Specifically, we include an indicator for having a Republican governor, an indicator for Republican control over the lower legislative chamber, and an indicator for Republican control over both chambers of the legislature and the governorship.\footnote{Nebraska is the only state with a unicameral legislature; moreover, the legislature is technically non-partisan. We nevertheless classified them as having a Republican control of the legislature.} 
+In addition to the ACS microdata, we use Census data to calculate the approximate percentage of people living within an ``urban'' area for each CPUMA (\cite{census}). Finally, we include three state-level covariates reflecting the partisan composition of each state's government in 2013. Specifically, we use data from the National Conference of State Legislatures (NCLS) to generate an indicator for states with a Republican governor, an indicator for states with Republican control over the lower legislative chamber, and an indicator for states with Republican control over both chambers of the legislature and the governorship.\footnote{Nebraska is the only state with a unicameral legislature; moreover, the legislature is technically non-partisan. We nevertheless classified them as having Republican control of the legislature.} 
 
 \subsection{Outcome}
 
-Our primary outcome of interest is the non-elderly adult uninsurance rate in 2014, which we donate using $Y$. While take-up among the Medicaid-eligible population is a more natural outcome, we choose the non-elderly adult uninsurance rate for two reasons, one theoretic and one practical. First, Medicaid eligibility in the post-period is likely endogenous: Medicaid expansion may affect an individual's income and poverty levels, which in general define Medicaid eligibility. A second reason is to align our study to compare our results with the existing literature, and this is the outcome that \cite{courtemanche2017early} use. One implication of using this outcome is that the simultaneous adoption of other ACA provisions in 2014 more clearly affects this rate in a way that a more targeted group might not.
+Our outcome of interest is the non-elderly adult uninsurance rate in 2014, which we donate using $Y$. While take-up among the Medicaid-eligible population is a more natural outcome, we choose the non-elderly adult uninsurance rate for two reasons, one theoretic and one practical. First, Medicaid eligibility in the post-period is likely endogenous: Medicaid expansion may affect an individual's income and poverty levels, which in general define Medicaid eligibility. A second reason is to align our study with others to compare our results with the existing literature, and this is the outcome that \cite{courtemanche2017early} use. One drawback of using this outcome is that the simultaneous adoption of other ACA provisions in 2014 more clearly affects this rate in a way that a more targeted group might not be.
 
 \subsection{Treatment assignment} \label{sssec:txassign}
 
-While some states expanded Medicaid and other states did not, assigning a binary treatment status simplifies a more complex reality. There are three reasons to be cautious about this simplification. First, states differed substantially in prior Medicaid coverage policies: with perfect data we might consider Medicaid expansion as a continuous treatment with values proportional to the number of newly eligible individuals. The challenge though is correctly identifying newly eligible individuals in the data (see \cite{frean2017premium}, who attempt to address this). Second, \cite{frean2017premium} note that five states (California, Connecticut, Minnesota, New Jersey, and Washington) and the District of Columbia adopted partial limited Medicaid expansions prior to 2014. \cite{kaestner2017effects} and \cite{courtemanche2017early} also consider Arizona, Colorado, Hawaii, Illinois, Iowa, Maryland, and Oregon to have had early expansions. Lastly, timing is an issue: among the states that expanded Medicaid in 2014, Michigan's expansion did not go into effect until April 2014, while New Hampshire's expansion did not occur until September 2014.
+While some states expanded Medicaid and other states did not, assigning a binary treatment status simplifies a more complex reality. There are three reasons to be cautious about this simplification. First, states differed substantially in their Medicaid coverage policies prior to 2014: with perfect data we might consider Medicaid expansion as a continuous treatment with values proportional to the number of newly eligible individuals. The challenge though is correctly identifying newly eligible individuals in the data (see \cite{frean2017premium}, who attempt to address this). Second, \cite{frean2017premium} note that five states (California, Connecticut, Minnesota, New Jersey, and Washington) and the District of Columbia adopted partial limited Medicaid expansions prior to 2014. \footnote{\cite{kaestner2017effects} and \cite{courtemanche2017early} also consider Arizona, Colorado, Hawaii, Illinois, Iowa, Maryland, and Oregon to have had early expansions.} Lastly, timing is an issue: among the states that expanded Medicaid in 2014, Michigan's expansion did not go into effect until April 2014, while New Hampshire's expansion did not occur until September 2014.
 
-Our primary analysis excludes New York, Vermont, Massachusetts, Delaware, and the District of Columbia from our pool of expansion states, because these states had comparable Medicaid coverage policies prior to 2014 (\cite{kaestner2017effects}). We also exclude New Hampshire because it did not expand Medicaid until September 2014. While Michigan expanded Medicaid in April 2014, we leave this state in our treated pool. We consider the remaining expansion states as ``treated'' and the non-expansion states as ``control'' states. We later consider the sensitivity of our results to these classifications by removing the early expansion states noted by \cite{frean2017premium}. Our primary classification of expansion and non-expansion states is unique among similar studies: \cite{courtemanche2017early} classifies all expansion states as treated, and all non-expansion states as control. \cite{frean2017premium} exclude Massachusetts from expansion states. Lastly, \cite{kaestner2017effects} include Delaware, the District of Columbia, Massachusetts, New York, and Vermont as control states. Our final dataset contains aggregated statistics for all of the above variables for 925 CPUMAs in our non-expansion and our pool of expansion states. 414 CPUMAs among 24 non-expansion states and 515 CPUMAs among 22 expansion states. When we exclude the early expansion states, we are left with 296 CPUMAs across 17 states.
+Our primary analysis excludes New York, Vermont, Massachusetts, Delaware, and the District of Columbia from our pool of expansion regions, because these regions had comparable Medicaid coverage policies prior to 2014 (\cite{kaestner2017effects}). We also exclude New Hampshire because it did not expand Medicaid until September 2014. While Michigan expanded Medicaid in April 2014, we leave this state in our pool of treated states. We consider the remaining expansion states as ``treated'' and the non-expansion states as ``control'' states. We later consider the sensitivity of our results to these classifications by removing the early expansion states noted by \cite{frean2017premium}. Our final dataset contains aggregated statistics for all of the above variables for 925 CPUMAs in our non-expansion and our pool of expansion states. There are 414 CPUMAs among 24 non-expansion states and 515 CPUMAs among 22 expansion states. When we exclude the early expansion states for sensitivity analyses, we are left with 296 CPUMAs across 17 states.
 
 \section{Methods}
 \label{sec:methods}
 
-In this section we present our causal estimand, identifying assumptions, estimation strategy, and inferential procedure. Additional details are available in the Appendix.
+In this section we present our causal estimand, identifying assumptions, estimation strategy, and inferential procedure.
 
 \subsection{Estimand}
 
-We seek to estimate the average effect 2014 Medicaid expansion would have had on the non-elderly adult uninsurance rate in states that did not expand Medicaid. The 2014 Medicaid expansion occurred simultaneously with the implementation of several other major ACA provisions, including (but not limited to) the creation of the ACA-marketplace exchanges, the individual mandate, health insurance subsidies, and community-rating and guaranteed issue of insurance plans (\cite{courtemanche2017early}). Almost all states broadly implemented these reforms beginning January 2014. Conceptually we think of the other ACA components as a state-level treatment ($V$) separate from Medicaid expansion ($A$).
-
-Let $c$ index a CPUMA, $s$ index the state, and $t$ index the time period. Let $N_1$ be the number of treated CPUMAs, $N_0$ be the number of control CPUMAs, and $N$ be the total number of CPUMAs. Similarly, let and $M = M_0 + M_1$ states (with $M_0$ and $M_1$ defined analogously). Each state has $n_s$ CPUMAs. Finally, let $Y_{scT}^{A_{scT} = a, V_{scT} = v}$ be the potential uninsurance rate given Medicaid expansion and other ACA-reforms at time $T = 2014$. We wish to estimate the following contrast:
+Our goal is to estimate the average effect 2014 Medicaid expansion would have had on the non-elderly adult uninsurance rate in states that did not expand Medicaid. Let $c$ index a CPUMA, $s$ index the state, and $t$ index the time period. Let $N_1$ be the number of treated CPUMAs, $N_0$ be the number of control CPUMAs, and $N$ be the total number of CPUMAs. Similarly, let and $M = M_1 + M_0$ states (with $M_1$ and $M_0$ defined analogously). Each state has $n_s$ CPUMAs. Since we are only interested in the counterfactual at time $T = 2014$, we simplify notation by removing this variable and the subscript and write our formal estimand as:
 
 $$
-\psi &= \psi^1 - \psi^0 \\
-&=N_0^{-1}\sum_{s: A_{sT} = 0, V_{sT} = 1}^{M_0}\sum_{c = 1}^{n_s} Y_{scT}^{A_{scT} = 1, V_{scT} = 1} - Y_{scT}^{A_{scT} = 0, V_{scT} = 1} 
+\psi = \psi^1 - \psi^0 = N_0^{-1}\sum_{s, c: A_s = 0} Y_{sc}^{A_s = 1} - Y_{sc}^{A_s = 0}
 $$
 
-In other words, we want to estimate the difference in the non-elderly adult uninsurance rates among states that did not expand Medicaid, but did implement other aspects of the ACA. Because all states implemented the ACA marketplace expansion in 2014, contrasts with the corresponding potential outcome absent this expansion are not identified. Moreover, since we are only interested in the counterfactual at time $T$, we simplify notation by removing this variable and the subscript in the estimand:
-
-$$
-\psi = N_0^{-1}\sum_{s, c: A_s = 0} Y_{sc}^{A_s = 1} - Y_{sc}^{A = 0}
-$$
-
-We therefore seek to identify the effect of Medicaid expansion in the context of the simultaneous implementation of the ACA, but do not attempt to separately identify the effects of these separate treatments. Because interactions between the ACA implementation and Medicaid expansion may vary over time, we do not seek to generalize these results outside of 2014. 
+We observe $\psi^0$ in the data; the challenge is estimating $\psi^1$ using our pool of treated units. That is, we wish to predict the counterfactual uninsurance rates in 2014 for states that did not expand Medicaid expansion had they expanded their Medicaid eligibility requirements. \foonote{The 2014 Medicaid expansion occurred simultaneously with the implementation of several other major ACA provisions, including (but not limited to) the creation of the ACA-marketplace exchanges, the individual mandate, health insurance subsidies, and community-rating and guaranteed issue of insurance plans (\cite{courtemanche2017early}). Almost all states broadly implemented these reforms beginning January 2014. Conceptually we think of the other ACA components as a state-level treatment ($V$) separate from Medicaid expansion ($A$). Therefore, our total estimated effect may also include interactions between these policy changes; however, we do not attempt to separately identify these effects. Because the ACA implementation and Medicaid expansion may vary over time, we do not try to generalize these results beyond 2014.} 
 
 \subsection{Identification}
 
-We make the following causal assumptions: consistency, no unmeasured confounding, no anticipatory treatment effects, and positivity of treatment assignment. We explain these assumptions in detail and why we think they might be reasonable in this context. We additionally make several parametric assumptions to help us identify our parameter given the problem of measurement error in our covariates.
+The following causal assumptions are necessary (though not sufficient) to enable us to identify our target parameter from the data: consistency, no unmeasured confounding, no anticipatory treatment effects, and positivity of treatment assignment. We explain these assumptions in detail and their consequences below. We additionally invoke several parametric assumptions to help us identify our causal parameter given the measurement error in our covariates.
 
-Consistency states that the observed factual outcome under a given treatment assignment is equal to the potential outcome under that same treatment assignment ($Y_{sc}^{A_{sc} = a} = Y_{sc} \mid A_{sc} = a$). In other words, we assume that one regions' treatment assignment didn't affect another regions' observed outcome. This is a standard assumption, but is often not realistic. Violations of this assumption are likely in our setting: for example, \cite{frean2017premium} find evidence that Medicaid expansion drove previously eligible but uninsured individuals to enroll in Medicaid in both expansion and non-expansion states. Signing the potential bias from these spillovers requires redefining the causal estimand: for example, we might consider the treatment effect on the untreated given that all states have expanded Medicaid, where the contrast is against where only the observed expansion states expanded Medicaid. If spillovers occurred in equal proportions in each region, and the magnitude of the spillovers increase with the number of treated regions, then the true effect would be larger in absolute magnitude than the estimated estimated using the observed data. We could consider other estimands or assumptions to get different predictions about the sign of the bias, but we leave this as an area for future work.
+Consistency states that the observed factual outcome under a given treatment assignment is equal to the potential outcome under that same treatment assignment ($Y_{sc}^{A_{sc} = a} = Y_{sc} \mid A_{sc} = a$). In other words, we assume that one regions' treatment assignment does not affect another regions' observed outcome. This is a standard assumption, but is often not realistic. Violations of this assumption are likely in our setting: for example, \cite{frean2017premium} find evidence that Medicaid expansion drove previously eligible but uninsured individuals to enroll in Medicaid in both expansion and non-expansion states. Signing the potential bias from this violation requires redefining the causal estimand: for example, we might consider the treatment effect on the untreated given that all states have expanded Medicaid, where the contrast is against where only the observed expansion states expanded Medicaid. If spillovers occurred in equal proportions across each region, and the magnitude of the spillovers increase with the total number of treated regions, then the true effect would be larger in absolute magnitude than the estimated estimated using the observed data. We could consider other estimands or assumptions to get different predictions about the sign of the bias; however, this is beyond the scope of this paper.
 
 We next assume that there were no anticipatory treatment effects. Letting treatment occur at time $T$, we have that for $t < T$:
 
@@ -156,7 +147,7 @@ $$
 Y_{sct} = Y_{sct}^0
 $$
 
-This assumption is necessary because we are conditioning on pre-treatment outcomes. If these outcomes were affected by the treatment before it were implemented, these covariates would not be exogenous. Anticipatory treatment effects may occur if plans to expand Medicaid induce uninsured but Medicaid-eligible individuals to enroll in Medicaid prior to expansion. We do not think these violations occurred in large enough numbers to substantially affect our results. Instead, we address a more concerning version of this violation: as noted above, several states allowed certain counties to expand Medicaid prior to 2014. We therefore test the sensitivity of our results to the inclusion of these states.
+This assumption is necessary because we are conditioning on pre-treatment outcomes. If these outcomes were affected by the treatment before it were implemented, these covariates would be endogenous. Anticipatory treatment effects may occur if plans to expand Medicaid induce uninsured but Medicaid-eligible individuals to enroll in Medicaid prior to expansion. We do not think these violations occurred in large enough numbers to substantially affect our results. Instead, we address a more concerning version of this violation: the fact that several states allowed certain counties to expand Medicaid prior to 2014. We therefore test the sensitivity of our results to the exclusion of these states.
 
 Third, we assume no unmeasured confounding; that is, that at time $T$ the potential outcomes for each CPUMA are independent of the state-level treatment assignment conditional on the population-level CPUMA and state-level covariates $X_{sc}$ (which includes pre-treatment outcomes):
 
@@ -164,23 +155,37 @@ $$
 Y_{sc}^a \perp A_{sc} \mid X_{sc}
 $$
 
-While unverifiable, we believe it is reasonable here given our rich covariate set. To be explicit, we believe that the potential uninsurance rates for each CPUMA are independent of the treatment assignment conditional on the percentage of uninsured individuals in each year of the pre-treatment period, the percentage of unemployed individuals in each year of the pre-treatment period, the population growth in 2012 and 2013, the average ratio of households to non-elderly adult population, the state's political composition, the average proportion of households with one or more children during the pre-treatment period, the average number of households who did not respond about their number children, and the average proportion of individuals during the pre-treatment period with given demographics noted above (age, sex, white, Hispanic ethnicity, US citizenship, foreign born, income-to-poverty group (including non-response), disability status, urban residence, and educational attainment group). If this assumption were violated -- that is, other covariates exist that determine this potential outcome and treatment assignment -- conditioning on pre-treatment outcomes is likely to help proxy for these covariates, thereby minimizing the potential for bias. 
+While unverifiable, we believe it is reasonable here given our rich covariate set. To be explicit, we believe that the potential uninsurance rates for each CPUMA are independent of the treatment assignment conditional on the percentage of uninsured individuals in each year of the pre-treatment period, the percentage of unemployed individuals in each year of the pre-treatment period, the population growth in 2012 and 2013, the average ratio of households to non-elderly adult population, the state's political composition, the average proportion of households with one, two, or three or more children during the pre-treatment period, the average proportion of households who did not respond about their number children, and the average proportion of individuals during the pre-treatment period with given demographics noted above (age group, sex, white, Hispanic ethnicity, US citizenship, foreign born, income-to-poverty group (including non-response), disability status, urban residence, and educational attainment group). 
 
-Unfortunately we do not actually observe the true values of $X_{sc}$ but rather an estimate $W_{sc}$. Importantly, $Y_{sc}^a \perp A_{sc} \mid X_{sc} \centernot\implies Y_{sc}^a \perp A_{sc} \mid W_{sc}$. Therefore, the use of these proxies may also bias our estimates. We rely on several modeling assumptions outlined below in our estimation procedure to correct for this bias.
+Finally, we assume positivity of treatment assignment; that is, that all states had some non-zero probability of being treated $\pi(X_{1s}, ..., X_{n_ss}) > 0$. Positivity violations can cause a lack of covariate overlap in the observed data. Overlap is an issue in this study. We address this in multiple ways that we outline in our estimation strategy below. 
 
-Finally, we assume positivity of treatment assignment; that is, that all states had some probability of being treated $\pi(X_{1s}, ..., X_{n_ss}) > 0$. Positivity violations can cause a lack of covariate overlap in the observed data. As we have noted before, overlap is an issue in this study. We address this in multiple ways that we outline in our estimation strategy below. 
+These assumptions are sufficient to non-parametrically identify our causal estimand if we observed the true covariates $X_{sc}$. Unfortunately, for our covariates estimated using the ACS data, we do not observe the true values of $X_{sc}$ but rather a mean-unbiased estimate $W_{sc}$. Importantly, $Y_{sc}^a \perp A_{sc} \mid X_{sc} \centernot\implies Y_{sc}^a \perp A_{sc} \mid W_{sc}$. The use of these proxies may also bias our estimates; we therefore rely on several modeling assumptions to correct for this bias.
 
-These assumptions are sufficient to non-parametrically identify our causal estimand if we observed the true covariates $X_{sc}$. We next invoke parametric modeling assumptions that help us identify our estimand given that we observe the mean unbiased sample estimates $W_{sc}$. First, we assume that the potential outcome under treatment is linear and additive in the covariates $X_{sc}$. Specifically, we assume that the following model generates the potential non-elderly adult uninsurance rate under treatment:
+First, we assume that the potential outcome under treatment is linear in the covariates $X_{sc}$. Specifically, we assume that the following model generates the potential non-elderly adult uninsurance rate under treatment:
 
 $$
-Y_{sc}^1 = \alpha + x_{sc}^T\beta + \epsilon_{sc} + c_s
+Y_{sc}^1 = \alpha + X_{sc}^T\beta + \epsilon_{sc} + c_s
 $$
 
-We assume that the errors $\epsilon_{sc}$ and $c_s$ are independent from each other and across time (ie we rule out serial-correlation), and that these errors are invariant to the intervention. This model then allows us to identify $\psi^1$ in terms of our model parameters; specifically, we have that $\psi^1 = \alpha + \bar{X}_0^T\beta$, where $\bar{X}_0$ is the (observed) mean covariate values among the control units.\footnote{To be precise, we use the population-weighted mean so as to target the individual-level treatment effect rather than the CPUMA-average treatment effect.} Let $s_{sc}$ be the vector of sample sizes used to calculate $W_{sc}$. We then assume that that $W_{sc} = X_{sc} + v_{sc}$, where $\sqrt{s_{sc}}v_{sc}$ are drawn independently from $MVN(0, \Sigma_{vv \mid A = a})$, and $v_{sc}$ is independent of the CPUMA-level errors $\epsilon_{sc}$ (which may include measurement error in the outcome) and the state-level errors $c_s$. We do not believe the errors in the CPUMA-level aggregates are correlated with the CPUMA outcome errors because the outcomes are estimated from a different cross-section of individuals than the covariates; therefore, any estimation error in $Y_{sc}$ is likely independent of $v_{sc}$. Moreover, because the measurement error comes from sampling variability, assuming that the error is normally distributed is reasonable.\footnote{While the sample sizes for each CPUMA are all relatively large, the variance is still larger than one might expect due to the design effect of the survey.} Using results from the measurement error literature, these parameters, and therefore our causal estimand, are identified if we know $\Sigma_{vv \mid A = a}$ (see, eg, \cite{gleser1992importance}). We discuss this further in Appendix A, while connecting these results to weighting estimators that directly estimate $\psi^1$ rather than outcome models that estimate $(\alpha, \beta)$. 
+We assume that the errors $\epsilon_{sc}$ and $c_s$ are independent from each other and across time (ie we rule out serial-correlation), and that these errors are invariant to the intervention. This model then allows us to identify $\psi^1$ in terms of our model parameters; specifically, we have that $\psi^1 = \alpha + \bar{X}_0^T\beta$, where $\bar{X}_0$ is the (observed) mean covariate values among the control units.\footnote{To be precise, we use the population-weighted mean so as to target the individual-level treatment effect rather than the CPUMA-average treatment effect.} 
+
+A classical assumption in the measurement-error literature is that $X$ and $W$ are jointly normally distributed, the measurement errors are independent and identically distributed, and these errors are uncorrelated with the outcome. Under these assumptions, it is well-known that standard regression-based estimates of $\beta$ will suffer from the following bias:
+
+$$
+\mathbb{E}\{\hat{\beta}\} = \kappa \beta
+$$
+
+where $\kappa = \Sigma_{WW \mid A = a}^{-1}\Sigma_{XX \mid A = a}$. Our causal parameter is a function of $\beta$, which is estimable from the data if we know (or can estimate) $\kappa$ (\cite{gleser1992importance}). 
+
+Under the classical errors-in-variables model, the asymptotic bias for the SBW estimator that sets $\delta = 0$ is equivalent to the bias of a linear combination of coefficient estimates from the OLS-based regression estimator. The intuition for this result is as follows: exact balancing weights estimate an implicit $\beta$ on a subset of the data where we have sufficient overlap. We can therefore think of SBW as returning a solution to some implicit weighted-least squares problem. If we assume that the outcome model holds across all of the data, WLS and OLS are estimating the same $\beta$; therefore, the bias that effects the least squares solution will have the same effect on the WLS, and therefore SBW, solution. Our target parameter is therefore identified under the same conditions regardless of the estimation strategy. We prove this result more formally in Appendix A.
+
+For this application we make a slight departure from the classical setting, assuming that that $W_{sc} = X_{sc} + v_{sc}$, where $\sqrt{s_{sc}}v_{sc}$ are drawn iid from $MVN(0, \Sigma_{vv \mid A = a})$, and where $s_{sc}$ are the vector of sample sizes used to calculate $W_{sc}$. We again assume that $v_{sc}$ is independent of the CPUMA-level errors $\epsilon_{sc}$ (which may include measurement error in the outcome) and the state-level errors $c_s$. We believe this is reasonable because the errors in the CPUMA-level aggregates are estimated from a 2014 cross-section of individuals, while the covariates are estimated from different individuals surveyed from 2011-2013. \footnote{While the sample sizes for each CPUMA are all relatively large, the variance is still larger than one might expect due to the design effect of the survey.} 
 
 \subsection{Estimation}
 
-We outline our estimation strategy first emphasizing how our method differs from the synthetic controls approach. In particular, we explain why estimating the ETC must rely on arguably stronger assumptions than the ETT. We then explain these how these assumptions differ from synthetic control applications and why we therefore choose to use an implementation of Stable Balancing Weights (SBW) for our modeling. Second, we explain a modification we make to the SBW criterion (which we call H-SBW) to address the hierarchical data structure and show that it reduces the variance of our estimator under our assumption of within-state correlation of our model errors. Third, we connect our estimator to the regression calibration literature by generating weights that balance on a linear prediction of the true covariates $\hat{\eta}_a(W_{sc})$. Finally, due to remaining imbalances in our covariates, we test the sensitivity of our results to a ridge-augmented estimator, following the suggestion of \cite{ben2018augmented}. As an additional sensitivity check we also use overlap weights, to estimate a different causal parameter -- the overlap average treatment effect (OATE) -- as suggested by \cite{li2018balancing}.
+We outline our estimation strategy first emphasizing how our method differs from the synthetic controls approach, which motivates our use of the SBW objective. Second, we explain a modification we make to the SBW criterion to address the hierarchical data structure (which we call H-SBW) that reduces the variance of our estimator under our assumption of within-state correlation of our model errors. Third, we connect our estimator to the regression calibration literature by generating weights that balance a linear prediction of the true covariates $\hat{\eta}_a(W_{sc})$ using the observed covariates $W_{sc}$. 
+
+We also test the sensitivity of our estimator to a ridge-augmented version, following the suggestion of \cite{ben2018augmented}; this allows us to achieve better covariate balance by extrapolating beyond the support of the data. As a separate sensitivity check, we estimate a different causal parameter -- the overlap average treatment effect (OATE) -- using overlap weights, as discussed in \cite{li2018balancing}. Estimating this effect does not require extrapolation, but rather changing the target estimand. We discuss this further below.
 
 Similar to synthetic controls applications, we seek to generate a set of positive weights that balance the means of covariates for the treated units to the mean of covariates for the control units. Assume that we observe the true covariate matrices $X_1$ and $X_0$, and let $\bar{X}_0$ be the (population-weighted) average of the covariate values in the non-expansion region. Ideally, we could then find some $\gamma^\star$ such that for $\delta = 0$: 
 
@@ -194,15 +199,13 @@ $$
 \hat{\psi} = (N_0^{-1}\sum_{s: A_s = 1}^{M_1}\sum_{c = 1}^{n_s}\gamma_{sc}^\star Y_{sc} - \sum_{s: A_s = 0}\sum_{c = 1}^{n_s}Y_{sc}p_{sc})
 $$
 
-While synthetic controls are frequently motivated by the assumption that the outcomes follow a linear factor model, here we assume no unobserved confounding and that $\mu_1(X_{sc}) = \alpha + x_{sc}^T\beta$. The bias of our estimator is therefore less than or equal to $\lvert\beta\rvert^T\delta = 0$ (see, eg, \cite{zubizarreta2015stable}). The challenge, however, is that for any given dataset we have no guarantee that any such $\gamma$ exists that exactly balances the covariates; we therefore need some method of determining how to prioritize which parts of the covariate distribution we wish to balance to control the bias.
+The assumption that the outcomes (absent treatment) follow a linear factor model frequently motivates the synthetic controls approach; here we instead assume no unobserved confounding and assume that the outcomes given treatment $\mu_1(X_{sc}) = \alpha + X_{sc}^T\beta$. The bias of our estimator (again assuming we observed $X_{sc}$), is therefore less than or equal to $\lvert\beta\rvert^T\delta = 0$ (see, eg, \cite{zubizarreta2015stable}). The challenge, however, is that for any given dataset we have no guarantee that any such $\gamma$ exists that exactly balances the covariates; we therefore need some method of determining how to prioritize which parts of the covariate distribution we wish to balance to minimize this bias.
 
-This is where our method to estimate the ETC contrasts with the commonly used synthetic control approach used to estimate the ETT: \cite{abadie2010synthetic} determine how to prioritize covariate balance by training their model on pre-treatment outcomes (\cite{kaul2015synthetic} shows that often the most relevant covariates simply become the pre-treatment outcomes). Because in that setting $Y^0_{sct}$ is actually observed for $t \le T_0$, \cite{abadie2010synthetic} leverage this data to select the covariates that best predict these values. By contrast we never observe $Y^1_{sct}$ prior to treatment. Without additional assumptions, we cannot use the pre-treatment data to learn which covariates matter most for determining this potential outcome.
+This is where estimating the ETC contrasts with the commonly used synthetic control approach used to estimate the ETT: \cite{abadie2010synthetic} determine how to prioritize covariate balance by training their model on pre-treatment outcomes (\cite{kaul2015synthetic} shows that often the most relevant covariates simply become the pre-treatment outcomes). Because in that setting $Y^0_{sct}$ is actually observed for $t \le T_0$, \cite{abadie2010synthetic} are able to leverage this data to select the covariates that best predict these values. By contrast we never observe $Y^1_{sct}$ prior to treatment. Without additional assumptions, we cannot use the pre-treatment data to learn which covariates matter most for determining this potential outcome.
 
-Moreover, the problem of predicting treatment response also makes estimating the ETC more challenging than the ETT. As a result, we may care far more about balancing ``auxillary covariates'' (ie covariates that are not pre-treatment outcomes) in our setting than the traditional synthetic controls setting. Consider the following example: say for some application there exist two sets of weights, $\gamma_1$ and $\gamma_2$, that exactly balances $k$ pre-treatment means of the controls units to the treated unit(s). $\gamma_1$ additionally exactly balances $p$ auxillary covariates, while $\gamma_2$ does not. Heuristically, estimates using either set of weights may provide reasonable estimates of the counterfactuals for the treated unit(s) absent treatment. However, now consider inverting the treatment assignment -- ie the control units are treated and the treated units control -- and predicting the outcome under treatment for those not treated: intuitively, we should choose $\gamma_2$. Why? Because we might worry that these observable characteristics predict not just outcome levels without treatment but also treatment response, and the treatment response of these two units might differ substantially. 
+Moreover, the problem of predicting treatment response also makes estimating the ETC more challenging to estimate than the ETT. In particular, we likely care more about balancing ``auxillary covariates'' (covariates that are not pre-treatment outcomes) in our setting than the traditional synthetic controls setting. To see this, assume that both $\mu_0$ and $\mu_1$ are linear in the covariates, including the pre-treatment outcomes. We might reasonably believe the coefficients on the auxillary covariates are close to zero once we condition on pre-treatment outcomes. As a result, the bias induced by remaining imbalances on the auxillary covariates would be small. On the other hand, the coefficients on the same covariates for the model $\mu_1(X_{sc})$ could be much larger, even after conditioning on pre-treatment outcomes, because these coefficients are highly predictive of treatment response. If our weights fail to balance these covariates, we should expect that our estimates of $\mu_0$ will in general have less bias than our estimates of $\mu_1$. In summary, estimating the ETC requires a greater understanding of how the covariates are related to treatment response than the ETT; moreover, we cannot learn this information by using pre-treatment outcomes.
 
-More formally, assume that $\mu_0(X_{sc})$ is linear in the covariates. We might reasonably believe the coefficients on auxillary covariates are close to zero once we condition on pre-treatment outcomes. As a result, the bias induced by imbalances on these covariates would be small. On the other hand, the coefficients on the same covariates for the model $\mu_1(X_{sc})$ could be much larger, even after conditioning on pre-treatment outcomes. If our synthetic control weights fail to balance these covariates, we should expect that our estimates of $\mu_0$ will in general have less bias than our estimates of $\mu_1$. In summary, estimating the ETC requires a greater understanding of how the covariates are related to treatment response than the ETT; moreover, and we cannot learn this information by using pre-treatment outcomes.
-
-We therefore estimate the ETC by using a variation of SBW that we call H-SBW.\footnote{Specifically, we use a modified implementation of Noah Griefer's ``optweight'' package in R, available on github.com/mrubinst757}. This procedure allows us to estimate the minimum variance weights that satisfy certain balance constraints. Let $\eta_a(W_{sc}) = \mathbb{E}\{X_{sc} \mid W_{sc}, A_s = a\}$, and $\hat{\eta}_1(W_1)$ be a matrix of estimates of $\eta_1(W_1)$. Let $\bar{W}_0$ be a vector of population-weighted estimates of the covariates for the non-expansion region.\footnote{Because $\bar{W}_0$ and $\bar{X}_0$ are equal in expectation, the use of this target will not contribute to any asymptotic bias of our estimator.} We generate weights that solve the following objective:
+We therefore estimate the ETC by using a variation of SBW that we call H-SBW.\footnote{Specifically, we use a modified implementation of Noah Griefer's ``optweight'' package in R, available on github.com/mrubinst757}. This procedure allows us to estimate the minimum variance weights that satisfy user-specified balance constraints. Let $\eta_a(W_{sc}) = \mathbb{E}\{X_{sc} \mid W_{sc}, A_s = a\}$, and $\hat{\eta}_1(W_1)$ be a matrix of estimates of $\eta_1(W_1)$. Let $\bar{W}_0$ be a vector of population-weighted estimates of the covariates for the non-expansion region.\footnote{Because $\bar{W}_0$ and $\bar{X}_0$ are equal in expectation, the use of this target will not contribute to any asymptotic bias of our estimator.} We generate weights that solve the following objective:
 
 $$
 \min_{\gamma \in \Gamma} \sum_{s: A_s = 1}^{M_1}(\sum_{c = 1}^{n_s} \gamma_{sc}^2 + \sum_{c \ne d}\rho \gamma_{sc}\gamma_{sd})
@@ -212,29 +215,33 @@ $$
 \Gamma := \{\gamma \mid \frac{1}{N_0}\hat{\eta}_1(W_{sc})^T\gamma - \bar{W}_0 \mid \le \delta, \gamma_{sc} > 0, \sum_{sc}\gamma_{s,c} = N_0\}
 $$
 
-Unlike the synthetic controls objective, the SBW objective allows the user to specify covariate-level balance constraints using the vector $\delta$. When estimating the ETC, we lean heavily on assumptions to justify our choice of $\delta$; in particular, we use a priori domain knowledge about which covariates are most likely to be important predictors of treatment effect heterogeneity when setting $\delta$. 
+This objective is a modification of the SBW objective, which sets $\rho = 0$ and balances on $W_{sc}$ rather than $\eta_1(W_{sc})$. Importantly, both allow the user to specify covariate-level balance constraints using the vector $\delta$. When estimating the ETC, we lean heavily on assumptions to justify our choice of $\delta$; in particular, we use a priori domain knowledge about which covariates are most likely to be important predictors of treatment effect heterogeneity when setting $\delta$. However, we also must choose $\delta$ to something that is feasible given the data. 
 
-We now discuss how the H-SBW criterion differs from SBW. Notice that the SBW criterion is equivalent to ours when setting $\rho = 0$; in other words, SBW attempts to calculate the minimum variance weights for a fixed $\delta$. This is desirable if, for example, the errors in the outcome model are all independent and identically distributed. In our case, we account for possible state-level dependencies in the outcome model. Intuitively, by adding the tuning parameter $\rho$, this objective attempts to ensure that the within state sum of weights is roughly uniform across states as well as across CPUMAs. This is especially desirable if many weights would in some cases be concentrated in only one state. We discuss this objective in more detail and provide simulation results in Rubinstein et al (2021) (not yet available); broadly speaking, we can think of H-SBW being to SBW what generalized least squares (GLS) is to ordinary least squares (OLS): both SBW and OLS can produce unbiased estimates of certain parameters, but H-SBW and GLS are more efficient estimators assuming a block-matrix correlation structure in the outcome errors.
+For our application, we constrain $\delta$ to be 0.05 percentage points for pre-treatment outcomes, 0.1 percentage points for pre-treatment uninsurance rates. We believe these are the most likely factors associated with treatment response, so we prioritize balancing these covariates. For the remaining covariates, we let $\delta$ be 0.25 percentage points for population growth, 1 percentage point for female, hispanic ethnicity, white race, age category, disability, and number of children category; 2 for urban, citizenship, education category, income-to-poverty category, student, and foreign-born; and 20 for the Republican governance indicators. We choose these constraints primarily on feasibility concerns, and for our variance estimates, we programmatically reduce these initial constraints when this constraint set becomes infeasible.
 
-A second departure from SBW comes in the constraint set: rather than balancing on the observed covariate values $W_{sc}$, we instead balance on our estimate of $\eta_1(W_{sc})$. This is because the estimation error in these CPUMA-level covariates will bias our estimate of $\psi^1$. In Appendix A we show that this bias is equivalent to the bias induced in the classical measurement error framework using OLS. We further show that if we had access to $\eta_1$, we could get an unbiased estimate of $\psi^1$. Here we leverage the person-level replicate survey weights provided in the ACS microdata to estimate the variability in each CPUMA's observed covariate values. We then use a variant of regression calibration techniques to estimate $\eta_a(W_{sc})$ as a linear approximation to the true covariate values (see, eg, \cite{gleser1992importance}, \cite{carroll2006measurement}). We consider two versions of this procedure: our preferred version which accounts for the fact that some covariate values are estimated much more precisely than other values; and a second that follows the traditionally used procedures in this setting which does not account for this differential precision. Further details about these covariate adjustment procedures in Appendix B.
+We now discuss how H-SBW differs from SBW, beginning with the criterion. The motivation of the SBW criterion, which is equivalent to ours with $\rho = 0$, is to produce the minimum variance weights for a fixed $\delta$. This is optimal if, for example, the errors in the outcome model are independent and identically distributed. In our setting we have possible state-level dependencies, reducing the efficiency of this estimator. To improve the efficiency, we add the tuning parameter $\rho$, which attempts to more uniformally disperse the weights across states. This objective is optimal if we assume constant within-state correlation of the errors and constant variance across units. We discuss this objective in more detail and provide simulation results in Rubinstein (2021) (pre-print available soon); broadly speaking, we can think of H-SBW being to SBW what generalized least squares (GLS) is to ordinary least squares (OLS): both SBW and OLS can produce unbiased estimates of model parameters; however, H-SBW and GLS can be produce efficient estimators assuming a block-matrix correlation structure in the outcome errors. 
 
-This is the first application we are aware of to use regression calibration methods in the context of balancing weights. We emphasize the key assumptions for the theoretical groundings for this procedure: (1) the outcome model is linear in the covariates; (2) the measurement error in the outcome is unrelated to the measurement error in the covariates; (3) the covariates are randomly sampled from some larger super-population. The first assumption is quite strong, though standard in many applications. The second assumption is reasonable, because our outcomes are estimated from a different cross-section of individuals than our covariates. The final assumption is not strictly necessary, though is often invoked to motivate using regression-calibration methods (see, eg, \cite{gleser1992importance}). 
+A second departure from SBW comes in the constraint set: rather than balancing on the observed covariate values $W_{sc}$, we instead balance on our estimate of $\eta_1(W_{sc})$. This is because the estimation error in these CPUMA-level covariates will bias our estimate of $\psi^1$. In Appendix A we show that if we had access to $\eta_1$, we could obtain an unbiased estimate of the super-population parameter $\psi^1 = \mathbb{E}\{Y_i^1 \mid A_i = 0\}$ by balancing on $\eta_1(W_{sc})$.\footnote{For the finite-sample parameter we're interested in here, using the conditional expectation still leads to some finite-sample bias.} Of course, in practice we do not know $\eta_1$ but must estimate it using auxillary data. Here we leverage the person-level replicate survey weights provided in the ACS microdata to estimate the variability in each CPUMA's observed covariate values. We then use a variant of regression calibration techniques to estimate $\eta_a(W_{sc})$ as a linear approximation to the true covariate values (see, eg, \cite{gleser1992importance}, \cite{carroll2006measurement}). We consider two versions of this procedure: our preferred version which accounts for the fact that some covariates are estimated much more precisely than others, but that assumes that all of the differences in the errors are attributable to the different sample sizes used to estimate the covariates; and a second that follows the traditionally used procedures in this setting which does not account for this differential precision, but does not model the differential sampling variability, and instead averages over all observed variance estimates. Further details about these covariate adjustment procedures are available in Appendix B.
 
-Lastly, we are unable to achieve exact balance. These imbalances may well bias our estimator. Following the recent literature on synthetic controls, we reduce this bias by using ridge-regression augmented weights \cite{ben2018augmented}. Letting $\hat{\eta}_1(W_1)$ be the matrix of adjusted covariates, we standardize our weights to sum to one and use the regression-augmented weights:
+This is the first application we are aware of to use regression calibration methods in the context of balancing weights. We emphasize two critical assumptions for using this procedure in our context: (1) the outcome model is linear in the true covariates; (2) the measurement error in the outcome is unrelated to the measurement error in the covariates. The first assumption is strong, though often used in practice. The second assumption is reasonable, because our outcomes are estimated from a different cross-section of individuals than our covariates. 
+
+Lastly, we are unable to achieve exact balance, which will also contribute to the bias of our estimator. Following the recent literature on synthetic controls, we test the sensitivity of our results to these imabalances by using ridge-regression augmented weights \cite{ben2018augmented}. Letting $\hat{\eta}_1(W_1)$ be the matrix of adjusted covariates, and $\gamma^{hsbw}$ be our H-SBW weights, we standardize our weights to sum to one and estimate the regression-augmented weights:
 
 $$
-\gamma^{aug} = \gamma^{sbw} + (\hat{\eta}_1(W_1)^T\gamma^{sbw} - \bar{W}_0)^T(\hat{\eta}_1(W_1)^T\Omega^{-1}\hat{\eta}_1(W_1) + \lambda I_d)^{-1}\hat{\eta}_1(W_1)^T\Omega^{-1}
+\gamma^{aug} = \gamma^{hsbw} + (\hat{\eta}_1(W_1)^T\gamma^{hsbw} - \bar{W}_0)^T(\hat{\eta}_1(W_1)^T\Omega^{-1}\hat{\eta}_1(W_1) + \lambda I_d)^{-1}\hat{\eta}_1(W_1)^T\Omega^{-1}
 $$
 
-where $\Omega$ is a block diagonal matrix with diagonal entries equal to one and the within-group off diagonals equal to $\rho$. We choose $\lambda$ so that the remaining imbalances all fall within 0.1 percentage points (see \cite{ben2018augmented} for more details on the connection between these weights and ridge-regression). The cost of this de-biasing procedure is that we must extrapolate from the support of the data, and therefore rely more heavily on our modeling assumptions. Finally, notice that we can also generate Oaxaca-Blinder weights ($\gamma^{ob}$) by setting $\gamma^{sbw} = 1/N_0$ and $\lambda = 0$. These are equivalent to running OLS (or GLS) on the observed outcomes among the treated units and imputing the missing counterfactual using these coefficient estimates. In our results we consider estimators using SBW ($\rho = 0$), $H-SBW$ ($\rho = 0.2$), and ridge-augmented versions of SBW and H-SBW that we call BC-SBW and BC-HSBW. We also generate Oaxaca-Blinder weights setting $\rho \in \{0, 0.2\}$ (OB and H-OB) and provide these results in Appendix~\ref{ssec:allresults}. We focus our discussion on our preferred estimator, H-SB, and its ridge augmented version BC-HSBW. We also provide results for SBW and the ridge-augmented estimator BC-SBW.
+where $\Omega$ is a block diagonal matrix with diagonal entries equal to one and the within-group off diagonals equal to $\rho$. We choose $\lambda$ so that the remaining imbalances all fall within 0.1 percentage points (see \cite{ben2018augmented} for more details on the connection between these weights and ridge-regression). The cost of this procedure is that we must extrapolate from the support of the data, and therefore rely more heavily on our modeling assumptions. In our results we consider estimators using SBW ($\rho = 0$), H-SBW ($\rho = 0.2$), and ridge-augmented versions of SBW and H-SBW that we call BC-SBW and BC-HSBW. We focus our discussion on our preferred estimator, H-SBW, and its ridge augmented version BC-HSBW. 
 
 \subsection{Inference}
 
-We treat our estimate of $\psi^0$ as known, since the population-weighted CPUMA average of observed values is quite precisely estimated relative to the CPUMA-level averages. We then evaluate the uncertainty in our estimator with respect to our model-based estimates of $\psi^1$ and $\eta_1(W_{sc})$. We use the leave-one-state-out jackknife to estimate the standard error of our estimator of $\psi^1$ (\cite{cameron2015practitioner}). We compute standard errors both recalculating all of the estimators on the adjusted dataset using our estimates of $\eta_1(W_{sc})$, and also recalculating the estimators including the entire adjustment process. We expect that either of these estimators will be conservative: our target of inference is a finite-sample estimand while the bootstrapped standard errors give asymptotic coverage for imagined super-population effects (see, eg, \cite{imbens2015causal}). Moreover, it is not clear that resampling entire states to approximate the variability from our estimate of $\eta_1(W_{sc})$ is a sensible procedure when we view the underlying covariates as fixed, since, conditional on $X_{sc}$, it is reasonable to assume that the sampling variability is drawn independently at the CPUMA rather than the state-level. We therefore present the standard errors that are conditioned on the adjustment process in the paper, and leave the full-procedure jackknife confidence interval results to Appendix~\ref{ssec:allresults}. 
+We treat our estimate of $\psi^0$ as known, since the population-weighted CPUMA average of observed values is quite precisely estimated relative to the CPUMA-level averages. We also treat our balancing targets $\bar{W}_0$ as known for the same reason. 
+
+We then evaluate the uncertainty in our estimator with respect to our model-based estimates of $\psi^1$. We then use the leave-one-state-out jackknife to estimate the standard error of our estimator of $\psi^1$ (\cite{cameron2015practitioner}). Our preferred estimators conditions on our estimates of $\eta_1(W_{sc})$; however, we also calculate a second estimate that recalculates the entire adjustment process. While this latter estimator accounts for the additional uncertainty in our estimate of $\eta_1$, we expect this estimator to be overly conservative: the variability in our estimate of $\eta_1$ occurs at the CPUMA-level, but this procedure re-samples entire states to approximate this uncertainty. We therefore present the standard errors that condition on the adjustment process in the paper, and leave the results from full-procedure jackknife confidence interval results to Appendix E. 
 
 \section{Results}
 
-We present the following results using our preferred covariate adjustment $\hat{\eta}_1(W_{sc})$.  Figure~\ref{fig:loveplotc1} shows how our balancing weights reduce the imbalances among covariates with greater than one percentage point difference between the targeted mean in the expansion region and the mean values in the non-expansion region (we target the population-weighted mean of the untreated region). Before applying our weights, we see that there are substantial imbalances in the Republican governance indicators, as well as pre-treatment uninsurance and unemployment rates. Our weights drastically reduce these differences; however, some imbalances remain. In particular, imbalances remain in the Republican governance indicators. A complete balance table is available in Appendix D, Table~\ref{tab:baltab1} and Table~\ref{tab:baltab2}. 
+The following results use our preferred covariate adjustment $\hat{\eta}_1(W_{sc})$. Figure~\ref{fig:loveplotc1} shows how our balancing weights reduce the imbalances among covariates with greater than one percentage point difference between the targeted mean in the expansion region and the mean values in the non-expansion region (we target the population-weighted mean of the untreated region). Before applying our weights, we see that there are substantial imbalances in the Republican governance indicators, as well as pre-treatment uninsurance and unemployment rates. Our weights drastically reduce these differences; however, some imbalances remain. In particular, imbalances remain in the Republican governance indicators. A complete balance table is available in Appendix D, Table~\ref{tab:baltab1} and Table~\ref{tab:baltab2}. Appendix C contains additional summary statistics.
 
 \begin{figure}[B]
 \begin{center}
@@ -244,7 +251,7 @@ We present the following results using our preferred covariate adjustment $\hat{
 \end{center}
 \end{figure}
 
-As discussed above, we then use ridge-regression augmentation to extrapolate from the data in order to reduce all imbalances within 0.1 percentage points. Figure~\ref{fig:statewghts} shows the total weights summed across states for each estimator: H-SBW and BC-HSBW. This figure sums the negative weights separately from the positive weights to make clear the extent of the extrapolation. We see that BC-HSBW extrapolates heavily in order to estimate the counterfactual, particularly for CPUMAS in California. Due to this extensive extrapolation, we therefore prefer the H-SBW estimator, though we compare results against BC-HSBW as a robustness check.
+As discussed above, we use a ridge-regression augmentation to extrapolate from the data in order to reduce all imbalances within 0.1 percentage points. Figure~\ref{fig:statewghts} shows the total weights summed across states for each estimator: H-SBW and BC-HSBW. This figure sums the negative weights separately from the positive weights to show the extent of the extrapolation. We see that BC-HSBW extrapolates heavily in order to estimate the counterfactual, particularly for CPUMAS in California. Due to this extensive extrapolation, we therefore prefer the H-SBW estimator, though we compare results against BC-HSBW as a robustness check.
 
 \begin{figure}[B]
 \begin{center}
@@ -254,7 +261,7 @@ As discussed above, we then use ridge-regression augmentation to extrapolate fro
 \end{center}
 \end{figure}
 
-Using H-SBW we calculate an estimated effect of -2.00 (-3.59, -0.40). The bias-correction makes little substantive difference, yielding an estimate of -2.14 (-3.57, -0.71). In other words, we estimate that had states that did not expand Medicaid in 2014 done so, they would have seen a 2 percentage point reduction in their uninsurance rates that year. These estimates differ somewhat from the estimates we find running the procedure on our unadjusted covariate estimates: here H-SBW gives an estimated effect of -2.26 (-3.23, -1.29), and the bias corrected estimator yields -2.50 (-3.41, -1.58). Using the adjusted covariate set appears to both move our estimate closer in absolute magnitude towards zero and increase the width of the estimated confidence intervals. Figure~\ref{fig:estimators} displays the point estimates from these weighting estimators, as well as estimators using SBW, on the adjusted and unadjusted datasets. We also calculate estimates using two versions of Oaxaca-Blinder (regression) weights and using a second covariate adjustment; these results are substantively similar and are available in Appendix~\ref{ssec:allresults}. 
+Using H-SBW we calculate an estimated effect of -2.00 (-3.59, -0.40). In other words, we estimate that had states that did not expand Medicaid in 2014 done so, they would have seen a 2 percentage point reduction in their uninsurance rates that year. While remaining imbalances are quite large, the bias-correction makes little substantive difference, yielding an estimate of -2.14 (-3.57, -0.71). These estimates differ somewhat from the estimates we find running the procedure on our unadjusted covariate estimates: here H-SBW gives an estimated effect of -2.26 (-3.23, -1.29), and the bias corrected estimator yields -2.50 (-3.41, -1.58). Using the adjusted covariate set appears to both move our estimate closer in absolute magnitude towards zero and decreases the width of the estimated confidence intervals. Figure~\ref{fig:estimators} displays the point estimates from these weighting estimators, as well as estimators using SBW, on the adjusted and unadjusted datasets. Additional results are available in Appendix E.
 
 \begin{figure}[B]
 \begin{center}
@@ -264,7 +271,7 @@ Using H-SBW we calculate an estimated effect of -2.00 (-3.59, -0.40). The bias-c
 \end{center}
 \end{figure}
 
-We examine the robustness of our point estimates to the removal of individual states (note that these are the point estimates used to calculate our confidence intervals). Figure~\ref{fig:loostateplot} shows how the point estimates change for both the adjusted (``sigma\_uu\_i\_modeled'') and unadjusted (``sigma\_zero'') datasets. We see similar results in either case: removing Ohio and Arkansas tends to increase the absolute magnitude of the point estimates. By contrast, removing California decreases the absolute magnitude of the estimators, particularly for estimators that are not bias-corrected. The results are quite similar when using different covariate adjustments and when recalculating the entire procedure; some are available in Appendix E, Table~\ref{tab:sensitivityc1}. 
+We examine the robustness of our point estimates to the removal of individual states (note that these are the point estimates used to calculate our confidence intervals). Figure~\ref{fig:loostateplot} shows how the point estimates change for both the adjusted (``sigma\_uu\_i\_modeled'') and unadjusted (``sigma\_zero'') datasets. We see similar results in either case: removing Ohio and Arkansas tends to increase the absolute magnitude of the point estimates. By contrast, removing California decreases the absolute magnitude of the estimators, particularly for estimators that are not bias-corrected. The results are quite similar when using different covariate adjustments and when recalculating the entire procedure; some additional results are available in Appendix E, Table~\ref{tab:sensitivityc1}. 
 
 \begin{figure}[]
 \begin{center}
@@ -274,9 +281,9 @@ We examine the robustness of our point estimates to the removal of individual st
 \end{center}
 \end{figure}
 
-We now move to examining our second research question: whether Republican governance might be an important effect modifier for our estimates. We examine this by removing the Republican governance indicators and recalculating our point estimates and comparing this estimated contrast to our original point estimate (ie the estimated treatment effect when all groups are included). This difference is a function both of the model coefficients and the differences in the weighted imbalances between the covariates of the treated and control groups.
+We now consider our second research question: whether Republican governance might be an effect modifier for the treatment effect. We examine this by removing the Republican governance indicators and recalculating our point estimates and comparing this estimated contrast to our original point estimate (ie the estimated treatment effect when all groups are included). This difference is a function both of the model coefficients and the differences in the weighted imbalances between the covariates of the treated and control groups.
 
-More formally, let $\hat{\psi}_v$ be the estimator with covariates $V$ removed using weights $\gamma_v$; let $\beta_v$ be the model coefficients on those covariates; and let $\hat{\psi}_0$ be our primary estimator. This procedure approximately estimates the following quantity:\footnote{Notice that these final two lines are approximations rather than equalities for four reasons: one, error in the outcome model; two, estimation error from $\hat{\eta}(W_{sc})$; three, the difference between $\eta(W_{sc})$ and $X_{sc}$; and finally, because while we hold $\delta$ constant for all covariates not in $V$, the reweighting may affect some of the imbalances within that tolerance for non-binding constraints.}
+More formally, let $\hat{\psi}_v$ be the estimator with covariates $V$ removed using weights $\gamma_v$; let $\beta_v$ be the model coefficients on those covariates; and let $\hat{\psi}^1_0$ be our primary estimator. This procedure approximately estimates the following quantity:\footnote{Notice that these final two lines are approximations rather than equalities for four reasons: one, error in the outcome model; two, estimation error from $\hat{\eta}(W_{sc})$; three, the difference between $\eta(W_{sc})$ and $X_{sc}$; and finally, because while we hold $\delta$ constant for all covariates not in $V$, the reweighting may affect some of the imbalances within that tolerance for non-binding constraints.}
 
 \begin{align*}
     \hat{\Delta}_v &= \hat{\psi}_v - \hat{\psi}_0 \\
@@ -286,15 +293,15 @@ More formally, let $\hat{\psi}_v$ be the estimator with covariates $V$ removed u
     &\approx (V_1^T(\gamma_v - \gamma_0))^T\beta_v
 \end{align*}
 
-Let $\hat{\Delta}$ be this estimate with the Republican governance indicators removed. Because we hypothesize that regions under Republican governed administrations will have lower Medicaid take-up rates, we expect that removing these covariates will move this estimate farther away from zero.\footnote{Specifically, for these covariates we know that $V_1^T(\gamma_1 - \gamma_0)$ will be negative because the treated region is much more Democratic than the control region. Because we expect that Republican governance is positively associated with uninsurance rates, we expect that this overall quantity will be negative.} We also examine the influence of four other covariate groups: pre-treatment uninsurance rates and pre-treatment unemployment rates, and three sets of different demographic indicators. Specifically, the first group includes: urban residence, age group, education, citizenship, student, disability, female; the second, white race, Hispanic ethnicity, foreign-born, and income-to-poverty ratio; the third, number of children, household to population ratio, and population growth. We present and comment on these results in Appendix E, Table~\ref{tab:ptests}.
+Let $\hat{\Delta}$ be this estimate with the Republican governance indicators removed. Because we hypothesize that regions under Republican governed administrations will have lower Medicaid take-up rates, we expect that removing these covariates will move this estimate farther away from zero.\footnote{Specifically, for these covariates we know that $V_1^T(\gamma_1 - \gamma_0)$ will be negative because the treated region is much more Democratic than the control region. Because we expect that Republican governance is positively associated with uninsurance rates, we expect that this overall quantity will be negative.} We also examine the influence of four other covariate groups: pre-treatment uninsurance rates and pre-treatment unemployment rates, and three sets of different demographic indicators. Specifically, the first group includes: urban residence, age group, education, citizenship, student, disability, female; the second, white race, Hispanic ethnicity, foreign-born, and income-to-poverty ratio; the third, children category (0, 1, 2, 3+, NA), household to population ratio, and population growth. We present and comment on these results in Appendix E, Table~\ref{tab:ptests}.
 
-For our H-SBW estimator we calculate $\hat{\Delta}$ equal to -0.62 (-2.05, -0.81) for BC-HSBW and -0.51 (-1.74, 0.71). We see similar differentials on our unadjusted dataset (0.64 (-1.62, 0.34) and 0.49 (-1.33, 0.34), respectively). These results are consistent with our hypothesis that Republican governance drives heterogeneity in the effect of Medicaid expansion. While our confidence intervals include zero, we find that these differences are negative for all estimators we consider when removing each state -- conditional on the covariate adjustment. That is, the sign of the differences in the contrasts remains negative for every specification that we run. When we re-run the entire adjustment procedure when removing each state, we find that removing California results in a positive contrast between these estimates for BC-HSBW and BC-SBW and Illinois for BC-SBW for our adjusted dataset. However, this result does not occur with any set of weights that does not extrapolate beyond the support of the data, or any set of weights calculated on the unadjusted data. Overall we view this as suggestive evidence consistent with our hypothesis.
+For the H-SBW estimator we calculate $\hat{\Delta}$ equal to -0.62 (-2.05, 0.81) for BC-HSBW and -0.51 (-1.74, 0.71). We see similar differentials on our unadjusted dataset (0.64 (-1.62, 0.34) and 0.49 (-1.33, 0.34), respectively). These results are consistent with our hypothesis that Republican governance drives heterogeneity in the effect of Medicaid expansion. While our confidence intervals include zero, we find that these differences are negative for all estimators we consider when removing each state (conditional on the covariate adjustment). That is, the sign of the differences in the contrasts remains negative for every specification that we run.\footnote{When we re-run the entire adjustment procedure when removing each state, we find that removing California results in a positive contrast between these estimates for BC-HSBW and BC-SBW and Illinois for BC-SBW for our adjusted dataset. However, this result only occurs with weights that extrapolate beyond the support of the data calculated on a covariate-adjusted dataset. We find that the covariate adjustments can lead to quite extreme imputed values for certain CPUMAs, particularly when we reduce the amount of data used to calculate the adjustment, a limitation of using a linear approximation to impute covariates that can only fall within a certain range. This problem compounds when allowing the weights to extrapolate because they are far more likely to use these bad estimates. Additional comments on these extreme values are available in Appendix C.} Overall we view this as suggestive (though not definitive) evidence consistent with our research hypothesis.
 
-Appendix E  Figure~\ref{fig:rdiffc1state} and Figure~\ref{fig:rdiffc1proc} display all estimates $\hat{\Delta}$ with each state removed, both conditional on the covariate adjustment and recalculating the covariate adjustment, respectively. Additional results for different estimators are available in Appendix E, Table~\ref{tab:deltac1}.
+Appendix E Figure~\ref{fig:rdiffc1state} and Figure~\ref{fig:rdiffc1proc} display all estimates $\hat{\Delta}$ with each state removed, both conditional on the covariate adjustment and recalculating the covariate adjustment, respectively. Additional results for different estimators are available in Appendix E, Table~\ref{tab:deltac1}.
 
 \subsection{Sensitivity Analyses} \label{sssec:sensitivity}
 
-We examine the sensitivity of our analysis to violations of two key causal assumptions: (1) no anticipatory treatment effects, and (2) positivity violations. To the first point, several states had partial limited expansions prior to 2014. Following \cite{frean2017premium}, we consider these states to be California, Connecticut, Minnesota, New Jersey, and Washington. We rerun our analyses excluding CPUMAs from all five of these states. It is unclear how removing these states might affect our estimates: on the one hand, states that expanded early might have a smaller treatment effect after 2014 because they already enrolled newly eligible individuals. On the other hand, if these states were also more motivated to enroll people in Medicaid, they might have larger post-expansion coverage gains. Figure~\ref{fig:weightsbystatec2} displays the H-SBW weights summed by state alongside BC-HSBW. We again see that the BC-HSBW estimator extrapolates heavily to reduce the imbalances. A complete balance table is available in Appendix D, Table~\ref{tab:baltab1} and Table~\ref{tab:baltab2}.
+We examine the sensitivity of our analysis to violations of two key causal assumptions: (1) no anticipatory treatment effects, and (2) positivity violations. To the first point, several states had partial limited expansions prior to 2014. Following \cite{frean2017premium}, these states are California, Connecticut, Minnesota, New Jersey, and Washington. We rerun our analyses excluding CPUMAs from all five of these states. It is unclear how removing these states might affect our estimates: on the one hand, states that expanded early might have a smaller treatment effect after 2014 because they already enrolled newly eligible individuals. On the other hand, if these states were also more motivated to enroll people in Medicaid, they might have larger post-expansion coverage gains. Figure~\ref{fig:weightsbystatec2} displays the H-SBW weights summed by state alongside BC-HSBW. We again see that the BC-HSBW estimator extrapolates heavily to reduce the imbalances. A complete balance table is available in Appendix D, Table~\ref{tab:baltab1} and Table~\ref{tab:baltab2}.
 
 \begin{figure}[]
 \begin{center}
@@ -304,10 +311,9 @@ We examine the sensitivity of our analysis to violations of two key causal assum
 \end{center}
 \end{figure}
 
+On this dataset we estimate an effect of -1.48 (-2.91, -0.06) using H-SBW weights; BC-HSBW yields an estimate of -2.06 (-3.72, -0.41). Here we see that the bias correction makes a larger substantive difference to the point estimate; however, it is not substantively different from the original point estimate with all states included. Overall we view this as evidence that our primary point estimates are fairly robust to the exclusion of these states, though perhaps the true effect is smaller in absolute magnitude. Table~\ref{tab:confintmainc2} and Table~\ref{tab:secondaryptests} in Appendix E display additional results. 
 
-On this dataset we estimate an effect of -1.29 (-2.45, -0.12) using H-SBW weights; BC-HSBW yields an estimate of -2.17 (-3.65, -0.68). Here we see that the bias correction makes a substantive difference to the point estimate; however, it is not substantively different from the original point estimate with all states included. Overall we view this as evidence that our primary point estimates are fairly robust to the exclusion of these states. Table~\ref{tab:confintmainc2} and Table~\ref{tab:secondaryptests} in Appendix E display additional results. 
-
-We further find that our estimates $\hat{\Delta}$ increase in absolute magnitude. Specifically, we find -1.28 (-2.20, -0.21) percentage point decrease for the H-SBW estimator when excluding the Republican governance indicators and a -0.73 (-2.40, 0.94) increase for BC-HSBW. Figure~\ref{fig:repub} displays these differences in the contrasts against those from our preferred dataset. On our unadjusted dataset we estimate contrasts of -1.04 (-2.01, -0.07) and -0.61 (-1.75, 0.52). 
+We also find that our estimates $\hat{\Delta}$ increase in absolute magnitude. Specifically, we find -1.15 (-2.53, 0.24) percentage point decrease for the H-SBW estimator when excluding the Republican governance indicators and a -0.74 (-2.40, 0.91) increase for BC-HSBW. Figure~\ref{fig:repub} displays these differences in the contrasts against those from our primary dataset. On our unadjusted dataset we estimate contrasts of -1.04 (-2.01, -0.07) and -0.61 (-1.75, 0.52). While these confidence intervals mostly contain zero, we again find that each individual difference between the leave-one-out-states estimated contrasts is less than zero (conditional on the covariate adjustment). These results again are consistent with hypothesis that factors associated with Republican governance reduce the effect size of Medicaid expansion. Additional results are available in Appendix E, Table~\ref{tab:deltac2}. 
 
 \begin{figure}[]
 \begin{center}
@@ -317,9 +323,7 @@ We further find that our estimates $\hat{\Delta}$ increase in absolute magnitude
 \end{center}
 \end{figure}
 
-Unlike in our primary analysis, both the confidence interval from the H-SBW and SBW estimators exclude zero; moreover, we again find that for all estimators (including the Oaxaca-Blinder weights), the difference between the leave-one-out-states estimated contrasts are negative conditional on the preferred covariate adjustment. When we rerun the entire adjustment procedure, we again find that the only estimators that have positive differences between these contrasts are ones that allow for negative weights. For our preferred covariate adjustment, BC-HSBW and BC-SBW are only sensitive to the removal of Kentucky. These results again support our hypothesis that factors associated with Republican governance reduce the effect size of Medicaid expansion. Additional results are available in Appendix E, Table~\ref{tab:deltac2}. 
-
-We next consider an alternative method to account for positivity violations. To this point we have relied on either (1) retaining a potentially biased estimate from weights that do not provide exact balance, or (2) producing a a more model-dependent estimate that relies on extrapolation. Overall we found that the results didn't change substantially either way. Here we consider a third option: changing our target estimand. In particular, we consider the overlap average treatment effect (OATE), proposed by \cite{li2018balancing}. This is the treatment effect on the subset of the entire dataset where we have overlap. It is a data-dependent treatment effect, and is not the same as the treatment effect on the untreated; however, we believe that this effect will be more similar to the ETC than the ETT, particularly because there were no Democratic controlled states that did not expand Medicaid. Indeed, after generating overlap weights on our primary dataset we find that across all covariates, the mean average absolute distance from the overlap region to the untreated region is 2.9 and to the treated region is 7.8.\footnote{The distance is between the overlap region calculated as an unweighted mean on the adjusted datasets.} Figure~\ref{fig:oatearea} displays the distance between covariates with greater than one percentage point distance from the overlap region to either the control or treated region. We see that the overlap region is substantially more Republican than the treated region, as expected. This region is also less Hispanic, more white, less rural, and more educated than either the expansion or non-expansion region. Table~\ref{tab:oatedist1} and Table~\ref{tab:oatedist2} in Appendix D show additional statistics on the OATE region versus the treatment and control regions for all covariates.
+We conclude by considering an alternative method to account for positivity violations. To this point we have relied on either (1) retaining a potentially biased estimate from weights that do not provide exact balance, or (2) producing a more model-dependent estimate that relies on extrapolation. Overall we found that the results didn't change substantially either way. Here we consider a third option: changing our target estimand. In particular, we consider the overlap average treatment effect (OATE), proposed by \cite{li2018balancing}. This is the treatment effect on the subset of the entire dataset where we have overlap. It is a data-dependent treatment effect, and is not the same as the treatment effect on the untreated; however, we believe that this effect will be more similar to the ETC than the ETT, particularly because there were no Democratic controlled states that did not expand Medicaid. Indeed, after generating overlap weights on our primary dataset we find that across all covariates, the mean average absolute distance from the overlap region to the untreated region is 2.9 and to the treated region is 7.8.\footnote{The distance is between the overlap region calculated as an unweighted mean on the adjusted datasets.} Figure~\ref{fig:oatearea} displays the distance between covariates with greater than one percentage point distance from the overlap region to either the control or treated region. We see that the overlap region is substantially more Republican than the treated region, as expected. This region is also less Hispanic, more white, less rural, and more educated than either the expansion or non-expansion region. Table~\ref{tab:oatedist1} and Table~\ref{tab:oatedist2} in Appendix D show additional statistics on the OATE region versus the treatment and control regions for all covariates.
 
 \begin{figure}[]
 \begin{center}
@@ -329,7 +333,7 @@ We next consider an alternative method to account for positivity violations. To 
 \end{center}
 \end{figure}
 
-Figure~\ref{fig:oateimbalance} displays the sum of the weights within each state by treatment group. Ohio, Michigan, and Arkansas, which all expanded Medicaid, are the most heavily weighted states (the weights are standardized to sum to 100). The weights are more evenly dispersed among the non-expansion regions, though Pennsylvania, Missouri, Wisconsin, and Florida are given the most weight. We note that this region is specific to the preferred covariate adjustment; the results are quite similar for the unadjusted and less preferred covariate adjustment and are available in Appendix~\ref{ssec:allresults}, Table ~\ref{tab:oatestateweights}.
+Figure~\ref{fig:oateimbalance} displays the sum of the weights within each state by treatment group. Ohio, Michigan, and Arkansas, which all expanded Medicaid, are the most heavily weighted states (the weights are standardized to sum to 100). The weights are more evenly dispersed among the non-expansion regions, though Pennsylvania, Missouri, Wisconsin, and Florida are given the most weight. We note that this region is specific to the preferred covariate adjustment; the results are quite similar for the unadjusted and less preferred covariate adjustment and are available in Appendix D, Table ~\ref{tab:oatestateweights}.
 
 \begin{figure}[]
 \begin{center}
@@ -339,29 +343,31 @@ Figure~\ref{fig:oateimbalance} displays the sum of the weights within each state
 \end{center}
 \end{figure}
 
-We find similar results to our primary analysis: within the overlap region we estimate a treatment effect -1.64 (-2.41 -0.89) when including all treatment states in our primary analysis, and of -1.76 when excluding the early expansion states. We again find a negative difference when comparing an estimate excluding the Republican governance indicators against our primary estimate: specifically, we find that the estimate decreases by -0.96 (-0.81, -1.10) percentage points on the primary dataset and by -0.62 (-0.78, -0.46) percentage points when removing early expansion states.\footnote{Unlike the ETC, this contrast is a function of the differences in the weighted covariates among both the treated and control regions.} Notice that both of these estimates were statistically significant; the confidence intervals increase only slightly when recomputing the entire adjustment when removing each state. Moreover, this negative difference in estimated contrasts holds for each excluded state, regardless of whether or not we conditioned on the adjustment or recalculated it. Additional results are available in Appendix E, Table~\ref{tab:oateconfint} and Table~\ref{tab:oatesensitive}. Again provides support for our hypothesis that factor associated with Republican governance may decrease the absolute magnitude of the treatment effects.
+We find similar results to our primary analysis: within the overlap region we estimate a treatment effect -1.64 (-2.41 -0.89) when including all treatment states in our primary analysis, and of -1.76 when excluding the early expansion states. We again find a negative difference when comparing an estimate excluding the Republican governance indicators against our primary estimate: specifically, we find that the estimate decreases by -0.96 (-0.81, -1.10) percentage points on the primary dataset and by -0.62 (-0.78, -0.46) percentage points when removing early expansion states.\footnote{Unlike the ETC, this contrast is a function of the differences in the weighted covariates among both the treated and control regions.} Notice that both of these estimates were statistically significant; the confidence intervals increase only slightly when recomputing the entire adjustment when removing each state. Moreover, this negative difference in estimated contrasts holds for each excluded state, regardless of whether or not we conditioned on the adjustment or recalculated it. Additional results are available in Appendix E, Table~\ref{tab:oateconfint} and Table~\ref{tab:oatesensitive}. Again this provides support for our hypothesis that factor associated with Republican governance may decrease the absolute magnitude of the treatment effects.
 
 \section{Discussion}
 
-We estimate that had states that did not expand Medicaid in 2014 expanded their programs, they would have seen a -2.00 (-3.59, -0.40) percentage point change in the adult uninsurance rate. Existing estimates place the ETT between -3 and -6 percentage points; these estimates vary depending on the targeted sub-population of interest, the data used, and the modeling approach (see, eg, \cite{courtemanche2017early}, \cite{kaestner2017effects}, \cite{frean2017premium}). This ETC estimate is therefore closer to zero than these ETT papers, supporting our original hypothesis that the treatment effect on non-expansion states would be smaller in absolute magnitude. Moreover, we also find suggestive evidence that factors associated with Republican governance may drive this differential. While much of this evidence lay was statistically insignificant, we believe that the robustness of this finding to many of our modeling specifications supports this hypothesis.
+We estimate that had states that did not expand Medicaid in 2014 expanded their programs, they would have seen a -2.00 (-3.59, -0.40) percentage point change in the adult uninsurance rate. Existing estimates place the ETT between -3 and -6 percentage points; these estimates vary depending on the targeted sub-population of interest, the data used, and the modeling approach (see, eg, \cite{courtemanche2017early}, \cite{kaestner2017effects}, \cite{frean2017premium}). This ETC estimate is therefore closer to zero than these ETT estimates, supporting our original hypothesis that the treatment effect on non-expansion states would be smaller in absolute magnitude. Moreover, we also find suggestive evidence that factors associated with Republican governance may drive this differential. While much of this evidence lay was statistically insignificant, we believe that the consistency of this finding to many of our modeling specifications supports this hypothesis.
 
 We also make several methodological contributions to the literature on balancing weights. First, we extend the synthetic controls literature to estimate the treatment effect on the controls. The key challenge is that we need to predict treatment response rather than the outcome absent treatment. Unlike when estimating the treatment effect on the treated, we cannot use pre-treatment outcomes to conduct variable selection, run placebo tests, or train our model in some other way. This is a fundamentally more difficult problem that requires greater modeling assumptions. Second, we extend the Stable Balancing Weights objective function for use with hierarchical data and covariates measured with error. We modify the criterion to more evenly disperse the weights across states, and the constraint set to to balance on a linear approximation to the true covariate values using regression-calibration techniques (\cite{gleser1992importance}).
 
-Our study's approach also has bearing on estimating and understanding the ETT using a differences-in-differences design when estimating the 2014 effects of Medicaid expansion. If we believe that Republican governance is associated with changes in trends over time, then we need to control for this factor. However, there is likely insufficient overlap to control for these factors without significantly extrapolating from the data. We see that the ETC requires less extrapolation than the ETT with respect to governance, and is therefore in some sense a more estimable quantity.\footnote{We note, however, that the standard parallel trends assumption used to identify the ETT is different to the no unmeasured confounding assumption we made here.} Even putting aside this problem, assume that we do have a reasonable estimate of the ETT for some outcome. Our results also suggest that we should not use this estimate to make inferences about the ETC. Because almost every outcome of interest is largely mediated through increasing the number of insured individuals, and because we have shown that there is likely treatment effect heterogeneity with respect to governance, projecting findings from an estimate of the ETT to the ETC would lead to inaccurate inferences. For example, \cite{miller2019medicaid} study the effect of Medicaid expansion on mortality. Using their estimate of the ETT they project that had all states expanded Medicaid, 15,600 deaths would have been avoided during their study's time-period. If we believe that the ETT were further away from zero than the ETC, we should expect that this projection is an over-estimate. Directly estimating the ETC context can therefore also help us better model interesting downstream effects mediated through increasing the number of insured individuals. 
+Our study's approach also has bearing on estimating and understanding the ETT using a differences-in-differences design when estimating the 2014 effects of Medicaid expansion. If we believe that Republican governance is associated with changes in trends over time, then we need to control for this factor. However, there is likely insufficient overlap to control for these factors without significantly extrapolating from the data. We see that the ETC requires less extrapolation than the ETT with respect to governance, and is therefore in some sense a more estimable quantity.\footnote{We note, however, that the standard parallel trends assumption used to identify the ETT is different to the no unmeasured confounding assumption we made here.} 
 
-Our results come with three major caveats: (1) we rely on parametric assumptions about the outcome model to estimate our causal effect; (2) our identification assumes no unmeasured confounding given the true covariates; (3) many of our estimated associations between Republican governance and our estimated treatment effect fall within our estimated margins of error. 
+More generally our results also suggest that we should not use estimates of the ETT to make inferences about the ETC. Because almost every outcome of interest is largely mediated through increasing the number of insured individuals, and because we have shown that there is likely treatment effect heterogeneity with respect to governance, projecting findings from an estimate of the ETT to the ETC would lead to inaccurate inferences. For example, \cite{miller2019medicaid} study the effect of Medicaid expansion on mortality. Using their estimate of the ETT they project that had all states expanded Medicaid, 15,600 deaths would have been avoided during their study's time-period. If we believe that the ETT were further away from zero than the ETC, we should expect that this projection is an over-estimate. Directly estimating the ETC can therefore also help us better model interesting downstream effects mediated through increasing the number of insured individuals. 
 
-We conclude by discussing the policy implications of these findings. First, we note that a reduction of adult uninsurance rates by -2.00 percentage points represents approximately a 10 percent reduction in the uninsurance rate among non-expansion states. This estimated treatment effect is closer to zero than corresponding estimates of the ETT (see, eg, \cite{courtemanche2017early}). We may therefore expect that downstream effects that move away from zero monotonically with the number of uninsured are also closer to zero than estimates of the ETT. Second, we emphasize that the association we find between Republican governance and the estimated treatment effect is only an association: this finding does not imply, for example, that states with more conservative governments in general make Medicaid enrollment more difficult relative to Democratic states. However, this finding does not rule out this possibility either. Even if this causal story were true, it is also a normative judgment whether this finding is a ``good'' or a ``bad'' result. To evaluate the policy implications, we compare this result against Congress's goal in implementing Medicaid expansion in the 2010 ACA, which was to increase health insurance coverage. Measured against this intent, this finding suggests that leaving states to implement individual enrollment schemes likely achieves sub-optimal results. Better federal policies should encourage states to adopt some form of automatic Medicaid enrollment, or to make Medicaid enrollment easier in some other way. On the other hand, Republican governed states in 2014 were also more culturally conservative, and people may have been less likely to enroll in Medicaid due to social stigma and/or personal beliefs about the welfare state (\cite{sommers2012understanding}). If this remains true today, then Republican governments that are committed to expanding access to health care to low-income individuals may again wish to consider policies such as automatic enrollment to help mitigate these effects. 
+Our results come with three major caveats: (1) we rely on strong parametric assumptions about the outcome model to estimate our causal effect; (2) our identification assumes no unmeasured confounding given the true covariates; (3) our estimated associations between Republican governance and our estimated treatment effect largely fall within our estimated margins of error. 
+
+We conclude by discussing the policy implications of these findings. First, we note that a reduction of adult uninsurance rates by -2.00 percentage points represents approximately a 10 percent reduction in the uninsurance rate among non-expansion states. As observed previously, this estimated treatment effect is closer to zero than corresponding estimates of the ETT (see, eg, \cite{courtemanche2017early}), and we may therefore expect that downstream effects that move away from zero monotonically with the number of uninsured are also closer to zero than estimates of the ETT. Second, we emphasize that the association we find between Republican governance and the estimated treatment effect is only an association: this finding does not imply, for example, that states with more conservative governments in general deliberately make Medicaid enrollment more difficult relative to Democratic states. As \cite{sommers2012understanding} notes, people may be less likely to enroll in Medicaid in conservative states due to social stigma and/or personal beliefs about the welfare state. Regardless of the true cause, to evaluate the policy implications of this finding, we compare this result against Congress's goal in implementing Medicaid expansion in the 2010 ACA, which was to increase health insurance coverage. Measured against this intent, better federal policies should encourage states to make Medicaid enrollment easier, for example, by making enrollment automatic. 
 
 \section{Conclusion}
 
 This is the first study to directly estimate the foregone coverage expansions of Medicaid Expansion on states that did not expand Medicaid in 2014. We also contribute to the methodological literature on synthetic controls by clarifying the assumptions required to use longitudinal data to estimate the ETC rather than the ETT, and to the balancing weights literature more generally by considering the case where we have hierarchical data and covariates measured with error. We estimate that had states that did not expand Medicaid in 2014 done so, they would have seen a -2.00 (-3.59, -0.40) percentage point change in their uninsurance rate. This is substantially closer to zero than existing estimates of the ETT, which range between -3 and -6 percentage points. These estimates are robust to different model specifications and sensitivity analyses examining potential violations of the assumptions of no anticipatory treatment effects and positivity violations.
 
-We also find evidence that Republican governance is associated with estimated effect sizes closer to zero. This association is also robust to our sensitivity analyses. Moreover, it is consistent with existing estimates of the ETT that are also farther away from zero, and the finding that Medicaid take-up rates are lower in Republican-governed states prior to Medicaid expansion in 2014 (\cite{sommers2012understanding}). If the goal of Medicaid expansion is to increase access to insurance for low-income adults, state and federal governments may wish to adopt policies that make Medicaid enrollment easier.
+We also find evidence that Republican governance is associated with estimated effect sizes closer to zero. This association is not statistically significant, but is consistent across our sensitivity analyses. Moreover, it is consistent with existing estimates of the ETT that are also farther away from zero, and the finding that Medicaid take-up rates are lower in Republican-governed states prior to Medicaid expansion in 2014 (\cite{sommers2012understanding}). If the goal of Medicaid expansion is to increase access to insurance for low-income adults, state and federal governments may wish to adopt policies that make Medicaid enrollment automatic, or at least easier.
 
 \section{Acknowledgements}
 
-The authors gratefully aknowledge invaluable advice and comments from Zachary Branson, Dave Choi, Edward Kennedy, Brian Kovak, Akshaya Jha, Lowell Taylor, and Jose Zubizaretta.
+The authors gratefully acknowledge invaluable advice and comments from Zachary Branson, Dave Choi, Edward Kennedy, Brian Kovak, Akshaya Jha, Lowell Taylor, and Jose Zubizaretta.
 
 \cleardoublepage
 \bibliography{research.bib} 
@@ -372,9 +378,9 @@ The authors gratefully aknowledge invaluable advice and comments from Zachary Br
 
 \subsection{Appendix A: Proofs}
 
-We prove that the asymptotic bias of the SBW estimator under measurement error is equivalent to the asymptotic bias of the OLS estimator under the classical errors-in-variables model. We then prove the unbiasedness of the estimator when balancing on the adjusted covariates when balancing on $\eta_a(W_i) = \mathbb{E}\{X_i \mid W_i, A_i = a\}$ instead of $W_i$. This is not meant to be a comprehensive treatment of the properties of this estimator, but rather to introduce the idea that we can apply concepts in the regression-calibration literature for balancing weights when the covariates are measured with mean-zero error that is independent of any measurement error in the outcome. We conclude by noting how our application differs from this stylized introduction; Appendix B provides details on how we applied these ideas for our application.
+We first prove that the asymptotic bias of the SBW estimator under measurement error is equivalent to the asymptotic bias of the OLS estimator under the classical errors-in-variables model. We then prove the unbiasedness of the estimator when balancing on the adjusted covariates when balancing on $\eta_a(W_i) = \mathbb{E}\{X_i \mid W_i, A_i = a\}$ instead of $W_i$. We conclude by noting how our application differs from this stylized introduction; Appendix B provides details on how we applied these ideas for our application.
 
-We begin by outlining the classical errors-in-variables setup. Consider the linear model $Y_i^1 = \alpha + X_i^T\beta + \epsilon_i$ and assume we observe covariates $W_i \in \mathbb{R}^d$ which are a vector of mean-unbiased proxies for the true covariate $X_i$; ie $W_i = X_i + v_i$. Assume that $(\epsilon_i, v_i) \sim MVN((0,0), \Sigma_{uu})$ 
+We begin by outlining the classical errors-in-variables model. Consider the linear model $Y_i^1 = \alpha + X_i^T\beta + \epsilon_i$ and assume we observe covariates $W_i \in \mathbb{R}^d$ which are a vector of mean-unbiased proxies for the true covariate $X_i$; ie $W_i = X_i + v_i$. Assume that $(\epsilon_i, v_i) \sim MVN((0,0), \Sigma_{uu})$ 
 
 $$
 \Sigma_{uu} = \begin{pmatrix} 
@@ -383,7 +389,7 @@ $$
 \end{pmatrix}
 $$ 
 
-In general we can either consider the case where $X_i$ are fixed (functional model) or random (structural model); the structural case typically motivates regression calibration, however, the ideas have desirable properties in the functional case as well (see, eg, \cite{gleser1992importance}). While in our application we think of the $X_i$ as fixed, for motivating purposes, we consider the case where $X_i$ are random. In a slight departure from the classical setup, we also consider the binary treatment indicator $A_i$ and we let $(X_i, W_i \mid A_i = a)$ are drawn iid from $MVN((\mu_a, \mu_a), \Sigma)$ where 
+While often it is more natural to think of $X_i$ as fixed unknown parameters, for motivating purposes, we consider the case where $X_i$ are random. In a slight departure from the classical setup, we also consider the binary treatment indicator $A_i$ and we let $(X_i, W_i \mid A_i = a)$ are iid draws from from $MVN((\mu_a, \mu_a), \Sigma)$ where 
 
 $$
 \Sigma = \begin{pmatrix} 
@@ -392,16 +398,23 @@ $$
 \end{pmatrix}
 $$ 
 
-We note that $\Sigma_{WW} = \Sigma_{XX} + \Sigma_{vv}$. For simplicity we have also assumed that $\Sigma_{WW \mid A = 1} = \Sigma_{WW \mid A = 0} = \Sigma_{WW}$ and $\Sigma_{XX \mid A = 1} = \Sigma_{XX \mid A = 0} = \Sigma_{XX}$. This is not a necessary assumption, but helps simplify notation. By the joint normality of $X_i$ and $W_i$, we know that that $\mathbb{E}\{X_i \mid W_i, A_i = a\} = \mu_a + \kappa^T(W_i - \mu_a)$, where $\kappa = \Sigma_{WW}^{-1}\Sigma_{XX}$.
+notice that $\Sigma_{WW} = \Sigma_{XX} + \Sigma_{vv}$.\footnote{For simplicity we have also assumed that $\Sigma_{WW \mid A = 1} = \Sigma_{WW \mid A = 0} = \Sigma_{WW}$ and $\Sigma_{XX \mid A = 1} = \Sigma_{XX \mid A = 0} = \Sigma_{XX}$. This is not a necessary assumption, but helps simplify notation.} By the joint normality of $X_i$ and $W_i$, we know that that 
+
+$$
+\mathbb{E}\{X_i \mid W_i, A_i = a\} = \mu_a + \kappa^T(W_i - \mu_a)
+$$
+
+where $\kappa = \Sigma_{WW}^{-1}\Sigma_{XX}$.
 
 Let $\psi^1 = \mathbb{E}\{Y_i^1 \mid A_i = 0\}$ and $\mu_y = \mathbb{E}\{Y_i^1\} = \mathbb{E}\{Y_i \mid A_i = 1\}$. From our modeling assumptions we have that
 
 \begin{align*}
     \mathbb{E}\{Y_i^1 \mid X_i = x_i\} &= \alpha + x_i^T\beta \\
-    &= \mu_y + (x_i - \mu_1)^T\beta
+    &= \mu_y + (x_i - \mu_1)^T\beta \\
+    \implies \psi^1 = \mu_y + (\mu_0 - \mu_1)^T\beta
 \end{align*}
 
-We can then write that $\psi^1 = \mu_y + (\mu_0 - \mu_1)^T\beta$. Let $\hat{\beta}$ be the OLS estimator of $\beta$ run only on the treatment data. Recall that $\mathbb{E}(\hat{\beta}) = \kappa\beta$ (see, eg, \cite{gleser1992importance}). Consider the estimator $\hat{\psi} = \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T\hat{\beta}$. We have that: 
+Let $\hat{\beta}$ be the OLS estimator of $\beta$ run only on the treatment data. Recall that $\mathbb{E}(\hat{\beta}) = \kappa\beta$ (see, eg, \cite{gleser1992importance}). Consider the estimator $\hat{\psi} = \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T\hat{\beta}$. We have that: 
 
 \begin{align*}
     \hat{\psi} - \psi &= \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T\hat{\beta} - (\mu_y + (\mu_0 - \mu_1)^T\beta) \\
@@ -411,9 +424,7 @@ We can then write that $\psi^1 = \mu_y + (\mu_0 - \mu_1)^T\beta$. Let $\hat{\bet
 
 The final result holds because in the second line, the first term is simply the estimation error from a sample average and has expectation zero. The second term is the product of the estimation error from a sample average and $\hat{\beta}$; this also has expectation zero because $\bar{X}_0$ is estimated on a different part of the sample than $\hat{\beta}$, so these errors are independent. The third term is more complicated because the estimation error of $\mu_1$ is not independent of $\hat{\beta}$ since they are typically estimated using the same sample. However, we know that the estimation error converges in probability to zero and $\hat{\beta} \to \kappa\beta$; therefore, by Slutsky's Theorem, this term also converges in probability to zero, and we are left with the asymptotic bias noted above. 
 
-We now consider the SBW estimator that sets $\delta = 0$ and show that this estimator has the same asymptotic bias. The intuition for this result is as follows: exact balancing weights estimate an implicit $\beta$ on a subset of the data where we have sufficient overlap. We can think of SBW as returning a solution to some implicit weighted-least squares problem. Because we assume that the outcome model holds on all of the data, WLS and OLS are estimating the same $\beta$; therefore, the bias that effects the least squares solution will have the same effect on the weighted least squares solution.
-
-More formally, define the SBW estimator as:
+We now consider the SBW estimator that sets $\delta = 0$ and show that this estimator has the same asymptotic bias. More formally, define the SBW estimator as:
 
 $$
 \arg\min_{\gamma \in \Gamma} \gamma_i^2
@@ -423,7 +434,7 @@ $$
 \Gamma := \{\gamma: W_1^T\gamma = \bar{W}_0, \gamma_i > 0, \gamma^T1 = 1\}
 $$
 
-Then we can again consider the error of our estimator:
+We first consider the error of our estimator:
 
 \begin{align*}
     \hat{\psi} - \psi &= \sum_{i: A_i = 0}w_iY_i - (\alpha + \mu_0^T\beta) \\
@@ -470,7 +481,7 @@ We conclude by noting several key departures in our applied setting to the frame
 
 \subsection{Appendix B: Calibration Details}
 
-We now discuss how we estimate $\eta_a(W_i)$. We first outline the traditional adjustment outlined in \cite{carroll2006measurement}, and then we explain our preferred departures from this framework. In either case we begin by estimating the covariance matrix $\Sigma_{UU, sc}$, the sampling variability for each CPUMA using the individual replicate survey weights to generate $b = 80$ additional CPUMA-level datasets. We then estimate the covariance matrix of the measurement errors using:
+We now discuss how we estimate $\eta_a(W_i)$. We first outline the more conventional adjustment outlined in \cite{carroll2006measurement}, and then we explain our preferred departures from this framework. In either case we begin by estimating the covariance matrix $\Sigma_{UU, sc}$, the sampling variability for each CPUMA using the individual replicate survey weights to generate $b = 80$ additional CPUMA-level datasets. We then estimate the covariance matrix of the measurement errors using:
 
 $$
 \hat{\Sigma}_{vv, sc} = \frac{4}{80}\sum_{b=1}^{80}(X_{sc}^B - \bar{X}_{sc})(X_{b, sc} - \bar{X}_{sc})^T
@@ -479,7 +490,7 @@ $$
 where the $4$ in the numerator comes from the process used to generate the replicate survey weights. Let $\hat{\Sigma}_{vv \mid A = a} = N_a^{-1}\sum_{s, c: A_s = a} (W_{sc} - \bar{W})(W_{sc} - \bar{W})^T$. This estimator is calculated on the original observed dataset. We then estimate $\Sigma_{XX \mid A = a}$ using:
 
 $$
-\hat{\Sigma}_{XX \mid A = a} = \hat{\Sigma}_{WW \mid A = a} - N_t^{-1}\sum_{s, c: A_s = 1} \hat{\Sigma}_{UU, sc}
+\hat{\Sigma}_{XX \mid A = a} = \hat{\Sigma}_{WW \mid A = a} - N_a^{-1}\sum_{s, c: A_s = a} \hat{\Sigma}_{UU, sc}
 $$
 
 Define
@@ -500,14 +511,14 @@ Our preferred estimators therefore use an alternative approach where we model an
 
 To estimate these matrices, we pool our initial estimates of the CPUMA-level covariance matrices ($\hat{\Sigma}_{vv, sc}$) to generate $\hat{\Sigma}_{vv}^a = N_a^{-1}\sum_{s, c: A_s = a} S_{sc} \circ \Sigma_{vv, sc}$. We then estimate $\hat{\Sigma}_{vv, sc}^m = \hat{\Sigma}_{vv}^a \oslash S_{sc}$. From this we estimate $\hat{\Sigma}_{XX \mid A = a} = \hat{\Sigma}_{WW \mid A = a} - N_a^{-1}\sum_{s, c: A_s = a}\hat{\Sigma}_{vv, sc}^a$. Finally, we calculate $\hat{\kappa}_{sc} = (\hat{\Sigma}_{XX \mid A = a} + \hat{\Sigma}_{vv, sc}^m)^{-1}\hat{\Sigma}_{XX \mid A = a}$, which we use to estimate $\hat{\eta}_a(W_{sc})$. 
 
-The benefit of this estimator is that we account for unit-level heterogeneity in the measurement error. Specifically, this adjustment should primarily affect outlying values of imprecisely estimated covariates, while leaving precisely estimated covariates largely unchanged. Moreover, we are able to use the full efficiency of using all units in the modeling. The disadvantage is that, as shown in Appendix~\ref{sec:appendixsumstat}, this adjustment can lead to extreme values that fall outside of the support of the original data, or of the possible values entirely. A second cost of this procedure is that this aggregation models all differences as a function of the sample sizes, and averages over any potential heterogeneity due to heteroskedasticity (ie the measurement error covariance matrix changes depending on the true value of $X_{sc}$). However, in practice we find that these adjustments give very similar results (see Appendix~\ref{ssec:allresults}).
+The benefit of this estimator is that we account for unit-level heterogeneity in the measurement error. Specifically, this adjustment should primarily affect outlying values of imprecisely estimated covariates, while leaving precisely estimated covariates largely unchanged. Moreover, we are able to use the full efficiency of using all units in the modeling. The disadvantage is that, as shown in Appendix~\ref{sec:appendixsumstat}, this adjustment, compared to the conventional approach, is more likely to lead to extreme values that fall outside of the support of the original data, or of the possible values entirely. A second cost of this procedure is that this aggregation models all differences as a function of the sample sizes, and averages over any potential heterogeneity due to heteroskedasticity (ie the measurement error covariance matrix changes depending on the true value of $X_{sc}$). However, in practice we find that either adjustment yields quite similar results (see Appendix~\ref{ssec:allresults}).
 
 \subsection{Appendix C: Summary Statistics}
 \label{sec:appendixsumstat}
 
 Table~\ref{tab:summarytab1}, Table~\ref{tab:summarytab2}, and Table~\ref{tab:summarytab3} display univariate summary statistics from the primary dataset. We display the mean, interquartile range, and the range (as defined by the maximum value minus the minimum value) for the unadjusted dataset (sigma\_zero), the preferred adjustment (sigma\_uu\_i), and the secondary adjustment (sigma\_uu\_avg). We see that in general the secondary adjustment reduces the variability in the data. The preferred adjustment reduces the interquartile range, but increases the overall variability (as measured by the range) by causing extreme values for particular CPUMAs. However, these extreme values are quite rare; we display the overall number of CPUMAs whose adjusted values fall outside of the range of the unadjusted data in Table~\ref{tab:extreme1} and Table~\ref{tab:extreme2}. Note that for our ETT estimates, we only use the adjustments on the treatment data, while we use both for the OATE estimates. As a reminder there are 414 control group CPUMAs and 515 treatment group CPUMAs.
 
-We also calculate these adjustments when excluding the early expansion states and leaving out each state one at a time from the primary dataset and from the early expansion states excluded dataset; we are happy to make these results available on request. 
+We also calculate these adjustments when excluding the early expansion states and leaving out each state one at a time from the primary dataset and from the early expansion states excluded dataset; these results are available on request. 
 
 \begin{table}[ht]
 \centering
@@ -672,7 +683,7 @@ Variable & sigma\_uu\_avg & sigma\_uu\_i \\
     \label{tab:extreme2}
 \end{table}
 
-Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset. The relationships are quite similar when using the ``sigma\_uu\_avg'' adjustment, but change quite a bit do to the extreme values on the third adjustment. We can make these results available on request.
+Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset. The relationships are quite similar when using the ``sigma\_uu\_avg'' adjustment, but change quite a bit do to the extreme values on the third adjustment. These results are available on request.
 
 \begin{figure}[]
 \begin{center}
@@ -685,13 +696,13 @@ Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for 
 \subsection{Appendix D: Weight Diagnostics}
 \label{ssec:balancetables}
 
-Table~\ref{tab:baltab1} and Table~\ref{tab:baltab2} display the differences between the population-weighted mean covariate values of the non-expansion region and the weighted mean of the expansion region for our preferred dataset and with the early expansion states excluded (calculated using our covariate adjustments). The weights presented here are from the H-SBW estimator. The values under each column of ``Preferred'' and ``Early Excluded'' are in the following format: (unweighted difference, weighted difference). Additional results are available on request.
+Table~\ref{tab:baltab1} and Table~\ref{tab:baltab2} display the differences between the population-weighted mean covariate values of the non-expansion region and the weighted mean of the expansion region for our primary dataset and with the early expansion states excluded (calculated using our covariate adjustments). The weights presented here are from the H-SBW estimator. The values under each column of ``Primary'' and ``Early Excluded'' are in the following format: (unweighted difference, weighted difference). Additional results are available on request.
 
 \begin{table}[ht]
 \centering
 \begin{tabular}{lll}
   \toprule
-Variables & Preferred & Early Excluded \\ 
+Variables & Primary & Early Excluded \\ 
   \midrule
 age\_cat2\_19\_29\_pct & (0.51, 0.50) & (0.80, -0.11) \\ 
   age\_cat2\_30\_39\_pct & (0.23, 0.42) & (0.57, -0.14) \\ 
@@ -727,7 +738,7 @@ age\_cat2\_19\_29\_pct & (0.51, 0.50) & (0.80, -0.11) \\
 \centering
 \begin{tabular}{lrr}
   \toprule
-Variables & Preferred & Early Excluded \\ 
+Variables & Primary & Early Excluded \\ 
   \midrule
   race\_white\_pct & (1.49, -1.00) & (-2.66, -1.00) \\ 
   repub\_gov & (65.02, 17.40) & (55.02, 15.14) \\ 
@@ -746,13 +757,13 @@ Variables & Preferred & Early Excluded \\
     \label{tab:baltab2}
 \end{table}
 
-Table~\ref{tab:oatedist1} and Table~\ref{tab:oatedist2} display the difference in means from the overlap region from the control and treated regions on the preferred dataset and with the early expansion states excluded. The numbers are displayed as (absolute distance from control region, absolute distance from treated region). These distances are computed using our adjusted datasets. Additional results are available on request.
+Table~\ref{tab:oatedist1} and Table~\ref{tab:oatedist2} display the difference in means from the overlap region from the control and treated regions on the primary dataset and with the early expansion states excluded. The numbers are displayed as (absolute distance from control region, absolute distance from treated region). These distances are computed using our adjusted datasets. 
 
 \begin{table}[ht]
 \centering
 \begin{tabular}{lll}
   \toprule
-Variable & Preferred & Early Excluded \\ 
+Variable & Primary & Early Excluded \\ 
   \midrule
 age\_cat2\_19\_29\_pct & (-1.38, -1.09) & (-1.31, -0.73) \\ 
   age\_cat2\_30\_39\_pct & (-0.65, -1.08) & (-0.60, -0.70) \\ 
@@ -788,7 +799,7 @@ age\_cat2\_19\_29\_pct & (-1.38, -1.09) & (-1.31, -0.73) \\
 \centering
 \begin{tabular}{lrr}
   \toprule
-Variable & Preferred & Early Excluded \\ 
+Variable & Primary & Early Excluded \\ 
   \midrule
   race\_white\_pct & (4.41, 8.25) & (6.23, 5.93) \\ 
   repub\_gov & (-12.46, 52.56) & (-11.62, 43.39) \\ 
@@ -844,7 +855,7 @@ OH & 1 & 33.98 & 35.10 & 36.75 \\
   SC & 0 & 0.47 & 0.47 & 1.00 \\ 
   \bottomrule
 \end{tabular}
-\caption{OATE weights summed by state by covariate adjustment, preferred dataset}
+\caption{OATE weights summed by state by covariate adjustment, primary dataset}
 \label{tab:oatestateweightsc1}
 \end{table}
 
@@ -885,11 +896,10 @@ OH & 1 & 31.42 & 33.16 & 36.92 \\
 \label{tab:oatestateweightsc2}
 \end{table}
 
-
 \subsection{Appendix E: Additional Results}
 \label{ssec:allresults}
 
-Table~\ref{tab:confintmain} displays the point estimates from all estimators as well as confidence intervals calculated either (a) leave-one-state-out jackknife on the adjusted dataset (CI (states)); (b) leave-one-state-out jackknife repeating the entire adjusted leaving each state out (CI (proc)). This table also includes the Oaxaca-Blinder weights (OB and H-OB), and also all analyses calculated on a second version of the adjusted data where we use a common $\kappa$ for all values (sigma\_uu\_avg), which is the adjustment suggested by \cite{carroll2006measurement}. Notice that they are identical for ``sigma\_zero'' because this is the unadjusted dataset. ``sigma\_uu\_i'' is our preferred covariate adjustment.
+Table~\ref{tab:confintmain} displays the point estimates from all estimators as well as confidence intervals calculated either (a) leave-one-state-out jackknife on the adjusted dataset (CI (states)); (b) leave-one-state-out jackknife repeating the entire adjusted leaving each state out (CI (proc)). This table also includes all analyses calculated on a second version of the adjusted data where we use a common $\kappa$ for all values (sigma\_uu\_avg), which is the adjustment suggested by \cite{carroll2006measurement}. Notice that the confidence intervals are identical for ``sigma\_zero'' because this is the unadjusted dataset. ``sigma\_uu\_i'' is our preferred covariate adjustment.
 
 \begin{table}[ht]
 \centering
@@ -909,12 +919,6 @@ H-SBW & sigma\_uu\_i & -2.00 & (-3.59, -0.4) & (-3.74, -0.26) \\
   BC-SBW & sigma\_uu\_i & -1.89 & (-3.06, -0.73) & (-3.6, -0.19) \\ 
   BC-SBW & sigma\_uu\_avg & -1.96 & (-2.78, -1.14) & (-6.7, 2.78) \\ 
   BC-SBW & sigma\_zero & -2.37 & (-3.1, -1.64) & (-3.1, -1.64) \\ 
-  H-OB & sigma\_uu\_i & -2.30 & (-3.24, -1.35) & (-5.32, 0.73) \\ 
-  H-OB & sigma\_uu\_avg & -2.20 & (-3.19, -1.22) & (-8.69, 4.28) \\ 
-  H-OB & sigma\_zero & -2.55 & (-3.31, -1.78) & (-3.31, -1.78) \\ 
-  OB & sigma\_uu\_i & -2.11 & (-2.83, -1.39) & (-5.79, 1.57) \\ 
-  OB & sigma\_uu\_avg & -2.08 & (-2.9, -1.25) & (-9.6, 5.44) \\ 
-  OB & sigma\_zero & -2.47 & (-3.11, -1.83) & (-3.11, -1.83) \\ 
    \bottomrule
 \end{tabular}
 \caption{Primary point estimates and confidence intervals}
@@ -927,63 +931,58 @@ Table ~\ref{tab:deltac1} presents the difference in the estimated contrast when 
 \centering
 \begin{tabular}{llrll}
   \toprule
-Weight type & Sigma estimate & $\hat{\Delta}$ & CI state & CI proc \\ 
+Weight type & Sigma estimate & $\hat{\Delta}$ & CI (states) & CI (proc) \\ 
   \midrule
-SBW & sigma\_uu\_i & -0.92 & (-2.52, 0.67) & (-2.71, 0.86) \\ 
-  H-SBW & sigma\_uu\_i & -0.62 & (-2.05, 0.81) & (-2.21, 0.97) \\ 
-  BC-SBW & sigma\_uu\_i & -0.41 & (-1.64, 0.82) & (-2.33, 1.51) \\ 
-  BC-HSBW & sigma\_uu\_i & -0.51 & (-1.74, 0.71) & (-2.6, 1.58) \\ 
-  OB & sigma\_uu\_i & -0.26 & (-1.03, 0.51) & (-3.97, 3.46) \\ 
-  H-OB & sigma\_uu\_i & -0.52 & (-1.22, 0.18) & (-4.35, 3.31) \\ 
-  SBW & sigma\_uu\_avg & -0.79 & (-1.94, 0.37) & (-2.91, 1.34) \\ 
+H-SBW & sigma\_uu\_i\_modeled & -0.62 & (-2.05, 0.81) & (-2.21, 0.97) \\ 
   H-SBW & sigma\_uu\_avg & -0.60 & (-1.54, 0.35) & (-2.42, 1.22) \\ 
-  BC-SBW & sigma\_uu\_avg & -0.32 & (-1.16, 0.53) & (-5.02, 4.39) \\ 
-  BC-HSBW & sigma\_uu\_avg & -0.56 & (-1.44, 0.32) & (-2.84, 1.72) \\ 
-  OB & sigma\_uu\_avg & -0.11 & (-0.75, 0.52) & (-7.29, 7.07) \\ 
-  H-OB & sigma\_uu\_avg & -0.43 & (-1.16, 0.3) & (-8.23, 7.37) \\ 
-  SBW & sigma\_zero & -0.69 & (-1.67, 0.28) & (-1.67, 0.28) \\ 
   H-SBW & sigma\_zero & -0.64 & (-1.62, 0.34) & (-1.62, 0.34) \\ 
-  BC-SBW & sigma\_zero & -0.34 & (-0.98, 0.29) & (-0.98, 0.29) \\ 
+  BC-HSBW & sigma\_uu\_i\_modeled & -0.51 & (-1.74, 0.71) & (-2.6, 1.58) \\ 
+  BC-HSBW & sigma\_uu\_avg & -0.56 & (-1.44, 0.32) & (-2.84, 1.72) \\ 
   BC-HSBW & sigma\_zero & -0.49 & (-1.33, 0.34) & (-1.33, 0.34) \\ 
-  OB & sigma\_zero & -0.20 & (-0.83, 0.42) & (-0.83, 0.42) \\ 
-  H-OB & sigma\_zero & -0.43 & (-1.07, 0.21) & (-1.07, 0.21) \\ 
+  SBW & sigma\_uu\_i\_modeled & -0.92 & (-2.52, 0.67) & (-2.71, 0.86) \\ 
+  SBW & sigma\_uu\_avg & -0.79 & (-1.94, 0.37) & (-2.91, 1.34) \\ 
+  SBW & sigma\_zero & -0.69 & (-1.67, 0.28) & (-1.67, 0.28) \\ 
+  BC-SBW & sigma\_uu\_i\_modeled & -0.41 & (-1.64, 0.82) & (-2.33, 1.51) \\ 
+  BC-SBW & sigma\_uu\_avg & -0.32 & (-1.16, 0.53) & (-5.02, 4.39) \\ 
+  BC-SBW & sigma\_zero & -0.34 & (-0.98, 0.29) & (-0.98, 0.29) \\ 
    \bottomrule
 \end{tabular}
 \caption{$\hat{\Delta}$ estimates primary dataset}
 \label{tab:deltac1}
 \end{table}
 
+% Wed Jan 13 15:24:43 2021
 \begin{table}[ht]
 \centering
-\begin{tabular}{rlrrrrrr}
+\begin{tabular}{rlrrrr}
   \toprule
-Var subset & Sigma estimate & H-SBW & BC-HSBW & SBW & BC-SBW & H-OB & OB \\ 
+Variable subset & Sigma estimate & H-SBW & BC-HSBW & SBW & BC-SBW \\ 
   \midrule
-0 & sigma\_uu\_i & -2.00 & -2.14 & -1.81 & -1.89 & -2.30 & -2.11 \\ 
-  0 & sigma\_uu\_avg & -2.08 & -2.10 & -1.98 & -1.96 & -2.20 & -2.08 \\ 
-  0 & sigma\_zero & -2.26 & -2.50 & -2.25 & -2.37 & -2.55 & -2.47 \\ 
-  1 & sigma\_uu\_i & -2.62 & -2.66 & -2.74 & -2.30 & -2.82 & -2.37 \\ 
-  1 & sigma\_uu\_avg & -2.68 & -2.66 & -2.77 & -2.27 & -2.63 & -2.19 \\ 
-  1 & sigma\_zero & -2.90 & -2.99 & -2.95 & -2.71 & -2.98 & -2.67 \\ 
-  2 & sigma\_uu\_i & -5.59 & -4.43 & -5.19 & -4.14 & -4.30 & -3.96 \\ 
-  2 & sigma\_uu\_avg & -5.67 & -4.41 & -5.34 & -4.13 & -4.25 & -3.91 \\ 
-  2 & sigma\_zero & -5.61 & -5.46 & -5.19 & -5.15 & -5.46 & -5.15 \\ 
-  3 & sigma\_uu\_i & -2.03 & -2.16 & -1.93 & -1.95 & -2.23 & -2.11 \\ 
-  3 & sigma\_uu\_avg & -2.03 & -2.08 & -1.91 & -1.89 & -2.20 & -2.10 \\ 
-  3 & sigma\_zero & -2.16 & -2.00 & -2.22 & -1.99 & -2.13 & -2.14 \\ 
-  4 & sigma\_uu\_i & -2.20 & -2.17 & -1.95 & -1.89 & -2.22 & -2.11 \\ 
-  4 & sigma\_uu\_avg & -2.42 & -2.13 & -2.36 & -2.05 & -2.18 & -2.13 \\ 
-  4 & sigma\_zero & -2.23 & -2.50 & -2.19 & -2.37 & -2.61 & -2.59 \\ 
-  5 & sigma\_uu\_i & -1.81 & -2.34 & -1.84 & -2.22 & -2.70 & -2.62 \\ 
-  5 & sigma\_uu\_avg & -2.03 & -2.48 & -2.06 & -2.42 & -2.62 & -2.62 \\ 
-  5 & sigma\_zero & -2.14 & -2.44 & -2.23 & -2.44 & -2.64 & -2.58 \\ 
+0 & sigma\_uu\_i & -2.00 & -2.14 & -1.81 & -1.89 \\ 
+  0 & sigma\_uu\_avg & -2.08 & -2.10 & -1.98 & -1.96 \\ 
+  0 & sigma\_zero & -2.26 & -2.50 & -2.25 & -2.37 \\ 
+  1 & sigma\_uu\_i & -2.62 & -2.66 & -2.74 & -2.30 \\ 
+  1 & sigma\_uu\_avg & -2.68 & -2.66 & -2.77 & -2.27 \\ 
+  1 & sigma\_zero & -2.90 & -2.99 & -2.95 & -2.71 \\ 
+  2 & sigma\_uu\_i & -5.59 & -4.43 & -5.19 & -4.14 \\ 
+  2 & sigma\_uu\_avg & -5.67 & -4.41 & -5.34 & -4.13 \\ 
+  2 & sigma\_zero & -5.61 & -5.46 & -5.19 & -5.15 \\ 
+  3 & sigma\_uu\_i & -2.03 & -2.16 & -1.93 & -1.95 \\ 
+  3 & sigma\_uu\_avg & -2.03 & -2.08 & -1.91 & -1.89 \\ 
+  3 & sigma\_zero & -2.16 & -2.00 & -2.22 & -1.99 \\ 
+  4 & sigma\_uu\_i & -2.20 & -2.17 & -1.95 & -1.89 \\ 
+  4 & sigma\_uu\_avg & -2.42 & -2.13 & -2.36 & -2.05 \\ 
+  4 & sigma\_zero & -2.23 & -2.50 & -2.19 & -2.37 \\ 
+  5 & sigma\_uu\_i & -1.81 & -2.34 & -1.84 & -2.22 \\ 
+  5 & sigma\_uu\_avg & -2.03 & -2.48 & -2.06 & -2.42 \\ 
+  5 & sigma\_zero & -2.14 & -2.44 & -2.23 & -2.44 \\ 
    \bottomrule
 \end{tabular}
 \caption{Point estimates for all specifications}
 \label{tab:ptests}
 \end{table}
 
-Table ~\ref{tab:confintmainc2}, Table~\ref{tab:deltac2}, and Table~\ref{tab:secondaryptests} are identical to the structure of the previous two tables except we exclude the ``early expansion states'' from the pool of expansion state matches. We note that some of the confidence intervals are extremely large when rerunning the entire procedure, particularly for estimators that require extrapolating from the observed data. This may be a function of both the extreme weights required to achieve balance and also of rare extreme covariate values that occasionally occur in the adjustment procedure. For example, for our preferred adjustment procedure, we find that the results are particularly sensitive to the exclusion of Illinois from the expansion-state group. On this dataset, we find that the variance of the H-SBW weights is approximately 15 while the variance of the BC-HSBW weights is over 5,000.
+Table ~\ref{tab:confintmainc2}, Table~\ref{tab:deltac2}, and Table~\ref{tab:secondaryptests} are identical to the structure of the previous two tables except we exclude the ``early expansion states'' from the pool of expansion state matches. 
 
 \begin{table}[ht]
 \centering
@@ -991,24 +990,18 @@ Table ~\ref{tab:confintmainc2}, Table~\ref{tab:deltac2}, and Table~\ref{tab:seco
   \toprule
 Weight type & Sigma estimate & Psihat & CI (states) & CI (proc) \\ 
   \midrule
-H-SBW & sigma\_uu\_i & -1.29 & (-2.45, -0.12) & (-2.54, -0.03) \\ 
-  H-SBW & sigma\_uu\_avg & -1.64 & (-3.27, -0.01) & (-4.27, 0.99) \\ 
+H-SBW & sigma\_uu\_i & -1.48 & (-2.91, -0.06) & (-3.17, 0.2) \\ 
+  H-SBW & sigma\_uu\_avg & -1.94 & (-3.52, -0.36) & (-4.28, 0.4) \\ 
   H-SBW & sigma\_zero & -1.83 & (-2.63, -1.03) & (-2.63, -1.03) \\ 
-  BC-HSBW & sigma\_uu\_i & -2.17 & (-3.65, -0.68) & (-33.17, 28.83) \\ 
-  BC-HSBW & sigma\_uu\_avg & -2.70 & (-4.26, -1.14) & (-11.82, 6.42) \\ 
+  BC-HSBW & sigma\_uu\_i & -2.06 & (-3.72, -0.41) & (-3.63, -0.49) \\ 
+  BC-HSBW & sigma\_uu\_avg & -2.44 & (-4.24, -0.64) & (-4.91, 0.03) \\ 
   BC-HSBW & sigma\_zero & -2.53 & (-3.66, -1.39) & (-3.66, -1.39) \\ 
-  SBW & sigma\_uu\_i & -1.12 & (-2.23, -0.02) & (-2.49, 0.24) \\ 
-  SBW & sigma\_uu\_avg & -1.53 & (-3.22, 0.15) & (-4.15, 1.08) \\ 
+  SBW & sigma\_uu\_i & -1.23 & (-2.9, 0.43) & (-3, 0.54) \\ 
+  SBW & sigma\_uu\_avg & -1.89 & (-2.96, -0.83) & (-4.13, 0.34) \\ 
   SBW & sigma\_zero & -1.76 & (-2.64, -0.89) & (-2.64, -0.89) \\ 
-  BC-SBW & sigma\_uu\_i & -1.93 & (-3.32, -0.54) & (-27.55, 23.69) \\ 
-  BC-SBW & sigma\_uu\_avg & -2.57 & (-4.14, -1) & (-9.41, 4.28) \\ 
+  BC-SBW & sigma\_uu\_i & -1.74 & (-3.42, -0.07) & (-3.13, -0.36) \\ 
+  BC-SBW & sigma\_uu\_avg & -2.28 & (-3.84, -0.71) & (-4.65, 0.1) \\ 
   BC-SBW & sigma\_zero & -2.42 & (-3.74, -1.11) & (-3.74, -1.11) \\ 
-  H-OB & sigma\_uu\_i & -2.45 & (-4.15, -0.74) & (-41.48, 36.58) \\ 
-  H-OB & sigma\_uu\_avg & -1.22 & (-4.67, 2.22) & (-20.04, 17.6) \\ 
-  H-OB & sigma\_zero & -2.70 & (-3.82, -1.57) & (-3.82, -1.57) \\ 
-  OB & sigma\_uu\_i & -2.32 & (-4.35, -0.29) & (-35.53, 30.88) \\ 
-  OB & sigma\_uu\_avg & -1.71 & (-5.87, 2.46) & (-15.14, 11.73) \\ 
-  OB & sigma\_zero & -2.66 & (-3.65, -1.67) & (-3.65, -1.67) \\ 
    \bottomrule
 \end{tabular}
 \caption{Early expansion excluded, point estimates and confidence intervals}
@@ -1019,26 +1012,20 @@ H-SBW & sigma\_uu\_i & -1.29 & (-2.45, -0.12) & (-2.54, -0.03) \\
 \centering
 \begin{tabular}{llrll}
   \toprule
-Weight type & Sigma estimate & $\hat{\Delta}$ & CI state & CI proc \\ 
+Weight type & Sigma estimate & $\hat{\Delta}$ & CI (state) & CI (proc) \\ 
   \midrule
-SBW & sigma\_uu\_i & -1.53 & (-2.31, -0.76) & (-2.57, -0.49) \\ 
-  H-SBW & sigma\_uu\_i & -1.28 & (-2.2, -0.36) & (-2.34, -0.21) \\ 
-  BC-SBW & sigma\_uu\_i & -0.73 & (-2.29, 0.82) & (-25.45, 23.98) \\ 
-  BC-HSBW & sigma\_uu\_i & -0.73 & (-2.4, 0.94) & (-30.95, 29.49) \\ 
-  OB & sigma\_uu\_i & -0.51 & (-2.44, 1.43) & (-32.84, 31.82) \\ 
-  H-OB & sigma\_uu\_i & -0.44 & (-1.87, 0.98) & (-38.79, 37.9) \\ 
-  SBW & sigma\_uu\_avg & -1.15 & (-2.69, 0.39) & (-3.41, 1.12) \\ 
-  H-SBW & sigma\_uu\_avg & -0.94 & (-2.41, 0.52) & (-3.18, 1.3) \\ 
-  BC-SBW & sigma\_uu\_avg & -0.70 & (-2.16, 0.76) & (-7.34, 5.94) \\ 
-  BC-HSBW & sigma\_uu\_avg & -0.62 & (-2.09, 0.85) & (-8.53, 7.29) \\ 
-  OB & sigma\_uu\_avg & -1.86 & (-6.13, 2.42) & (-16.8, 13.09) \\ 
-  H-OB & sigma\_uu\_avg & -2.18 & (-5.53, 1.18) & (-20.36, 16.01) \\ 
-  SBW & sigma\_zero & -1.06 & (-2.12, 0) & (-2.12, 0) \\ 
+H-SBW & sigma\_uu\_i\_modeled & -1.15 & (-2.53, 0.24) & (-2.5, 0.2) \\ 
+  H-SBW & sigma\_uu\_avg & -0.72 & (-2.22, 0.78) & (-3.01, 1.58) \\ 
   H-SBW & sigma\_zero & -1.04 & (-2.01, -0.07) & (-2.01, -0.07) \\ 
-  BC-SBW & sigma\_zero & -0.40 & (-1.92, 1.11) & (-1.92, 1.11) \\ 
+  BC-HSBW & sigma\_uu\_i\_modeled & -0.74 & (-2.4, 0.91) & (-2.23, 0.75) \\ 
+  BC-HSBW & sigma\_uu\_avg & -0.39 & (-1.97, 1.19) & (-2.66, 1.89) \\ 
   BC-HSBW & sigma\_zero & -0.61 & (-1.75, 0.52) & (-1.75, 0.52) \\ 
-  OB & sigma\_zero & -0.26 & (-1.41, 0.9) & (-1.41, 0.9) \\ 
-  H-OB & sigma\_zero & -0.36 & (-1.31, 0.6) & (-1.31, 0.6) \\ 
+  SBW & sigma\_uu\_i\_modeled & -1.46 & (-2.9, -0.02) & (-2.84, -0.08) \\ 
+  SBW & sigma\_uu\_avg & -0.83 & (-1.86, 0.2) & (-2.88, 1.22) \\ 
+  SBW & sigma\_zero & -1.06 & (-2.12, 0) & (-2.12, 0) \\ 
+  BC-SBW & sigma\_uu\_i\_modeled & -0.86 & (-2.37, 0.65) & (-2.16, 0.44) \\ 
+  BC-SBW & sigma\_uu\_avg & -0.33 & (-1.58, 0.92) & (-2.31, 1.65) \\ 
+  BC-SBW & sigma\_zero & -0.40 & (-1.92, 1.11) & (-1.92, 1.11) \\ 
    \bottomrule
 \end{tabular}
 \caption{$\hat{\Delta}$ estimates, early expansion excluded}
@@ -1047,35 +1034,35 @@ SBW & sigma\_uu\_i & -1.53 & (-2.31, -0.76) & (-2.57, -0.49) \\
 
 \begin{table}[ht]
 \centering
-\begin{tabular}{rlrrrrrr}
+\begin{tabular}{rlrrrr}
   \toprule
-Variable subset & Sigma estimate & H-SBW & BC-HSBW & SBW & BC-SBW & H-OB & OB \\ 
+Variable subset & Sigma estimate & H-SBW & BC-HSBW & SBW & BC-SBW \\ 
   \midrule
-0 & sigma\_uu\_i & -1.29 & -2.17 & -1.12 & -1.93 & -2.45 & -2.32 \\ 
-  0 & sigma\_uu\_avg & -1.64 & -2.70 & -1.53 & -2.57 & -1.22 & -1.71 \\ 
-  0 & sigma\_zero & -1.83 & -2.53 & -1.76 & -2.42 & -2.70 & -2.66 \\ 
-  1 & sigma\_uu\_i & -2.56 & -2.90 & -2.65 & -2.66 & -2.89 & -2.83 \\ 
-  1 & sigma\_uu\_avg & -2.58 & -3.32 & -2.68 & -3.27 & -3.40 & -3.56 \\ 
-  1 & sigma\_zero & -2.87 & -3.14 & -2.83 & -2.83 & -3.05 & -2.91 \\ 
-  2 & sigma\_uu\_i & -5.53 & -5.30 & -4.98 & -5.09 & -5.13 & -5.08 \\ 
-  2 & sigma\_uu\_avg & -5.54 & -4.05 & -5.01 & -3.60 & -3.52 & -3.18 \\ 
-  2 & sigma\_zero & -5.53 & -5.31 & -5.01 & -5.14 & -5.04 & -5.13 \\ 
-  3 & sigma\_uu\_i & -1.10 & -1.58 & -1.06 & -1.57 & -2.15 & -2.16 \\ 
-  3 & sigma\_uu\_avg & -1.59 & -1.88 & -1.53 & -1.86 & -2.06 & -2.09 \\ 
-  3 & sigma\_zero & -1.77 & -1.82 & -1.75 & -1.75 & -2.20 & -2.11 \\ 
-  4 & sigma\_uu\_i & -1.52 & -1.84 & -1.45 & -1.47 & -2.48 & -2.13 \\ 
-  4 & sigma\_uu\_avg & -1.80 & -2.24 & -1.69 & -1.86 & -2.44 & -2.15 \\ 
-  4 & sigma\_zero & -1.93 & -2.55 & -1.95 & -2.41 & -2.81 & -2.68 \\ 
-  5 & sigma\_uu\_i & -1.18 & -1.43 & -1.04 & -1.29 & -1.89 & -1.77 \\ 
-  5 & sigma\_uu\_avg & -1.21 & -1.67 & -1.14 & -1.60 & -2.07 & -2.00 \\ 
-  5 & sigma\_zero & -1.73 & -2.27 & -1.58 & -2.14 & -2.53 & -2.49 \\ 
+0 & sigma\_uu\_i & -1.48 & -2.06 & -1.23 & -1.74 \\ 
+  0 & sigma\_uu\_avg & -1.94 & -2.44 & -1.89 & -2.28 \\ 
+  0 & sigma\_zero & -1.83 & -2.53 & -1.76 & -2.42 \\ 
+  1 & sigma\_uu\_i & -2.63 & -2.80 & -2.69 & -2.61 \\ 
+  1 & sigma\_uu\_avg & -2.66 & -2.83 & -2.72 & -2.61 \\ 
+  1 & sigma\_zero & -2.87 & -3.14 & -2.83 & -2.83 \\ 
+  2 & sigma\_uu\_i & -5.54 & -4.44 & -5.02 & -4.29 \\ 
+  2 & sigma\_uu\_avg & -5.60 & -4.47 & -5.11 & -4.32 \\ 
+  2 & sigma\_zero & -5.53 & -5.31 & -5.01 & -5.14 \\ 
+  3 & sigma\_uu\_i & -1.46 & -1.86 & -1.25 & -1.72 \\ 
+  3 & sigma\_uu\_avg & -1.93 & -2.22 & -1.89 & -2.07 \\ 
+  3 & sigma\_zero & -1.77 & -1.82 & -1.75 & -1.75 \\ 
+  4 & sigma\_uu\_i & -1.92 & -2.06 & -1.80 & -1.72 \\ 
+  4 & sigma\_uu\_avg & -2.26 & -2.40 & -1.99 & -2.02 \\ 
+  4 & sigma\_zero & -1.93 & -2.55 & -1.95 & -2.41 \\ 
+  5 & sigma\_uu\_i & -1.44 & -2.21 & -1.24 & -1.96 \\ 
+  5 & sigma\_uu\_avg & -1.35 & -2.15 & -1.27 & -2.13 \\ 
+  5 & sigma\_zero & -1.73 & -2.27 & -1.58 & -2.14 \\ 
    \bottomrule
 \end{tabular}
    \caption{Point estimates for all specifications, early expansion excluded}
     \label{tab:secondaryptests}
 \end{table}
 
-Table~\ref{tab:sensitivityc1} displays the point estimates from the H-SBW estimator when leaving out each state compared to the original point estimates. We display the changes relative to the full covariate set (``Psihat (0)'') and the covariate set excluding the Republican governance indicators (``Psihat (1)''). We display the point estimates both when leaving out the state conditional on the covariate adjustment and when rerunning the entire adjustment procedure (``(states, proc)''). Additional results for other estimators are available on request.
+Table~\ref{tab:loostatec1} and Table~\ref{tab:loostatec2} present point estimates for the leave-one-state out analysis for our preferred estimator, H-SBW calculated on our preferred covariate adjustment for the primary dataset and when excluding early expansion states.
 
 \begin{table}[ht]
 \centering
@@ -1107,11 +1094,40 @@ AR & -2.00 & (-2.18, -2.21) & -2.62 & (-2.55, -2.55) \\
   WV & -2.00 & (-2.00, -2.02) & -2.62 & (-2.54, -2.54) \\ 
    \bottomrule
 \end{tabular}
-   \caption{H-SBW point estimates, leave-one-state-out jackknife, primary dataset}
-    \label{tab:sensitivityc1}
+   \caption{Leave-one-state-out point estimates, primary dataset, preferred adjustment}
+    \label{tab:loostatec1}
 \end{table}
 
-Finally, Figure~\ref{fig:rdiffc1state}, Figure~\ref{fig:rdiffc1proc}, Figure~\ref{fig:rdiffc2state}, and Figure~\ref{fig:rdiffc2proc} display heatmaps showing the estimates of $\Delta$ for all of our primary estimators when leaving out each state. We see that this contrast is overwhelmingly negative; we only estimate positive contrasts for estimators calculated on the adjusted datasets where the adjustment was recalculated excluding that state and that extrapolate beyond the support of the data.
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrlrl}
+  \toprule
+State & Psihat (0) & None (states, proc) & Psihat (1) & Repub (states, proc) \\ 
+  \midrule
+AR & -1.48 & (-1.53, -1.48) & -2.63 & (-2.49, -2.48) \\ 
+  AZ & -1.48 & (-1.64, -1.59) & -2.63 & (-2.67, -2.66) \\ 
+  CO & -1.48 & (-1.48, -1.42) & -2.63 & (-2.64, -2.6) \\ 
+  HI & -1.48 & (-1.48, -1.49) & -2.63 & (-2.5, -2.52) \\ 
+  IA & -1.48 & (-1.36, -1.39) & -2.63 & (-2.65, -2.64) \\ 
+  IL & -1.48 & (-1.43, -1.55) & -2.63 & (-2.55, -2.53) \\ 
+  KY & -1.48 & (-1.44, -1.1) & -2.63 & (-2.4, -2.28) \\ 
+  MD & -1.48 & (-1.76, -1.66) & -2.63 & (-2.7, -2.69) \\ 
+  MI & -1.48 & (-1.04, -1.01) & -2.63 & (-2.62, -2.64) \\ 
+  ND & -1.48 & (-1.84, -1.85) & -2.63 & (-2.63, -2.63) \\ 
+  NH & -1.48 & (-1.48, -1.66) & -2.63 & (-2.77, -2.76) \\ 
+  NM & -1.48 & (-1.48, -1.35) & -2.63 & (-2.4, -2.38) \\ 
+  NV & -1.48 & (-1.61, -1.6) & -2.63 & (-2.78, -2.77) \\ 
+  OH & -1.48 & (-1.83, -1.87) & -2.63 & (-2.83, -2.81) \\ 
+  OR & -1.48 & (-1.48, -1.63) & -2.63 & (-2.6, -2.61) \\ 
+  RI & -1.48 & (-1.48, -1.51) & -2.63 & (-2.61, -2.61) \\ 
+  WV & -1.48 & (-1.48, -1.47) & -2.63 & (-2.55, -2.54) \\ 
+   \bottomrule
+\end{tabular}
+   \caption{Leave-one-state-out point estimates, early expansion excluded, preferred adjustment}
+    \label{tab:loostatec2}
+\end{table}
+
+Finally, Figure~\ref{fig:rdiffc1state}, Figure~\ref{fig:rdiffc1proc}, Figure~\ref{fig:rdiffc2state}, and Figure~\ref{fig:rdiffc2proc} display heatmaps showing the estimates of $\hat{\Delta}$ for all of our estimators when removing each state. We see that these estimates are overwhelmingly negative. In fact we only estimate positive contrasts when recalculating the covariate adjustment excluding that state and when the estimator could extrapolate beyond the support of the data. As we noted in Appendix C, the covariate adjustments can result in estimates that are outside of the support of the data, or even possible values. While quite rare, these bad imputations occur more frequently when less data is used to calculate the adjustment. In general, we expect estimators that do not extrapolate to be less affected by these adjustments, since they will get close to no weight; however, estimators that extrapolate are more likely to use the data from these CPUMAs, resulting in estimates that we caution against over-interpreting. For the primary dataset, this occurred with California and Illinois. When removing early expansion states this only occurred when removing Hawaii and Ohio for our less preferred covariate adjustment.
 
 \begin{figure}[]
 \begin{center}
@@ -1185,7 +1201,7 @@ sigma\_uu\_i & c1 & -0.96 & (-1.1, -0.81) & (-1.12, -0.8) \\
 \label{tab:oaterepubdiff}
 \end{table}
 
-Table~\ref{tab:oatesensitive} presents all point estimates calculate using the overlap weights. Dataset ``c1'' refers to the preferred dataset and dataset ``c2'' removes the early expansion states. The numeric column names refer to the covariate group excluded (covariate groups described above).
+Table~\ref{tab:oatesensitive} presents all point estimates calculate using the overlap weights. Dataset ``c1'' refers to the primary dataset and dataset ``c2'' removes the early expansion states. The numeric column names refer to the covariate group excluded (covariate groups described above).
 
 \begin{table}[ht]
 \centering
@@ -1214,10 +1230,6 @@ Figure~\ref{fig:oateheatmap} displays a heatmap showing how the OATE point estim
     \label{fig:oateheatmap}
 \end{center}
 \end{figure}
-
-\subsection{Appendix F: Miscellaneous Program Details}
-
-We implement Stable Balancing Weights using a modification of Noah Griefer's ``optweight'' package available in R. The modifications are available on ``github.com/mrubinst757'', but are not documented. We use this program to generate weights that balance the means of the following covariates in the treated group to the control group within an error tolerance, $\delta$. When estimating the weights on different subsets of the data, $\delta^\star$ is not guaranteed to converge. We therefore modify the program so that if it does not converge, it relaxes some of the constraints until convergence. The program is available on github.com/mrubinst757/Medicaid-Expansion-Project/03\_RPrograms/03\_Analysis/02\_model-estimation.R and all R programs used to complete this analysis are available in the parent directory.
 
 \end{document}
 
