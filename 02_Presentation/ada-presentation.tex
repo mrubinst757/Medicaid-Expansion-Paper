@@ -93,9 +93,12 @@
     \item Existing literature primarily targets the ETT; the ETC has rarely been directly studied \bigskip
     \begin{itemize}
         \item Miller et al (2019) predict that 15,000 deaths would have been avoided had non-expansion states expanded Medicaid \bigskip
-        \item If treatment effect heterogeneity, we cannot simply use existing estimates of ETT to understand the ETC \bigskip
+        \item Not valid if treatment effect heterogeneity \bigskip
     \end{itemize}
     \item We believe that the association between governance and Medicaid enrollment would make it likely these effects are smaller in absolute magnitude (see, eg, Sommers (2012)) \bigskip
+    \begin{itemize}
+        \item Why? Medicaid outreach, ease of enrollment, cultural conservativism
+    \end{itemize}
     \end{itemize} 
 \end{frame}
 
@@ -109,25 +112,17 @@
 \begin{itemize}
     \item We estimate the treatment effect of 2014 Medicaid expansion on non-expansion states \bigskip
     
-    \begin{itemize}
-        \item We estimate -2 percentage point change, over 35 percent lower in absolute magnitude than ETT from Courtenmanche et al. (2017) \bigskip 
-    \end{itemize}
-
     \item We examine how factors associated with Republican governance might drive this difference \bigskip
     
-    \begin{itemize}
-        \item We find a consistent positive association between Republican governance and our predicted uninsurance rates under treatment \bigskip 
-    \end{itemize}
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Contributions: Methodological}
 \begin{itemize}
-    \item We outline the assumptions necessary to estimate a ``synthetic treatment'' using longitudinal data \bigskip
+
+    \item We generate balancing weights that account for hierarchical data structure \bigskip
     
-    \item We generate balancing weights that account for hierarchical data structure (reduce the variance) \bigskip
-    
-    \item Our balancing weights account for measurement error in our covariates (reduce the bias) \bigskip
+    \item We extend ``regression-calibration'' methods for balancing weights to account for measurement error in the covariates \bigskip
     \end{itemize}
 \end{frame}
 
@@ -155,26 +150,21 @@ $$
 \begin{itemize}
     \item SUTVA \bigskip
     \begin{itemize}
-        \item No spillovers; only one version of treatment \bigskip
+        \item Only one version of treatment \bigskip
+        \begin{itemize}
+            \item ``Less'' treatment in Delaware, DC, Massachusetts, New York, Vermont \bigskip
+        \end{itemize}
+        \item No spillovers \bigskip
     \end{itemize}
     \item No anticipatory treatment effects \bigskip
     \begin{itemize}
         \item For $t < T$, $Y_{sct}^0 = Y_{sct}$ \bigskip
+        \begin{itemize}
+            \item Possibly violated for California, Connecticut, Minnesota, New Jersey, and Washington
+        \end{itemize}
     \end{itemize}
 \end{itemize}
 
-\end{frame}
-
-\begin{frame}{Treatment assignment: non-expansion states}
-    \begin{center}
-	\includegraphics[scale=0.5]{01_Plots/expansion-heterogeneity-ctonly.png}
-    \end{center}
-\end{frame}
-
-\begin{frame}{Treatment assignment: expansion states}
-    \begin{center}
-	\includegraphics[scale=0.5]{01_Plots/expansion-heterogeneity-txonly.png}
-    \end{center}
 \end{frame}
 
 \begin{frame}{Identifying Assumptions}
@@ -220,7 +210,7 @@ $$
             \item $Y_{sc}^a \perp A_{sc} \mid X_{sc} \centernot\implies Y_{sc}^a \perp A_{sc} \mid W_{sc}$ \bigskip
         \end{itemize}
         \item $W_{sc} = X_{sc} + v_{sc}$, where $v_{sc} \sim N(0, \Sigma_{vv, sc})$ \bigskip
-        \item Annual sample sizes range from 350 to 22,000, median of 1,000 \bigskip
+        \item Annual sample sizes range from 334 to 23,990, mean of 1,001 \bigskip
     \end{itemize}
 \end{frame}
 
@@ -339,6 +329,12 @@ $$
     \end{center}
 \end{frame}
 
+\begin{frame}{Balancing Weights by State}
+    \begin{center}
+	\includegraphics[scale=0.5]{01_Plots/weights-by-state-hsbw-c1.png}
+    \end{center}
+\end{frame}
+
 \begin{frame}{Primary Point Estimates}
 
 \begin{table}[ht]
@@ -355,12 +351,6 @@ Estimator & Estimate & 95 percent CI (lower, upper)\\
 \caption{Primary point estimates and confidence intervals}
 \label{tab:confintmain}
 \end{table}
-\end{frame}
-
-\begin{frame}{Covariate Balance: Early Expansion Excluded}
-    \begin{center}
-	\includegraphics[scale=0.5]{01_Plots/balance-plot-etuc2.png}
-    \end{center}
 \end{frame}
 
 \begin{frame}{Sensitivity analysis: no anticipatory treatment effects}
@@ -397,18 +387,12 @@ BC-SBW & -1.93 & (-3.32, -0.54) \\
             \item Primarily interested in Republican governance indicators \bigskip
         \end{itemize}
         \item Let $\hat{\psi}_1$ be estimate excluding covariates, $\hat{\psi}_0$ be the original estimate using weights $\gamma_1$ and $\gamma_2$ \bigskip
-        \item $\Delta = \hat{\psi}^1_1 - \hat{\psi}^1_0$ \bigskip
+        \item $\hat{\Delta} = \hat{\psi}^1_1 - \hat{\psi}^1_0$ \bigskip
     \end{itemize}
 \begin{align*}
-\mathbb{E}\{\Delta\} &\approx (X_1^T(\gamma_1 - \gamma_0))^T\beta \\ &\approx (V_1^T(\gamma_1 - \gamma_0))^T\beta_V
+\hat{\Delta} &\approx (V_1^T(\gamma_1 - \gamma_0))^T\beta_V
 \end{align*}
 
-\end{frame}
-
-\begin{frame}{Heterogeneity across covariate groups}
-\begin{center}
-	\includegraphics[scale=0.5]{01_Plots/loo-covariates-main-c1.png}
-\end{center}
 \end{frame}
 
 \begin{frame}{Republican governance removal}
@@ -502,15 +486,14 @@ Sigma estimate & Dataset & Difference & 95 Percent CI\\
 \begin{itemize}
     \item Propose an extension to synthetic controls/balancing weights literature to estimate the ETC with hierarchical data, measurement error in covariates \bigskip
     \item Estimate that had non-expansion states expanded Medicaid in 2014, uninsurance rates would have decreased by 2.00 percentage points (1.23, 2.82) \bigskip
-    \item We show that factors associated with Republican governance are consistently associated with reducing the absolute magnitude of the estimated effects
+    \item We show that factors associated with Republican governance are consistently associated with reducing the absolute magnitude of the estimated effect sizes
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Policy implications}
     \begin{itemize}
-        \item We cannot simply use existing estimates of the ETT to assume we know the ETC \bigskip
-        \item Effects mediated primarily through decreasing the uninsurance rate would be smaller in absolute magnitude among states that did not expand Medicaid (see, eg, \cite{wherry2016early}) \bigskip
-        \item If the goal of Medicaid expansion is decreasing uninsurance rate, should consider ways to make it easier to enroll (eg automatic enrollment based on eligibility)
+        \item If the goal of Medicaid expansion is decreasing uninsurance rate, should consider ways to make it easier to enroll (eg automatic enrollment based on eligibility) \bigskip
+        \item Effects mediated primarily through decreasing the uninsurance rate would be smaller in absolute magnitude among states that did not expand Medicaid in 2014 (see, eg, \cite{wherry2016early}) \bigskip
     \end{itemize}
 \end{frame}
 
