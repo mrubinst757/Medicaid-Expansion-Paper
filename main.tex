@@ -271,7 +271,7 @@ Using H-SBW we calculate an estimated effect of -2.00 (-3.59, -0.40). In other w
 \end{center}
 \end{figure}
 
-We examine the robustness of our point estimates to the removal of individual states (note that these are the point estimates used to calculate our confidence intervals). Figure~\ref{fig:loostateplot} shows how the point estimates change for both the adjusted (``sigma\_uu\_i\_modeled'') and unadjusted (``sigma\_zero'') datasets. We see similar results in either case: removing Ohio and Arkansas tends to increase the absolute magnitude of the point estimates. By contrast, removing California decreases the absolute magnitude of the estimators, particularly for estimators that are not bias-corrected. The results are quite similar when using different covariate adjustments and when recalculating the entire procedure; some additional results are available in Appendix E, Table~\ref{tab:sensitivityc1}. 
+We examine the robustness of our point estimates to the removal of individual states (note that these are the point estimates used to calculate our confidence intervals). Figure~\ref{fig:loostateplot} shows how the point estimates change for both the adjusted (``sigma\_uu\_i\_modeled'') and unadjusted (``sigma\_zero'') datasets. We see similar results in either case: removing Ohio and Arkansas tends to increase the absolute magnitude of the point estimates. By contrast, removing California decreases the absolute magnitude of the estimators, particularly for estimators that are not bias-corrected. The results are quite similar when using different covariate adjustments and when recalculating the entire procedure; some additional results are available in Appendix E, Table~\ref{tab:loostatec1}. 
 
 \begin{figure}[]
 \begin{center}
@@ -343,7 +343,9 @@ Figure~\ref{fig:oateimbalance} displays the sum of the weights within each state
 \end{center}
 \end{figure}
 
-We find similar results to our primary analysis: within the overlap region we estimate a treatment effect -1.64 (-2.41 -0.89) when including all treatment states in our primary analysis, and of -1.76 when excluding the early expansion states. We again find a negative difference when comparing an estimate excluding the Republican governance indicators against our primary estimate: specifically, we find that the estimate decreases by -0.96 (-0.81, -1.10) percentage points on the primary dataset and by -0.62 (-0.78, -0.46) percentage points when removing early expansion states.\footnote{Unlike the ETC, this contrast is a function of the differences in the weighted covariates among both the treated and control regions.} Notice that both of these estimates were statistically significant; the confidence intervals increase only slightly when recomputing the entire adjustment when removing each state. Moreover, this negative difference in estimated contrasts holds for each excluded state, regardless of whether or not we conditioned on the adjustment or recalculated it. Additional results are available in Appendix E, Table~\ref{tab:oateconfint} and Table~\ref{tab:oatesensitive}. Again this provides support for our hypothesis that factor associated with Republican governance may decrease the absolute magnitude of the treatment effects.
+We find similar results to our primary analysis: within the overlap region we estimate a treatment effect -1.64 (-2.40 -0.89) when including all treatment states in our primary analysis, and of -1.81 (-2.47, -1.15) when excluding the early expansion states. The results are quite similar when we use the unadjusted datasets: -1.80 (-2.49, -1.10) on the primary dataset and -1.95 (-2.65, -1.25) when excluding early expansion states. 
+
+We again find a negative difference when comparing an estimate excluding the Republican governance indicators against our primary estimate: specifically, we find that the estimate decreases by -0.96 (-0.81, -1.10) percentage points on the primary dataset and by -0.62 (-0.78, -0.46) percentage points when removing early expansion states. \footnote{Unlike the ETC, this contrast is a function of the differences in the weighted covariates among both the treated and control regions.} Notice that both of these estimates were statistically significant; the confidence intervals increase only slightly when recomputing the entire adjustment when removing each state. Moreover, this negative difference in estimated contrasts holds for each excluded state, regardless of whether or not we conditioned on the adjustment or recalculated it. Additional results are available in Appendix E, Table~\ref{tab:oateconfint} and Table~\ref{tab:oatesensitive}. This result again supports our hypothesis that factors associated with Republican governance drive heterogeneity in the estimated treatment effects.
 
 \section{Discussion}
 
@@ -1187,9 +1189,9 @@ Table~\ref{tab:oateconfint} displays point estimates and confidence intervals fo
   \toprule
 Psihat & Sigma estimate & Dataset & CI (states) & CI (proc) \\ 
   \midrule
--1.64 & sigma\_uu\_i & c1 & (-2.54, -0.75) & (-2.57, -0.72) \\ 
-  -1.58 & sigma\_avg & c1 & (-2.32, -0.85) & (-2.37, -0.79) \\ 
-  -1.80 & sigma\_zero & c1 & (-2.66, -0.94) & (-2.49, -1.1) \\ 
+-1.64 & sigma\_uu\_i & c1 & (-2.4, -0.89) & (-2.57, -0.72) \\ 
+  -1.58 & sigma\_avg & c1 & (-2.17, -1) & (-2.37, -0.79) \\ 
+  -1.80 & sigma\_zero & c1 & (-2.49, -1.1) & (-2.49, -1.1) \\ 
   -1.81 & sigma\_uu\_i & c2 & (-2.47, -1.15) & (-2.63, -0.98) \\ 
   -1.74 & sigma\_avg & c2 & (-2.28, -1.2) & (-2.44, -1.04) \\ 
   -1.95 & sigma\_zero & c2 & (-2.65, -1.25) & (-2.65, -1.25) \\ 
@@ -1205,9 +1207,9 @@ Table~\ref{tab:oaterepubdiff} displays the difference between the estimated cont
 \centering
 \begin{tabular}{llrll}
   \toprule
-Sigma estimate & Dataset & Difference & CI (states) & CI (proc) \\ 
+Sigma estimate & Dataset & $\hat{\Delta}$ & CI (states) & CI (proc) \\ 
   \midrule
-sigma\_uu\_i & c1 & -0.96 & (-1.10, -0.81) & (-1.12, -0.80) \\ 
+sigma\_uu\_i & c1 & -0.96 & (-1.1, -0.81) & (-1.12, -0.8) \\ 
   sigma\_uu\_i & c2 & -0.72 & (-0.87, -0.57) & (-0.89, -0.55) \\ 
   sigma\_avg & c1 & -1.04 & (-1.19, -0.89) & (-1.22, -0.86) \\ 
   sigma\_avg & c2 & -0.80 & (-0.98, -0.63) & (-0.99, -0.61) \\ 
