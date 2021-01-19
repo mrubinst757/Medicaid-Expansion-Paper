@@ -1,54 +1,119 @@
-\documentclass{article}
+% Template for the submission to:
+%   The Annals of Applied Statistics    [AOAS]
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% In this template, the places where you   %%
+%% need to fill in your information are     %%
+%% indicated by '???'.                      %%
+%%                                          %%
+%% Please do not use \input{...} to include %%
+%% other tex files. Submit your LaTeX       %%
+%% manuscript as one .tex document.         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\documentclass[aoas]{imsart}
 
-\usepackage{arxiv}
-
-\usepackage[utf8]{inputenc} % allow utf-8 input
-\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
-\usepackage{hyperref}       % hyperlinks
-\usepackage{url}            % simple URL typesetting
-\usepackage{booktabs}       % professional-quality tables
-\usepackage{amsfonts}       % blackboard math symbols
-\usepackage{nicefrac}       % compact symbols for 1/2, etc.
-\usepackage{microtype}      % microtypography
-\usepackage{lipsum}
-\usepackage{graphicx}
+%% Packages
 \RequirePackage{amsthm,amsmath,amsfonts,amssymb,centernot}
+\RequirePackage{natbib}
+%\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+\RequirePackage{graphicx}% uncomment this for including figures
 
-\title{The Effect of Medicaid Expansion on Non-Elderly Adult Uninsurance Rates Among States that did not Expand Medicaid}
+\startlocaldefs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Uncomment next line to change            %%
+%% the type of equation numbering           %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\numberwithin{equation}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% For Axiom, Claim, Corollary, Hypothezis, %%
+%% Lemma, Theorem, Proposition              %%
+%% use \theoremstyle{plain}                 %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[axiom]{Claim}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% For Assumption, Definition, Example,     %%
+%% Notation, Property, Remark, Fact         %%
+%% use \theoremstyle{remark}                %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{remark}
+\newtheorem{remark}{remark}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\theoremstyle{plain}
+%\newtheorem{???}{???}
+%\newtheorem*{???}{???}
+%\newtheorem{???}{???}[???]
+%\newtheorem{???}[???]{???}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% For Assumption, Definition, Example,     %%
+%% Notation, Property, Remark, Fact         %%
+%% use \theoremstyle{remark}                %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\theoremstyle{remark}
+%\newtheorem{???}{???}
+%\newtheorem*{???}{???}
+%\newtheorem{???}{???}[???]
+%\newtheorem{???}[???]{???}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Please put your definitions here:        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-\author{
-  Max ~Rubinstein\thanks{Use footnote for providing further
-    information about author (webpage, alternative
-    address)---\emph{not} for acknowledging funding agencies.} \\
-  Heinz College and Department of Statistics and Data Science\\
-  Carnegie Mellon University\\
-  Pittsburgh, PA 15213 \\
-  \texttt{mrubinst@andrew.cmu.edu} \\
-  %% examples of more authors
-   \And
- Amelia ~Haviland \\
-  Heinz College and Department of Statistics and Data Science\\
-  Carnegie Mellon University\\
-  Pittsburgh, PA 15213 \\
-  \texttt{amelia@andrew.cmu.edu} \\
-}
+\endlocaldefs
 
 \begin{document}
-\maketitle
+
+\begin{frontmatter}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter the title of your article here     %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{The Effect of Medicaid Expansion on Non-Elderly Adult Uninsurance Rates Among States that did not Expand Medicaid}
+%\title{A sample article title with some additional note\thanksref{T1}}
+\runtitle{}
+%\thankstext{T1}{A sample of additional note to the title.}
+
+\begin{aug}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%Only one address is permitted per author. %%
+%%Only division, organization and e-mail is %%
+%%included in the address.                  %%
+%%Additional information can be included in %%
+%%the Acknowledgments section if necessary. %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author[A]{\fnms{Max} \snm{Rubinstein}\ead[label=e1]{Heinz College and Department of Statistics and Data Science}} and
+\author[A]{\fnms{Amelia} \snm{Haviland}\ead{Heinz College and Department of Statistics and Data Science}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Addresses                                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\address[A]{Carnegie Mellon University, \printead{e1}}
+
+\end{aug}
 
 \begin{abstract}
-We estimate the effect of Medicaid expansion on the adult uninsurance rate in states that did not expand Medicaid in 2014 using a novel extension of the synthetic controls approach (\cite{abadie2010synthetic}). The existing literature primarily estimates treatment effects on states that expanded Medicaid. We hypothesize these effects differ: prior to the 2014 expansion, evidence suggested that Medicaid take-up rates are lower among conservative states (\cite{sommers2012understanding}), and Republicans were more likely to govern non-expansion states. We therefore hypothesize that the treatment effect on states that did not expand Medicaid would have been closer to zero than for states that did expand Medicaid. Using data from the American Community Survey (ACS), we estimate the effect on non-expansion states by re-weighting expansion regions to approximately balance the covariates from non-expansion regions. We contribute to the literature on balancing weights by accounting for hierarchical data and measurement error in the covariates when calculating the weights. We estimate that Medicaid expansion would have changed the uninsurance rate by -2.00 percentage points (-3.59, -0.40). These results are smaller in absolute magnitude than existing estimates of the treatment effect on the treated (see, e.g., \cite{courtemanche2017early}). We provide evidence that factors associated with Republican governance may drive this difference.
+We estimate the effect of Medicaid expansion on the adult uninsurance rate in states that did not expand Medicaid in 2014 using a novel extension of the synthetic controls approach (\cite{abadie2010synthetic}). The existing literature primarily estimates treatment effects on states that expanded Medicaid. We hypothesize these effects differ: prior to the 2014 expansion, evidence suggested that Medicaid take-up rates are lower among conservative states (\cite{sommers2012understanding}), and Republicans were more likely to govern non-expansion states. We therefore hypothesize that the treatment effect on states that did not expand Medicaid would have been closer to zero than for states that did expand Medicaid. Using data from the American Community Survey (ACS), we estimate the effect on non-expansion states by re-weighting expansion regions to approximately balance the covariates from non-expansion regions. We contribute to the literature on balancing weights by accounting for hierarchical data and measurement error in the covariates when calculating the weights. We estimate that Medicaid expansion would have changed the uninsurance rate by -1.94 percentage points (-3.56, -0.32). These results are smaller in absolute magnitude than existing estimates of the treatment effect on the treated (see, e.g., \cite{courtemanche2017early}). We provide evidence that factors associated with Republican governance may drive this difference.
 \end{abstract}
 
 \begin{keyword}
-\kwd{Synthetic controls},
-\kwd{balancing weights},
-\kwd{Medicaid expansion},
-\kwd{causal inference}
+\kwd{Synthetic controls}
+\kwd{balancing weights}
+\kwd{Medicaid expansion}
 \end{keyword}
 
+\end{frontmatter}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Please use \tableofcontents for articles %%
 %% with 50 pages and more                   %%
@@ -237,9 +302,9 @@ Because we hypothesize that regions under Republican-governed administrations wi
 
 \subsection{Inference}
 
-We treat our estimate of $\psi^0$ as known, since the population-weighted CPUMA average of observed values is quite precisely estimated relative to the CPUMA-level averages. We also treat our balancing targets $\bar{W}_0$ as known for the same reason. 
+We estimate $Var(\hat{\psi} \mid W)$ by decomposing this estimator into two parts: $Var(\hat{\psi}^1 \mid W) + Var(\hat{\psi}^0 \mid W)$. We view the unobserved covariates $X$ as fixed so that the randomness of our estimator is a function of (1) the errors in our outcome model; (2) our estimator $\hat{\eta_1}_1$.\footnote{Assuming $\hat{\eta}_a$ is unbiased for $\eta_a$, the remaining differences $\hat{\psi} - \psi$ are a function of $X_{sc} - \eta_1(W_{sc})$ which lead to a finite-sample bias; see Appendix A.} We use the leave-one-state-out jackknife to estimate the variance $Var(\hat{\psi}^1 \mid W)$ (\cite{cameron2015practitioner}), where we hold our reweighted targets fixed at $\bar{W}_0$, which are an unbiased estimate of $\bar{X}_0$. When our preferred choice of $\delta$ does not converge, we programmatically reduce the constraints until the optimization program reaches a solution. 
 
-We then evaluate the uncertainty in our estimator with respect to our model-based estimates of $\psi^1$. We use the leave-one-state-out jackknife to estimate the standard error of our estimator of $\psi^1$ (\cite{cameron2015practitioner}). Our preferred estimators condition on our estimates of $\eta_1(W_{sc})$; however, we also calculate a second uncertainty estimate that recalculates the entire adjustment process. While this latter estimator accounts for the additional uncertainty in our estimate of $\eta_1$, we expect this estimator to be overly conservative: the variability in our estimate of $\eta_1$ occurs at the CPUMA-level, but this procedure re-samples entire states to approximate this uncertainty. We therefore present the standard errors that condition on the adjustment process in the paper, and leave the results from full-procedure jackknife confidence interval results to Appendix E. 
+Our preferred estimator calculates this estimate conditioning on our covariate adjustment $\hat_1{\eta}(W_{sc})$. As a secondary estimate, we additionally recalculate $\hat{\eta_1}$ omitting each state in the jackknife procedure; however, we believe this estimator will be overly conservative. Since we view both $X$ and $W$ as fixed, the variability in $\hat{\eta}_1$ comes from the auxillary data used to calculate $\hat{\Sigma}_{vv}$. Unfortunately there is no simple way to re-sample from the underlying microdata to approximate the variability of this estimator. The jackknife procedure instead treats the uncertainty as coming from resampling $(X, W)$ from a larger super-population, and therefore gives an overly conservative variance estimate. Finally, we estimate $Var(\hat{\psi}^0 \mid W)$ using an auxillary regression model and take the variance of the linear combination $\bar{W}_0^T\beta$, using standard errors clustered at the state-level. Obtaining more precise inference in this setting is an interesting area that we leave for future work.
 
 \section{Results}
 
@@ -269,7 +334,7 @@ As discussed above, we use a ridge-regression augmentation to extrapolate from t
 
 \subsection{Primary Results}
 
-Using H-SBW we calculate an estimated effect of -2.00 (-3.59, -0.40). In other words, we estimate that had states that did not expand Medicaid in 2014 done so, they would have seen a 2 percentage point reduction in their uninsurance rates that year. While remaining imbalances are quite large, the bias-correction makes little substantive difference, yielding an estimate of -2.14 (-3.57, -0.71). These estimates differ somewhat from the estimates we find running the procedure on our unadjusted covariate estimates: here H-SBW gives an estimated effect of -2.26 (-3.23, -1.29), and the bias corrected estimator yields -2.50 (-3.41, -1.58). Using the adjusted covariate set appears to both move our estimate closer in absolute magnitude towards zero and decreases the width of the estimated confidence intervals. Figure~\ref{fig:estimators} displays the point estimates from these weighting estimators, as well as estimators using SBW, on the adjusted and unadjusted datasets. Additional results are available in Appendix E.
+Using H-SBW we calculate an estimated effect of -1.94 (-3.56, -0.32). In other words, we estimate that had states that did not expand Medicaid in 2014 done so, they would have seen a 2 percentage point reduction in their uninsurance rates that year. While remaining imbalances are quite large, the bias-correction makes little substantive difference, yielding an estimate of -2.09 (-3.54, -0.63). These estimates differ somewhat from the estimates we find running the procedure on our unadjusted covariate estimates: here H-SBW gives an estimated effect of -2.21 (-3.22, -1.20), and the bias corrected estimator yields -2.44 (-3.40, -1.48). Using the adjusted covariate set appears to both move our estimate closer in absolute magnitude towards zero and decreases the width of the estimated confidence intervals. Figure~\ref{fig:estimators} displays the point estimates from these weighting estimators, as well as estimators using SBW, on the adjusted and unadjusted datasets. Additional results are available in Appendix E.
 
 \begin{figure}
 \begin{center}
@@ -372,179 +437,9 @@ We also find evidence that Republican governance is associated with estimated ef
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{appendix}
 
-\section{Proofs}
-
-Assume we observe covariates $W_i \in \mathbb{R}^d$ which are a vector of mean-unbiased proxies for the true covariate vector $X_i$; i.e. $W_i = X_i + v_i$. Assume that $(\epsilon_i, v_i) \sim MVN((0,0)^T, \Sigma_{uu})$ 
-
-$$
-\Sigma_{uu} = \begin{pmatrix} 
-\Sigma_{\epsilon\epsilon} & 0 \\ 
-0 & \Sigma_{vv} 
-\end{pmatrix}
-$$ 
-
-Let $A_i \in \{0, 1\}$ indicate treatment assignment and let $(X_i, W_i) \mid A_i = a \sim MVN((\mu_a, \mu_a)^T, \Sigma)$\footnote{For simplicity we have also assumed that $\Sigma_{WW \mid A = 1} = \Sigma_{WW \mid A = 0} = \Sigma_{WW}$ and $\Sigma_{XX \mid A = 1} = \Sigma_{XX \mid A = 0} = \Sigma_{XX}$. This is not a necessary assumption, but helps simplify notation.}  where 
-
-$$
-\Sigma = \begin{pmatrix} 
-\Sigma_{XX} & \Sigma_{XX} \\ 
-\Sigma_{XX} & \Sigma_{WW}  
-\end{pmatrix}
-$$ 
-
-Let $\kappa = \Sigma_{WW}^{-1}\Sigma_{XX}$. By the joint normality of $X_i$ and $W_i$, we know that that 
-
-$$
-\mathbb{E}\{X_i \mid W_i, A_i = a\} = \mu_a + \kappa^T(W_i - \mu_a)
-$$
-
-Our target parameter of interest is $\psi = \mathbb{E}\{Y_i^1 \mid A_i = 0\}$. By iterated expectations, this is equal to $\int \mathbb{E}\{Y_i^1 \mid X_i, A_i = 0\}p(x)dx$. Let $\mu_y = \mathbb{E}\{Y_i \mid A_i = 1\}$. From our causal and modeling assumptions we have that
-
-\begin{align*}
-\mathbb{E}\{Y_i^1 \mid X_i, A_i = 0\} &= \mathbb{E}\{Y_i^1 \mid X_i, A_i = 1\} \\ 
-&= \mathbb{E}\{Y_i \mid X_i, A_i = 1\} \\
-&= \alpha + X_i^T\beta \\
-&= \mu_y + (X_i - \mu_1)^T\beta \\
-&\implies \psi = \mu_y + (\mu_0 - \mu_1)^T\beta
-\end{align*}
-
-where the first line follows from unconfoundedness, the second line from consistency, the third from our modeling assumptions, the third by definition of $\alpha$, and the final line substituting $X_i = \mu_0$.
-
-Let $\hat{\psi}^{reg} = \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T\hat{\beta}$, where $\hat{\beta}$ is the OLS estimator of $\beta$.  
-
-Let $\hat{\psi}^{sbw} = \sum_{i: A_i = 1}\gamma_iY_i$ be the SBW estimator, where $\gamma$ solves the following objective:
-
-$$
-\arg\min_{\gamma \in \Gamma} \gamma_i^2
-$$
-
-$$
-\Gamma := \{\gamma: W_1^T\gamma = \bar{W}_0, \gamma_i > 0, \gamma^T1 = 1\}
-$$
-
-\begin{claim}\label{cl1}
-The asymptotic bias of $\psi^{reg}$ is equal to the asymptotic bias of $\psi^{sbw}$; specifically, 
-
-$$
-\mathbb{E}\{\psi^{reg} - \psi\} = \mathbb{E}\{\psi^{sbw} - \psi\} = (\mu_0 - \mu_1)^T(\kappa - I_d)\beta
-$$
-\end{claim}
-
-\begin{proof}
-Recall that $\mathbb{E}(\hat{\beta}) = \kappa\beta$ (see, e.g., \cite{gleser1992importance}). Consider the error of $\hat{\psi}^{reg}$: 
-
-\begin{align*}
-    \hat{\psi}^{reg} - \psi &= \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T\hat{\beta} - (\mu_y + (\mu_0 - \mu_1)^T\beta) \\
-    &= (\bar{Y}_1 - \mu_y) + (\bar{W}_0 - \mu_0)^T\hat{\beta} - (\bar{W}_1 - \mu_1)^T\hat{\beta} + (\mu_0 - \mu_1)^T(\hat{\beta} - \beta) \\
-    \hat{\psi}^{reg} - \psi &\to (\mu_0 - \mu_1)^T(\kappa - I_d)\beta
-\end{align*}
-
-The first equality holds by definition. In the second line we see that the first term is simply the estimation error from a sample average, which has expectation zero. The second term is the product of the estimation error from a sample average and $\hat{\beta}$; this also has expectation zero because $\bar{X}_0$ is estimated on a different part of the sample than $\hat{\beta}$, so these errors are independent. The third term is more complicated because the estimation error $\bar{W}_1 - \mu_1$ is not independent of $\hat{\beta}$ since they are typically estimated using the same sample. However, we know that the estimation error converges in probability to zero and $\hat{\beta} \to \kappa\beta$; therefore, by Slutsky's Theorem, this term also converges in probability to zero, and we are left with the asymptotic bias noted above. 
-
-We now consider the bias of $\hat{\psi}^{sbw}$:
-
-\begin{align*}
-    \hat{\psi}^{sbw} - \psi &= \sum_{i: A_i = 1}\gamma_iY_i - (\alpha + \mu_0^T\beta) \\
-    &= \sum_{i: A_i = 1} \gamma_i(\alpha + X_i^T\beta + \epsilon_i) - (\alpha + \bar{W}_0^T\beta + (\mu_0 - \bar{W}_0)^T\beta) \\
-    &= \sum_{i: A_i = 1} (\gamma_i(W_i - v_i)^T\beta + \gamma_i\epsilon_i) - \bar{W}_0^T\beta + (\mu_0 - \bar{W}_0)^T\beta \\
-    &= -\sum_{i: A_i = 1}\gamma_iv_i^T\beta + \sum_{i: A_i = 1}\gamma_i\epsilon_i  + (\mu_0 - \bar{W}_0)^T\beta
-\end{align*}
-
-Conditioning on $W_i$, we can take expectations over $X_i$, and see that the second term has expectation zero (noting that the weights, conditional on $W_i$, are independent of these errors). The third term is simply the scaled sum of mean zero estimation error and therefore has expectation zero. We conclude by considering the first term and again take expectations over $X_i$ conditional on $W_i$: 
-
-\begin{align*}
-    \sum_{i: A_i = 1} \gamma_i\mathbb{E}\{X_i - W_i \mid W_i\}^T\beta &= \sum_{i: A_i = 1} \gamma_i (\mu_1 + \kappa^T(W_i - \mu_1))^T\beta - \sum_{i: A_i = 1}\gamma_i W_i^T\beta \\
-    &= (\mu_1 + \kappa^T(\bar{W}_0 - \mu_1))^T\beta - \bar{W}_0^T\beta \\
-    &= (\kappa^T(\bar{W}_0 - \mu_1))^T\beta - (\bar{W}_0 - \mu_1)^T\beta  \\
-    &= (\bar{W}_0 - \mu_1)^T(\kappa - I_d)\beta \\
-    &= (\mu_0 - \mu_1)^T(\kappa - I_d)\beta + (\bar{W}_0 - \mu_0)^T(\kappa - I_d)\beta \\
-    &\to (\mu_0 - \mu_1)^T(\kappa - I_d)\beta
-\end{align*}
-
-The final line holds because in the second to last line, we can take expectation over $W_i$ and see that the second term is a scaled sum of mean zero estimation error and has expectation zero. We therefore see that the asymptotic bias of the SBW estimator is equivalent to the OLS estimator.
-\end{proof}
+\input{Text_files/proof}
 
 
-We now make the simplifying assumptions that $\eta_a(W_i)$ and $\mu_0$ are known. Let $\hat{\psi}^{sbw}(\eta)$ be the SBW estimator that reweights $\eta_1(W_i)$ rather than $W_i$; i.e. $\hat{\psi}^{sbw}(\eta) = \sum_{i: A_i = 1}\gamma_iY_i$ where $\gamma$ is the solution to
-
-$$
-\arg\min_{\gamma \in \Gamma} \gamma_i^2
-$$
-
-$$
-\Gamma := \{\gamma: \eta_1(W_1)^T\gamma = \mu_0, \gamma_i > 0, \gamma^T1 = 1\}
-$$
-
-For simplicity we also assume there is no model error on $Y_i$. 
-
-\begin{claim}
-The estimator $\hat{\psi}^{sbw}(\eta)$ is unbiased, i.e.
-$\mathbb{E}\{\hat{\psi}^{sbw}(\eta)\} = \psi$
-\end{claim}
-
-\begin{proof}
-By linearity, we know that
-
-$$
-(Y_i^1 \mid A_i = a) = \alpha + \eta_a(W_i)^T\beta + (X_i - \eta_a(W_i))^T\beta
-$$
-
-We then have that:
-
-\begin{align*}
-    \hat{\psi}^{sbw}(\eta) - \psi &= \sum_{i: A_i = 1}\gamma_iY_i - (\alpha + \mu_0^T\beta) \\
-    &= \sum_{i: A_i = 1}\gamma_i\alpha + \sum_{i: A_i = 1}\gamma_i\eta_1(W_i)^T\beta + \sum_{i: A_i = 1}\gamma_i(X_i - \eta_1(W_i))^T\beta - (\alpha + \mu_0^T\beta) \\
-    &= \sum_{i: A_i = 1}\gamma_i(X_i - \eta_1(W_i))^T\beta
-\end{align*}
-
-Since the weights are independent of the errors $X_i - \eta_1(W_i)$, and $\eta_1(W_i)$ is an unbiased estimate of $X_i$, these terms are both mean zero when taking expectations over $X_i$. 
-\end{proof}
-
-\begin{remark}
-While we have assumed no model error, this estimator still has variance, conditional on $W_i$, equal to
-
-$$
-\sum_{i: A_i = 0} \gamma_i^2\beta^TCov(X_i \mid W_i)\beta
-$$
-
-where, assuming that $(X_i, W_i)$ are jointly normally distributed, $Cov(X_i \mid W_i) = \Sigma_{XX} - \Sigma_{XX}\Sigma_{WW}^{-1}\Sigma_{XX}$. Therefore, the variance of this estimator is higher than if we knew the true $X_i$ unless $\Sigma_{WW} = \Sigma_{XX}$ (i.e. we observe $X_i$). 
-\end{remark}
-
-We conclude by noting several departures in our applied setting to the framework we presented above: first, our causal parameter is a sample-average estimand, and we therefore we view $X_i$ as fixed underlying parameters. Second, we don't know $\eta_a(W_i)$ and instead approximate it using an estimate of $\Sigma_{vv}$ using auxillary data and an estimate of $\Sigma_{WW}$ from the observed data. Finally, we do not believe that $X_i$ is linear in $W_i$; however, we can view this adjustment as the best linear predictor of $X_i$. An extensive literature exists on regression calibration methods that considers the theory of these approximations under different conditions (see, e.g., \cite{gleser1992importance}, \cite{carroll2006measurement}). Further consideration of these issues is beyond the scope of this paper.
-
-\section{Adjustment Details}
-
-We now discuss how we estimate $\eta_a(W_i)$. We first outline the more conventional adjustment outlined in \cite{carroll2006measurement}, and then we explain our preferred departures from this framework. In either case we begin by estimating the covariance matrix $\Sigma_{UU, sc}$, the sampling variability for each CPUMA using the individual replicate survey weights to generate $b = 80$ additional CPUMA-level datasets. We then estimate the covariance matrix of the measurement errors using:
-
-$$
-\hat{\Sigma}_{vv, sc} = \frac{4}{80}\sum_{b=1}^{80}(X_{sc}^B - \bar{X}_{sc})(X_{b, sc} - \bar{X}_{sc})^T
-$$
-
-where the $4$ in the numerator comes from the process used to generate the replicate survey weights. Let $\hat{\Sigma}_{vv \mid A = a} = N_a^{-1}\sum_{s, c: A_s = a} (W_{sc} - \bar{W})(W_{sc} - \bar{W})^T$. This estimator is calculated on the original observed dataset. We then estimate $\Sigma_{XX \mid A = a}$ using:
-
-$$
-\hat{\Sigma}_{XX \mid A = a} = \hat{\Sigma}_{WW \mid A = a} - N_a^{-1}\sum_{s, c: A_s = a} \hat{\Sigma}_{UU, sc}
-$$
-
-Define
-
-$$
-\hat{\kappa}_a = (\hat{\Sigma}_{WW \mid A = a})^{-1}(\hat{\Sigma}_{XX \mid A = a})
-$$
-
-We can think of this as a matrix of estimated coefficients of a linear regressions of the (unobserved) matrix $X_{sc}$ on (observed) matrix $W_{sc}$. We can estimate $X_{sc}$ as
-
-$$
-\hat{\eta}_a(W_{sc}) = \bar{W}_a + \hat{\kappa}_a^T(W_{sc} - \bar{W}_a)
-$$
-
-where $\bar{W}_a = N_a^{-1}\sum_{i: A_i = a} W_{sc}$. This approximately aligns with the adjustments suggested by \cite{carroll2006measurement} and \cite{gleser1992importance}. However, in our setting we have additional access to information about a substantial source of heterogeneity in the measurement error: in particular, regions with large populations are estimated quite precisely, while regions with small populations are estimated much less precisely. This is because the survey is a one-percent sample across all regions. Moreover, for a given CPUMA, some covariates are measured using three years of data, and others only one. However, using the conventional regression calibration approach will adjust precisely estimated covariates to imprecisely estimated covariates in a similar way. 
-
-Our preferred estimators therefore use an alternative approach where we model an individual-level $\Sigma_{vv, sc}$ as a function of the sample sizes used to estimate each covariate. In particular, let $s_{sc}$ be the d-dimensional vector of the sample sizes used to estimate each covariate value for a given CPUMA. Let $S_{sc} = \sqrt{s_{sc}}\sqrt{s_{sc}}^T$. We assume that $\sqrt{s_{sc}}v_{sc} \sim N(0, \Sigma_{vv}^a)$. We then know that $\Sigma_{vv, sc}^m = \Sigma_{vv}^a \oslash S_{sc}$. We add the superscript $m$ to distinguish that is a modeled covariance matrix.
-
-To estimate these matrices, we pool our initial estimates of the CPUMA-level covariance matrices ($\hat{\Sigma}_{vv, sc}$) to generate $\hat{\Sigma}_{vv}^a = N_a^{-1}\sum_{s, c: A_s = a} S_{sc} \circ \Sigma_{vv, sc}$. We then estimate $\hat{\Sigma}_{vv, sc}^m = \hat{\Sigma}_{vv}^a \oslash S_{sc}$. From this we estimate $\hat{\Sigma}_{XX \mid A = a} = \hat{\Sigma}_{WW \mid A = a} - N_a^{-1}\sum_{s, c: A_s = a}\hat{\Sigma}_{vv, sc}^a$. Finally, we calculate $\hat{\kappa}_{sc} = (\hat{\Sigma}_{XX \mid A = a} + \hat{\Sigma}_{vv, sc}^m)^{-1}\hat{\Sigma}_{XX \mid A = a}$, which we use to estimate $\hat{\eta}_a(W_{sc})$. 
-
-The benefit of this estimator is that we account for unit-level heterogeneity in the measurement error. Specifically, this adjustment should primarily affect outlying values of imprecisely estimated covariates, while leaving precisely estimated covariates largely unchanged. Moreover, we are able to use the full efficiency of using all units in the modeling. The disadvantage is that, as shown in Appendix~\ref{sec:appendixsumstat}, this adjustment, compared to the conventional approach, is more likely to lead to extreme values that fall outside of the support of the original data, or of the possible values entirely. A second cost of this procedure is that this aggregation models all differences as a function of the sample sizes, and averages over any potential heterogeneity due to heteroskedasticity (i.e. the measurement error covariance matrix changes depending on the true value of $X_{sc}$). However, in practice we find that either adjustment yields quite similar results (see Appendix~\ref{ssec:allresults}).
 
 \section{Summary Statistics}
 \label{sec:appendixsumstat}
@@ -893,18 +788,18 @@ Table~\ref{tab:confintmain} displays the point estimates from all estimators as 
   \hline
 Weight type & Sigma estimate & Psihat & CI (states) & CI (proc) \\ 
   \hline
-H-SBW & sigma\_uu\_i & -2.00 & (-3.59, -0.4) & (-3.74, -0.26) \\ 
-  H-SBW & sigma\_uu\_avg & -2.08 & (-3.16, -1) & (-4.14, -0.02) \\ 
-  H-SBW & sigma\_zero & -2.26 & (-3.23, -1.29) & (-3.23, -1.29) \\ 
-  BC-HSBW & sigma\_uu\_i & -2.14 & (-3.57, -0.71) & (-4.03, -0.26) \\ 
-  BC-HSBW & sigma\_uu\_avg & -2.10 & (-3.22, -0.99) & (-3.86, -0.35) \\ 
-  BC-HSBW & sigma\_zero & -2.50 & (-3.41, -1.58) & (-3.41, -1.58) \\ 
-  SBW & sigma\_uu\_i & -1.81 & (-3.60, -0.02) & (-3.83, 0.21) \\ 
-  SBW & sigma\_uu\_avg & -1.98 & (-3.24, -0.72) & (-4.23, 0.27) \\ 
-  SBW & sigma\_zero & -2.25 & (-3.34, -1.16) & (-3.34, -1.16) \\ 
-  BC-SBW & sigma\_uu\_i & -1.89 & (-3.06, -0.73) & (-3.6, -0.19) \\ 
-  BC-SBW & sigma\_uu\_avg & -1.96 & (-2.78, -1.14) & (-6.7, 2.78) \\ 
-  BC-SBW & sigma\_zero & -2.37 & (-3.1, -1.64) & (-3.1, -1.64) \\ 
+H-SBW & sigma\_uu\_i & -1.94 & (-3.56, -0.32) & (-3.70, -0.18) \\ 
+  H-SBW & sigma\_uu\_avg & -2.02 & (-3.14, -0.91) & (-4.10, 0.05) \\ 
+  H-SBW & sigma\_zero & -2.21 & (-3.22, -1.20) & (-3.22, -1.20) \\ 
+  BC-HSBW & sigma\_uu\_i & -2.09 & (-3.54, -0.63) & (-3.99, -0.18) \\ 
+  BC-HSBW & sigma\_uu\_avg & -2.05 & (-3.20, -0.90) & (-3.83, -0.27) \\ 
+  BC-HSBW & sigma\_zero & -2.44 & (-3.40, -1.48) & (-3.4, -1.48) \\ 
+  SBW & sigma\_uu\_i & -1.76 & (-3.57, 0.06) & (-3.8, 0.29) \\ 
+  SBW & sigma\_uu\_avg & -1.92 & (-3.22, -0.63) & (-4.19, 0.34) \\ 
+  SBW & sigma\_zero & -2.20 & (-3.32, -1.07) & (-3.32, -1.07) \\ 
+  BC-SBW & sigma\_uu\_i & -1.84 & (-3.03, -0.64) & (-3.57, -0.11) \\ 
+  BC-SBW & sigma\_uu\_avg & -1.90 & (-2.77, -1.03) & (-6.65, 2.85) \\ 
+  BC-SBW & sigma\_zero & -2.31 & (-3.09, -1.53) & (-3.09, -1.53) \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -944,24 +839,24 @@ H-SBW & sigma\_uu\_i\_modeled & -0.62 & (-2.05, 0.81) & (-2.21, 0.97) \\
   \hline
 Variable subset & Sigma estimate & H-SBW & BC-HSBW & SBW & BC-SBW \\ 
   \hline
-0 & sigma\_uu\_i & -2.00 & -2.14 & -1.81 & -1.89 \\ 
-  0 & sigma\_uu\_avg & -2.08 & -2.10 & -1.98 & -1.96 \\ 
-  0 & sigma\_zero & -2.26 & -2.50 & -2.25 & -2.37 \\ 
-  1 & sigma\_uu\_i & -2.62 & -2.66 & -2.74 & -2.30 \\ 
-  1 & sigma\_uu\_avg & -2.68 & -2.66 & -2.77 & -2.27 \\ 
-  1 & sigma\_zero & -2.90 & -2.99 & -2.95 & -2.71 \\ 
-  2 & sigma\_uu\_i & -5.59 & -4.43 & -5.19 & -4.14 \\ 
-  2 & sigma\_uu\_avg & -5.67 & -4.41 & -5.34 & -4.13 \\ 
-  2 & sigma\_zero & -5.61 & -5.46 & -5.19 & -5.15 \\ 
-  3 & sigma\_uu\_i & -2.03 & -2.16 & -1.93 & -1.95 \\ 
-  3 & sigma\_uu\_avg & -2.03 & -2.08 & -1.91 & -1.89 \\ 
-  3 & sigma\_zero & -2.16 & -2.00 & -2.22 & -1.99 \\ 
-  4 & sigma\_uu\_i & -2.20 & -2.17 & -1.95 & -1.89 \\ 
-  4 & sigma\_uu\_avg & -2.42 & -2.13 & -2.36 & -2.05 \\ 
-  4 & sigma\_zero & -2.23 & -2.50 & -2.19 & -2.37 \\ 
-  5 & sigma\_uu\_i & -1.81 & -2.34 & -1.84 & -2.22 \\ 
-  5 & sigma\_uu\_avg & -2.03 & -2.48 & -2.06 & -2.42 \\ 
-  5 & sigma\_zero & -2.14 & -2.44 & -2.23 & -2.44 \\ 
+0 & sigma\_uu\_i & -1.94 & -2.09 & -1.76 & -1.84 \\ 
+  0 & sigma\_uu\_avg & -2.02 & -2.05 & -1.92 & -1.90 \\ 
+  0 & sigma\_zero & -2.21 & -2.44 & -2.20 & -2.31 \\ 
+  1 & sigma\_uu\_i & -2.56 & -2.60 & -2.68 & -2.25 \\ 
+  1 & sigma\_uu\_avg & -2.62 & -2.61 & -2.71 & -2.22 \\ 
+  1 & sigma\_zero & -2.84 & -2.93 & -2.89 & -2.66 \\ 
+  2 & sigma\_uu\_i & -5.54 & -4.37 & -5.14 & -4.08 \\ 
+  2 & sigma\_uu\_avg & -5.61 & -4.35 & -5.28 & -4.08 \\ 
+  2 & sigma\_zero & -5.55 & -5.41 & -5.14 & -5.10 \\ 
+  3 & sigma\_uu\_i & -1.98 & -2.11 & -1.87 & -1.90 \\ 
+  3 & sigma\_uu\_avg & -1.98 & -2.02 & -1.85 & -1.84 \\ 
+  3 & sigma\_zero & -2.10 & -1.94 & -2.17 & -1.94 \\ 
+  4 & sigma\_uu\_i & -2.14 & -2.12 & -1.89 & -1.83 \\ 
+  4 & sigma\_uu\_avg & -2.37 & -2.07 & -2.31 & -1.99 \\ 
+  4 & sigma\_zero & -2.18 & -2.45 & -2.14 & -2.32 \\ 
+  5 & sigma\_uu\_i & -1.75 & -2.28 & -1.78 & -2.16 \\ 
+  5 & sigma\_uu\_avg & -1.97 & -2.43 & -2.00 & -2.36 \\ 
+  5 & sigma\_zero & -2.08 & -2.38 & -2.18 & -2.38 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -976,18 +871,18 @@ Table ~\ref{tab:confintmainc2}, Table~\ref{tab:deltac2}, and Table~\ref{tab:seco
   \hline
 Weight type & Sigma estimate & Psihat & CI (states) & CI (proc) \\ 
   \hline
-H-SBW & sigma\_uu\_i & -1.48 & (-2.91, -0.06) & (-3.17, 0.20) \\ 
-  H-SBW & sigma\_uu\_avg & -1.94 & (-3.52, -0.36) & (-4.28, 0.40) \\ 
-  H-SBW & sigma\_zero & -1.83 & (-2.63, -1.03) & (-2.63, -1.03) \\ 
-  BC-HSBW & sigma\_uu\_i & -2.06 & (-3.72, -0.41) & (-3.63, -0.49) \\ 
-  BC-HSBW & sigma\_uu\_avg & -2.44 & (-4.24, -0.64) & (-4.91, 0.03) \\ 
-  BC-HSBW & sigma\_zero & -2.53 & (-3.66, -1.39) & (-3.66, -1.39) \\ 
-  SBW & sigma\_uu\_i & -1.23 & (-2.9, 0.43) & (-3, 0.54) \\ 
-  SBW & sigma\_uu\_avg & -1.89 & (-2.96, -0.83) & (-4.13, 0.34) \\ 
-  SBW & sigma\_zero & -1.76 & (-2.64, -0.89) & (-2.64, -0.89) \\ 
-  BC-SBW & sigma\_uu\_i & -1.74 & (-3.42, -0.07) & (-3.13, -0.36) \\ 
-  BC-SBW & sigma\_uu\_avg & -2.28 & (-3.84, -0.71) & (-4.65, 0.1) \\ 
-  BC-SBW & sigma\_zero & -2.42 & (-3.74, -1.11) & (-3.74, -1.11) \\ 
+H-SBW & sigma\_uu\_i & -1.43 & (-2.88, 0.02) & (-3.14, 0.28) \\ 
+  H-SBW & sigma\_uu\_avg & -1.88 & (-3.49, -0.27) & (-4.24, 0.47) \\ 
+  H-SBW & sigma\_zero & -1.77 & (-2.62, -0.93) & (-2.62, -0.93) \\ 
+  BC-HSBW & sigma\_uu\_i & -2.01 & (-3.68, -0.33) & (-3.6, -0.41) \\ 
+  BC-HSBW & sigma\_uu\_avg & -2.38 & (-4.20, -0.56) & (-4.87, 0.11) \\ 
+  BC-HSBW & sigma\_zero & -2.47 & (-3.64, -1.30) & (-3.64, -1.30) \\ 
+  SBW & sigma\_uu\_i & -1.17 & (-2.86, 0.51) & (-2.96, 0.62) \\ 
+  SBW & sigma\_uu\_avg & -1.84 & (-2.94, -0.74) & (-4.09, 0.42) \\ 
+  SBW & sigma\_zero & -1.71 & (-2.62, -0.79) & (-2.62, -0.79) \\ 
+  BC-SBW & sigma\_uu\_i & -1.69 & (-3.39, 0.01) & (-3.1, -0.28) \\ 
+  BC-SBW & sigma\_uu\_avg & -2.22 & (-3.81, -0.63) & (-4.61, 0.17) \\ 
+  BC-SBW & sigma\_zero & -2.37 & (-3.71, -1.02) & (-3.71, -1.02) \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1024,24 +919,24 @@ H-SBW & sigma\_uu\_i\_modeled & -1.15 & (-2.53, 0.24) & (-2.5, 0.2) \\
   \hline
 Variable subset & Sigma estimate & H-SBW & BC-HSBW & SBW & BC-SBW \\ 
   \hline
-0 & sigma\_uu\_i & -1.48 & -2.06 & -1.23 & -1.74 \\ 
-  0 & sigma\_uu\_avg & -1.94 & -2.44 & -1.89 & -2.28 \\ 
-  0 & sigma\_zero & -1.83 & -2.53 & -1.76 & -2.42 \\ 
-  1 & sigma\_uu\_i & -2.63 & -2.80 & -2.69 & -2.61 \\ 
-  1 & sigma\_uu\_avg & -2.66 & -2.83 & -2.72 & -2.61 \\ 
-  1 & sigma\_zero & -2.87 & -3.14 & -2.83 & -2.83 \\ 
-  2 & sigma\_uu\_i & -5.54 & -4.44 & -5.02 & -4.29 \\ 
-  2 & sigma\_uu\_avg & -5.60 & -4.47 & -5.11 & -4.32 \\ 
-  2 & sigma\_zero & -5.53 & -5.31 & -5.01 & -5.14 \\ 
-  3 & sigma\_uu\_i & -1.46 & -1.86 & -1.25 & -1.72 \\ 
-  3 & sigma\_uu\_avg & -1.93 & -2.22 & -1.89 & -2.07 \\ 
-  3 & sigma\_zero & -1.77 & -1.82 & -1.75 & -1.75 \\ 
-  4 & sigma\_uu\_i & -1.92 & -2.06 & -1.80 & -1.72 \\ 
-  4 & sigma\_uu\_avg & -2.26 & -2.40 & -1.99 & -2.02 \\ 
-  4 & sigma\_zero & -1.93 & -2.55 & -1.95 & -2.41 \\ 
-  5 & sigma\_uu\_i & -1.44 & -2.21 & -1.24 & -1.96 \\ 
-  5 & sigma\_uu\_avg & -1.35 & -2.15 & -1.27 & -2.13 \\ 
-  5 & sigma\_zero & -1.73 & -2.27 & -1.58 & -2.14 \\ 
+0 & sigma\_uu\_i & -1.43 & -2.01 & -1.17 & -1.69 \\ 
+  0 & sigma\_uu\_avg & -1.88 & -2.38 & -1.84 & -2.22 \\ 
+  0 & sigma\_zero & -1.77 & -2.47 & -1.71 & -2.37 \\ 
+  1 & sigma\_uu\_i & -2.57 & -2.75 & -2.63 & -2.55 \\ 
+  1 & sigma\_uu\_avg & -2.60 & -2.77 & -2.67 & -2.55 \\ 
+  1 & sigma\_zero & -2.81 & -3.08 & -2.77 & -2.77 \\ 
+  2 & sigma\_uu\_i & -5.48 & -4.38 & -4.96 & -4.23 \\ 
+  2 & sigma\_uu\_avg & -5.55 & -4.42 & -5.06 & -4.26 \\ 
+  2 & sigma\_zero & -5.47 & -5.25 & -4.95 & -5.09 \\ 
+  3 & sigma\_uu\_i & -1.41 & -1.81 & -1.19 & -1.67 \\ 
+  3 & sigma\_uu\_avg & -1.87 & -2.16 & -1.83 & -2.01 \\ 
+  3 & sigma\_zero & -1.71 & -1.76 & -1.70 & -1.69 \\ 
+  4 & sigma\_uu\_i & -1.86 & -2.01 & -1.75 & -1.66 \\ 
+  4 & sigma\_uu\_avg & -2.21 & -2.35 & -1.93 & -1.97 \\ 
+  4 & sigma\_zero & -1.87 & -2.49 & -1.90 & -2.35 \\ 
+  5 & sigma\_uu\_i & -1.38 & -2.15 & -1.18 & -1.90 \\ 
+  5 & sigma\_uu\_avg & -1.29 & -2.10 & -1.21 & -2.07 \\ 
+  5 & sigma\_zero & -1.67 & -2.22 & -1.53 & -2.09 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1056,28 +951,28 @@ Table~\ref{tab:loostatec1} and Table~\ref{tab:loostatec2} present point estimate
   \hline
 State & Psihat (0) & None (states, proc) & Psihat (1) & Repub (states, proc) \\ 
   \hline
-AR & -2.00 & (-2.18, -2.21) & -2.62 & (-2.55, -2.55) \\ 
-  AZ & -2.00 & (-2.13, -2.06) & -2.62 & (-2.65, -2.65) \\ 
-  CA & -2.00 & (-1.46, -1.36) & -2.62 & (-2.57, -2.52) \\ 
-  CO & -2.00 & (-2.00, -2.01) & -2.62 & (-2.68, -2.66) \\ 
-  CT & -2.00 & (-2.00, -2.00) & -2.62 & (-2.62, -2.56) \\ 
-  HI & -2.00 & (-2.00, -1.97) & -2.62 & (-2.54, -2.56) \\ 
-  IA & -2.00 & (-1.87, -1.90) & -2.62 & (-2.64, -2.63) \\ 
-  IL & -2.00 & (-2.01, -1.94) & -2.62 & (-2.61, -2.62) \\ 
-  KY & -2.00 & (-1.92, -1.86) & -2.62 & (-2.39, -2.26) \\ 
-  MD & -2.00 & (-2.03, -2.12) & -2.62 & (-2.69, -2.72) \\ 
-  MI & -2.00 & (-1.62, -1.67) & -2.62 & (-2.61, -2.64) \\ 
-  MN & -2.00 & (-2.00, -1.94) & -2.62 & (-2.64, -2.65) \\ 
-  ND & -2.00 & (-2.05, -2.09) & -2.62 & (-2.62, -2.64) \\ 
-  NH & -2.00 & (-2.00, -2.03) & -2.62 & (-2.74, -2.72) \\ 
-  NJ & -2.00 & (-2.19, -2.14) & -2.62 & (-2.74, -2.78) \\ 
-  NM & -2.00 & (-1.95, -2.02) & -2.62 & (-2.50, -2.48) \\ 
-  NV & -2.00 & (-2.00, -2.08) & -2.62 & (-2.66, -2.66) \\ 
-  OH & -2.00 & (-2.38, -2.40) & -2.62 & (-2.83, -2.78) \\ 
-  OR & -2.00 & (-1.98, -2.07) & -2.62 & (-2.57, -2.58) \\ 
-  RI & -2.00 & (-2.00, -1.97) & -2.62 & (-2.60, -2.57) \\ 
-  WA & -2.00 & (-1.91, -1.94) & -2.62 & (-2.52, -2.45) \\ 
-  WV & -2.00 & (-2.00, -2.02) & -2.62 & (-2.54, -2.54) \\ 
+AR & -1.94 & (-2.13, -2.15) & -2.56 & (-2.5, -2.5) \\ 
+  AZ & -1.94 & (-2.07, -2.01) & -2.56 & (-2.60, -2.60) \\ 
+  CA & -1.94 & (-1.41, -1.31) & -2.56 & (-2.52, -2.46) \\ 
+  CO & -1.94 & (-1.94, -1.95) & -2.56 & (-2.62, -2.61) \\ 
+  CT & -1.94 & (-1.94, -1.94) & -2.56 & (-2.56, -2.51) \\ 
+  HI & -1.94 & (-1.94, -1.91) & -2.56 & (-2.49, -2.5) \\ 
+  IA & -1.94 & (-1.82, -1.85) & -2.56 & (-2.58, -2.57) \\ 
+  IL & -1.94 & (-1.95, -1.88) & -2.56 & (-2.55, -2.56) \\ 
+  KY & -1.94 & (-1.86, -1.80) & -2.56 & (-2.34, -2.21) \\ 
+  MD & -1.94 & (-1.97, -2.06) & -2.56 & (-2.63, -2.66) \\ 
+  MI & -1.94 & (-1.57, -1.61) & -2.56 & (-2.56, -2.58) \\ 
+  MN & -1.94 & (-1.94, -1.88) & -2.56 & (-2.58, -2.6) \\ 
+  ND & -1.94 & (-2.00, -2.04) & -2.56 & (-2.57, -2.59) \\ 
+  NH & -1.94 & (-1.94, -1.97) & -2.56 & (-2.68, -2.66) \\ 
+  NJ & -1.94 & (-2.13, -2.09) & -2.56 & (-2.68, -2.73) \\ 
+  NM & -1.94 & (-1.89, -1.96) & -2.56 & (-2.44, -2.43) \\ 
+  NV & -1.94 & (-1.94, -2.02) & -2.56 & (-2.60, -2.60) \\ 
+  OH & -1.94 & (-2.33, -2.35) & -2.56 & (-2.78, -2.72) \\ 
+  OR & -1.94 & (-1.92, -2.02) & -2.56 & (-2.51, -2.52) \\ 
+  RI & -1.94 & (-1.94, -1.91) & -2.56 & (-2.54, -2.52) \\ 
+  WA & -1.94 & (-1.85, -1.89) & -2.56 & (-2.46, -2.39) \\ 
+  WV & -1.94 & (-1.94, -1.96) & -2.56 & (-2.48, -2.49) \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1090,28 +985,28 @@ AR & -2.00 & (-2.18, -2.21) & -2.62 & (-2.55, -2.55) \\
   \hline
 State & Psihat (0) & None (states, proc) & Psihat (1) & Repub (states, proc) \\ 
   \hline
-AR & -1.48 & (-1.53, -1.48) & -2.63 & (-2.49, -2.48) \\ 
-  AZ & -1.48 & (-1.64, -1.59) & -2.63 & (-2.67, -2.66) \\ 
-  CO & -1.48 & (-1.48, -1.42) & -2.63 & (-2.64, -2.60) \\ 
-  HI & -1.48 & (-1.48, -1.49) & -2.63 & (-2.50, -2.52) \\ 
-  IA & -1.48 & (-1.36, -1.39) & -2.63 & (-2.65, -2.64) \\ 
-  IL & -1.48 & (-1.43, -1.55) & -2.63 & (-2.55, -2.53) \\ 
-  KY & -1.48 & (-1.44, -1.10) & -2.63 & (-2.40, -2.28) \\ 
-  MD & -1.48 & (-1.76, -1.66) & -2.63 & (-2.70, -2.69) \\ 
-  MI & -1.48 & (-1.04, -1.01) & -2.63 & (-2.62, -2.64) \\ 
-  ND & -1.48 & (-1.84, -1.85) & -2.63 & (-2.63, -2.63) \\ 
-  NH & -1.48 & (-1.48, -1.66) & -2.63 & (-2.77, -2.76) \\ 
-  NM & -1.48 & (-1.48, -1.35) & -2.63 & (-2.40, -2.38) \\ 
-  NV & -1.48 & (-1.61, -1.60) & -2.63 & (-2.78, -2.77) \\ 
-  OH & -1.48 & (-1.83, -1.87) & -2.63 & (-2.83, -2.81) \\ 
-  OR & -1.48 & (-1.48, -1.63) & -2.63 & (-2.6, -2.61) \\ 
-  RI & -1.48 & (-1.48, -1.51) & -2.63 & (-2.61, -2.61) \\ 
-  WV & -1.48 & (-1.48, -1.47) & -2.63 & (-2.55, -2.54) \\ 
+AR & -1.43 & (-1.47, -1.43) & -2.57 & (-2.43, -2.43) \\ 
+  AZ & -1.43 & (-1.59, -1.53) & -2.57 & (-2.61, -2.6) \\ 
+  CO & -1.43 & (-1.43, -1.36) & -2.57 & (-2.58, -2.55) \\ 
+  HI & -1.43 & (-1.43, -1.43) & -2.57 & (-2.44, -2.46) \\ 
+  IA & -1.43 & (-1.31, -1.33) & -2.57 & (-2.6, -2.58) \\ 
+  IL & -1.43 & (-1.37, -1.49) & -2.57 & (-2.49, -2.48) \\ 
+  KY & -1.43 & (-1.38, -1.05) & -2.57 & (-2.35, -2.23) \\ 
+  MD & -1.43 & (-1.7, -1.61) & -2.57 & (-2.64, -2.63) \\ 
+  MI & -1.43 & (-0.98, -0.95) & -2.57 & (-2.56, -2.59) \\ 
+  ND & -1.43 & (-1.78, -1.8) & -2.57 & (-2.57, -2.57) \\ 
+  NH & -1.43 & (-1.43, -1.6) & -2.57 & (-2.72, -2.71) \\ 
+  NM & -1.43 & (-1.42, -1.3) & -2.57 & (-2.34, -2.32) \\ 
+  NV & -1.43 & (-1.55, -1.54) & -2.57 & (-2.72, -2.72) \\ 
+  OH & -1.43 & (-1.77, -1.81) & -2.57 & (-2.77, -2.75) \\ 
+  OR & -1.43 & (-1.42, -1.57) & -2.57 & (-2.55, -2.56) \\ 
+  RI & -1.43 & (-1.43, -1.45) & -2.57 & (-2.56, -2.55) \\ 
+  WV & -1.43 & (-1.43, -1.41) & -2.57 & (-2.49, -2.49) \\ 
    \hline
 \end{tabular}
 \end{table}
 
-Finally, Figure~\ref{fig:rdiffc1state}, Figure~\ref{fig:rdiffc1proc}, Figure~\ref{fig:rdiffc2state}, and Figure~\ref{fig:rdiffc2proc} display heatmaps showing the estimates of $\hat{\Delta}$ for all of our estimators when removing each state. We see that these estimates are overwhelmingly negative. In fact we only estimate positive contrasts when recalculating the covariate adjustment excluding that state and when the estimator could extrapolate beyond the support of the data. For the primary dataset, this occurred with California and Illinois. When removing early expansion states this only occurred when removing Hawaii and Ohio for our less preferred covariate adjustment.
+Finally, Figure~\ref{fig:rdiffc1state}, Figure~\ref{fig:rdiffc1proc}, Figure~\ref{fig:rdiffc2state}, and Figure~\ref{fig:rdiffc2proc} display heatmaps showing the estimates of $\hat{\Delta}$ for all of our estimators when removing each state. We see that these estimates are overwhelmingly negative. We only estimate positive contrasts on our primary dataset when recalculating the covariate adjustment excluding that state and when the estimator could extrapolate beyond the support of the data. For the primary dataset, this occurred with California and Illinois. When removing early expansion states this only occurred when removing Hawaii and Ohio for our less preferred covariate adjustment.
 
 We also caution against over-interpreting those particular estimates: as we noted in Appendix C, the covariate adjustments can result in estimates that are outside of the support of the data, or even possible values. While quite rare on our primary dataset, these bad estimates occur more frequently when we recalculate the adjustment when removing each state. In general, we expect estimators that do not extrapolate to be less affected by these bad adjustments, since they will likely get close to no weight; however, estimators that extrapolate are more likely to use the data from these CPUMAs, resulting in dubious estimates. 
 
@@ -1257,6 +1152,9 @@ Analysis programs and supporting materials are available online at github.com/mr
 \bibliographystyle{imsart-nameyear} % Style BST file
 \bibliography{research.bib}       % Bibliography file (usually '*.bib')
 
-%%% and comment out the ``thebibliography'' section.
-%%% Comment out this section when you \bibliography{references} is enabled.
+%% or include bibliography directly:
+% \begin{thebibliography}{}
+% \bibitem[\protect\citeauthoryear{???}{???}]{b1}
+% \end{thebibliography}
+
 \end{document}
