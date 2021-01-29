@@ -226,14 +226,12 @@ Our estimation of $\eta_a$ follows a somewhat different procedure which we outli
 We now discuss how we estimate $\eta_a(W_{sc})$ in our data, recalling that $s$ indexes the state and $c$ indexes the CPUMA. We begin by estimating the covariance matrix $\Sigma_{UU, sc}$, the sampling variability for each CPUMA using the individual replicate survey weights to generate $b = 80$ additional CPUMA-level datasets. We then estimate the covariance matrix of the measurement errors using:
 
 \begin{equation}
-\hat{\Sigma}_{vv, sc} = \frac{4}{80}\sum_{b=1}^{80}(X_{sc}^B - \bar{X}_{sc})(X_{b, sc} - \bar{X}_{sc})^T
+\hat{\Sigma}_{vv, sc} = \frac{4}{80}\sum_{b=1}^{80}(W_{sc}^B - \bar{W}_{sc})(W_{b, sc} - \bar{W}_{sc})^T
 \end{equation}
 
-where the $4$ in the numerator comes from the process used to generate the replicate survey weights. 
+where the $4$ in the numerator comes from the process used to generate the replicate survey weights and $\bar{W}_{sc}$ is the value calculated in the original dataset. 
 
-Unlike in our proofs above, we do not assume that $\Sigma_{XX \mid A = a}$ or $\Sigma_{vv \mid A = a}$ are equal for $A_i \in \{0, 1\}$.
-
-Instead let $\hat{\Sigma}_{vv \mid A = a} = n_a^{-1}\sum_{s, c: A_s = a} (W_{sc} - \bar{W})(W_{sc} - \bar{W})^T$. This estimator is calculated on the original observed dataset. We then estimate $\Sigma_{XX \mid A = a}$ using:
+Unlike in our proofs above, we do not assume that $\Sigma_{XX \mid A = a}$ or $\Sigma_{vv \mid A = a}$ are equal for $A_i \in \{0, 1\}$. Instead we let $\hat{\Sigma}_{WW \mid A = a} = n_a^{-1}\sum_{s, c: A_s = a} (W_{sc} - \bar{W})(W_{sc} - \bar{W})^T$. This estimator is calculated on the original observed dataset. We then estimate $\Sigma_{XX \mid A = a}$ using:
 
 \begin{equation}
 \hat{\Sigma}_{XX \mid A = a} = \hat{\Sigma}_{WW \mid A = a} - n_a^{-1}\sum_{s, c: A_s = a} \hat{\Sigma}_{vv, sc}
@@ -245,7 +243,7 @@ Define
 \hat{\kappa}_a = (\hat{\Sigma}_{WW \mid A = a})^{-1}(\hat{\Sigma}_{XX \mid A = a})
 \end{equation}
 
-We can think of this as a matrix of estimated coefficients of a linear regressions of the (unobserved) matrix $X_{sc}$ on (observed) matrix $W_{sc}$. We can estimate $X_{sc}$ as
+Notice that $\hat{\kappa}$ is a matrix of estimated coefficients of a linear regressions of the (unobserved) matrix $X_{sc}$ on (observed) matrix $W_{sc}$. We can then estimate $X_{sc}$ as
 
 \begin{equation}
 \hat{\eta}_a(W_{sc}) = \bar{W}_a + \hat{\kappa}_a^T(W_{sc} - \bar{W}_a)
@@ -259,4 +257,4 @@ Our preferred estimators therefore use an alternative approach where we model an
 
 To estimate these matrices, we pool our initial estimates of the CPUMA-level covariance matrices ($\hat{\Sigma}_{vv, sc}$) to generate $\hat{\Sigma}_{vv}^a = n_a^{-1}\sum_{s, c: A_s = a} S_{sc} \circ \Sigma_{vv, sc}$. We then estimate $\hat{\Sigma}_{vv, sc}^m = \hat{\Sigma}_{vv}^a \oslash S_{sc}$. From this we estimate $\hat{\Sigma}_{XX \mid A = a} = \hat{\Sigma}_{WW \mid A = a} - n_a^{-1}\sum_{s, c: A_s = a}\hat{\Sigma}_{vv, sc}^a$. Finally, we calculate $\hat{\kappa}_{sc} = (\hat{\Sigma}_{XX \mid A = a} + \hat{\Sigma}_{vv, sc}^m)^{-1}\hat{\Sigma}_{XX \mid A = a}$, which we use to estimate $\hat{\eta}_a(W_{sc})$. 
 
-The benefit of this estimator is that we account for unit-level heterogeneity in the measurement error. Specifically, this adjustment should primarily affect outlying values of imprecisely estimated covariates, while leaving precisely estimated covariates largely unchanged. Moreover, we are able to use the full efficiency of using all units in the modeling. The disadvantage is that, as shown in Appendix~\ref{sec:appendixsumstat}, this adjustment, compared to the conventional approach, is more likely to lead to extreme values that fall outside of the support of the original data, or of the possible values entirely. A second cost of this procedure is that this aggregation models all differences as a function of the sample sizes, and averages over any potential heterogeneity due to heteroskedasticity (i.e. the measurement error covariance matrix changes depending on the true value of $X_{sc}$). However, in practice we find that either adjustment yields quite similar results (see Appendix~\ref{ssec:allresults}).
+We prefer this adjustment because it accounts for CPUMA-level variability in the measurement error. Specifically, this adjustment should primarily affect outlying values of imprecisely estimated covariates, while leaving precisely estimated covariates largely unchanged. Moreover, we are able to use the full efficiency of using all units in the modeling, so our CPUMA-level $\kappa$ estimates are using the full data. The disadvantage is that, as shown in Appendix~\ref{sec:appendixsumstat}, this adjustment, compared to the conventional approach, appears more likely to lead to extreme values that fall outside of the support of the original data. A second cost is that this aggregation models all differences as a function of the sample sizes, and averages over any potential heterogeneity due to heteroskedasticity (i.e. the measurement error covariance matrix changes depending on the true value of $X_{sc}$). In practice we find that either adjustment yields quite similar results (see Appendix~\ref{ssec:allresults}).
