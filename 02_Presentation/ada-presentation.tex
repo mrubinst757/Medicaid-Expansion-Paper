@@ -89,14 +89,14 @@
 
 \begin{frame}{Motivation}
     \begin{itemize}
-    \item We believe that the association between governance and Medicaid enrollment would make it likely these effects are smaller in absolute magnitude (see, eg, Sommers (2012)) \bigskip
-    \begin{itemize}
-        \item Why? Medicaid outreach, ease of enrollment, cultural conservativism
-    \end{itemize}
     \item Insuring previously uninsured individuals mediates many effects of Medicaid expansion \bigskip
     \item Existing literature primarily targets the ETT; the ETC has rarely been directly studied \bigskip
     \begin{itemize}
         \item Miller et al (2019) predict that 15,000 deaths would have been avoided had non-expansion states expanded Medicaid \bigskip
+    \end{itemize}
+    \item Existing literature shows that Medicaid take-up rates are smaller in absolute magnitude among more conservative states (see, eg, Sommers (2012)) \bigskip
+    \begin{itemize}
+        \item Why? Medicaid outreach, ease of enrollment, cultural conservativism \bigskip
     \end{itemize}
     \end{itemize} 
 \end{frame}
@@ -111,7 +111,7 @@
 \begin{itemize}
     \item We estimate the treatment effect of 2014 Medicaid expansion on non-expansion states \bigskip
     
-    \item We examine how factors associated with Republican governance are associated with this estimate \bigskip
+    \item We examine how factors associated with Republican governance are associated with our counterfactual estimate \bigskip
     
     \end{itemize}
 \end{frame}
@@ -154,7 +154,7 @@ $$
         \begin{itemize}
             \item ``Less'' treatment in Delaware, DC, Massachusetts, New York, Vermont \bigskip
         \end{itemize}
-        \item No spillovers \bigskip
+        \item No spillovers ($Y^a_{sc} = Y_{sc} \mid A = a$) \bigskip
     \end{itemize}
     \item No anticipatory treatment effects \bigskip
     \begin{itemize}
@@ -170,11 +170,11 @@ $$
 \begin{frame}{Identifying Assumptions}
     \item Positivity \bigskip
     \begin{itemize}
-        \item $1 > \pi(X_{sn_1}, ..., X_{sn_s}) > 0$ \bigskip
+        \item $1 > \pi(\mathbf{X}_{sn_1}, ..., \mathbf{X}_{sn_s}) > 0$ \bigskip
     \end{itemize}
     \item No unmeasured confounding \bigskip
     \begin{itemize}
-        \item $Y^a_{sc} \perp A_s | X_{sc}$ \bigskip 
+        \item $Y^a_{sc} \perp A_s | \mathbf{X}_{sc}$ \bigskip 
     \end{itemize}
 \end{frame}
 
@@ -207,9 +207,9 @@ $$
         \item All ACS generated covariates are estimates \bigskip
         \begin{itemize}
             \item We observe $W_{sc}$, but we need $X_{sc}$ \bigskip
-            \item $Y_{sc}^a \perp A_{sc} \mid X_{sc} \centernot\implies Y_{sc}^a \perp A_{sc} \mid W_{sc}$ \bigskip
+            \item $Y_{sc}^a \perp A_{sc} \mid \mathbf{X}_{sc} \centernot\implies Y_{sc}^a \perp A_{sc} \mid \mathbf{W}_{sc}$ \bigskip
         \end{itemize}
-        \item $W_{sc} = X_{sc} + v_{sc}$, where $v_{sc} \stackrel{ind.}\sim N(0, \Sigma_{vv, sc})$ \bigskip
+        \item $\mathbf{W}_{sc} = \mathbf{X}_{sc} + \mathbf{f}_{sc}$, where $\mathbf{f}_{sc} \stackrel{ind.}\sim MVN(\mathbf{0}, \Sigma_{ff, sc})$ \bigskip
         \begin{itemize}
             \item Annual sample sizes $s_{sc}$ range from 334 to 23,990, mean of 1,001 \bigskip
         \end{itemize}
@@ -218,22 +218,32 @@ $$
 
 \begin{frame}{Parametric assumptions}
     \begin{itemize}
-        \item Linearity of outcome model \bigskip
+        \item Linearity of potential outcomes model \bigskip
         \begin{itemize}
-            \item $Y_{sc}^1 = \alpha + X_{sc}^T\beta + \epsilon_{sc} + \nu_s$ \bigskip
-            \item $Y_{sc}^0 = \alpha_0 + X_{sc}^T\beta_0 + \epsilon_{sc} + \nu_s$ \bigskip
+            \item $Y^a_{sc} = \alpha_a + X_{sc}^T\beta_a + \epsilon_{sc} + \nu_s$ \bigskip
+            \item $Y_{sc} = \alpha_0 + A_s \alpha + X_{sc}^T\beta_0 + A_sX_{sc}\beta + \epsilon_{sc} + \nu_s$ \bigskip
         \end{itemize}
+        \item $\mathbb{E}\{\epsilon_{sc} \mid X_{sc}\} = \mathbb{E}\{\epsilon_{sc}\} = 0$ \bigskip
+        \item $\mathbb{E}\{\nu_s \mid X_{sc}\} = \mathbb{E}\{\nu_s\} = 0$ \bigskip
+        \item $\mathbb{E}\{\nu_s \epsilon_{sc}\} = 0$ \bigskip
+        \item $e_{sc} = \nu_s + \epsilon_{sc}$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Parametric assumptions}
         \item Linearity of $X_{cs}$ in $W_{cs}$ \bigskip 
         \begin{itemize}
             \item $\mathbb{E}\{X_{sc} \mid W_{sc}, A_s = a\} = \eta_a(W_{sc}) = \mu_a + \kappa^T(W_{sc} - \mu_a)$ \bigskip
             \item $\kappa = (\Sigma_{XX} + \Sigma_{vv})^{-1}\Sigma_{XX} = \Sigma_{WW}^{-1}\Sigma_{XX}$ \bigskip
-            \item Assumption: errors $v_{sc}$ are independent from outcome errors \bigskip
         \end{itemize}
-        \item Potential outcome model \bigskip
+        \item Outcome model \bigskip
         \begin{itemize}
-            \item $Y_{sc}^1 = \alpha + \eta_1(W_{sc})^T\beta + (X_{sc} - \eta_1(W_{sc}))^T\beta + \epsilon_{sc} + \nu_{s}$
+            \item $Y_{sc} = \alpha + \eta_a(W_{sc})^T\beta_a + (X_{sc} - \eta_a(W_{sc}))^T\beta_a + e_{sc}$ \bigskip
         \end{itemize}
-    \end{itemize}
+        \item Causal parameter \bigskip
+        \begin{itemize}
+            \item $\psi = \psi^1 - \psi^0 = \bar{X}_0^T(\beta_1 - \beta_0)$
+        \end{itemize}
 \end{frame}
 
 \section{Estimation}
@@ -246,7 +256,8 @@ $$
             \item Limit extrapolation from the data \bigskip
             \item Makes our comparisons explicit \bigskip
         \end{itemize}
-        \item Existing methods often assume i.i.d. data, no measurement error in the covariates
+        \item Existing methods often assume i.i.d. data, no measurement error in the covariates \bigskip
+        \item Estimates of $\hat{\psi}^{ols}$ using $W_{sc}$ have bias $\approx (\bar{X}_0 - \bar{X}_1)^T(\kappa - I_d)\beta_1$
     \end{itemize}
 \end{frame}
 
@@ -268,6 +279,7 @@ $$
 \begin{frame}{How to choose $\delta$?}
     \begin{itemize}
         \item Typically $\delta > 0$ because we have a lack of covariate overlap in the observed data \bigskip
+        \item Bias $\approx \delta \sum_{m = 1}^d \beta$ \bigskip
         \item To minimize this bias, we must choose $\delta$ using prior knowledge about what covariates are likely to be most predictive of treatment response, feasible given the data \bigskip
     \end{itemize}
 \end{frame}
@@ -293,9 +305,8 @@ $$
 
 \begin{frame}{Inference}
     \begin{itemize}
-        \item Preferred estimates of $\hat{\psi^1}$ use leave-one-state-out jackknife, conditional on our adjustment $\hat{\eta}_a(W_{sc})$ \bigskip
+        \item Preferred estimates of use leave-one-state-out jackknife, condition on $\hat{\eta}_a$ \bigskip
         \item We also create confidence intervals the leave-one-state-out jackknife recalculating $\hat{\eta}_1$ each time \bigskip
-        \item We estimate variance of $\hat{\psi}^0$ using linear regression with standard errors clustered at state-level
     \end{itemize}
 \end{frame}
 
@@ -307,10 +318,7 @@ $$
     \begin{itemize}
         \item What is our estimate of $\psi$? \bigskip
         \begin{itemize}
-            \item Is it robust to different sets of weights? \bigskip
-            \begin{itemize}
-                \item Extrapolation versus imbalances \bigskip
-            \end{itemize}
+            \item Is it robust to different specifications? \bigskip
             \item Is it robust to excluding ``early expansion'' states? \bigskip
             \item Is it robust to different specifications of $\eta(W_{sc})$? \bigskip
         \end{itemize}
@@ -338,7 +346,7 @@ Weight type & Psihat & CI (states) & CI (proc) \\
   \midrule
 H-SBW & -1.94 & (-3.56, -0.32) & (-3.70, -0.18) \\ 
   BC-HSBW & -2.09 & (-3.54, -0.63) & (-3.99, -0.18) \\ 
-  SBW & -1.76 & (-3.57, 0.06) & (-3.8, 0.29) \\ 
+  SBW & -1.76 & (-3.57, 0.06) & (-3.80, 0.29) \\ 
   BC-SBW & -1.84 & (-3.03, -0.64) & (-3.57, -0.11) \\ 
    \bottomrule
 \end{tabular}
@@ -352,12 +360,12 @@ H-SBW & -1.94 & (-3.56, -0.32) & (-3.70, -0.18) \\
 \begin{table}[ht]
 \begin{tabular}{lrll}
   \toprule
-Weight type & Psihat & CI (states) & CI (proc) \\ 
+Weight type & Psihat & CI (states) \\ 
   \midrule
-H-SBW & -1.43 & (-2.88, 0.02) & (-3.14, 0.28) \\ 
-  BC-HSBW & -2.01 & (-3.68, -0.33) & (-3.6, -0.41) \\ 
-  SBW & -1.17 & (-2.86, 0.51) & (-2.96, 0.62) \\ 
-  BC-SBW & -1.69 & (-3.39, 0.01) & (-3.1, -0.28) \\ 
+H-SBW & -1.43 & (-2.88, 0.02) \\ 
+  BC-HSBW & -2.01 & (-3.68, -0.33) \\ 
+  SBW & -1.17 & (-2.86, 0.51) \\ 
+  BC-SBW & -1.69 & (-3.39, 0.01) \\ 
    \bottomrule
 \end{tabular}
 \end{table}
@@ -377,17 +385,16 @@ H-SBW & -1.43 & (-2.88, 0.02) & (-3.14, 0.28) \\
 
 \begin{frame}{Question Two}
     \begin{itemize}
-        \item How sensitive is $\hat{\psi}$ to excluding different covariate sets $V$? \bigskip 
+        \item Divide $X$ into groups $(S, V)$ \bigskip
+        \item How sensitive is $\hat{\psi}^1$ to excluding different covariate sets $V$? \bigskip 
         \begin{itemize}
             \item Primarily interested in Republican governance indicators \bigskip
         \end{itemize}
-        \item Let $\hat{\psi}_1$ be estimated excluding covariates, $\hat{\psi}_0$ be the original estimate using weights $\gamma_1$ and $\gamma_0$ \bigskip
-        \item $\hat{\Delta} = \hat{\psi}^1_1 - \hat{\psi}^1_0$ \bigskip
+        \item Let $\hat{\psi}^1_1$ be estimated excluding covariates, $\hat{\psi}^1_0$ be the original estimate using weights $\gamma_1$ and $\gamma_0$ \bigskip
     \end{itemize}
-\begin{align*}
-\hat{\Delta} &\approx (V_1^T(\gamma_1 - \gamma_0))^T\beta_V
-\end{align*}
-
+    $$
+    \hat{\Delta} &\approx (V_1^T(\gamma_1 - \gamma_0))^T\beta_{1, V} \\
+    $$
 \end{frame}
 
 \begin{frame}{Republican governance removal}
@@ -408,9 +415,9 @@ H-SBW & -1.43 & (-2.88, 0.02) & (-3.14, 0.28) \\
 
 \begin{frame}{Discussion}
 \begin{itemize}
-    \item Propose an extension to synthetic controls/balancing weights literature to estimate the ETC with hierarchical data, measurement error in covariates \bigskip
-    \item Estimate that had non-expansion states expanded Medicaid in 2014, uninsurance rates would have decreased by 1.94 & (-3.56, -0.32) percentage points \bigskip
-    \item We show that factors associated with Republican governance are consistently associated with reducing the absolute magnitude of the estimated effect sizes
+    \item Propose an extension to balancing weights literature to estimate the ETC with hierarchical data, measurement error in covariates \bigskip
+    \item Estimate that had non-expansion states expanded Medicaid in 2014, uninsurance rates would have decreased by 1.94 & (3.56, 0.32) percentage points \bigskip
+    \item We show that factors associated with Republican governance are consistently associated with reducing the absolute magnitude of the estimated counterfactual estimates
 \end{itemize}
 \end{frame}
 
