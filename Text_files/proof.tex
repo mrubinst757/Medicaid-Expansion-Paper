@@ -2,9 +2,9 @@
 
 We show three results on the bias of the SBW estimator under the classical errors-in-variables model. First, we show that the bias of the SBW estimator that sets $\delta = 0$ is equal to the bias of the OLS estimator. Second, we show that if the observed covariate values can be replaced by their conditional expectations $\eta$ given the noisy observations, then the SBW estimator will have zero bias. Finally, we consider the case where we estimate $\eta$ using auxillary data to estimate the covariance matrix of the error terms and show that the SBW estimator is consistent if we replace $\eta$ by an estimate $\hat{\eta}$ in the constraint set.
 
-Consider a dataset of consists of $i = 1, ..., n$ units where we observe the outcomes $Y_i$ and a treatment assignment indicator $A_i \in \{0, 1\}$. Let $n_a$ be the number of units in each treatment group, i.e, $n_a = \sum_{i = 1}^n \mathbbm{1}(A_i = a)$. Let $X_i \in \mathbb{R}^d$ be a vector of covariates. 
+Consider a dataset of consists of $i = 1, ..., n$ units where we observe the outcomes $Y_i$ and a treatment assignment indicator $A_i \in \{0, 1\}$. Let $n_a$ be the number of units in each treatment group, i.e, $n_a = \sum_{i = 1}^n \mathbbm{1}(A_i = a)$. Let $X_i \in \mathbb{R}^q$ be a vector of covariates. 
 
-Our target parameter is $\psi = \mathbb{E}\{Y_i^1 \mid A_i = 0\}$. We assume unconfoundedness ($Y_i^a \perp A_i \mid X_i$), consistency ($Y_i^a = Y_i \mid A_i = a$), and that $\mathbb{E}\{Y_i \mid X_i, A_i = a\} = \alpha_a + X_i^T\beta_a$. We begin by establishing the following identity:
+Our target parameter is $\psi = \mathbb{E}\{Y_i^1 \mid A_i = 0\}$. We assume unconfoundedness ($Y_i^a \perp A_i \mid X_i$), consistency ($Y_i^a = Y_i \mid A_i = a$), positivity of treatment assignment, and that $\mathbb{E}\{Y_i \mid X_i, A_i = a\} = \alpha_a + X_i^T\beta_a$. We begin by establishing the following identity:
 
 \begin{equation}
 \psi = \mu_y + (\mu_0 - \mu_1)^T\beta_1
@@ -70,20 +70,17 @@ $$
 where $\hat{\beta}_1$ is the OLS estimator of $\beta_1$, where $\bar{W}_a = n_a^{-1}\sum_{i:A_i = a} W_i$ and $\bar{Y}_a$ is defined analogously. Let 
 
 $$
-\hat{\psi}^{sbw} := \sum_{i: A_i = a} \gamma_i Y_i
+\hat{\psi}^{sbw} = \sum_{i: A_i = a} \gamma_i Y_i
 $$ 
 
-be the SBW estimator, where $\gamma$ solves the following objective:
+be the SBW estimator, where $\gamma$ solves the following program:
 
-$$
-\gamma = \arg\min_{\theta \in \Gamma} \sum_{i: A_i = 1}\theta_i^2
-$$
+\begin{align*}
+&\min_{\theta} \sum_{i: A_i = 1}\theta_i^2 \text{ such that } W_{1, r}^T\theta = \bar{W}_{0, r} \ \ \ (r = 1, ..., q) \\
+&\theta_i > 0, \sum_i\theta_i = 1
+\end{align*}
 
-$$
-\Gamma = \{\theta: \mathbf{W_1}^T\theta = \bar{W}_0, \theta_i > 0, \theta^T1 = 1\}
-$$
-
-where $\mathbf{W_1}$ is the $n_1$ by $d$ matrix of observed covariates for the treated group.
+where $W_{a, r}$ is the $n_a$ dimensional vector associated with covariate $r$.
 
 \begin{proposition}\label{cl1}
 The bias of $\hat{\psi}^{reg}$ is equal to the bias of $\hat{\psi}^{sbw}$; specifically, 
@@ -129,13 +126,10 @@ The final line holds because in the second to last line, we can take expectation
 
 Let $\hat{\psi}^{sbw}(\eta)$ be the SBW estimator that reweights $\eta_1(W_i)$ rather than $W_i$; i.e. $\hat{\psi}^{sbw}(\eta) = \sum_{i: A_i = 1}\gamma_i^\star Y_i$ where $\gamma^\star$ is the solution to
 
-$$
-\arg\min_{\theta \in \Gamma} \sum_{i: A_i = 1}\theta_i^2
-$$
-
-$$
-\Gamma := \{\theta: \eta_1(W_1)^T\theta = \mu_0, \theta_i > 0, \theta^T1 = 1\}
-$$
+\begin{align*}
+&\arg\min_{\theta} \sum_{i: A_i = 1}\theta_i^2 \text{ such that } \eta_1(W_{1, r})^T\theta = \mu_{0, r} \ \ \ (r = 1, ..., q) \\
+&\theta_i > 0, \sum_{i: A_i = 1} \theta_i = 1
+\end{align*}
 
 \begin{proposition}
 The estimator $\hat{\psi}^{sbw}(\eta)$ is unbiased, i.e.
@@ -191,11 +185,11 @@ $$
 \hat{\kappa} = \hat{\Sigma}_{WW}^{-1}(\hat{\Sigma}_{WW} - n\hat{\Sigma}_{vv})
 $$
 
-assuming $\hat{\Sigma}_{WW} - n\hat{\Sigma}_{vv}$ is positive semi-definite, and where $\hat{\Sigma}_{WW} = \sum_{i=1}^n (W_i - \bar{W})'(W_i - \bar{W})$. 
+assuming $\hat{\Sigma}_{WW} - n\hat{\Sigma}_{vv}$ is positive semi-definite, and where $\hat{\Sigma}_{WW} = \sum_{i=1}^n (W_i - \bar{W})(W_i - \bar{W})'$. 
 
 \begin{proposition}
 
-Let $\gamma$ be the weights that solve the SBW objective with $\sum_{i: A_i = 1}\theta_i\hat{\eta}_1(W_i) = \bar{W}_0$. The estimator $\sum_{i: A_i = 0}\gamma_iY_i \to \psi$ as $n \to \infty$, $T \to \infty$.
+Let $\gamma$ be the weights that solve the SBW objective with $\sum_{i: A_i = 1}\gamma_i\hat{\eta}_1(W_{i, r}) = \bar{W}_{0, r}$ for all $r = 1, ..., q$. The estimator $\sum_{i: A_i = 0}\gamma_iY_i \to \psi$ as $n \to \infty$, $T \to \infty$.
 
 \end{proposition}
 
@@ -207,15 +201,15 @@ $$
 \sum_{i: A_i = 1}\gamma_i(\eta_1(W_i) - \hat{\eta_1}(W_i))^T\beta \to 0
 $$
 
-By the weak law of large numbers, $\frac{1}{n}\hat{\Sigma}_{WW} - \hat{\Sigma}_{vv} \to \Sigma_{XX}$ as $n \to \infty$, $T \to \infty$; similarly $\hat{\Sigma}_{WW} \to \Sigma_{WW}$ as $n \to \infty$. By the continuous mapping theorem $\hat{\kappa} \to \kappa$. Since $\bar{W}_0 \to \mu_0$, we have that $\hat{\eta} \to \eta$. 
+By the weak law of large numbers, $\frac{1}{n}\hat{\Sigma}_{WW} - \hat{\Sigma}_{vv} \to \Sigma_{XX}$ as $n \to \infty$, $T \to \infty$; similarly $\frac{1}{n}\hat{\Sigma}_{WW} \to \Sigma_{WW}$ as $n \to \infty$. By the continuous mapping theorem $\hat{\kappa} \to \kappa$. Since $\bar{W}_0 \to \mu_0$, we have that $\hat{\eta} \to \eta$. 
 
 Let $\gamma^\star$ be the weights defined in Lemma A.3. We can then rewrite the error term above as
 
-$$
+\begin{align*}
 \sum_{i: A_i = 1}(\gamma_i - \gamma_i^\star)(\hat{\eta}_1(W_i) - \eta(W_i))^T\beta + \sum_{i: A_i = 1}\gamma_i^\star(\hat{\eta}_1(W_i) - \eta_1(W_i))^T\beta
-$$
+\end{align*}
 
-As $n \to \infty$, $T \to \infty$, $\hat{\eta}_1 \to \eta_1$, and, by definition of the SBW objective, $\gamma_i \to \gamma_i^\star$. These two terms therefore both converge in probability to zero. 
+As $n \to \infty$, $T \to \infty$, $\hat{\eta}_1 \to \eta_1$, and therefore by definition of the SBW objective, $\gamma_i \to \gamma_i^\star$. These two terms therefore both converge in probability to zero. 
 
 \end{proof}
 
@@ -223,10 +217,10 @@ Our estimation of $\eta_a$ follows a somewhat different procedure which we outli
 
 \section{Adjustment Details}
 
-We now discuss how we estimate $\eta_a(W_{sc})$ in our data, recalling that $s$ indexes the state and $c$ indexes the CPUMA. We begin by estimating the covariance matrix $\Sigma_{UU, sc}$, the sampling variability for each CPUMA using the individual replicate survey weights to generate $b = 80$ additional CPUMA-level datasets. We then estimate the covariance matrix of the measurement errors using:
+We now discuss how we estimate $\eta_a$ in our data. We begin by estimating the unit-level covariance matrices $\Sigma_{vv, sc}$, the sampling variability for each CPUMA by using the individual replicate survey weights to generate $b = 80$ additional CPUMA-level datasets. We then estimate $\Sigma_{vv, sc}$:
 
 \begin{equation}
-\hat{\Sigma}_{vv, sc} = \frac{4}{80}\sum_{b=1}^{80}(W_{sc}^B - \bar{W}_{sc})(W_{b, sc} - \bar{W}_{sc})^T
+\hat{\Sigma}_{vv, sc} = \frac{4}{80}\sum_{b=1}^{80}(W_{sc}^B - \bar{W}_{sc})(W_{b, sc} - \bar{W}_{sc})'
 \end{equation}
 
 where the $4$ in the numerator comes from the process used to generate the replicate survey weights and $\bar{W}_{sc}$ is the value calculated in the original dataset. 
@@ -240,7 +234,7 @@ Unlike in our proofs above, we do not assume that $\Sigma_{XX \mid A = a}$ or $\
 Define
 
 \begin{equation}
-\hat{\kappa}_a = (\hat{\Sigma}_{WW \mid A = a})^{-1}(\hat{\Sigma}_{XX \mid A = a})
+\hat{\kappa}_a = \hat{\Sigma}_{WW \mid A = a}^{-1}\hat{\Sigma}_{XX \mid A = a}
 \end{equation}
 
 Notice that $\hat{\kappa}$ is a matrix of estimated coefficients of a linear regressions of the (unobserved) matrix $X_{sc}$ on (observed) matrix $W_{sc}$. We can then estimate $X_{sc}$ as
@@ -253,8 +247,8 @@ where $\bar{W}_a = n_a^{-1}\sum_{s, c: A_s = a} W_{sc}$. This approximately alig
 
 In our setting we have additional access to information about a substantial source of heterogeneity in the measurement error: in particular, regions with large populations are estimated quite precisely, while regions with small populations are estimated much less precisely. This is because the survey is a one-percent sample across all regions. Moreover, for a given CPUMA, some covariates are measured using three years of data, and others only one. However, using the conventional regression calibration approach will adjust precisely estimated covariates to imprecisely estimated covariates in a similar way. 
 
-Our preferred estimators therefore use an alternative approach where we model an individual-level $\Sigma_{vv, sc}$ as a function of the sample sizes used to estimate each covariate. In particular, let $s_{sc}$ be the d-dimensional vector of the sample sizes used to estimate each covariate value for a given CPUMA. Let $S_{sc} = \sqrt{s_{sc}}\sqrt{s_{sc}}^T$. We assume that $\sqrt{s_{sc}}v_{sc} \sim N(0, \Sigma_{vv}^a)$. We then know that $\Sigma_{vv, sc}^m = \Sigma_{vv}^a \oslash S_{sc}$. We add the superscript $m$ to distinguish that is a modeled covariance matrix.
+Our preferred estimators therefore use an alternative approach where we model an individual-level $\Sigma_{vv, sc}$ as a function of the sample sizes used to estimate each covariate. In particular, let $s_{sc}$ be the q-dimensional vector of the sample sizes used to estimate each covariate value for a given CPUMA. Let $\matr{S}_{sc} = \sqrt{s_{sc}}\sqrt{s_{sc}}^T$. We assume that $\sqrt{s_{sc}}v_{sc} \sim N(0, \Sigma_{vv}^a)$. We then know that $\Sigma_{vv, sc}^m = \Sigma_{vv}^a \oslash \matr{S}_{sc}$. We add the superscript $m$ to distinguish that is a modeled covariance matrix.
 
-To estimate these matrices, we pool our initial estimates of the CPUMA-level covariance matrices ($\hat{\Sigma}_{vv, sc}$) to generate $\hat{\Sigma}_{vv}^a = n_a^{-1}\sum_{s, c: A_s = a} S_{sc} \circ \Sigma_{vv, sc}$. We then estimate $\hat{\Sigma}_{vv, sc}^m = \hat{\Sigma}_{vv}^a \oslash S_{sc}$. From this we estimate $\hat{\Sigma}_{XX \mid A = a} = \hat{\Sigma}_{WW \mid A = a} - n_a^{-1}\sum_{s, c: A_s = a}\hat{\Sigma}_{vv, sc}^a$. Finally, we calculate $\hat{\kappa}_{sc} = (\hat{\Sigma}_{XX \mid A = a} + \hat{\Sigma}_{vv, sc}^m)^{-1}\hat{\Sigma}_{XX \mid A = a}$, which we use to estimate $\hat{\eta}_a(W_{sc})$. 
+To estimate these matrices, we pool our initial estimates of the CPUMA-level covariance matrices ($\hat{\Sigma}_{vv, sc}$) to generate $\hat{\Sigma}_{vv}^a = n_a^{-1}\sum_{s, c: A_s = a} \matr{S}_{sc} \circ \Sigma_{vv, sc}$. We estimate $\hat{\Sigma}_{vv, sc}^m = \hat{\Sigma}_{vv}^a \oslash \matr{S}_{sc}$. From this we estimate $\hat{\Sigma}_{XX \mid A = a} = \hat{\Sigma}_{WW \mid A = a} - n_a^{-1}\sum_{s, c: A_s = a}\hat{\Sigma}_{vv, sc}^a$. Finally, we calculate $\hat{\kappa}_{sc} = (\hat{\Sigma}_{XX \mid A = a} + \hat{\Sigma}_{vv, sc}^m)^{-1}\hat{\Sigma}_{XX \mid A = a}$, which we use to estimate $\hat{\eta}_a(W_{sc})$. 
 
-We prefer this adjustment because it accounts for CPUMA-level variability in the measurement error. Specifically, this adjustment should primarily affect outlying values of imprecisely estimated covariates, while leaving precisely estimated covariates largely unchanged. Moreover, we are able to use the full efficiency of using all units in the modeling, so our CPUMA-level $\kappa$ estimates are using the full data. The disadvantage is that, as shown in Appendix~\ref{sec:appendixsumstat}, this adjustment, compared to the conventional approach, appears more likely to lead to extreme values that fall outside of the support of the original data. A second cost is that this aggregation models all differences as a function of the sample sizes, and averages over any potential heterogeneity due to heteroskedasticity (i.e. the measurement error covariance matrix changes depending on the true value of $X_{sc}$). In practice we find that either adjustment yields quite similar results (see Appendix~\ref{ssec:allresults}).
+We prefer this adjustment because it accounts for CPUMA-level variability in the measurement error. Specifically, this adjustment should more greatly affect outlying values of imprecisely estimated covariates, while leaving precisely estimated covariates closer to their observed value in the dataset. Moreover, we are able to use the full efficiency of using all units in the modeling, so our CPUMA-level $\kappa$ estimates are using the full data. The disadvantage is that, as shown in Appendix~\ref{sec:appendixsumstat}, this adjustment, compared to the conventional approach, appears more likely to lead to extreme values that fall outside of the support of the original data. A second cost is that this aggregation models all differences as a function of the sample sizes, and averages over any potential heterogeneity due to heteroskedasticity (i.e. the measurement error covariance matrix changes depending on the true value of $X_{sc}$). In practice we find that either adjustment yields quite similar results (see Appendix~\ref{ssec:allresults}).

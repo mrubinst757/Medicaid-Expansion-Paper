@@ -229,42 +229,6 @@ AR & -2.05 & (-2.15, -2.16) & -2.85 & (-2.77, -2.76) \\
 \end{tabular}
 \end{table}
 
-Finally, Figure~\ref{fig:rdiffc1state}, Figure~\ref{fig:rdiffc1proc}, Figure~\ref{fig:rdiffc2state}, and Figure~\ref{fig:rdiffc2proc} display heatmaps showing the estimates of $\hat{\Delta}$ for all of our estimators when removing each state. We see that these estimates are overwhelmingly negative. We only estimate positive contrasts on our primary dataset when recalculating the covariate adjustment excluding that state and when the estimator could extrapolate beyond the support of the data. For the primary dataset, this occurred with California and Illinois. When removing early expansion states this only occurred when removing Hawaii and Ohio for our less preferred covariate adjustment.
-
-We also caution against over-interpreting those particular estimates: as we noted in Appendix C, the covariate adjustments can result in estimates that are outside of the support of the data, or even possible values. While quite rare on our primary dataset, these bad estimates occur more frequently when we recalculate the adjustment when removing each state. In general, we expect estimators that do not extrapolate to be less affected by these bad adjustments, since they will likely get close to no weight; however, estimators that extrapolate are more likely to use the data from these CPUMAs, resulting in dubious estimates. 
-
-\begin{figure}[]
-\begin{center}
-    \caption{$\hat{\Delta}$ leave-one-out state, primary dataset, covariate adjustment constant}
-    \label{fig:rdiffc1state}
-    \includegraphics[scale=0.6]{01_Plots/loostate-repub-sensitivityc1-state-main.png}
-\end{center}
-\end{figure}
-
-\begin{figure}[]
-\begin{center}
-    \caption{$\hat{\Delta}$ leave-one-out state, primary dataset, covariate adjustment recalculated}
-    \label{fig:rdiffc1proc}
-    \includegraphics[scale=0.6]{01_Plots/loostate-repub-sensitivityc1-proc-main.png}
-\end{center}
-\end{figure}
-
-\begin{figure}[]
-\begin{center}
-    \caption{$\hat{\Delta}$ leave-one-out state, early expansion excluded, covariate adjustment constant}
-    \label{fig:rdiffc2state}
-    \includegraphics[scale=0.6]{01_Plots/loostate-repub-sensitivityc2-state-main.png}
-\end{center}
-\end{figure}
-
-\begin{figure}[]
-\begin{center}
-    \caption{$\hat{\Delta}$ leave-one-out state, early expansion excluded, covariate adjustment recalculated}
-    \label{fig:rdiffc2proc}
-    \includegraphics[scale=0.6]{01_Plots/loostate-repub-sensitivityc2-proc-main.png}
-\end{center}
-\end{figure}
-
 Table~\ref{tab:oateconfint} displays point estimates and confidence intervals for the primary point estimates for the OATE. We display the confidence intervals calculated using both the leave-one-out-states conditional on the covariate adjustment (CI (states)) and recalculating the covariate adjustment for the OATE (CI (proc)). 
 
 \begin{table}[ht]
@@ -285,7 +249,7 @@ Psihat & Sigma estimate & Dataset & CI (states) & CI (proc) \\
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:oaterepubdiff} displays the difference between the estimated contrasts when excluding Republican governance indicators and when including all covariates as well as the estimated confidence intervals, estimated both conditional on the imputation (CI (states)) and recalculating the entire covariate adjustment (CI (proc)).
+Table~\ref{tab:oaterepubdiff} displays the difference between the estimated contrasts when excluding Republican governance indicators and when including all covariates as well as the estimated confidence intervals, estimated both conditional on the imputation (CI (states)) and recalculating the entire covariate adjustment (CI (proc)). Unlike the previous analyses, this difference $\hat{\Delta}$ is a function of both the treated and control data
 
 \begin{table}[ht]
 \centering
@@ -327,7 +291,7 @@ sigma\_uu\_i & c1 & -1.64 & -2.60 & -2.96 & -1.86 & -1.86 & -1.77 \\
 
 Figure~\ref{fig:oateheatmap} displays a heatmap showing how the OATE point estimates change when removing each state, conditional on our preferred covariate adjustment for both the primary dataset and when excluding early expansion states. We present the results for all covariates and excluding the Republican governance indicators. Additional results are available on request. We see that our point estimates move closer to zero when removing Wisconsin or Ohio for all specifications. Removing Arkansas appears to generally move the point estimates further away from zero.
 
-\begin{figure}[]
+\begin{figure}[H]
 \begin{center}
     \caption{OATE estimates, leave-one-out-states analysis}
     \label{fig:oateheatmap}
