@@ -1,16 +1,16 @@
 \section{Proofs}
 
-We show three results on the bias of the SBW estimator under the classical errors-in-variables model. First, we show that the bias of the SBW estimator that sets $\delta = 0$ is equal to the bias of the OLS estimator. Second, we show that if the observed covariate values can be replaced by their conditional expectations $\eta$ given the noisy observations, then the SBW estimator will have zero bias. Finally, we consider the case where we estimate $\eta$ using auxillary data to estimate the covariance matrix of the error terms and show that the SBW estimator is consistent if we replace $\eta$ by an estimate $\hat{\eta}$ in the constraint set.
+We show three results regarding the bias of the SBW estimator under the classical errors-in-variables model. First, we show that the bias of the SBW estimator that sets $\delta = 0$ (i.e. exactly balances the means of the covariates) is equal to the bias of the OLS estimator. Second, we show that if the observed covariate values can be replaced by their conditional expectations $\eta$ given the noisy observations, then the SBW estimator will be unbiased. Finally, we consider the case where we can estimate $\eta$ using auxillary data to estimate the covariance matrix of the error terms and show that the SBW estimator is consistent if we replace $\eta$ by an estimate $\hat{\eta}$ in the constraint set.
 
 Consider a dataset of consists of $i = 1, ..., n$ units where we observe the outcomes $Y_i$ and a treatment assignment indicator $A_i \in \{0, 1\}$. Let $n_a$ be the number of units in each treatment group, i.e, $n_a = \sum_{i = 1}^n \mathbbm{1}(A_i = a)$. Let $X_i \in \mathbb{R}^q$ be a vector of covariates. 
 
-Our target parameter is $\psi = \mathbb{E}\{Y_i^1 \mid A_i = 0\}$. We assume unconfoundedness ($Y_i^a \perp A_i \mid X_i$), consistency ($Y_i^a = Y_i \mid A_i = a$), positivity of treatment assignment, and that $\mathbb{E}\{Y_i \mid X_i, A_i = a\} = \alpha_a + X_i^T\beta_a$. We begin by establishing the following identity:
+Our target parameter is $\psi = \mathbb{E}\{Y_i^1 \mid A_i = 0\}$.\footnote{Note that this is a super-population target; in the application, we are interested in a finite-sample estimand.} We assume unconfoundedness ($Y_i^a \perp A_i \mid X_i$), consistency ($Y_i^a = Y_i \mid A_i = a$), positivity of treatment assignment ($1 - \epsilon > \pi(X_i) > \epsilon)$, and that $\mathbb{E}\{Y_i \mid X_i, A_i = a\} = \alpha_a + X_i^T\beta_a$. We begin by establishing the following identity:
 
 \begin{equation}
-\psi = \mu_y + (\mu_0 - \mu_1)^T\beta_1
+\psi = \mu_y + (\upsilon_0 - \upsilon_1)^T\beta_1
 \end{equation}
 
-where $\mu_y = \mathbb{E}\{Y_i \mid A_i = 1\}$ and $\mu_a = \mathbb{E}\{X_i \mid A_i = a\}$.
+where $\mu_y = \mathbb{E}\{Y_i \mid A_i = 1\}$ and $\upsilon_a = \mathbb{E}\{X_i \mid A_i = a\}$.
 
 \begin{proof}
 By the law of iterated expectations, $\psi = \int \mathbb{E}\{Y_i^1 \mid X_i, A_i = 0\}p(x \mid a = 0)dx$. Using our causal and modeling assumptions we have that:
@@ -19,12 +19,12 @@ By the law of iterated expectations, $\psi = \int \mathbb{E}\{Y_i^1 \mid X_i, A_
 \mathbb{E}\{Y_i^1 \mid X_i, A_i = 0\} &= \mathbb{E}\{Y_i^1 \mid X_i, A_i = 1\} \\ 
 &= \mathbb{E}\{Y_i \mid X_i, A_i = 1\} \\
 &= \alpha + X_i^T\beta \\
-&= \mu_y + (X_i - \mu_1)^T\beta \\
-&\implies \psi = \int (\mu_y + (X_i - \mu_1)^T\beta) p(x \mid a = 0)dx \\
-&= \mu_y + (\mu_0 - \mu_1)^T\beta
+&= \mu_y + (X_i - \upsilon_1)^T\beta \\
+&\implies \psi = \int (\mu_y + (X_i - \upsilon_1)^T\beta) p(x \mid a = 0)dx \\
+&= \mu_y + (\upsilon_0 - \upsilon_1)^T\beta
 \end{align*}
 
-where the first equality follows from unconfoundedness, the second equality from consistency, the third from our parametric modeling assumptions, and the fourth by definition of $\alpha$. The final implication and result follow from plugging these expressions back into the integral and solving.
+where the first equality follows from unconfoundedness, the second equality from consistency, the third from positivity and our parametric modeling assumptions, and the fourth by definition of $\alpha$. The final implication and result follow from plugging these expressions back into the integral and solving.
 
 \end{proof}
 
@@ -40,13 +40,13 @@ We now outline the classical errors-in-variables model. Let $Y_i(X_i, a) = \alph
 In other words the error in the outcome model is uncorrelated with the error in the covariates. Let $u_i = (\epsilon_i, v_i)$. We further assume that the covariates are uncorrelated with any of the error terms:
 
 \begin{equation}
-(X_i, u_i) \sim MVN((\mu_a, 0), \begin{pmatrix} 
+(X_i, u_i) \sim MVN((\upsilon_a, 0), \begin{pmatrix} 
 \Sigma_{XX} & 0 \\ 
 0 & \Sigma_{uu}  
 \end{pmatrix}
 \end{equation}
 
-Then we see that $(X_i, W_i) \mid A_i = a \stackrel{iid}{\sim} MVN((\mu_a, \mu_a)^T, \Sigma)$\footnote{For simplicity we have also assumed that $\Sigma_{WW \mid A = 1} = \Sigma_{WW \mid A = 0} = \Sigma_{WW}$ and $\Sigma_{XX \mid A = 1} = \Sigma_{XX \mid A = 0} = \Sigma_{XX}$. This is not a necessary assumption, but helps simplify notation.} where 
+Then we see that $(X_i, W_i) \mid A_i = a \stackrel{iid}{\sim} MVN((\upsilon_a, \upsilon_a), \Sigma)$\footnote{For simplicity we have also assumed that $\Sigma_{WW \mid A = 1} = \Sigma_{WW \mid A = 0} = \Sigma_{WW}$ and $\Sigma_{XX \mid A = 1} = \Sigma_{XX \mid A = 0} = \Sigma_{XX}$. This is not a necessary assumption, but helps simplify notation.} where 
 
 $$
 \Sigma = \begin{pmatrix} 
@@ -58,13 +58,13 @@ $$
 and $\Sigma_{WW} = \Sigma_{XX} + \Sigma_{vv}$. Let $\kappa = \Sigma_{WW}^{-1}\Sigma_{XX}$. By the normality of the joint distribution of $X_i$ and $W_i$, we also know that
 
 \begin{equation}
-\mathbb{E}\{X_i \mid W_i, A_i = a\} = \mu_a + \kappa^T(W_i - \mu_a)
+\mathbb{E}\{X_i \mid W_i, A_i = a\} = \upsilon_a + \kappa^T(W_i - \upsilon_a)
 \end{equation}
 
 We consider estimating $\psi$ in this setting. Let 
 
 $$
-\hat{\psi}^{reg} := \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T\hat{\beta}_1
+\hat{\psi}^{reg} = \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T\hat{\beta}_1
 $$ 
 
 where $\hat{\beta}_1$ is the OLS estimator of $\beta_1$, where $\bar{W}_a = n_a^{-1}\sum_{i:A_i = a} W_i$ and $\bar{Y}_a$ is defined analogously. Let 
@@ -73,20 +73,20 @@ $$
 \hat{\psi}^{sbw} = \sum_{i: A_i = a} \gamma_i Y_i
 $$ 
 
-be the SBW estimator, where $\gamma$ solves the following program:
+be the SBW estimator, where
 
 \begin{align*}
-&\min_{\theta} \sum_{i: A_i = 1}\theta_i^2 \text{ such that } W_{1, r}^T\theta = \bar{W}_{0, r} \ \ \ (r = 1, ..., q) \\
-&\theta_i > 0, \sum_i\theta_i = 1
+\gamma &= \arg\min_{\theta} \sum_{i: A_i = 1}\theta_i^2 \text{ such that } W_{1, r}\theta = \bar{W}_{0, r} \ \ \ (r = 1, ..., q) \\
+&\theta_i > 0, \sum_{i: A_i = 1}\theta_i = 1
 \end{align*}
 
-where $W_{a, r}$ is the $n_a$ dimensional vector associated with covariate $r$.
+where $W_{a, r}$ is the $n_a$ dimensional (row) vector associated with covariate $r$.
 
 \begin{proposition}\label{cl1}
 The bias of $\hat{\psi}^{reg}$ is equal to the bias of $\hat{\psi}^{sbw}$; specifically, 
 
 $$
-\mathbb{E}\{\psi^{reg} - \psi\} = \mathbb{E}\{\psi^{sbw} - \psi\} = (\mu_0 - \mu_1)^T(\kappa - I_d)\beta
+\mathbb{E}\{\psi^{reg} - \psi\} = \mathbb{E}\{\psi^{sbw} - \psi\} = (\upsilon_0 - \upsilon_1)^T(\kappa - I_d)\beta
 $$
 \end{proposition}
 
@@ -94,40 +94,40 @@ $$
 Recall that $\mathbb{E}(\hat{\beta}_1) = \kappa\beta_1$ (c.l. \cite{gleser1992importance}). Consider the error of $\hat{\psi}^{reg}$: 
 
 \begin{align*}
-    \hat{\psi}^{reg} - \psi &= \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T\hat{\beta}_1 - (\mu_y + (\mu_0 - \mu_1)^T\beta_1) \\
-    &= \underbrace{(\bar{Y}_1 - \mu_y)}_{T_1} + \underbrace{(\bar{W}_0 - \mu_0)^T\hat{\beta}_1}_{T_2} - \underbrace{(\bar{W}_1 - \mu_1)^T\hat{\beta}_1}_{T_3} + \underbrace{(\mu_0 - \mu_1)^T(\hat{\beta}_1 - \beta_1)}_{T_4} \\
-    & \to (\mu_0 - \mu_1)^T(\kappa - I_d)\beta_1
+    \hat{\psi}^{reg} - \psi &= \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T\hat{\beta}_1 - (\mu_y + (\upsilon_0 - \upsilon_1)^T\beta_1) \\
+    &= \underbrace{(\bar{Y}_1 - \mu_y)}_{T_1} + \underbrace{(\bar{W}_0 - \upsilon_0)^T\hat{\beta}_1}_{T_2} - \underbrace{(\bar{W}_1 - \upsilon_1)^T\hat{\beta}_1}_{T_3} + \underbrace{(\upsilon_0 - \upsilon_1)^T(\hat{\beta}_1 - \beta_1)}_{T_4} \\
+    \implies \mathbb{E}\{\hat{\psi}^{reg} - \psi\} &= (\upsilon_0 - \upsilon_1)^T(\kappa - I_d)\beta_1
 \end{align*}
 
-The first equality holds by definition and the second by rearranging terms. The second equality consists of four terms. $T_1$ is simply the estimation error from a sample average, which has expectation zero. $T_2$ is the product of the estimation error from a sample average and $\hat{\beta}$; this also has expectation zero because $\bar{X}_0$ is estimated on a different part of the sample than $\hat{\beta}$, so these errors are independent. $T_3$ also has expectation zero because $\bar{W}_1^T\hat{\beta}_1 = \bar{Y}_1$, which has expectation $\mu_1$, and $\mu_1^T\hat{\beta}_1$ also has expectation $\mu_1$. We are then left with $T_4$; we substitute $\mathbb{E}{\hat{\beta}} = \kappa\beta$ to get the final result. 
+The first equality holds by definition and the second by rearranging terms. The second equality consists of four terms. $T_1$ is simply the estimation error from a sample average, which has expectation zero. $T_2$ is the product of the estimation error from a sample average and $\hat{\beta}$; this also has expectation zero because $\bar{X}_0$ is estimated on a different part of the sample than $\hat{\beta}$, so these errors are independent. $T_3$ also has expectation zero because $\bar{W}_1^T\hat{\beta}_1 = \bar{Y}_1$, which has expectation $\mu_y$, and $\upsilon_1^T\hat{\beta}_1$ also has expectation $\mu_y$. We are then left with $T_4$; we substitute $\mathbb{E}{\hat{\beta}} = \kappa\beta$ to get the final result. 
 
 We now derive the bias of $\hat{\psi}^{sbw}$:
 
 \begin{align*}
-    \hat{\psi}^{sbw} - \psi &= \sum_{i: A_i = 1}\gamma_iY_i - (\alpha + \mu_0^T\beta) \\
-    &= \sum_{i: A_i = 1} \gamma_i(\alpha + X_i^T\beta + \epsilon_i) - (\alpha + \bar{W}_0^T\beta + (\mu_0 - \bar{W}_0)^T\beta) \\
-    &= \sum_{i: A_i = 1} (\gamma_i(W_i - v_i)^T\beta + \gamma_i\epsilon_i) - \bar{W}_0^T\beta + (\mu_0 - \bar{W}_0)^T\beta \\
-    &= \underbrace{-\sum_{i: A_i = 1}\gamma_iv_i^T\beta}_{T_1} + \underbrace{\sum_{i: A_i = 1}\gamma_i\epsilon_i}_{T_2}  + \underbrace{(\mu_0 - \bar{W}_0)^T\beta}_{T_3}
+    \hat{\psi}^{sbw} - \psi &= \sum_{i: A_i = 1}\gamma_iY_i - (\alpha + \upsilon_0^T\beta) \\
+    &= \sum_{i: A_i = 1} \gamma_i(\alpha + X_i^T\beta + \epsilon_i) - (\alpha + \bar{W}_0^T\beta + (\upsilon_0 - \bar{W}_0)^T\beta) \\
+    &= \sum_{i: A_i = 1} (\gamma_i(W_i - v_i)^T\beta + \gamma_i\epsilon_i) - \bar{W}_0^T\beta + (\upsilon_0 - \bar{W}_0)^T\beta \\
+    &= \underbrace{-\sum_{i: A_i = 1}\gamma_iv_i^T\beta}_{T_1} + \underbrace{\sum_{i: A_i = 1}\gamma_i\epsilon_i}_{T_2}  + \underbrace{(\upsilon_0 - \bar{W}_0)^T\beta}_{T_3}
 \end{align*}
 
 Conditioning on $W_i$, we can take expectations over $X_i$, and see that $T_2$ has expectation zero (noting that the weights, conditional on $W_i$, are independent of these errors). $T_3$ is simply the scaled sum of mean zero estimation error and therefore has expectation zero. We conclude by considering $T_1$ and again take expectations over $X_i$ conditional on $W_i$: 
 
 \begin{align*}
-    \sum_{i: A_i = 1} \gamma_i\mathbb{E}\{X_i - W_i \mid W_i\}^T\beta &= \sum_{i: A_i = 1} \gamma_i (\mu_1 + \kappa^T(W_i - \mu_1))^T\beta - \sum_{i: A_i = 1}\gamma_i W_i^T\beta \\
-    &= (\mu_1 + \kappa^T(\bar{W}_0 - \mu_1))^T\beta - \bar{W}_0^T\beta \\
-    &= (\kappa^T(\bar{W}_0 - \mu_1))^T\beta - (\bar{W}_0 - \mu_1)^T\beta  \\
-    &= (\bar{W}_0 - \mu_1)^T(\kappa - I_d)\beta \\
-    &= (\mu_0 - \mu_1)^T(\kappa - I_d)\beta + (\bar{W}_0 - \mu_0)^T(\kappa - I_d)\beta \\
-    &\to (\mu_0 - \mu_1)^T(\kappa - I_d)\beta
+    \sum_{i: A_i = 1} \gamma_i\mathbb{E}\{X_i - W_i \mid W_i\}^T\beta &= \sum_{i: A_i = 1} \gamma_i (\upsilon_1 + \kappa^T(W_i - \upsilon_1))^T\beta - \sum_{i: A_i = 1}\gamma_i W_i^T\beta \\
+    &= (\upsilon_1 + \kappa^T(\bar{W}_0 - \upsilon_1))^T\beta - \bar{W}_0^T\beta \\
+    &= (\kappa^T(\bar{W}_0 - \upsilon_1))^T\beta - (\bar{W}_0 - \upsilon_1)^T\beta  \\
+    &= (\bar{W}_0 - \upsilon_1)^T(\kappa - I_d)\beta \\
+    &= (\upsilon_0 - \upsilon_1)^T(\kappa - I_d)\beta + (\bar{W}_0 - \upsilon_0)^T(\kappa - I_d)\beta \\
+    \implies \mathbb{E}\{\hat{\psi}^{sbw} - \psi\} &= (\upsilon_0 - \upsilon_1)^T(\kappa - I_d)\beta
 \end{align*}
 
-The final line holds because in the second to last line, we can take expectation over $W_i$ and see that the second term is a scaled sum of mean zero estimation error and has expectation zero. We therefore see that the  bias of the SBW estimator is equivalent to the OLS estimator.
+The final line holds because in the second to last line, we can take expectation over $W_i$ and see that the second term is a scaled sum of mean zero estimation error and has expectation zero. 
 \end{proof}
 
-Let $\hat{\psi}^{sbw}(\eta)$ be the SBW estimator that reweights $\eta_1(W_i)$ rather than $W_i$; i.e. $\hat{\psi}^{sbw}(\eta) = \sum_{i: A_i = 1}\gamma_i^\star Y_i$ where $\gamma^\star$ is the solution to
+Let $\hat{\psi}^{sbw}(\eta)$ be the SBW estimator that reweights $\eta_1(W_i)$ rather than $W_i$; i.e. $\hat{\psi}^{sbw}(\eta) = \sum_{i: A_i = 1}\gamma_i^\star Y_i$ where 
 
 \begin{align*}
-&\arg\min_{\theta} \sum_{i: A_i = 1}\theta_i^2 \text{ such that } \eta_1(W_{1, r})^T\theta = \mu_{0, r} \ \ \ (r = 1, ..., q) \\
+\gamma^\star = &\arg\min_{\theta} \sum_{i: A_i = 1}\theta_i^2 \text{ such that } \eta_1(W_{1, r})\theta = \upsilon_{0, r} \ \ \ (r = 1, ..., q) \\
 &\theta_i > 0, \sum_{i: A_i = 1} \theta_i = 1
 \end{align*}
 
@@ -147,8 +147,8 @@ $$
 We then have that:
 
 \begin{align*}
-    \hat{\psi}^{sbw}(\eta) - \psi &= \sum_{i: A_i = 1}\gamma_i^\star Y_i - (\alpha + \mu_0^T\beta) \\
-    &= \sum_{i: A_i = 1}\gamma_i^\star\alpha + \sum_{i: A_i = 1}\gamma_i^\star\eta_1(W_i)^T\beta_1 + \sum_{i: A_i = 1}\gamma_i^\star(X_i - \eta_1(W_i))^T\beta_1 - (\alpha + \mu_0^T\beta_1) \\
+    \hat{\psi}^{sbw}(\eta) - \psi &= \sum_{i: A_i = 1}\gamma_i^\star Y_i - (\alpha + \upsilon_0^T\beta) \\
+    &= \sum_{i: A_i = 1}\gamma_i^\star\alpha + \sum_{i: A_i = 1}\gamma_i^\star\eta_1(W_i)^T\beta_1 + \sum_{i: A_i = 1}\gamma_i^\star(X_i - \eta_1(W_i))^T\beta_1 - (\alpha + \upsilon_0^T\beta_1) \\
     &= \sum_{i: A_i = 1}\gamma_i^\star(X_i - \eta_1(W_i))^T\beta_1
 \end{align*}
 
@@ -171,84 +171,45 @@ where, assuming that $(X_i, W_i)$ are jointly normally distributed, $Cov(X_i \mi
 Assuming there is a model error simply leads to the additional term $\sum_{i: A_i = 1}\gamma_i\epsilon_i$. This again has expectation zero, because the weights remain independent of the error in the outcome model, and adds a term to the total variance (conditional on $W_i$) equal to
 
 $$
-\sigma^2\sum_{i: A_i = 1}\gamma_i^2
+\sigma^2\sum_{i: A_i = 1}\gamma_i^\star^2
 $$
 \end{remark}
 
-In practice we don't know $\eta_a$ or $\mu_0$ but rather estimate it from the data. Moreover, the estimation of $\hat{\eta}_1$ typically involves both the observed dataset and auxillary data, which we have not yet specified here. We now consider a simple version of this case.
+Proposition 2 assumes that we know $\eta_a$ and $\upsilon_0$; however, in practice we estimate it from the data. Moreover, the estimation of $\hat{\eta}_1$ typically involves both the observed dataset and auxillary data, which we have not yet specified here. We now consider a simple version of this case.
 
-Recall that $\eta_a(W_i) = \mu_a + \kappa^T(W_i - \mu_a)$, where $\kappa = \Sigma_{WW}^{-1}\Sigma_{XX}$. We can easily estimate $\mu_a$ consistently using $\bar{W}_a$; the challenge is estimating $\kappa$. 
+Recall that $\eta_a(W_i) = \upsilon_a + \kappa^T(W_i - \upsilon_a)$, where $\kappa = \Sigma_{WW}^{-1}\Sigma_{XX}$. We can easily estimate $\upsilon_a$ consistently using $\bar{W}_a$; the challenge is estimating $\kappa$. 
 
 Following \cite{gleser1992importance}, consider the setting where we observe $T$ independent vectors of measurements $W_i^\star$ from known values $X_i^\star$, so that $v_i^\star = W_i^\star - X_i^\star$. Assume that $\Sigma_{v^\star v^\star} = \Sigma_{vv}$. We can then estimate $\hat{\Sigma}_{vv} = \frac{1}{T}\sum_{i=1}^T(W_i^\star - X_i^\star)'(W_i^\star - X_i^\star)$. We can then estimate
 
 $$
-\hat{\kappa} = \hat{\Sigma}_{WW}^{-1}(\hat{\Sigma}_{WW} - n\hat{\Sigma}_{vv})
+\hat{\kappa} = (n\hat{\Sigma}_{WW})^{-1}(n(\hat{\Sigma}_{WW} - \hat{\Sigma}_{vv}))
 $$
 
-assuming $\hat{\Sigma}_{WW} - n\hat{\Sigma}_{vv}$ is positive semi-definite, and where $\hat{\Sigma}_{WW} = \sum_{i=1}^n (W_i - \bar{W})(W_i - \bar{W})'$. 
+assuming $n(\hat{\Sigma}_{WW} - \hat{\Sigma}_{vv})$ is positive semi-definite, and where $\hat{\Sigma}_{WW} = \frac{1}{n}\sum_{i=1}^n (W_i - \bar{W})(W_i - \bar{W})'$. 
 
 \begin{proposition}
-
-Let $\gamma$ be the weights that solve the SBW objective with $\sum_{i: A_i = 1}\gamma_i\hat{\eta}_1(W_{i, r}) = \bar{W}_{0, r}$ for all $r = 1, ..., q$. The estimator $\sum_{i: A_i = 0}\gamma_iY_i \to \psi$ as $n \to \infty$, $T \to \infty$.
-
+Let $\tilde{\gamma}$ be the weights that solve the SBW objective with $\sum_{i: A_i = 1}\tilde{\gamma}_i\hat{\eta}_1(W_{i, r}) = \bar{W}_{0, r}$ for all $r = 1, ..., q$. The estimator $\sum_{i: A_i = 1}\tilde{\gamma}_iY_i \to \psi$ as $n \to \infty$, $T \to \infty$.
 \end{proposition}
 
 \begin{proof}
 
-Rewriting the error expression from Lemma A.2 leads to the additional terms $\sum_{i: A_i = 1}\gamma_i(\eta_1(W_i) - \hat{\eta_1}(W_i))^T\beta$ and $(\mu_0 - \bar{W}_0)^T\beta$. The second term is scaled estimation error and has expectation zero. It therefore suffices to show that 
+Rewriting the error expression from Lemma A.2 leads to the additional terms $\sum_{i: A_i = 1}\tilde{\gamma}_i(\eta_1(W_i) - \hat{\eta_1}(W_i))^T\beta$ and $(\upsilon_0 - \bar{W}_0)^T\beta$. The second term is scaled estimation error and has expectation zero. It therefore suffices to show that 
 
 $$
-\sum_{i: A_i = 1}\gamma_i(\eta_1(W_i) - \hat{\eta_1}(W_i))^T\beta \to 0
+\sum_{i: A_i = 1}\tilde{\gamma}_i(\eta_1(W_i) - \hat{\eta_1}(W_i))^T\beta \to 0
 $$
 
-By the weak law of large numbers, $\frac{1}{n}\hat{\Sigma}_{WW} - \hat{\Sigma}_{vv} \to \Sigma_{XX}$ as $n \to \infty$, $T \to \infty$; similarly $\frac{1}{n}\hat{\Sigma}_{WW} \to \Sigma_{WW}$ as $n \to \infty$. By the continuous mapping theorem $\hat{\kappa} \to \kappa$. Since $\bar{W}_0 \to \mu_0$, we have that $\hat{\eta} \to \eta$. 
+By the weak law of large numbers, $\hat{\Sigma}_{WW} - \hat{\Sigma}_{vv} \to \Sigma_{XX}$ as $n \to \infty$, $T \to \infty$; similarly $\hat{\Sigma}_{WW} \to \Sigma_{WW}$ as $n \to \infty$. By the continuous mapping theorem $\hat{\kappa} \to \kappa$. Since $\bar{W}_0 \to \upsilon_0$, we have that $\hat{\eta} \to \eta$. 
 
 Let $\gamma^\star$ be the weights defined in Lemma A.3. We can then rewrite the error term above as
 
 \begin{align*}
-\sum_{i: A_i = 1}(\gamma_i - \gamma_i^\star)(\hat{\eta}_1(W_i) - \eta(W_i))^T\beta + \sum_{i: A_i = 1}\gamma_i^\star(\hat{\eta}_1(W_i) - \eta_1(W_i))^T\beta
+\sum_{i: A_i = 1}(\tilde{\gamma}_i - \gamma_i^\star)(\hat{\eta}_1(W_i) - \eta(W_i))^T\beta + \sum_{i: A_i = 1}\gamma_i^\star(\hat{\eta}_1(W_i) - \eta_1(W_i))^T\beta
 \end{align*}
 
-As $n \to \infty$, $T \to \infty$, $\hat{\eta}_1 \to \eta_1$, and therefore by definition of the SBW objective, $\gamma_i \to \gamma_i^\star$. These two terms therefore both converge in probability to zero. 
+As $n \to \infty$, $T \to \infty$, $\hat{\eta}_1 \to \eta_1$, and therefore by definition of the SBW objective, $\tilde{\gamma}_i \to \gamma_i^\star$. These two terms therefore both converge in probability to zero. 
 
 \end{proof}
 
 Our estimation of $\eta_a$ follows a somewhat different procedure which we outline in Appendix B.
 
-\section{Adjustment Details}
-
-We now discuss how we estimate $\eta_a$ in our data. We begin by estimating the unit-level covariance matrices $\Sigma_{vv, sc}$, the sampling variability for each CPUMA by using the individual replicate survey weights to generate $b = 80$ additional CPUMA-level datasets. We then estimate $\Sigma_{vv, sc}$:
-
-\begin{equation}
-\hat{\Sigma}_{vv, sc} = \frac{4}{80}\sum_{b=1}^{80}(W_{sc}^B - \bar{W}_{sc})(W_{b, sc} - \bar{W}_{sc})'
-\end{equation}
-
-where the $4$ in the numerator comes from the process used to generate the replicate survey weights and $\bar{W}_{sc}$ is the value calculated in the original dataset. 
-
-Unlike in our proofs above, we do not assume that $\Sigma_{XX \mid A = a}$ or $\Sigma_{vv \mid A = a}$ are equal for $A_i \in \{0, 1\}$. Instead we let $\hat{\Sigma}_{WW \mid A = a} = n_a^{-1}\sum_{s, c: A_s = a} (W_{sc} - \bar{W})(W_{sc} - \bar{W})^T$. This estimator is calculated on the original observed dataset. We then estimate $\Sigma_{XX \mid A = a}$ using:
-
-\begin{equation}
-\hat{\Sigma}_{XX \mid A = a} = \hat{\Sigma}_{WW \mid A = a} - n_a^{-1}\sum_{s, c: A_s = a} \hat{\Sigma}_{vv, sc}
-\end{equation}
-
-Define
-
-\begin{equation}
-\hat{\kappa}_a = \hat{\Sigma}_{WW \mid A = a}^{-1}\hat{\Sigma}_{XX \mid A = a}
-\end{equation}
-
-Notice that $\hat{\kappa}$ is a matrix of estimated coefficients of a linear regressions of the (unobserved) matrix $X_{sc}$ on (observed) matrix $W_{sc}$. We can then estimate $X_{sc}$ as
-
-\begin{equation}
-\hat{\eta}_a(W_{sc}) = \bar{W}_a + \hat{\kappa}_a^T(W_{sc} - \bar{W}_a)
-\end{equation}
-
-where $\bar{W}_a = n_a^{-1}\sum_{s, c: A_s = a} W_{sc}$. This approximately aligns with the adjustments suggested by \cite{carroll2006measurement} and \cite{gleser1992importance}. 
-
-In our setting we have additional access to information about a substantial source of heterogeneity in the measurement error: in particular, regions with large populations are estimated quite precisely, while regions with small populations are estimated much less precisely. This is because the survey is a one-percent sample across all regions. Moreover, for a given CPUMA, some covariates are measured using three years of data, and others only one. However, using the conventional regression calibration approach will adjust precisely estimated covariates to imprecisely estimated covariates in a similar way. 
-
-Our preferred estimators therefore use an alternative approach where we model an individual-level $\Sigma_{vv, sc}$ as a function of the sample sizes used to estimate each covariate. In particular, let $s_{sc}$ be the q-dimensional vector of the sample sizes used to estimate each covariate value for a given CPUMA. Let $\matr{S}_{sc} = \sqrt{s_{sc}}\sqrt{s_{sc}}^T$. We assume that $\sqrt{s_{sc}}v_{sc} \sim N(0, \Sigma_{vv}^a)$. We then know that $\Sigma_{vv, sc}^m = \Sigma_{vv}^a \oslash \matr{S}_{sc}$. We add the superscript $m$ to distinguish that is a modeled covariance matrix.
-
-To estimate these matrices, we pool our initial estimates of the CPUMA-level covariance matrices ($\hat{\Sigma}_{vv, sc}$) to generate $\hat{\Sigma}_{vv}^a = n_a^{-1}\sum_{s, c: A_s = a} \matr{S}_{sc} \circ \Sigma_{vv, sc}$. We estimate $\hat{\Sigma}_{vv, sc}^m = \hat{\Sigma}_{vv}^a \oslash \matr{S}_{sc}$. From this we estimate $\hat{\Sigma}_{XX \mid A = a} = \hat{\Sigma}_{WW \mid A = a} - n_a^{-1}\sum_{s, c: A_s = a}\hat{\Sigma}_{vv, sc}^a$. Finally, we calculate $\hat{\kappa}_{sc} = (\hat{\Sigma}_{XX \mid A = a} + \hat{\Sigma}_{vv, sc}^m)^{-1}\hat{\Sigma}_{XX \mid A = a}$, which we use to estimate $\hat{\eta}_a(W_{sc})$. 
-
-We prefer this adjustment because it accounts for CPUMA-level variability in the measurement error. Specifically, this adjustment should more greatly affect outlying values of imprecisely estimated covariates, while leaving precisely estimated covariates closer to their observed value in the dataset. Moreover, we are able to use the full efficiency of using all units in the modeling, so our CPUMA-level $\kappa$ estimates are using the full data. The disadvantage is that, as shown in Appendix~\ref{sec:appendixsumstat}, this adjustment, compared to the conventional approach, appears more likely to lead to extreme values that fall outside of the support of the original data. A second cost is that this aggregation models all differences as a function of the sample sizes, and averages over any potential heterogeneity due to heteroskedasticity (i.e. the measurement error covariance matrix changes depending on the true value of $X_{sc}$). In practice we find that either adjustment yields quite similar results (see Appendix~\ref{ssec:allresults}).

@@ -1,7 +1,7 @@
 \section{Weight Diagnostics}
 \label{ssec:balancetables}
 
-Table~\ref{tab:baltab1} displays the differences between the population-weighted mean covariate values of the non-expansion region and the weighted mean of the expansion region for our primary dataset and with the early expansion states excluded (calculated using our covariate adjustments). The weights presented here are from the H-SBW estimator. The values under each column of ``Primary'' and ``Early Excluded'' are in the following format: (unweighted difference, weighted difference). Additional results are available on request.
+Table~\ref{tab:baltab1} displays the differences between the weighted mean covariate values of the expansion region and the mean of the non-expansion region for our primary dataset and with the early expansion states excluded (calculated using our covariate adjustments). The weights presented here are from the H-SBW estimator. The values under each column of ``Primary'' and ``Early Excluded'' are in the following format: (unweighted difference, weighted difference). Additional results are available on request.
 
 \begin{table}[ht]
 \centering
@@ -9,42 +9,42 @@ Table~\ref{tab:baltab1} displays the differences between the population-weighted
     \label{tab:baltab1}
 \begin{tabular}{lll}
   \hline
-Variables & Preferred & Early expansion excluded \\ 
+Variables & Preferred & Early Excluded \\ 
   \hline
-age\_cat2\_19\_29\_pct & (0.35, 0.20) & (0.62, 0.07) \\ 
-  age\_cat2\_30\_39\_pct & (-0.33, 0.16) & (0.11, 0.04) \\ 
-  age\_cat2\_40\_49\_pct & (-0.22, 0.41) & (-0.04, 0.50) \\ 
-  avg\_adult\_hh\_ratio & (-11.09, 0.40) & (-3.18, 0.18) \\ 
-  citizenship\_pct & (3.56, 1.93) & (0.20, 1.80) \\ 
-  disability\_pct & (1.46, -0.57) & (0.21, -0.73) \\ 
-  educ\_hs\_degree\_pct & (3.35, -0.99) & (1.05, -1.14) \\ 
-  educ\_less\_than\_hs\_pct & (0.40, -1.09) & (1.27, -1.27) \\ 
-  educ\_some\_college\_pct & (0.30, -0.69) & (-0.44, -0.53) \\ 
-  female\_pct & (0.34, 0.87) & (0.25, 1.00) \\ 
-  foreign\_born\_pct & (-7.51, -1.99) & (-0.97, -1.99) \\ 
-  hins\_unins\_pct\_2011 & (2.64, -0.48) & (3.09, -0.45) \\ 
-  hins\_unins\_pct\_2012 & (3.37, 0.42) & (3.90, 0.42) \\ 
-  hins\_unins\_pct\_2013 & (3.27, 0.32) & (3.77, 0.32) \\ 
-  hispanic\_pct & (-4.36, -1.00) & (1.44, -1.00) \\ 
-  inc\_pov2\_138\_pct & (2.08, -0.93) & (1.36, -0.60) \\ 
-  inc\_pov2\_139\_299\_pct & (2.34, -0.91) & (1.45, -0.86) \\ 
-  inc\_pov2\_300\_499\_pct & (0.80, 0.39) & (-0.05, 0.34) \\ 
-  inc\_pov2\_500\_plus\_pct & (-5.69, 1.91) & (-3.06, 1.91) \\ 
-  married\_pct & (0.80, 0.38) & (0.34, 0.60) \\ 
-  missing\_children\_pct & (3.21, 0.36) & (1.93, 0.08) \\ 
-  one\_child\_pct & (-0.80, 0.22) & (-0.21, 0.25) \\ 
-  pop\_growth & (-0.11, 0.1) & (0.08, 0.15) \\ 
-  race\_white\_pct & (3.87, -1.00) & (-0.31, -1.00) \\ 
-  repub\_gov & (65.02, 22.06) & (55.02, 21.97) \\ 
-  repub\_lower\_control & (74.91, 22.23) & (57.24, 20.66) \\ 
-  repub\_total\_control & (73.72, 25.00) & (58.2, 25.00) \\ 
-  student\_pct & (-0.29, 0.41) & (-0.12, 0.38) \\ 
-  three\_plus\_child\_pct & (-0.02, 0.14) & (0.17, 0.15) \\ 
-  two\_child\_pct & (-0.66, 0.47) & (-0.08, 0.55) \\ 
-  unemployed\_pct\_2011 & (-0.80, -0.15) & (-0.68, -0.15) \\ 
-  unemployed\_pct\_2012 & (-0.75, 0.00) & (-0.58, 0.00) \\ 
-  unemployed\_pct\_2013 & (-0.29, 0.25) & (-0.10, 0.25) \\ 
-  urban\_pct & (-0.08, 0.07) & (-0.03, 0.06) \\ 
+age\_cat2\_19\_29\_pct & (-0.35, -0.2) & (-0.62, -0.07) \\ 
+  age\_cat2\_30\_39\_pct & (0.33, -0.16) & (-0.11, -0.04) \\ 
+  age\_cat2\_40\_49\_pct & (0.22, -0.41) & (0.04, -0.50) \\ 
+  avg\_adult\_hh\_ratio & (11.09, -0.40) & (3.18, -0.18) \\ 
+  citizenship\_pct & (-3.56, -1.93) & (-0.20, -1.80) \\ 
+  disability\_pct & (-1.46, 0.57) & (-0.21, 0.73) \\ 
+  educ\_hs\_degree\_pct & (-3.35, 0.99) & (-1.05, 1.14) \\ 
+  educ\_less\_than\_hs\_pct & (-0.40, 1.09) & (-1.27, 1.27) \\ 
+  educ\_some\_college\_pct & (-0.30, 0.69) & (0.44, 0.53) \\ 
+  female\_pct & (-0.34, -0.87) & (-0.25, -1.00) \\ 
+  foreign\_born\_pct & (7.51, 1.99) & (0.97, 1.99) \\ 
+  hins\_unins\_pct\_2011 & (-2.64, 0.48) & (-3.09, 0.45) \\ 
+  hins\_unins\_pct\_2012 & (-3.37, -0.42) & (-3.9, -0.42) \\ 
+  hins\_unins\_pct\_2013 & (-3.27, -0.32) & (-3.77, -0.32) \\ 
+  hispanic\_pct & (4.36, 1.00) & (-1.44, 1.00) \\ 
+  inc\_pov2\_138\_pct & (-2.08, 0.93) & (-1.36, 0.60) \\ 
+  inc\_pov2\_139\_299\_pct & (-2.34, 0.91) & (-1.45, 0.86) \\ 
+  inc\_pov2\_300\_499\_pct & (-0.8, -0.39) & (0.05, -0.34) \\ 
+  inc\_pov2\_500\_plus\_pct & (5.69, -1.91) & (3.06, -1.91) \\ 
+  married\_pct & (-0.80, -0.38) & (-0.34, -0.60) \\ 
+  missing\_children\_pct & (-3.21, -0.36) & (-1.93, -0.08) \\ 
+  one\_child\_pct & (0.80, -0.22) & (0.21, -0.25) \\ 
+  pop\_growth & (0.11, -0.10) & (-0.08, -0.15) \\ 
+  race\_white\_pct & (-3.87, 1.00) & (0.31, 1.00) \\ 
+  repub\_gov & (-65.02, -22.06) & (-55.02, -21.97) \\ 
+  repub\_lower\_control & (-74.91, -22.23) & (-57.24, -20.66) \\ 
+  repub\_total\_control & (-73.72, -25.00) & (-58.2, -25) \\ 
+  student\_pct & (0.29, -0.41) & (0.12, -0.38) \\ 
+  three\_plus\_child\_pct & (0.02, -0.14) & (-0.17, -0.15) \\ 
+  two\_child\_pct & (0.66, -0.47) & (0.08, -0.55) \\ 
+  unemployed\_pct\_2011 & (0.80, 0.15) & (0.68, 0.15) \\ 
+  unemployed\_pct\_2012 & (0.75, 0) & (0.58, 0.00) \\ 
+  unemployed\_pct\_2013 & (0.29, -0.25) & (0.10, -0.25) \\ 
+  urban\_pct & (0.08, -0.07) & (0.03, -0.06) \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -56,9 +56,9 @@ Table~\ref{tab:oatedist1} displays the difference in means from the overlap regi
     \caption{Overlap region distance from control, treatment regions (1)}
     \label{tab:oatedist1}
 \begin{tabular}{lll}
-  \toprule
+  \hline
 Variable & Preferred & Early expansion excluded \\ 
-  \midrule
+  \hline
 age\_cat2\_19\_29\_pct & (-1.39, -1.03) & (-1.34, -0.71) \\ 
   age\_cat2\_30\_39\_pct & (-0.79, -1.12) & (-0.82, -0.72) \\ 
   age\_cat2\_40\_49\_pct & (0.24, 0.02) & (0.2, 0.16) \\ 
@@ -93,21 +93,11 @@ age\_cat2\_19\_29\_pct & (-1.39, -1.03) & (-1.34, -0.71) \\
   unemployed\_pct\_2012 & (0.05, -0.69) & (0.02, -0.55) \\ 
   unemployed\_pct\_2013 & (-0.42, -0.71) & (-0.44, -0.54) \\ 
   urban\_pct & (-0.05, -0.13) & (-0.05, -0.08) \\ 
-   \bottomrule
+   \hline
 \end{tabular}
 \end{table}
 
-Figure~\ref{fig:sbwvhsbw} shows the sum of the SBW weights by state versus the H-SBW weights on our primary dataset with our preferred estimator. We see that the H-SBW more evenly disperses the weights across states relative to SBW. This can be desirable if we believe there are positive dependencies within state in the outcome model.
-
-\begin{figure}[]
-\begin{center}
-    \caption{H-SBW versus SBW weights}
-    \label{fig:corrmatrix}
-    \includegraphics[scale=0.6]{01_Plots/weights-by-state-sbw-hsbw-c1.png}
-\end{center}
-\end{figure}
-
-Table ~\ref{tab:oatestateweightsc1} displays the sum of CPUMA-level weights within each state for the OATE region, using the preferred covariate adjustment (``sigma\_uu\_i''), as well as no adjustment (``sigma\_zero'') and the secondary adjustment (``sigma\_uu\_avg''). We display all states where the total sum of weights within states is greater than one for any state. The total sum of weights for each set is standardized to sum to 100 for each set of weights. Table ~\ref{tab:oatestateweightsc2} displays the same results with the early expansion states excluded.
+Table ~\ref{tab:oatestateweightsc1} displays the sum of CPUMA-level weights within each state for the OATE region, using the preferred covariate adjustment (``sigma\_uu\_i''), as well as no adjustment (``sigma\_zero'') and the secondary adjustment (``sigma\_uu\_avg''). We display all states where the total sum of weights within states is greater than one for any of the covariate sets. The total sum of weights for each set is standardized to sum to 100 for each set of weights. Table ~\ref{tab:oatestateweightsc2} displays the same results with the early expansion states excluded.
 
 \begin{table}[ht]
 \centering
@@ -117,40 +107,32 @@ Table ~\ref{tab:oatestateweightsc1} displays the sum of CPUMA-level weights with
   \hline
 State & Treatment & sigma\_uu\_i & sigma\_uu\_avg & sigma\_zero \\ 
   \hline
-CA & 1 & 25.95 & 25.69 & 21.29 \\ 
-  OH & 1 & 22.27 & 21.26 & 22.08 \\ 
-  AL & 0 & 13.78 & 13.54 & 10.39 \\ 
-  OR & 1 & 12.36 & 12.87 & 12.62 \\ 
-  FL & 0 & 11.21 & 11.96 & 11.66 \\ 
-  WI & 0 & 10.99 & 11.16 & 10.23 \\ 
-  MO & 0 & 10.44 & 10.34 & 10.90 \\ 
-  PA & 0 & 9.28 & 10.40 & 10.33 \\ 
-  LA & 0 & 9.10 & 9.23 & 11.12 \\ 
-  IL & 1 & 8.51 & 9.40 & 8.58 \\ 
-  KS & 0 & 7.11 & 7.05 & 5.89 \\ 
-  MN & 1 & 6.56 & 5.81 & 7.22 \\ 
-  TX & 0 & 6.18 & 4.70 & 4.72 \\ 
-  MD & 1 & 5.80 & 6.04 & 7.65 \\ 
-  KY & 1 & 4.64 & 4.75 & 4.59 \\ 
-  NE & 0 & 3.84 & 4.24 & 4.32 \\ 
-  IN & 0 & 3.80 & 3.33 & 3.39 \\ 
-  AZ & 1 & 3.52 & 3.05 & 4.11 \\ 
-  AR & 1 & 3.31 & 3.61 & 3.82 \\ 
-  ME & 0 & 3.24 & 3.12 & 3.23 \\ 
-  RI & 1 & 2.66 & 3.06 & 3.09 \\ 
-  NC & 0 & 2.34 & 2.20 & 3.36 \\ 
-  SC & 0 & 2.23 & 2.83 & 1.95 \\ 
-  NH & 1 & 2.16 & 1.35 & 1.22 \\ 
-  OK & 0 & 2.08 & 1.70 & 2.60 \\ 
-  GA & 0 & 1.67 & 1.70 & 1.91 \\ 
-  WA & 1 & 1.46 & 1.95 & 1.95 \\ 
-  MS & 0 & 0.88 & 1.12 & 0.54 \\ 
-  VA & 0 & 0.84 & 0.59 & 1.74 \\ 
-  TN & 0 & 0.59 & 0.50 & 1.01 \\ 
-  NJ & 1 & 0.37 & 0.36 & 0.48 \\ 
-  WY & 0 & 0.37 & 0.20 & 0.45 \\ 
-  ND & 1 & 0.35 & 0.64 & 1.06 \\ 
-   \hline
+OH & 1 & 34.41 & 34.51 & 36.75 \\ 
+  MI & 1 & 26.76 & 27.27 & 27.97 \\ 
+  AR & 1 & 15.99 & 15.87 & 12.28 \\ 
+  PA & 0 & 15.51 & 16.94 & 18.95 \\ 
+  MO & 0 & 15.49 & 15.27 & 11.66 \\ 
+  WI & 0 & 13.37 & 13.39 & 13.66 \\ 
+  FL & 0 & 11.40 & 12.15 & 11.22 \\ 
+  AZ & 1 & 9.00 & 8.40 & 8.96 \\ 
+  ME & 0 & 6.90 & 6.42 & 6.17 \\ 
+  TN & 0 & 6.30 & 6.83 & 5.77 \\ 
+  IN & 0 & 4.67 & 4.45 & 5.56 \\ 
+  IA & 1 & 4.62 & 4.78 & 5.73 \\ 
+  NC & 0 & 4.50 & 4.12 & 4.69 \\ 
+  NJ & 1 & 4.16 & 4.14 & 4.57 \\ 
+  NE & 0 & 3.62 & 4.39 & 3.84 \\ 
+  KS & 0 & 3.29 & 2.39 & 2.82 \\ 
+  VA & 0 & 3.03 & 2.18 & 1.79 \\ 
+  AL & 0 & 2.73 & 2.20 & 2.31 \\ 
+  UT & 0 & 2.34 & 1.83 & 1.82 \\ 
+  ND & 1 & 2.32 & 2.76 & 2.13 \\ 
+  TX & 0 & 2.27 & 1.91 & 2.85 \\ 
+  NV & 1 & 1.52 & 0.75 & 0.71 \\ 
+  NM & 1 & 1.22 & 1.54 & 0.90 \\ 
+  OK & 0 & 1.21 & 1.52 & 0.81 \\ 
+  AK & 0 & 0.77 & 1.37 & 1.55 \\ 
+  \hline
 \end{tabular}
 \end{table}
 
@@ -162,37 +144,47 @@ CA & 1 & 25.95 & 25.69 & 21.29 \\
   \hline
 State & Treatment & sigma\_uu\_i & sigma\_uu\_avg & sigma\_zero \\ 
   \hline
-FL & 0 & 29.59 & 29.53 & 26.90 \\ 
-  CO & 1 & 29.36 & 29.58 & 24.95 \\ 
-  IL & 1 & 13.23 & 14.66 & 13.82 \\ 
-  HI & 1 & 11.57 & 11.54 & 9.98 \\ 
-  MD & 1 & 9.67 & 10.23 & 13.33 \\ 
-  WI & 0 & 9.11 & 9.21 & 8.33 \\ 
-  PA & 0 & 8.69 & 9.52 & 10.42 \\ 
-  MO & 0 & 8.36 & 8.86 & 9.12 \\ 
-  OH & 1 & 8.32 & 6.63 & 8.33 \\ 
-  AZ & 1 & 6.99 & 6.53 & 7.37 \\ 
-  NC & 0 & 6.91 & 7.16 & 7.37 \\ 
-  KY & 1 & 6.86 & 6.78 & 6.43 \\ 
-  AR & 1 & 5.95 & 6.18 & 6.04 \\ 
-  IN & 0 & 5.21 & 5.18 & 5.50 \\ 
-  ME & 0 & 3.81 & 3.53 & 2.85 \\ 
-  AL & 0 & 3.79 & 3.44 & 3.72 \\ 
-  LA & 0 & 3.71 & 3.21 & 3.98 \\ 
-  MS & 0 & 3.38 & 3.28 & 4.06 \\ 
-  TN & 0 & 2.97 & 3.70 & 3.47 \\ 
-  TX & 0 & 2.61 & 2.08 & 2.66 \\ 
-  ND & 1 & 2.56 & 2.47 & 1.62 \\ 
-  GA & 0 & 2.29 & 2.61 & 2.41 \\ 
-  VA & 0 & 2.06 & 1.31 & 2.22 \\ 
-  NV & 1 & 1.81 & 1.17 & 2.67 \\ 
-  SC & 0 & 1.63 & 1.29 & 1.03 \\ 
-  NH & 1 & 1.48 & 1.75 & 2.02 \\ 
-  NM & 1 & 1.41 & 1.37 & 2.16 \\ 
-  MT & 0 & 1.40 & 1.31 & 0.91 \\ 
-  KS & 0 & 1.33 & 1.67 & 1.30 \\ 
-  OK & 0 & 1.07 & 1.03 & 1.51 \\ 
-  UT & 0 & 0.88 & 0.90 & 1.06 \\ 
+OH & 1 & 34.66 & 34.81 & 36.92 \\ 
+  MI & 1 & 27.65 & 28.05 & 28.38 \\ 
+  AR & 1 & 16.05 & 16.08 & 12.57 \\ 
+  MO & 0 & 15.61 & 15.43 & 11.89 \\ 
+  PA & 0 & 14.70 & 15.87 & 17.58 \\ 
+  WI & 0 & 14.58 & 14.43 & 14.52 \\ 
+  FL & 0 & 10.78 & 11.28 & 10.51 \\ 
+  AZ & 1 & 9.06 & 8.50 & 8.92 \\ 
+  TN & 0 & 6.50 & 7.31 & 5.85 \\ 
+  ME & 0 & 5.52 & 5.06 & 4.92 \\ 
+  IA & 1 & 4.78 & 5.02 & 6.15 \\ 
+  IN & 0 & 4.67 & 4.41 & 5.97 \\ 
+  NC & 0 & 4.63 & 4.25 & 4.93 \\ 
+  NE & 0 & 4.03 & 4.83 & 4.33 \\ 
+  KS & 0 & 3.82 & 2.88 & 3.08 \\ 
+  NV & 1 & 3.69 & 2.74 & 2.97 \\ 
+  AL & 0 & 3.15 & 2.55 & 2.52 \\ 
+  UT & 0 & 2.73 & 2.14 & 2.15 \\ 
+  TX & 0 & 2.56 & 2.28 & 3.17 \\ 
+  ND & 1 & 2.28 & 2.48 & 2.14 \\ 
+  VA & 0 & 2.01 & 1.40 & 1.46 \\ 
+  NM & 1 & 1.84 & 2.32 & 1.95 \\ 
+  OK & 0 & 1.29 & 1.70 & 0.82 \\ 
+  AK & 0 & 0.75 & 1.30 & 1.35 \\ 
+  SC & 0 & 0.57 & 0.54 & 1.10 \\ 
+  MT & 0 & 0.44 & 0.64 & 0.68 \\ 
+  WY & 0 & 0.39 & 0.26 & 0.65 \\ 
+  MS & 0 & 0.38 & 0.49 & 0.79 \\ 
+  LA & 0 & 0.32 & 0.36 & 0.43 \\ 
+  GA & 0 & 0.28 & 0.30 & 0.70 \\ 
+  ID & 0 & 0.17 & 0.11 & 0.25 \\ 
+  SD & 0 & 0.11 & 0.19 & 0.33 \\ 
+  HI & 1 & 0.00 & 0.00 & 0.00 \\ 
+  MD & 1 & 0.00 & 0.00 & 0.00 \\ 
+  KY & 1 & 0.00 & 0.00 & 0.00 \\ 
+  IL & 1 & 0.00 & 0.00 & 0.00 \\ 
+  RI & 1 & 0.00 & 0.00 & 0.00 \\ 
+  NH & 1 & 0.00 & 0.00 & 0.00 \\ 
+  CO & 1 & 0.00 & 0.00 & 0.00 \\ 
+  WV & 1 & 0.00 & 0.00 & 0.00 \\ 
+  OR & 1 & 0.00 & 0.00 & 0.00 \\ 
    \hline
 \end{tabular}
 \end{table}
