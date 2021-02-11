@@ -5,7 +5,7 @@ Table~\ref{tab:confintmain} displays the point estimates from all estimators as 
 
 \begin{table}[ht]
 \centering
-\caption{Primary point estimates and confidence intervals}
+\caption{Point estimates and confidence intervals, primary dataset}
 \label{tab:confintmain}
 \begin{tabular}{llrll}
   \hline
@@ -14,52 +14,28 @@ Weight type & Sigma estimate & Psihat & CI (states) & CI (proc) \\
 H-SBW & sigma\_uu\_i & -2.17 & (-3.41, -0.94) & (-3.42, -0.92) \\ 
   H-SBW & sigma\_uu\_avg & -2.25 & (-3.51, -0.99) & (-3.35, -1.14) \\ 
   H-SBW & sigma\_zero & -2.35 & (-3.09, -1.61) & (-3.09, -1.61) \\ 
-  BC-HSBW & sigma\_uu\_i & -2.13 & (-3.55, -0.71) & (-3.16, -1.11) \\ 
-  BC-HSBW & sigma\_uu\_avg & -2.17 & (-3.57, -0.78) & (-4.91, 0.56) \\ 
-  BC-HSBW & sigma\_zero & -2.40 & (-3.33, -1.46) & (-3.3, -1.49) \\ 
+  BC-HSBW & sigma\_uu\_i & -2.13 & (-3.55, -0.71) & (-3.42, -0.84) \\ 
+  BC-HSBW & sigma\_uu\_avg & -2.17 & (-3.57, -0.78) & (-3.39, -0.96) \\ 
+  BC-HSBW & sigma\_zero & -2.40 & (-3.33, -1.46) & (-3.33, -1.46) \\ 
   SBW & sigma\_uu\_i & -2.24 & (-3.50, -0.99) & (-3.51, -0.97) \\ 
   SBW & sigma\_uu\_avg & -2.30 & (-3.67, -0.92) & (-3.45, -1.15) \\ 
   SBW & sigma\_zero & -2.40 & (-3.10, -1.69) & (-3.10, -1.69) \\ 
-  BC-SBW & sigma\_uu\_i & -2.12 & (-3.15, -1.10) & (-3.06, -1.19) \\ 
-  BC-SBW & sigma\_uu\_avg & -2.17 & (-3.25, -1.08) & (-4.46, 0.12) \\ 
-  BC-SBW & sigma\_zero & -2.36 & (-2.93, -1.80) & (-2.88, -1.85) \\ 
+  BC-SBW & sigma\_uu\_i & -2.12 & (-3.15, -1.10) & (-3.11, -1.14) \\ 
+  BC-SBW & sigma\_uu\_avg & -2.17 & (-3.25, -1.08) & (-3.22, -1.12) \\ 
+  BC-SBW & sigma\_zero & -2.36 & (-2.93, -1.80) & (-2.93, -1.80) \\ 
    \hline
 \end{tabular}
 \end{table}
 
-Table ~\ref{tab:deltac1} presents the difference in the estimated contrast when excluding the Republican governance indicators along with inferential estimates. Table~\ref{tab:ptests} presents all point estimates from estimators that we calculated. The ``Var subset`` column indicates which variables were excluded from the estimation: 0 excludes no variables; 1 removes Republican governance indicators; 2 pre-treatment uninsurance and unemployment rates; 3 urban, age, education, citizenship, marital status, student, disability, or female; 4 race, ethnicity, income, foreign born; 5 children, population growth, and household to person ratio. We see that the largest changes generally occur when excluding the pre-treatment uninsurance and unemployment rates. This is not surprising: controlling for the other covariates, the pre-treatment uninsurance rate was substantially lower in the treated region compared to the control region. Given that pre-treatment uninsurance rates are highly correlated with post-treatment rates, we find that this comparison leads to a larger absolute magnitude point estimate, highlighting the need to control for these covariates.
+Table~\ref{tab:ptests} presents all point estimates from estimators that we calculated. The ``Var subset`` column indicates which variables were excluded from the estimation: 0 excludes no variables; 1 removes Republican governance indicators; 2 pre-treatment uninsurance and unemployment rates; 3 urban, age, education, citizenship, marital status, student, disability, or female; 4 race, ethnicity, income, foreign born; 5 children, population growth, and household to person ratio. We see that the largest changes generally occur when excluding the pre-treatment uninsurance and unemployment rates. This is not surprising: controlling for the other covariates, the pre-treatment uninsurance rate was substantially lower in the treated region compared to the control region. Given that pre-treatment uninsurance rates are highly correlated with post-treatment rates, we find that this comparison leads to a larger absolute magnitude point estimate, highlighting the need to control for these covariates.
 
-\begin{table}[ht]
-\centering
-\caption{$\hat{\Delta}^1$ estimates primary dataset}
-\label{tab:deltac1}
-\begin{tabular}{llrll}
-  \hline
-Weight type & Sigma estimate & diff & CI state & CI proc \\ 
-  \hline
-H-SBW & sigma\_uu\_i\_modeled & -0.67 & (-1.63, 0.28) & (-1.66, 0.32) \\ 
-  H-SBW & sigma\_uu\_avg & -0.61 & (-1.57, 0.35) & (-1.46, 0.24) \\ 
-  H-SBW & sigma\_zero & -0.65 & (-1.20, -0.09) & (-1.2, -0.09) \\ 
-  BC-HSBW & sigma\_uu\_i\_modeled & -0.74 & (-1.86, 0.39) & (-1.76, 0.28) \\ 
-  BC-HSBW & sigma\_uu\_avg & -0.69 & (-1.79, 0.41) & (-3.62, 2.24) \\ 
-  BC-HSBW & sigma\_zero & -0.70 & (-1.48, 0.08) & (-1.53, 0.13) \\ 
-  SBW & sigma\_uu\_i\_modeled & -0.75 & (-1.74, 0.24) & (-1.82, 0.31) \\ 
-  SBW & sigma\_uu\_avg & -0.70 & (-1.77, 0.38) & (-1.57, 0.17) \\ 
-  SBW & sigma\_zero & -0.68 & (-1.28, -0.08) & (-1.28, -0.08) \\ 
-  BC-SBW & sigma\_uu\_i\_modeled & -0.63 & (-1.54, 0.28) & (-2.14, 0.88) \\ 
-  BC-SBW & sigma\_uu\_avg & -0.58 & (-1.50, 0.34) & (-2.97, 1.81) \\ 
-  BC-SBW & sigma\_zero & -0.56 & (-1.13, 0.01) & (-1.1, -0.02) \\ 
-   \hline
-\end{tabular}
-\end{table}
-
-% Wed Jan 13 15:24:43 2021
+%Wed Jan 13 15:24:43 2021
 \begin{table}[ht]
 \centering
 \caption{Point estimates for all specifications}
 \label{tab:ptests}
 \begin{tabular}{rlrrrr}
-  \toprule
+  \hline
 Variable subset & Sigma estimate & H-SBW & BC-HSBW & SBW & BC-SBW \\ 
   \hline
 0 & sigma\_uu\_i & -2.17 & -2.13 & -2.24 & -2.12 \\ 
@@ -84,11 +60,11 @@ Variable subset & Sigma estimate & H-SBW & BC-HSBW & SBW & BC-SBW \\
 \end{tabular}
 \end{table}
 
-Table ~\ref{tab:confintmainc2}, Table~\ref{tab:deltac2}, and Table~\ref{tab:secondaryptests} are identical to the structure of the previous two tables except we exclude the ``early expansion states'' from the pool of expansion state matches. 
+Table ~\ref{tab:confintmainc2} and Table~\ref{tab:secondaryptests} are identical to the structure of the previous two tables except we exclude the ``early expansion states'' from the pool of expansion state matches. 
 
 \begin{table}[ht]
 \centering
-\caption{Early expansion excluded, point estimates and confidence intervals}
+\caption{Point estimates and confidence intervals, early expansion excluded}
 \label{tab:confintmainc2}
 \begin{tabular}{llrll}
   \hline
@@ -97,39 +73,15 @@ Weight type & Sigma estimate & Psihat & CI (states) & CI (proc) \\
 H-SBW & sigma\_uu\_i & -2.05 & (-3.10, -1.00) & (-3.05, -1.05) \\ 
   H-SBW & sigma\_uu\_avg & -2.13 & (-3.20, -1.05) & (-3.17, -1.08) \\ 
   H-SBW & sigma\_zero & -2.29 & (-2.90, -1.69) & (-2.90, -1.69) \\ 
-  BC-HSBW & sigma\_uu\_i & -2.14 & (-3.63, -0.64) & (-3.45, -0.82) \\ 
-  BC-HSBW & sigma\_uu\_avg & -2.19 & (-3.65, -0.73) & (-3.79, -0.59) \\ 
-  BC-HSBW & sigma\_zero & -2.50 & (-3.66, -1.33) & (-3.69, -1.31) \\ 
+  BC-HSBW & sigma\_uu\_i & -2.14 & (-3.63, -0.64) & (-3.48, -0.80) \\ 
+  BC-HSBW & sigma\_uu\_avg & -2.19 & (-3.65, -0.73) & (-3.57, -0.81) \\ 
+  BC-HSBW & sigma\_zero & -2.50 & (-3.66, -1.33) & (-3.66, -1.33) \\ 
   SBW & sigma\_uu\_i & -1.91 & (-2.91, -0.91) & (-2.79, -1.03) \\ 
   SBW & sigma\_uu\_avg & -2.01 & (-3.02, -1.00) & (-2.83, -1.19) \\ 
   SBW & sigma\_zero & -2.20 & (-2.69, -1.71) & (-2.69, -1.71) \\ 
-  BC-SBW & sigma\_uu\_i & -1.97 & (-3.49, -0.44) & (-3.53, -0.40) \\ 
-  BC-SBW & sigma\_uu\_avg & -2.04 & (-3.59, -0.50) & (-3.44, -0.65) \\ 
-  BC-SBW & sigma\_zero & -2.34 & (-3.44, -1.25) & (-3.46, -1.23) \\ 
-   \hline
-\end{tabular}
-\end{table}
-
-\begin{table}[ht]
-\centering
-\caption{$\hat{\Delta}^1$ estimates, early expansion excluded}
-\label{tab:deltac2}
-\begin{tabular}{llrll}
-  \hline
-Weight type & Sigma estimate & diff & CI state & CI proc \\ 
-  \hline
-H-SBW & sigma\_uu\_i\_modeled & -0.80 & (-1.69, 0.09) & (-1.62, 0.02) \\ 
-  H-SBW & sigma\_uu\_avg & -0.73 & (-1.68, 0.22) & (-1.57, 0.11) \\ 
-  H-SBW & sigma\_zero & -0.76 & (-1.52, -0.01) & (-1.52, -0.01) \\ 
-  BC-HSBW & sigma\_uu\_i\_modeled & -0.85 & (-2.16, 0.46) & (-2.15, 0.45) \\
-  BC-HSBW & sigma\_uu\_avg & -0.79 & (-2.08, 0.49) & (-2.16, 0.57) \\ 
-  BC-HSBW & sigma\_zero & -0.69 & (-1.9, 0.52) & (-2.02, 0.65) \\ 
-  SBW & sigma\_uu\_i\_modeled & -0.94 & (-1.73, -0.15) & (-1.61, -0.27) \\ 
-  SBW & sigma\_uu\_avg & -0.85 & (-1.62, -0.08) & (-1.39, -0.31) \\ 
-  SBW & sigma\_zero & -0.76 & (-1.51, -0.01) & (-1.51, -0.01) \\ 
-  BC-SBW & sigma\_uu\_i\_modeled & -0.89 & (-2.41, 0.62) & (-2.58, 0.79) \\ 
-  BC-SBW & sigma\_uu\_avg & -0.82 & (-2.36, 0.72) & (-1.96, 0.33) \\ 
-  BC-SBW & sigma\_zero & -0.64 & (-1.86, 0.57) & (-2.21, 0.93) \\ 
+  BC-SBW & sigma\_uu\_i & -1.97 & (-3.49, -0.44) & (-3.27, -0.66) \\ 
+  BC-SBW & sigma\_uu\_avg & -2.04 & (-3.59, -0.50) & (-3.39, -0.70) \\ 
+  BC-SBW & sigma\_zero & -2.34 & (-3.44, -1.25) & (-3.44, -1.25) \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -195,7 +147,7 @@ AR & -2.17 & (-2.34, -2.38) & -2.85 & (-2.81, -2.80) \\
   OR & -2.17 & (-2.17, -2.25) & -2.85 & (-2.80, -2.84) \\ 
   RI & -2.17 & (-2.17, -2.15) & -2.85 & (-2.81, -2.81) \\ 
   WA & -2.17 & (-2.10, -2.11) & -2.85 & (-2.78, -2.77) \\ 
-  WV & -2.17 & (-2.16, -2.18) & -2.85 & (-2.80, -2.78) \\ 
+  WV & -2.17 & (-2.16, -2.18) & -2.85 & (-2.8, -2.78) \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -214,9 +166,9 @@ AR & -2.05 & (-2.15, -2.16) & -2.85 & (-2.77, -2.76) \\
   HI & -2.05 & (-2.01, -1.99) & -2.85 & (-2.71, -2.73) \\ 
   IA & -2.05 & (-1.98, -1.95) & -2.85 & (-2.85, -2.86) \\ 
   IL & -2.05 & (-2.03, -2.01) & -2.85 & (-2.8, -2.79) \\ 
-  KY & -2.05 & (-1.87, -1.80) & -2.85 & (-2.59, -2.54) \\ 
+  KY & -2.05 & (-1.87, -1.8) & -2.85 & (-2.59, -2.54) \\ 
   MD & -2.05 & (-2.18, -2.15) & -2.85 & (-2.97, -2.96) \\ 
-  MI & -2.05 & (-1.96, -2.00) & -2.85 & (-2.92, -2.96) \\ 
+  MI & -2.05 & (-1.96, -2) & -2.85 & (-2.92, -2.96) \\ 
   ND & -2.05 & (-2.02, -2.04) & -2.85 & (-2.84, -2.84) \\ 
   NH & -2.05 & (-2.05, -2.06) & -2.85 & (-3.02, -3.03) \\ 
   NM & -2.05 & (-1.99, -1.97) & -2.85 & (-2.72, -2.75) \\ 
@@ -249,26 +201,6 @@ Psihat & Sigma estimate & Dataset & CI (states) & CI (proc) \\
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:oaterepubdiff} displays the difference between the estimated contrasts when excluding Republican governance indicators and when including all covariates as well as the estimated confidence intervals, estimated both conditional on the imputation (CI (states)) and recalculating the entire covariate adjustment (CI (proc)). Unlike the previous analyses, this difference $\hat{\Delta}$ is a function of both the treated and control data
-
-\begin{table}[ht]
-\centering
-\caption{OATE $\hat{\Delta}$ estimates}
-\label{tab:oaterepubdiff}
-\begin{tabular}{llrll}
-  \hline
-Sigma estimate & Dataset & Difference & CI (states) & CI (proc) \\ 
-  \hline
-sigma\_uu\_i\_modeled & c1 & -0.90 & (-1.09, -0.70) & (-1.12, -0.67) \\ 
-  sigma\_uu\_i\_modeled & c2 & -0.65 & (-0.86, -0.43) & (-0.88, -0.42) \\ 
-  sigma\_uu\_avg & c1 & -0.94 & (-1.15, -0.72) & (-1.20, -0.67) \\ 
-  sigma\_uu\_avg & c2 & -0.67 & (-0.90, -0.44) & (-0.91, -0.43) \\ 
-  sigma\_zero & c1 & -0.76 & (-0.93, -0.58) & (-0.93, -0.58) \\ 
-  sigma\_zero & c2 & -0.56 & (-0.75, -0.38) & (-0.75, -0.38) \\ 
-   \hline
-\end{tabular}
-\end{table}
-
 Table~\ref{tab:oatesensitive} presents all point estimates calculate using the overlap weights. Dataset ``c1'' refers to the primary dataset and dataset ``c2'' removes the early expansion states. The numeric column names refer to the covariate group excluded (covariate groups described above).
 
 \begin{table}[ht]
@@ -289,12 +221,100 @@ sigma\_uu\_i & c1 & -1.64 & -2.60 & -2.96 & -1.86 & -1.86 & -1.77 \\
 \end{tabular}
 \end{table}
 
-Figure~\ref{fig:oateheatmap} displays a heatmap showing how the OATE point estimates change when removing each state, conditional on our preferred covariate adjustment for both the primary dataset and when excluding early expansion states. We present the results for all covariates and excluding the Republican governance indicators. Additional results are available on request. We see that our point estimates move closer to zero when removing Wisconsin or Ohio for all specifications. Removing Arkansas appears to generally move the point estimates further away from zero.
+Table~\ref{tab:rdiffc1} and ~\ref{tab:rdiffc2} display the quantiles of the distribution $\hat{\Delta}_v^1$ estimates when leaving out each state for the primary dataset and removing the early expansion states. The ``resample'' column indicates whether the entire adjustment procedure was recalculated (``proc'') or whether we left out each state conditional on the adjustment (``states''). Table~\ref{tab:hte} displays the estimated linear combination of model coefficients on the Republican governance indicators with 95 percent confidence intervals (standard errors clustered at the state level). The ``Weights'' column represents whether the regressions were weighted; we ran two versions, an unweighted regression and one using the overlap weights.
 
-\begin{figure}[H]
-\begin{center}
-    \caption{OATE estimates, leave-one-out-states analysis}
-    \label{fig:oateheatmap}
-    \includegraphics[scale=0.6]{01_Plots/oate-loo-state-cov-group-heatmap-states.png}
-\end{center}
-\end{figure}
+\begin{table}[ht]
+\centering
+\label{tab:rdiffc1}
+\caption{$\hat{\Delta}^1_v$ leave-one-state-out estimates, primary dataset}
+\begin{tabular}{lllrrrrrr}
+  \hline
+Resample & Sigma estimate & Weight type & Original & 0\% & 25\% & 50\% & 75\% & 100\% \\ 
+  \hline
+states & sigma\_uu\_i\_modeled & H-SBW & -0.67 & -0.80 & -0.68 & -0.67 & -0.62 & -0.30 \\ 
+  proc & sigma\_uu\_i\_modeled & H-SBW & -0.67 & -0.78 & -0.68 & -0.64 & -0.59 & -0.30 \\ 
+  states & sigma\_uu\_i\_modeled & BC-HSBW & -0.74 & -0.87 & -0.77 & -0.71 & -0.69 & -0.26 \\ 
+  proc & sigma\_uu\_i\_modeled & BC-HSBW & -0.74 & -0.85 & -0.76 & -0.70 & -0.67 & -0.34 \\ 
+  states & sigma\_uu\_i\_modeled & SBW & -0.75 & -0.98 & -0.77 & -0.75 & -0.72 & -0.48 \\ 
+  proc & sigma\_uu\_i\_modeled & SBW & -0.75 & -0.98 & -0.78 & -0.73 & -0.67 & -0.49 \\ 
+  states & sigma\_uu\_i\_modeled & BC-SBW & -0.63 & -0.85 & -0.69 & -0.62 & -0.61 & -0.39 \\ 
+  proc & sigma\_uu\_i\_modeled & BC-SBW & -0.63 & -0.82 & -0.68 & -0.64 & -0.59 & -0.35 \\ 
+  states & sigma\_uu\_avg & H-SBW & -0.61 & -0.74 & -0.64 & -0.60 & -0.57 & -0.23 \\ 
+  proc & sigma\_uu\_avg & H-SBW & -0.61 & -0.76 & -0.63 & -0.59 & -0.55 & -0.33 \\ 
+  states & sigma\_uu\_avg & BC-HSBW & -0.69 & -0.83 & -0.73 & -0.68 & -0.64 & -0.24 \\ 
+  proc & sigma\_uu\_avg & BC-HSBW & -0.69 & -0.83 & -0.73 & -0.66 & -0.63 & -0.39 \\ 
+  states & sigma\_uu\_avg & SBW & -0.70 & -0.89 & -0.72 & -0.69 & -0.67 & -0.31 \\ 
+  proc & sigma\_uu\_avg & SBW & -0.70 & -0.93 & -0.73 & -0.68 & -0.65 & -0.49 \\ 
+  states & sigma\_uu\_avg & BC-SBW & -0.58 & -0.78 & -0.63 & -0.57 & -0.56 & -0.32 \\ 
+  proc & sigma\_uu\_avg & BC-SBW & -0.58 & -0.81 & -0.63 & -0.58 & -0.55 & -0.28 \\ 
+  states & sigma\_zero & H-SBW & -0.65 & -0.78 & -0.66 & -0.63 & -0.61 & -0.50 \\ 
+  proc & sigma\_zero & H-SBW & -0.65 & -0.78 & -0.66 & -0.63 & -0.61 & -0.50 \\ 
+  states & sigma\_zero & BC-HSBW & -0.70 & -0.88 & -0.74 & -0.68 & -0.64 & -0.50 \\ 
+  proc & sigma\_zero & BC-HSBW & -0.70 & -0.88 & -0.74 & -0.68 & -0.64 & -0.50 \\ 
+  states & sigma\_zero & SBW & -0.68 & -0.84 & -0.71 & -0.68 & -0.66 & -0.49 \\ 
+  proc & sigma\_zero & SBW & -0.68 & -0.84 & -0.71 & -0.68 & -0.66 & -0.49 \\ 
+  states & sigma\_zero & BC-SBW & -0.56 & -0.67 & -0.61 & -0.55 & -0.52 & -0.39 \\ 
+  proc & sigma\_zero & BC-SBW & -0.56 & -0.67 & -0.61 & -0.55 & -0.52 & -0.39 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\label{tab:rdiffc2}
+\caption{$\hat{\Delta}^1_v$ leave-one-state-out estimates, early expansion excluded}
+\centering
+\begin{tabular}{lllrrrrrr}
+  \hline
+Resample & Sigma estimate & Weight type & Original & 0\% & 25\% & 50\% & 75\% & 100\% \\ 
+  \hline
+states & sigma\_uu\_i\_modeled & H-SBW & -0.80 & -1.05 & -0.82 & -0.77 & -0.73 & -0.60 \\ 
+  proc & sigma\_uu\_i\_modeled & H-SBW & -0.80 & -0.98 & -0.81 & -0.76 & -0.74 & -0.60 \\ 
+  states & sigma\_uu\_i\_modeled & BC-HSBW & -0.85 & -1.13 & -0.96 & -0.83 & -0.76 & -0.45 \\ 
+  proc & sigma\_uu\_i\_modeled & BC-HSBW & -0.85 & -1.05 & -0.94 & -0.83 & -0.77 & -0.53 \\ 
+  states & sigma\_uu\_i\_modeled & SBW & -0.94 & -1.15 & -0.94 & -0.92 & -0.89 & -0.70 \\ 
+  proc & sigma\_uu\_i\_modeled & SBW & -0.94 & -1.05 & -0.98 & -0.91 & -0.86 & -0.73 \\ 
+  states & sigma\_uu\_i\_modeled & BC-SBW & -0.89 & -1.27 & -0.93 & -0.86 & -0.81 & -0.26 \\ 
+  proc & sigma\_uu\_i\_modeled & BC-SBW & -0.89 & -1.19 & -0.96 & -0.86 & -0.81 & -0.37 \\ 
+  states & sigma\_uu\_avg & H-SBW & -0.73 & -0.99 & -0.74 & -0.70 & -0.68 & -0.51 \\ 
+  proc & sigma\_uu\_avg & H-SBW & -0.73 & -0.94 & -0.73 & -0.69 & -0.67 & -0.50 \\ 
+  states & sigma\_uu\_avg & BC-HSBW & -0.79 & -1.10 & -0.87 & -0.78 & -0.69 & -0.42 \\ 
+  proc & sigma\_uu\_avg & BC-HSBW & -0.79 & -1.01 & -0.89 & -0.73 & -0.69 & -0.46 \\ 
+  states & sigma\_uu\_avg & SBW & -0.85 & -1.08 & -0.85 & -0.83 & -0.81 & -0.66 \\ 
+  proc & sigma\_uu\_avg & SBW & -0.85 & -0.95 & -0.86 & -0.82 & -0.80 & -0.68 \\ 
+  states & sigma\_uu\_avg & BC-SBW & -0.82 & -1.21 & -0.86 & -0.80 & -0.74 & -0.18 \\ 
+  proc & sigma\_uu\_avg & BC-SBW & -0.82 & -1.09 & -0.86 & -0.76 & -0.74 & -0.26 \\ 
+  states & sigma\_zero & H-SBW & -0.76 & -0.95 & -0.83 & -0.74 & -0.70 & -0.58 \\ 
+  proc & sigma\_zero & H-SBW & -0.76 & -0.95 & -0.83 & -0.74 & -0.70 & -0.58 \\ 
+  states & sigma\_zero & BC-HSBW & -0.69 & -1.00 & -0.83 & -0.70 & -0.60 & -0.39 \\ 
+  proc & sigma\_zero & BC-HSBW & -0.69 & -1.00 & -0.83 & -0.70 & -0.60 & -0.39 \\ 
+  states & sigma\_zero & SBW & -0.76 & -0.91 & -0.83 & -0.75 & -0.74 & -0.51 \\ 
+  proc & sigma\_zero & SBW & -0.76 & -0.91 & -0.83 & -0.75 & -0.74 & -0.51 \\ 
+  states & sigma\_zero & BC-SBW & -0.64 & -1.06 & -0.70 & -0.58 & -0.55 & -0.38 \\ 
+  proc & sigma\_zero & BC-SBW & -0.64 & -1.06 & -0.70 & -0.58 & -0.55 & -0.38 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\caption{OLS HTE estimates}
+\label{tab:hte}
+\centering
+\begin{tabular}{rllll}
+  \hline
+Estimate & Dataset & Sigma estimate & CI 95 & Weights \\ 
+  \hline
+  -1.76 & c1 & sigma\_uu\_i\_modeled & (-5.47, 1.94) & Overlap \\ 
+  -1.67 & c1 & sigma\_uu\_avg & (-7.18, 3.84) & Overlap \\ 
+  -1.97 & c1 & sigma\_zero & (-4.11, 0.17) & Overlap \\ 
+  0.51 & c2 & sigma\_uu\_i\_modeled & (-6.00, 7.02) & Overlap \\ 
+  -0.17 & c2 & sigma\_uu\_avg & (-8.17, 7.83) & Overlap \\ 
+  -1.48 & c2 & sigma\_zero & (-3.51, 0.54) & Overlap \\ 
+  0.10 & c1 & sigma\_uu\_i\_modeled & (-1.09, 1.30) & None \\ 
+  0.61 & c1 & sigma\_uu\_avg & (-1.82, 3.04) & None \\ 
+  -0.12 & c1 & sigma\_zero & (-0.90, 0.66) & None \\ 
+  0.37 & c2 & sigma\_uu\_i\_modeled & (-0.9, 1.63) & None \\ 
+  0.64 & c2 & sigma\_uu\_avg & (-1.77, 3.04) & None \\ 
+  -0.11 & c2 & sigma\_zero & (-0.91, 0.68) & None \\ 
+   \hline
+\end{tabular}
+\end{table}
