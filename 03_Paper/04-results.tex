@@ -1,0 +1,183 @@
+\section{Results}
+
+This section presents our results. The first sub-section contains summary statistics regarding the variability of six key covariates pre- and post- adjustment. The second sub-section contains weight diagnostics. The third sub-section contains our primary results, presenting our estimates of the treatment effect and a series of sensitivity analyses. The final sub-section contains our analysis of covariate importance and investigation into treatment effect heterogeneity.
+
+\subsection{Covariate adjustment}
+
+We first examine the effects of our covariate adjustments on the variance of our pre-treatment outcomes and pre-treatment unemployment rates among the expansion states. We most heavily prioritize balancing these covariates, but they are also among the least precisely estimated (all of our other covariates average over three years of data, rather than just one). Table~\ref{tab:adjust1} displays the variance of each covariate on the unadjusted and adjusted datasets. We see that both our preferred and secondary procedures reduce the variability in the data by comparable amounts. Intuitively, this reduces the likelihood that our balancing weights will over-fit to noise in the data. These results are consistent across most of our other covariates.
+
+\begin{table}[ht]
+\caption{Sample variance on unadjusted and adjusted datasets, expansion data}
+\label{tab:adjust1}
+\begin{tabular}{lrrr}
+  \hline
+Variable & No adjustment & Preferred & Secondary \\ 
+  \hline
+Uninsured Pct 2011 & 8.35 & 8.04 & 8.05 \\ 
+  Uninsured Pct 2012 & 8.20 & 7.89 & 7.90 \\ 
+  Uninsured Pct 2013 & 8.09 & 7.78 & 7.79 \\ 
+  Unemployed Pct 2011 & 3.66 & 3.25 & 3.27 \\ 
+  Unemployed Pct 2012 & 3.72 & 3.38 & 3.38 \\ 
+  Unemployed Pct 2013 & 3.20 & 2.88 & 2.87 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+We also examine the adjustment procedures on the non-expansion states in Table ~\ref{tab:adjust2}. We emphasize that we do not require or use for any of our estimates of the ETC. We find that our preferred adjustment actually increases the variability of our data. Upon closer inspection, we find that this procedure causes certain values to fall outside of the range of the original support of the data, and even well beyond the support of possible values.\footnote{We also see this in rare cases on the expansion-state data as well; see Table~\ref{tab:extreme1}}. We suspect that this may be a function of the relatively smaller sample sized used to calculate these adjustments (there are 414 control CPUMAs compared to 511 treated CPUMAs). While rare, these suspicious estimates are unlikely to threaten our weighting estimators that include the positivity constraint, as these data points are unlikely to be useful matches. However, these values can potentially threaten the validity of our estimators that extrapolate from the data. Fortunately, our primary analyses only require the adjustments on the treated data, which are far more satisfactory. Appendix C contains additional summary statistics about the original and adjusted datasets, including Table~\ref{tab:extreme1}, which displays the frequency of observations that fall outside of the support of the unadjusted data by treatment status.
+
+\begin{table}[ht]
+\caption{Sample variance on unadjusted and adjusted datasets, non-expansion data}
+\label{tab:adjust2}
+\begin{tabular}{lrrr}
+  \hline
+Variable & No adjustment & Preferred & Secondary \\ 
+  \hline
+Uninsured Pct 2011 & 8.10 & 45.67 & 7.81 \\ 
+  Uninsured Pct 2012 & 8.02 & 29.83 & 7.73 \\ 
+  Uninsured Pct 2013 & 8.02 & 21.59 & 7.73 \\ 
+  Unemployed Pct 2011 & 3.40 & 3.22 & 3.01 \\ 
+  Unemployed Pct 2012 & 3.30 & 11.34 & 2.91 \\ 
+  Unemployed Pct 2013 & 3.10 & 9.34 & 2.71 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+\subsection{Covariate balance}
+
+Figure~\ref{fig:loveplotc1} displays the reduction of imbalances using our H-SBW weights. This plot only displays covariates with greater than one percentage point difference between the targeted mean in the expansion region and the mean values in the non-expansion region, and the reweighted treatment values use our preferred covariate adjustment $\hat{\eta}_1(W_{sc})$. Before applying our weights, we see that there are substantial imbalances in the Republican governance indicators, as well as pre-treatment uninsurance and unemployment rates. Our weights drastically reduce these differences; however, some remain, particularly among the Republican governance indicators. A complete balance table is available in Appendix D, Table~\ref{tab:baltab1}. 
+
+\begin{figure}[H]
+\begin{center}
+    \caption{Balance plot, primary dataset}
+    \label{fig:loveplotc1}
+    \includegraphics[scale=0.6]{01_Plots/balance-plot-etuc1.png}
+\end{center}
+\end{figure}
+
+We then use ridge-regression augmentation to extrapolate from the data in order to reduce all imbalances within 0.5 percentage points. Figure~\ref{fig:statewghts} shows the total weights summed across states for each estimator: H-SBW and BC-HSBW. This figure sums the negative weights separately from the positive weights to show the extent of the extrapolation. We see that BC-HSBW extrapolates somewhat heavily in order to estimate the counterfactual, particularly for CPUMAs in California. 
+
+\begin{figure}[H]
+\begin{center}
+    \caption{Total weights summed by state, primary dataset}
+    \label{fig:statewghts}
+    \includegraphics[scale=0.6]{01_Plots/weights-by-state-hsbw-c1.png}
+\end{center}
+\end{figure}
+
+We also compare the H-SBW estimator to the SBW estimates in Figure~\ref{fig:sbwvhsbw1}. We see that H-SBW more evenly distributes the weights across states relative to SBW, particularly by reducing the amount of weight given to CPUMAs in Ohio. 
+
+\begin{figure}[H]
+\begin{center}
+    \caption{H-SBW versus SBW, weights summed by state, primary dataset}
+    \label{fig:sbwvhsbw1}
+    \includegraphics[scale=0.6]{01_Plots/weights-by-state-sbw-hsbw-c1.png}
+\end{center}
+\end{figure}
+
+Finally, Table~\ref{tab:balcomp} compares the imbalances among our pre-treatment outcomes and uninsurance rates using H-SBW weights generated on our unadjusted dataset applied to the adjusted (homogeneous) dataset. The ``Unweighted Difference'' column represents the raw difference in means, while the ``Weighted Difference'' column reflects the weighted difference that we calculate on the unadjusted dataset. Finally, the ``Weighted Difference (adjusted)'' column displays the weighted imbalance when applying the H-SBW weights to the adjusted dataset. We see that the weighted pre-treatment outcomes are approximately one percentage point lower than we desired in the two years prior to treatment (viewing the adjusted dataset as reflecting the ``true'' covariate values). Given the high degree of correlation between pre-treatment outcomes, we may expect the estimator trained on the unadjusted data to have a downward bias.
+
+\begin{table}[ht]
+\caption{Balance comparison: unadjusted weights on adjusted data}
+\label{tab:balcomp}
+\begin{tabular}{lrrr}
+  \hline
+Variables & Unweighted Difference & Weighted Difference (unadjusted).x & Weighted Difference (unadjusted).y \\ 
+  \hline
+Uninsured Pct 2011 & -3.09 & -0.05 & -0.11 \\ 
+  Uninsured Pct 2012 & -2.99 & -0.05 & -0.21 \\ 
+  Uninsured Pct 2013 & -3.00 & -0.05 & -0.38 \\ 
+  Unemployed Pct 2011 & 0.83 & 0.15 & 0.63 \\ 
+  Unemployed Pct 2012 & 0.63 & 0.15 & 0.29 \\ 
+  Unemployed Pct 2013 & 0.42 & 0.02 & 0.01 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Model validation}
+
+We compare the performance of our models by repeating the covariate adjustments and calculating our procedure on 2009-2011 ACS data to predict 2012 outcomes, and similarly for 2010-2012 data to predict 2013 outcomes for the treated states. Table~\ref{tab:pretxpred} see that the estimators trained on the covariate adjusted data have substantially better performance than the unadjusted data. Moreover, the estimators trained on the homogeneous adjustment seem to do slightly better than the ones that model the heterogeneity; we therefore prioritize presenting results on the homogeneous adjustment. We also find that SBW tends to have slightly lower bias than H-SBW. This is consistent with our theoretic results in Appendix A, which show that the bias should decrease with the square of the weights for fixed $X$. Despite these results, we still believe H-SBW may have lower variance (and possibly MSE) given our assumed dependencies in the model errors. We therefore do not use these results to prefer one estimator over another. Finally, we see that the bias corrected estimators tend to perform worse. This indicates that the extrapolation bias outweighs the cost of the covariate imbalances. While this does not necessarily imply this should hold for the model of $Y^1_T$, it does caution against these results. We see this as a function of models as best reflecting an approximation: we expect in general that assuming the linear outcome models approximately holds on the support of the data where we have sufficient covariate overlap, but we these models may lead us astray when our weights extrapolate excessively from the data. We see that the worst performing estimators are the bias-corrected estimators trained on the unadjusted data.
+
+\begin{table}[ht]
+\caption{Estimator pre-treatment outcome prediction error}
+\label{tab:pretxpred}
+\begin{tabular}{llrrr}
+  \hline
+Adjustment & Estimator & 2011 error & 2012 error & RMSE \\ 
+  \hline
+Homogeneous & SBW & -0.18 & -0.22 & 0.20 \\ 
+  Homogeneous & H-SBW & -0.24 & -0.21 & 0.23 \\ 
+  Heterogeneous & SBW & -0.25 & -0.30 & 0.27 \\ 
+  Heterogeneous & H-SBW & -0.32 & -0.39 & 0.36 \\ 
+  Homogeneous & BC-SBW & -0.42 & -0.35 & 0.39 \\ 
+  Heterogeneous & BC-SBW & -0.45 & -0.39 & 0.42 \\ 
+  None & SBW & -0.50 & -0.61 & 0.56 \\ 
+  None & H-SBW & -0.52 & -0.61 & 0.57 \\ 
+  Homogeneous & BC-HSBW & -0.54 & -0.62 & 0.58 \\ 
+  Heterogeneous & BC-HSBW & -0.54 & -0.72 & 0.64 \\ 
+  None & BC-SBW & -0.82 & -0.93 & 0.88 \\ 
+  None & BC-HSBW & -0.93 & -0.99 & 0.96 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+Finally, we find a consistent negative bias across all of our estimators: that is, all of our models tend to under-predict the true uninsurance rate the following year. If we believe that the sign of this bias will also afflict our estimates of $\hat{Y}^1$, then we should expect our estimates to have some upward bias; that is, they should be larger in absolute magnitude than the true treatment effect.
+
+\subsection{Primary Results}
+
+Using H-SBW we estimate an effect of -2.33 (-3.49, -1.16). The SBW results are almost identical with -2.35 & (-3.65, -1.06). Compared to the unadjusted data we see very similar estimates at -2.34 & (-2.85, -1.82) for H-SBW and -2.39 & (-2.95, -1.83) for SBW. We see that H-SBW reduces the confidence intervals relative to SBW. We also observe that using the adjusted covariate set appears to increases the width of the estimated confidence intervals. This increase in variability is expected because the adjustment procedure generally reduces the variability in the data, as we saw in Table~\ref{tab:adjust1}, thereby requiring that the balancing weights also increase in variability to achieve the desired level of balance. Importantly, this variance estimate conditions on the covariate adjustment, and does not take into account the randomness in this procedure. When we try to recalculate the entire adjustment procedure, we find that the confidence intervals often decrease relative to the main confidence intervals. We are unsure why this should be the case, and we present these results in the Appendix E.
+
+When we add the bias-correction, the absolute magnitude of the point estimate decreases. -2.05 & (-3.32, -0.79) BC-HSBW and -2.00 & (-2.98, -1.01) BC-SBW. In contrast to the H-SBW and SBW estimators, we see that the confidence interval for BC-SBW is narrower than for BC-HSBW. Figure~\ref{fig:estimators} presents all of our estimates, including those using our heterogeneous covariate adjustment procedure. In general the point estimates using the heterogeneous adjustment tended to be closer to zero than the homogeneous adjustment. All adjusted estimates were closer to zero than the unadjusted estimates, though the point estimates from the homogeneous adjustment and unadjusted covariates were often quite similar.
+
+\begin{figure}[H]
+\begin{center}
+    \caption{Point estimates}
+    \label{fig:estimators}
+    \includegraphics[scale=0.6]{01_Plots/point-estimates-c1.png}
+\end{center}
+\end{figure}
+
+Lastly, we examine the robustness of our point estimates to the removal of individual states (these are the same point estimates used to calculate our confidence intervals). Figure~\ref{fig:loostateplot} shows how the point estimates for each estimator changes for both the (homogeneous) adjusted and unadjusted datasets. We see similar results in either case: removing Ohio tends to decrease the point estimates. By contrast, removing Iowa, Kentucky, or California tends to increase the estimates. The results are quite similar when using the heterogeneous adjustment or when recalculating the entire procedure.
+
+\begin{figure}[H]
+\begin{center}
+    \caption{Estimator sensitivity to states}
+    \label{fig:loostateplot}
+    \includegraphics[scale=0.6]{01_Plots/loostate-sensitivityc1-state-uu-i.png}
+\end{center}
+\end{figure}
+
+\subsection{Sensitivity analysis} \label{sssec:sensitivity}
+
+We now consider the sensitivity of our analysis with respect to no anticipatory treatment effects. Several states had partial limited expansions prior to 2014. Following \cite{frean2017premium}, these states are California, Connecticut, Minnesota, New Jersey, and Washington. We rerun our analyses excluding CPUMAs from all five of these states. We have no a priori expectation about how removing these states might affect our estimates: on the one hand, states that expanded early might have a smaller treatment effect after 2014 because they already enrolled newly eligible individuals. On the other hand, if these states were also more motivated to enroll people in Medicaid, they might have experienced larger post-expansion coverage gains. Figure~\ref{fig:weightsbystatec2} displays the H-SBW weights summed by state alongside BC-HSBW, which extrapolates to reduce the imbalances. 
+
+\begin{figure}[H]
+\begin{center}
+    \caption{Total weights summed by state, early expansion removed}
+    \label{fig:weightsbystatec2}
+    \includegraphics[scale=0.6]{01_Plots/weights-by-state-hsbw-c2.png}
+\end{center}
+\end{figure}
+
+Excluding early expansion states, we estimate an effect of -2.21 (-3.54, -0.87) using H-SBW weights and -2.14 & (-3.43, -0.85) for SBW. These estimates are quite similar though slightly closer to zero than the the primary estimates. We also see that the differential between these estimates and the unadjusted estimates is slightly larger: -2.28  (-2.82, -1.74) for H-SBW and -2.23  (-3.05, -1.40) for SBW. 
+
+When we add the bias-correction the point estimates again move closer to zero: -2.04 (-3.57, -0.51) for BC-HSBW and -2.08 & (-3.42, -0.75) for SBW. Overall these results suggests that the results are relatively robust to the exclusion of these states, so that potential violations of this causal assumption are not a large factor here.
+
+\subsection{Covariate importance}
+
+We also investigate our hypothesis that factors associated with Governance are associated with treatment response. As discussed above, we first remove the balance constraints on the Republican governance indicators and estimate $\hat{\psi}^1_v$, and subtract our original point estimate from this quantity to generate $\hat{\Delta}_v^1$. Because this quantity does not reflect a clear population target, instead of confidence intervals, we present the minimum and maximum leave-one-state-out values in parentheses next to the original estimate.
+
+For the H-SBW estimator we calculate $\hat{\Delta}^1$ equal to -0.78 (min = -0.88, max = -0.59) and equal to -0.79 (min = -0.90, max = -0.66) on our unadjusted dataset. When we remove the early expansion states, we find that $\hat{\Delta}^1$ decreases slightly. Specifically, we estimate a -0.98 (-1.27, -0.79) percentage point decrease using the H-SBW estimator and -0.94 (-1.11, -0.78) on our unadjusted data. All of our point estimates were less than zero, regardless of whether we conditioned on the covariate adjustment or not. Across all specifications that we ran the minimum change we calculated was -1.45 and the maximum was -0.33. Additional distributional results across all leave-one-state-out estimates are available in Appendix E, Table~\ref{tab:rdiffc1} and Table~\ref{tab:rdiffc2}. Figure~\ref{fig:repub} displays our primary estimates of $\hat{\Delta}_v^1$. 
+
+We also consider four other covariate sets. We find that our estimates are most sensitive to controlling for pre-treatment outcomes and unemployment rates. This is not unexpected: all else equal, the expansion region had much lower pre-treatment uninsurance rates. If we do not control for these covariates, the comparable region will likely have lower pre-treament uninsurance rates, causing the estimated counterfactual to be closer to zero. The effect estimates were less sensitive to the removal of different covariate groups, and all point estimates are available in Appendix E, Table~\ref{tab:ptests}
+
+\begin{figure}[H]
+\begin{center}
+    \caption{Removing Republican Governance Indicators}
+    \label{fig:repub}
+    \includegraphics[scale=0.6]{01_Plots/repub-diff-c1c2.png}
+\end{center}
+\end{figure}
+
+These results highlight the importance of Republican governance in our counterfactual outcome model. If the models specified by \cite{kaestner2017effects} and \cite{courtemanche2017early} are correct (that is, they correctly omit Republican governance from their balancing weights), this would suggest treatment effect heterogeneity with respect to Republican governance. 
+
+Since this is a policy question of some interest, we directly investigate this by estimating the outcome model on the full data to estimate the treatment effect heterogeneity as a linear combination of model coefficients. Because we find that extrapolation bias might be an issue here, we run all of these models using weights that exactly balance the means of the control and treated units (see \cite{li2018balancing}). When decreasing Republican governance by 50 percentage points, we estimate a ZZZ change in effect size on the unadjusted data. When excluding the early expansion states we estimate ZZZ. By contrast, when we use the adjusted dataset, we get much wider confidence intervals (conditioning on the adjustment): ZZZ on the full dataset, and ZZZ on the early expansion dataset. Finally, when we estimate the model on the full dataset (using OLS rather than WLS with overlap weights), we calculate smaller magnitude point estimates that are all close to zero. The complete results are available in Appendix E.

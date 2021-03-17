@@ -1,7 +1,7 @@
 \section{Additional Results}
 \label{ssec:allresults}
 
-Table~\ref{tab:confintmain} displays the point estimates from all estimators as well as confidence intervals calculated either (a) leave-one-state-out jackknife on the adjusted dataset (CI (states)); (b) leave-one-state-out jackknife repeating the entire adjusted leaving each state out (CI (proc)). This table also includes all analyses calculated on a second version of the adjusted data where we use a common $\kappa$ for all values (sigma\_uu\_avg), which is the adjustment suggested by \cite{carroll2006measurement}. Notice that the confidence intervals are identical for ``sigma\_zero'' because this is the unadjusted dataset. ``sigma\_uu\_i'' is our preferred covariate adjustment.
+Table~\ref{tab:confintmain} displays the point estimates from all estimators as well as confidence intervals calculated either (a) leave-one-state-out jackknife on the adjusted dataset (CI (states)); (b) leave-one-state-out jackknife repeating the entire adjusted leaving each state out (CI (proc)). This table also includes all analyses calculated on a second version of the adjusted data where we model a separate $\kappa$ for all values (heterogeneous), which is the adjustment suggested by \cite{carroll2006measurement}. Notice that the confidence intervals are identical for ``None'' because this is the unadjusted dataset. ``Homogeneous'' is our preferred covariate adjustment.
 
 \begin{table}[ht]
 \centering
@@ -9,20 +9,20 @@ Table~\ref{tab:confintmain} displays the point estimates from all estimators as 
 \label{tab:confintmain}
 \begin{tabular}{llrll}
   \hline
-Weight type & Sigma estimate & Psihat & CI (states) & CI (proc) \\ 
+Weight type & Adjustment & Psihat & CI (states) & CI (proc) \\ 
   \hline
-H-SBW & sigma\_uu\_i & -2.17 & (-3.41, -0.94) & (-3.42, -0.92) \\ 
-  H-SBW & sigma\_uu\_avg & -2.25 & (-3.51, -0.99) & (-3.35, -1.14) \\ 
-  H-SBW & sigma\_zero & -2.35 & (-3.09, -1.61) & (-3.09, -1.61) \\ 
-  BC-HSBW & sigma\_uu\_i & -2.13 & (-3.55, -0.71) & (-3.42, -0.84) \\ 
-  BC-HSBW & sigma\_uu\_avg & -2.17 & (-3.57, -0.78) & (-3.39, -0.96) \\ 
-  BC-HSBW & sigma\_zero & -2.40 & (-3.33, -1.46) & (-3.33, -1.46) \\ 
-  SBW & sigma\_uu\_i & -2.24 & (-3.50, -0.99) & (-3.51, -0.97) \\ 
-  SBW & sigma\_uu\_avg & -2.30 & (-3.67, -0.92) & (-3.45, -1.15) \\ 
-  SBW & sigma\_zero & -2.40 & (-3.10, -1.69) & (-3.10, -1.69) \\ 
-  BC-SBW & sigma\_uu\_i & -2.12 & (-3.15, -1.10) & (-3.11, -1.14) \\ 
-  BC-SBW & sigma\_uu\_avg & -2.17 & (-3.25, -1.08) & (-3.22, -1.12) \\ 
-  BC-SBW & sigma\_zero & -2.36 & (-2.93, -1.80) & (-2.93, -1.80) \\ 
+H-SBW & Homogeneous & -2.33 & (-3.49, -1.16) & (-3.31, -1.34) \\ 
+  H-SBW & Heterogeneous & -2.24 & (-3.23, -1.24) & (-3.14, -1.33) \\ 
+  H-SBW & None & -2.34 & (-2.85, -1.82) & (-2.85, -1.82) \\ 
+  BC-HSBW & Homogeneous & -2.05 & (-3.32, -0.79) & (-3.1, -1.01) \\ 
+  BC-HSBW & Heterogeneous & -1.99 & (-3.25, -0.73) & (-2.99, -0.98) \\ 
+  BC-HSBW & None & -2.23 & (-2.9, -1.55) & (-2.9, -1.55) \\ 
+  SBW & Homogeneous & -2.35 & (-3.65, -1.06) & (-3.48, -1.22) \\ 
+  SBW & Heterogeneous & -2.28 & (-3.33, -1.22) & (-3.26, -1.3) \\ 
+  SBW & None & -2.39 & (-2.95, -1.83) & (-2.95, -1.83) \\ 
+  BC-SBW & Homogeneous & -2.07 & (-3.17, -0.97) & (-3.02, -1.12) \\ 
+  BC-SBW & Heterogeneous & -2.00 & (-2.98, -1.01) & (-2.87, -1.12) \\ 
+  BC-SBW & None & -2.19 & (-2.9, -1.49) & (-2.9, -1.49) \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -34,28 +34,28 @@ Table~\ref{tab:ptests} presents all point estimates from estimators that we calc
 \centering
 \caption{Point estimates for all specifications}
 \label{tab:ptests}
-\begin{tabular}{rlrrrr}
+\begin{tabular}{llrrrr}
   \hline
-Variable subset & Sigma estimate & H-SBW & BC-HSBW & SBW & BC-SBW \\ 
+Variable subset & Adjustment & H-SBW & BC-HSBW & SBW & BC-SBW \\ 
   \hline
-0 & sigma\_uu\_i & -2.17 & -2.13 & -2.24 & -2.12 \\ 
-  0 & sigma\_uu\_avg & -2.25 & -2.17 & -2.30 & -2.17 \\ 
-  0 & sigma\_zero & -2.35 & -2.40 & -2.40 & -2.36 \\ 
-  1 & sigma\_uu\_i & -2.85 & -2.87 & -3.00 & -2.76 \\ 
-  1 & sigma\_uu\_avg & -2.86 & -2.86 & -2.99 & -2.75 \\ 
-  1 & sigma\_zero & -3.00 & -3.09 & -3.07 & -2.92 \\ 
-  2 & sigma\_uu\_i & -5.73 & -5.05 & -5.24 & -4.70 \\ 
-  2 & sigma\_uu\_avg & -5.73 & -5.05 & -5.24 & -4.70 \\ 
-  2 & sigma\_zero & -5.73 & -5.13 & -5.24 & -4.77 \\ 
-  3 & sigma\_uu\_i & -2.17 & -2.00 & -2.24 & -2.00 \\ 
-  3 & sigma\_uu\_avg & -2.25 & -2.06 & -2.29 & -2.06 \\ 
-  3 & sigma\_zero & -2.34 & -2.17 & -2.40 & -2.15 \\ 
-  4 & sigma\_uu\_i & -2.35 & -2.39 & -2.29 & -2.30 \\ 
-  4 & sigma\_uu\_avg & -2.39 & -2.39 & -2.32 & -2.32 \\ 
-  4 & sigma\_zero & -2.45 & -2.59 & -2.43 & -2.49 \\ 
-  5 & sigma\_uu\_i & -2.17 & -2.19 & -2.26 & -2.21 \\ 
-  5 & sigma\_uu\_avg & -2.25 & -2.24 & -2.33 & -2.27 \\ 
-  5 & sigma\_zero & -2.35 & -2.44 & -2.42 & -2.47 \\ 
+0 & Homogeneous & -2.33 & -2.05 & -2.35 & -2.07 \\ 
+  0 & Heterogeneous & -2.24 & -1.99 & -2.28 & -2.00 \\ 
+  0 & None & -2.34 & -2.23 & -2.39 & -2.19 \\ 
+  1 & Homogeneous & -3.02 & -2.99 & -3.03 & -2.76 \\ 
+  1 & Heterogeneous & -3.02 & -2.98 & -3.01 & -2.76 \\ 
+  1 & None & -3.13 & -3.17 & -3.14 & -2.93 \\ 
+  2 & Homogeneous & -5.40 & -4.75 & -5.12 & -4.48 \\ 
+  2 & Heterogeneous & -5.40 & -4.74 & -5.12 & -4.48 \\ 
+  2 & None & -5.40 & -4.82 & -5.12 & -4.55 \\ 
+  3 & Homogeneous & -2.21 & -1.94 & -2.24 & -1.91 \\ 
+  3 & Heterogeneous & -2.14 & -1.86 & -2.18 & -1.85 \\ 
+  3 & None & -2.33 & -2.03 & -2.38 & -2.02 \\ 
+  4 & Homogeneous & -2.34 & -2.18 & -2.29 & -2.15 \\ 
+  4 & Heterogeneous & -2.30 & -2.17 & -2.25 & -2.10 \\ 
+  4 & None & -2.39 & -2.38 & -2.45 & -2.35 \\ 
+  5 & Homogeneous & -2.33 & -2.12 & -2.37 & -2.15 \\ 
+  5 & Heterogeneous & -2.24 & -2.06 & -2.30 & -2.09 \\ 
+  5 & None & -2.34 & -2.26 & -2.38 & -2.26 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -68,20 +68,20 @@ Table ~\ref{tab:confintmainc2} and Table~\ref{tab:secondaryptests} are identical
 \label{tab:confintmainc2}
 \begin{tabular}{llrll}
   \hline
-Weight type & Sigma estimate & Psihat & CI (states) & CI (proc) \\ 
+Weight type & Adjustment & Psihat & CI (states) & CI (proc) \\ 
   \hline
-H-SBW & sigma\_uu\_i & -2.05 & (-3.10, -1.00) & (-3.05, -1.05) \\ 
-  H-SBW & sigma\_uu\_avg & -2.13 & (-3.20, -1.05) & (-3.17, -1.08) \\ 
-  H-SBW & sigma\_zero & -2.29 & (-2.90, -1.69) & (-2.90, -1.69) \\ 
-  BC-HSBW & sigma\_uu\_i & -2.14 & (-3.63, -0.64) & (-3.48, -0.80) \\ 
-  BC-HSBW & sigma\_uu\_avg & -2.19 & (-3.65, -0.73) & (-3.57, -0.81) \\ 
-  BC-HSBW & sigma\_zero & -2.50 & (-3.66, -1.33) & (-3.66, -1.33) \\ 
-  SBW & sigma\_uu\_i & -1.91 & (-2.91, -0.91) & (-2.79, -1.03) \\ 
-  SBW & sigma\_uu\_avg & -2.01 & (-3.02, -1.00) & (-2.83, -1.19) \\ 
-  SBW & sigma\_zero & -2.20 & (-2.69, -1.71) & (-2.69, -1.71) \\ 
-  BC-SBW & sigma\_uu\_i & -1.97 & (-3.49, -0.44) & (-3.27, -0.66) \\ 
-  BC-SBW & sigma\_uu\_avg & -2.04 & (-3.59, -0.50) & (-3.39, -0.70) \\ 
-  BC-SBW & sigma\_zero & -2.34 & (-3.44, -1.25) & (-3.44, -1.25) \\ 
+H-SBW & Homogeneous & -2.21 & (-3.54, -0.87) & (-3.28, -1.14) \\ 
+  H-SBW & Heterogeneous & -2.11 & (-3.17, -1.06) & (-3.11, -1.12) \\ 
+  H-SBW & None & -2.28 & (-2.82, -1.74) & (-2.82, -1.74) \\ 
+  BC-HSBW & Homogeneous & -2.04 & (-3.57, -0.51) & (-3.41, -0.67) \\ 
+  BC-HSBW & Heterogeneous & -1.96 & (-3.37, -0.55) & (-3.13, -0.79) \\ 
+  BC-HSBW & None & -2.18 & (-3.06, -1.3) & (-3.08, -1.28) \\ 
+  SBW & Homogeneous & -2.14 & (-3.43, -0.85) & (-3.09, -1.19) \\ 
+  SBW & Heterogeneous & -2.06 & (-3.05, -1.07) & (-2.93, -1.19) \\ 
+  SBW & None & -2.21 & (-2.71, -1.72) & (-2.71, -1.72) \\ 
+  BC-SBW & Homogeneous & -2.08 & (-3.42, -0.75) & (-3.21, -0.96) \\ 
+  BC-SBW & Heterogeneous & -2.02 & (-3.16, -0.87) & (-3.05, -0.98) \\ 
+  BC-SBW & None & -2.23 & (-3.05, -1.40) & (-3.03, -1.42) \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -90,133 +90,28 @@ H-SBW & sigma\_uu\_i & -2.05 & (-3.10, -1.00) & (-3.05, -1.05) \\
 \centering
    \caption{Point estimates for all specifications, early expansion excluded}
     \label{tab:secondaryptests}
-\begin{tabular}{rlrrrr}
+\begin{tabular}{llrrrr}
   \hline
-Variable subset & Sigma estimate & H-SBW & BC-HSBW & SBW & BC-SBW \\ 
+Variable subset & Adjustment & H-SBW & BC-HSBW & SBW & BC-SBW \\ 
   \hline
-0 & sigma\_uu\_i & -2.05 & -2.14 & -1.91 & -1.97 \\ 
-  0 & sigma\_uu\_avg & -2.13 & -2.19 & -2.01 & -2.04 \\ 
-  0 & sigma\_zero & -2.29 & -2.50 & -2.20 & -2.34 \\ 
-  1 & sigma\_uu\_i & -2.85 & -2.99 & -2.85 & -2.86 \\ 
-  1 & sigma\_uu\_avg & -2.86 & -2.98 & -2.86 & -2.86 \\ 
-  1 & sigma\_zero & -3.05 & -3.18 & -2.96 & -2.99 \\ 
-  2 & sigma\_uu\_i & -5.55 & -4.46 & -5.02 & -4.52 \\ 
-  2 & sigma\_uu\_avg & -5.55 & -4.73 & -5.01 & -4.53 \\ 
-  2 & sigma\_zero & -5.55 & -4.78 & -5.01 & -4.56 \\ 
-  3 & sigma\_uu\_i & -2.05 & -2.03 & -1.91 & -1.89 \\ 
-  3 & sigma\_uu\_avg & -2.13 & -2.10 & -2.00 & -1.97 \\ 
-  3 & sigma\_zero & -2.27 & -2.22 & -2.20 & -2.13 \\ 
-  4 & sigma\_uu\_i & -2.27 & -2.24 & -2.15 & -2.00 \\ 
-  4 & sigma\_uu\_avg & -2.35 & -2.28 & -2.23 & -2.04 \\ 
-  4 & sigma\_zero & -2.36 & -2.62 & -2.28 & -2.45 \\ 
-  5 & sigma\_uu\_i & -2.05 & -2.20 & -1.91 & -2.03 \\ 
-  5 & sigma\_uu\_avg & -2.13 & -2.26 & -1.99 & -2.11 \\ 
-  5 & sigma\_zero & -2.29 & -2.45 & -2.19 & -2.36 \\ 
-   \hline
-\end{tabular}
-\end{table}
-
-Table~\ref{tab:loostatec1} and Table~\ref{tab:loostatec2} present point estimates for the leave-one-state out analysis for our preferred estimator, H-SBW calculated on our preferred covariate adjustment for the primary dataset and when excluding early expansion states.
-
-\begin{table}[ht]
-\centering
-   \caption{Leave-one-state-out point estimates, primary dataset, preferred adjustment}
-    \label{tab:loostatec1}
-\begin{tabular}{lrlrl}
-  \hline
-State & Psihat (0) & None (states, proc) & Psihat (1) & Repub (states, proc) \\ 
-  \hline
-AR & -2.17 & (-2.34, -2.38) & -2.85 & (-2.81, -2.80) \\ 
-  AZ & -2.17 & (-2.21, -2.24) & -2.85 & (-2.86, -2.86) \\ 
-  CA & -2.17 & (-1.99, -2.02) & -2.85 & (-2.77, -2.76) \\ 
-  CO & -2.17 & (-2.17, -2.23) & -2.85 & (-2.84, -2.84) \\ 
-  CT & -2.17 & (-2.17, -2.15) & -2.85 & (-2.83, -2.82) \\ 
-  HI & -2.17 & (-2.15, -2.14) & -2.85 & (-2.77, -2.78) \\ 
-  IA & -2.17 & (-2.09, -2.07) & -2.85 & (-2.83, -2.84) \\ 
-  IL & -2.17 & (-2.16, -2.24) & -2.85 & (-2.83, -2.84) \\ 
-  KY & -2.17 & (-2.02, -1.95) & -2.85 & (-2.57, -2.52) \\ 
-  MD & -2.17 & (-2.25, -2.27) & -2.85 & (-2.94, -2.94) \\ 
-  MI & -2.17 & (-2.10, -2.18) & -2.85 & (-2.89, -2.92) \\ 
-  MN & -2.17 & (-2.17, -2.19) & -2.85 & (-2.84, -2.86) \\ 
-  ND & -2.17 & (-2.23, -2.26) & -2.85 & (-2.84, -2.84) \\ 
-  NH & -2.17 & (-2.18, -2.21) & -2.85 & (-2.98, -2.99) \\ 
-  NJ & -2.17 & (-2.26, -2.25) & -2.85 & (-2.99, -3.03) \\ 
-  NM & -2.17 & (-2.16, -2.22) & -2.85 & (-2.76, -2.77) \\ 
-  NV & -2.17 & (-2.21, -2.24) & -2.85 & (-2.89, -2.88) \\ 
-  OH & -2.17 & (-2.70, -2.68) & -2.85 & (-3.00, -2.98) \\ 
-  OR & -2.17 & (-2.17, -2.25) & -2.85 & (-2.80, -2.84) \\ 
-  RI & -2.17 & (-2.17, -2.15) & -2.85 & (-2.81, -2.81) \\ 
-  WA & -2.17 & (-2.10, -2.11) & -2.85 & (-2.78, -2.77) \\ 
-  WV & -2.17 & (-2.16, -2.18) & -2.85 & (-2.8, -2.78) \\ 
-   \hline
-\end{tabular}
-\end{table}
-
-\begin{table}[ht]
-\centering
-   \caption{Leave-one-state-out point estimates, early expansion excluded, preferred adjustment}
-    \label{tab:loostatec2}
-\begin{tabular}{lrlrl}
-  \hline
-State & Psihat (0) & None (states, proc) & Psihat (1) & Repub (states, proc) \\ 
-  \hline
-AR & -2.05 & (-2.15, -2.16) & -2.85 & (-2.77, -2.76) \\ 
-  AZ & -2.05 & (-1.82, -1.88) & -2.85 & (-2.87, -2.86) \\ 
-  CO & -2.05 & (-2.07, -2.09) & -2.85 & (-2.84, -2.83) \\ 
-  HI & -2.05 & (-2.01, -1.99) & -2.85 & (-2.71, -2.73) \\ 
-  IA & -2.05 & (-1.98, -1.95) & -2.85 & (-2.85, -2.86) \\ 
-  IL & -2.05 & (-2.03, -2.01) & -2.85 & (-2.8, -2.79) \\ 
-  KY & -2.05 & (-1.87, -1.8) & -2.85 & (-2.59, -2.54) \\ 
-  MD & -2.05 & (-2.18, -2.15) & -2.85 & (-2.97, -2.96) \\ 
-  MI & -2.05 & (-1.96, -2) & -2.85 & (-2.92, -2.96) \\ 
-  ND & -2.05 & (-2.02, -2.04) & -2.85 & (-2.84, -2.84) \\ 
-  NH & -2.05 & (-2.05, -2.06) & -2.85 & (-3.02, -3.03) \\ 
-  NM & -2.05 & (-1.99, -1.97) & -2.85 & (-2.72, -2.75) \\ 
-  NV & -2.05 & (-2.15, -2.15) & -2.85 & (-2.93, -2.92) \\ 
-  OH & -2.05 & (-2.43, -2.38) & -2.85 & (-3.03, -3.02) \\ 
-  OR & -2.05 & (-2.05, -2.11) & -2.85 & (-2.81, -2.84) \\ 
-  RI & -2.05 & (-2.05, -2.05) & -2.85 & (-2.80, -2.80) \\ 
-  WV & -2.05 & (-2.06, -2.06) & -2.85 & (-2.83, -2.81) \\ 
-   \hline
-\end{tabular}
-\end{table}
-
-Table~\ref{tab:oateconfint} displays point estimates and confidence intervals for the primary point estimates for the OATE. We display the confidence intervals calculated using both the leave-one-out-states conditional on the covariate adjustment (CI (states)) and recalculating the covariate adjustment for the OATE (CI (proc)). 
-
-\begin{table}[ht]
-\centering
-\caption{OATE primary results inference}
-\label{tab:oateconfint}
-\begin{tabular}{rllll}
-  \hline
-Psihat & Sigma estimate & Dataset & CI (states) & CI (proc) \\ 
-  \hline
--1.74 & sigma\_uu\_i\_modeled & c1 & (-2.35, -1.14) & (-2.48, -1.00) \\ 
-  -1.67 & sigma\_uu\_avg & c1 & (-2.34, -0.99) & (-2.52, -0.81) \\ 
-  -1.80 & sigma\_zero & c1 & (-2.50, -1.10) & (-2.50, -1.10) \\ 
-  -1.89 & sigma\_uu\_i\_modeled & c2 & (-2.47, -1.32) & (-2.54, -1.24) \\ 
-  -1.80 & sigma\_uu\_avg & c2 & (-2.43, -1.17) & (-2.57, -1.03) \\ 
-  -1.95 & sigma\_zero & c2 & (-2.65, -1.25) & (-2.65, -1.25) \\ 
-   \hline
-\end{tabular}
-\end{table}
-
-Table~\ref{tab:oatesensitive} presents all point estimates calculate using the overlap weights. Dataset ``c1'' refers to the primary dataset and dataset ``c2'' removes the early expansion states. The numeric column names refer to the covariate group excluded (covariate groups described above).
-
-\begin{table}[ht]
-\centering
-\caption{OATE all point estimates}
-\label{tab:oatesensitive}
-\begin{tabular}{llrrrrrr}
-  \hline
-Sigma estimate & Dataset & 0 & 1 & 2 & 3 & 4 & 5 \\ 
-  \hline
-sigma\_uu\_i & c1 & -1.64 & -2.60 & -2.96 & -1.86 & -1.86 & -1.77 \\ 
-  sigma\_uu\_i & c2 & -1.81 & -2.53 & -3.10 & -2.18 & -2.04 & -1.96 \\ 
-  sigma\_avg & c1 & -1.58 & -2.62 & -2.85 & -1.76 & -1.76 & -1.78 \\ 
-  sigma\_avg & c2 & -1.74 & -2.54 & -3.00 & -2.10 & -1.96 & -1.95 \\ 
-  sigma\_zero & c1 & -1.80 & -2.55 & -3.11 & -1.98 & -1.94 & -1.83 \\ 
-  sigma\_zero & c2 & -1.95 & -2.51 & -3.25 & -2.12 & -2.10 & -2.00 \\ 
+0 & Homogeneous & -2.21 & -2.04 & -2.14 & -2.08 \\ 
+  0 & Heterogeneous & -2.11 & -1.96 & -2.06 & -2.02 \\ 
+  0 & None & -2.28 & -2.18 & -2.21 & -2.23 \\ 
+  1 & Homogeneous & -3.10 & -3.16 & -2.97 & -2.96 \\ 
+  1 & Heterogeneous & -3.09 & -3.16 & -2.96 & -2.96 \\ 
+  1 & None & -3.23 & -3.33 & -3.05 & -3.08 \\ 
+  2 & Homogeneous & -5.32 & -4.42 & -4.84 & -4.28 \\ 
+  2 & Heterogeneous & -5.32 & -4.16 & -4.84 & -4.27 \\ 
+  2 & None & -5.32 & -4.44 & -4.85 & -4.30 \\ 
+  3 & Homogeneous & -2.11 & -1.96 & -2.02 & -1.91 \\ 
+  3 & Heterogeneous & -2.06 & -1.90 & -1.94 & -1.84 \\ 
+  3 & None & -2.28 & -2.08 & -2.21 & -2.06 \\ 
+  4 & Homogeneous & -2.33 & -2.11 & -2.26 & -2.05 \\ 
+  4 & Heterogeneous & -2.21 & -2.01 & -2.17 & -1.96 \\ 
+  4 & None & -2.31 & -2.40 & -2.29 & -2.33 \\ 
+  5 & Homogeneous & -2.20 & -2.08 & -2.13 & -2.11 \\ 
+  5 & Heterogeneous & -2.11 & -2.00 & -2.05 & -2.05 \\ 
+  5 & None & -2.28 & -2.19 & -2.21 & -2.24 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -229,32 +124,32 @@ Table~\ref{tab:rdiffc1} and ~\ref{tab:rdiffc2} display the quantiles of the dist
 \caption{$\hat{\Delta}^1_v$ leave-one-state-out estimates, primary dataset}
 \begin{tabular}{lllrrrrrr}
   \hline
-Resample & Sigma estimate & Weight type & Original & 0\% & 25\% & 50\% & 75\% & 100\% \\ 
+Inference & Adjustment & Weight type & Original & 0\% & 25\% & 50\% & 75\% & 100\% \\ 
   \hline
-states & sigma\_uu\_i\_modeled & H-SBW & -0.67 & -0.80 & -0.68 & -0.67 & -0.62 & -0.30 \\ 
-  proc & sigma\_uu\_i\_modeled & H-SBW & -0.67 & -0.78 & -0.68 & -0.64 & -0.59 & -0.30 \\ 
-  states & sigma\_uu\_i\_modeled & BC-HSBW & -0.74 & -0.87 & -0.77 & -0.71 & -0.69 & -0.26 \\ 
-  proc & sigma\_uu\_i\_modeled & BC-HSBW & -0.74 & -0.85 & -0.76 & -0.70 & -0.67 & -0.34 \\ 
-  states & sigma\_uu\_i\_modeled & SBW & -0.75 & -0.98 & -0.77 & -0.75 & -0.72 & -0.48 \\ 
-  proc & sigma\_uu\_i\_modeled & SBW & -0.75 & -0.98 & -0.78 & -0.73 & -0.67 & -0.49 \\ 
-  states & sigma\_uu\_i\_modeled & BC-SBW & -0.63 & -0.85 & -0.69 & -0.62 & -0.61 & -0.39 \\ 
-  proc & sigma\_uu\_i\_modeled & BC-SBW & -0.63 & -0.82 & -0.68 & -0.64 & -0.59 & -0.35 \\ 
-  states & sigma\_uu\_avg & H-SBW & -0.61 & -0.74 & -0.64 & -0.60 & -0.57 & -0.23 \\ 
-  proc & sigma\_uu\_avg & H-SBW & -0.61 & -0.76 & -0.63 & -0.59 & -0.55 & -0.33 \\ 
-  states & sigma\_uu\_avg & BC-HSBW & -0.69 & -0.83 & -0.73 & -0.68 & -0.64 & -0.24 \\ 
-  proc & sigma\_uu\_avg & BC-HSBW & -0.69 & -0.83 & -0.73 & -0.66 & -0.63 & -0.39 \\ 
-  states & sigma\_uu\_avg & SBW & -0.70 & -0.89 & -0.72 & -0.69 & -0.67 & -0.31 \\ 
-  proc & sigma\_uu\_avg & SBW & -0.70 & -0.93 & -0.73 & -0.68 & -0.65 & -0.49 \\ 
-  states & sigma\_uu\_avg & BC-SBW & -0.58 & -0.78 & -0.63 & -0.57 & -0.56 & -0.32 \\ 
-  proc & sigma\_uu\_avg & BC-SBW & -0.58 & -0.81 & -0.63 & -0.58 & -0.55 & -0.28 \\ 
-  states & sigma\_zero & H-SBW & -0.65 & -0.78 & -0.66 & -0.63 & -0.61 & -0.50 \\ 
-  proc & sigma\_zero & H-SBW & -0.65 & -0.78 & -0.66 & -0.63 & -0.61 & -0.50 \\ 
-  states & sigma\_zero & BC-HSBW & -0.70 & -0.88 & -0.74 & -0.68 & -0.64 & -0.50 \\ 
-  proc & sigma\_zero & BC-HSBW & -0.70 & -0.88 & -0.74 & -0.68 & -0.64 & -0.50 \\ 
-  states & sigma\_zero & SBW & -0.68 & -0.84 & -0.71 & -0.68 & -0.66 & -0.49 \\ 
-  proc & sigma\_zero & SBW & -0.68 & -0.84 & -0.71 & -0.68 & -0.66 & -0.49 \\ 
-  states & sigma\_zero & BC-SBW & -0.56 & -0.67 & -0.61 & -0.55 & -0.52 & -0.39 \\ 
-  proc & sigma\_zero & BC-SBW & -0.56 & -0.67 & -0.61 & -0.55 & -0.52 & -0.39 \\ 
+States & Homogeneous & H-SBW & -0.78 & -0.88 & -0.80 & -0.78 & -0.73 & -0.59 \\ 
+  Procedure & Homogeneous & H-SBW & -0.78 & -0.99 & -0.85 & -0.84 & -0.78 & -0.59 \\ 
+  States & Homogeneous & BC-HSBW & -0.99 & -1.13 & -1.02 & -0.99 & -0.94 & -0.69 \\ 
+  Procedure & Homogeneous & BC-HSBW & -0.99 & -1.12 & -1.05 & -1.00 & -0.96 & -0.74 \\ 
+  States & Homogeneous & SBW & -0.74 & -0.93 & -0.77 & -0.73 & -0.70 & -0.52 \\ 
+  Procedure & Homogeneous & SBW & -0.74 & -0.99 & -0.91 & -0.88 & -0.83 & -0.64 \\ 
+  States & Homogeneous & BC-SBW & -0.77 & -0.97 & -0.79 & -0.75 & -0.72 & -0.56 \\ 
+  Procedure & Homogeneous & BC-SBW & -0.77 & -1.02 & -0.94 & -0.88 & -0.84 & -0.60 \\ 
+  States & Heterogeneous & H-SBW & -0.69 & -0.83 & -0.74 & -0.70 & -0.64 & -0.42 \\ 
+  Procedure & Heterogeneous & H-SBW & -0.69 & -0.95 & -0.80 & -0.77 & -0.75 & -0.51 \\ 
+  States & Heterogeneous & BC-HSBW & -0.93 & -1.07 & -0.96 & -0.94 & -0.88 & -0.62 \\ 
+  Procedure & Heterogeneous & BC-HSBW & -0.93 & -1.09 & -1.01 & -0.96 & -0.92 & -0.69 \\ 
+  States & Heterogeneous & SBW & -0.67 & -0.86 & -0.72 & -0.67 & -0.65 & -0.40 \\ 
+  Procedure & Heterogeneous & SBW & -0.67 & -0.94 & -0.85 & -0.83 & -0.80 & -0.59 \\ 
+  States & Heterogeneous & BC-SBW & -0.70 & -0.89 & -0.75 & -0.70 & -0.66 & -0.50 \\ 
+  Procedure & Heterogeneous & BC-SBW & -0.70 & -0.93 & -0.89 & -0.83 & -0.78 & -0.54 \\ 
+  States & None & H-SBW & -0.79 & -0.90 & -0.81 & -0.80 & -0.76 & -0.66 \\ 
+  Procedure & None & H-SBW & -0.79 & -0.92 & -0.82 & -0.79 & -0.75 & -0.66 \\ 
+  States & None & BC-HSBW & -0.95 & -1.11 & -0.97 & -0.94 & -0.90 & -0.84 \\ 
+  Procedure & None & BC-HSBW & -0.95 & -1.14 & -1.00 & -0.96 & -0.94 & -0.87 \\ 
+  States & None & SBW & -0.75 & -0.89 & -0.77 & -0.75 & -0.73 & -0.58 \\ 
+  Procedure & None & SBW & -0.75 & -0.94 & -0.78 & -0.76 & -0.74 & -0.58 \\ 
+  States & None & BC-SBW & -0.74 & -0.88 & -0.75 & -0.72 & -0.70 & -0.57 \\ 
+  Procedure & None & BC-SBW & -0.74 & -0.91 & -0.81 & -0.77 & -0.75 & -0.61 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -265,38 +160,38 @@ states & sigma\_uu\_i\_modeled & H-SBW & -0.67 & -0.80 & -0.68 & -0.67 & -0.62 &
 \centering
 \begin{tabular}{lllrrrrrr}
   \hline
-Resample & Sigma estimate & Weight type & Original & 0\% & 25\% & 50\% & 75\% & 100\% \\ 
+Inference & Adjustment & Weight type & Original & 0\% & 25\% & 50\% & 75\% & 100\% \\ 
   \hline
-states & sigma\_uu\_i\_modeled & H-SBW & -0.80 & -1.05 & -0.82 & -0.77 & -0.73 & -0.60 \\ 
-  proc & sigma\_uu\_i\_modeled & H-SBW & -0.80 & -0.98 & -0.81 & -0.76 & -0.74 & -0.60 \\ 
-  states & sigma\_uu\_i\_modeled & BC-HSBW & -0.85 & -1.13 & -0.96 & -0.83 & -0.76 & -0.45 \\ 
-  proc & sigma\_uu\_i\_modeled & BC-HSBW & -0.85 & -1.05 & -0.94 & -0.83 & -0.77 & -0.53 \\ 
-  states & sigma\_uu\_i\_modeled & SBW & -0.94 & -1.15 & -0.94 & -0.92 & -0.89 & -0.70 \\ 
-  proc & sigma\_uu\_i\_modeled & SBW & -0.94 & -1.05 & -0.98 & -0.91 & -0.86 & -0.73 \\ 
-  states & sigma\_uu\_i\_modeled & BC-SBW & -0.89 & -1.27 & -0.93 & -0.86 & -0.81 & -0.26 \\ 
-  proc & sigma\_uu\_i\_modeled & BC-SBW & -0.89 & -1.19 & -0.96 & -0.86 & -0.81 & -0.37 \\ 
-  states & sigma\_uu\_avg & H-SBW & -0.73 & -0.99 & -0.74 & -0.70 & -0.68 & -0.51 \\ 
-  proc & sigma\_uu\_avg & H-SBW & -0.73 & -0.94 & -0.73 & -0.69 & -0.67 & -0.50 \\ 
-  states & sigma\_uu\_avg & BC-HSBW & -0.79 & -1.10 & -0.87 & -0.78 & -0.69 & -0.42 \\ 
-  proc & sigma\_uu\_avg & BC-HSBW & -0.79 & -1.01 & -0.89 & -0.73 & -0.69 & -0.46 \\ 
-  states & sigma\_uu\_avg & SBW & -0.85 & -1.08 & -0.85 & -0.83 & -0.81 & -0.66 \\ 
-  proc & sigma\_uu\_avg & SBW & -0.85 & -0.95 & -0.86 & -0.82 & -0.80 & -0.68 \\ 
-  states & sigma\_uu\_avg & BC-SBW & -0.82 & -1.21 & -0.86 & -0.80 & -0.74 & -0.18 \\ 
-  proc & sigma\_uu\_avg & BC-SBW & -0.82 & -1.09 & -0.86 & -0.76 & -0.74 & -0.26 \\ 
-  states & sigma\_zero & H-SBW & -0.76 & -0.95 & -0.83 & -0.74 & -0.70 & -0.58 \\ 
-  proc & sigma\_zero & H-SBW & -0.76 & -0.95 & -0.83 & -0.74 & -0.70 & -0.58 \\ 
-  states & sigma\_zero & BC-HSBW & -0.69 & -1.00 & -0.83 & -0.70 & -0.60 & -0.39 \\ 
-  proc & sigma\_zero & BC-HSBW & -0.69 & -1.00 & -0.83 & -0.70 & -0.60 & -0.39 \\ 
-  states & sigma\_zero & SBW & -0.76 & -0.91 & -0.83 & -0.75 & -0.74 & -0.51 \\ 
-  proc & sigma\_zero & SBW & -0.76 & -0.91 & -0.83 & -0.75 & -0.74 & -0.51 \\ 
-  states & sigma\_zero & BC-SBW & -0.64 & -1.06 & -0.70 & -0.58 & -0.55 & -0.38 \\ 
-  proc & sigma\_zero & BC-SBW & -0.64 & -1.06 & -0.70 & -0.58 & -0.55 & -0.38 \\ 
+States & Homogeneous & H-SBW & -0.98 & -1.27 & -0.98 & -0.95 & -0.89 & -0.79 \\ 
+  Procedure & Homogeneous & H-SBW & -0.98 & -1.21 & -0.96 & -0.95 & -0.91 & -0.79 \\ 
+  States & Homogeneous & BC-HSBW & -1.20 & -1.51 & -1.23 & -1.18 & -1.12 & -0.89 \\ 
+  Procedure & Homogeneous & BC-HSBW & -1.20 & -1.42 & -1.23 & -1.16 & -1.06 & -0.92 \\ 
+  States & Homogeneous & SBW & -0.90 & -1.12 & -0.95 & -0.89 & -0.85 & -0.70 \\ 
+  Procedure & Homogeneous & SBW & -0.90 & -1.11 & -1.00 & -0.96 & -0.93 & -0.85 \\ 
+  States & Homogeneous & BC-SBW & -0.95 & -1.28 & -1.05 & -0.92 & -0.88 & -0.57 \\ 
+  Procedure & Homogeneous & BC-SBW & -0.95 & -1.31 & -1.03 & -0.97 & -0.93 & -0.72 \\ 
+  States & Heterogeneous & H-SBW & -0.89 & -1.18 & -0.88 & -0.86 & -0.83 & -0.52 \\ 
+  Procedure & Heterogeneous & H-SBW & -0.89 & -1.14 & -0.93 & -0.88 & -0.85 & -0.64 \\ 
+  States & Heterogeneous & BC-HSBW & -1.11 & -1.45 & -1.15 & -1.08 & -1.03 & -0.68 \\ 
+  Procedure & Heterogeneous & BC-HSBW & -1.11 & -1.38 & -1.14 & -1.09 & -1.01 & -0.81 \\ 
+  States & Heterogeneous & SBW & -0.83 & -1.00 & -0.87 & -0.82 & -0.78 & -0.49 \\ 
+  Procedure & Heterogeneous & SBW & -0.83 & -1.02 & -0.91 & -0.89 & -0.86 & -0.76 \\ 
+  States & Heterogeneous & BC-SBW & -0.88 & -1.16 & -0.99 & -0.86 & -0.81 & -0.33 \\ 
+  Procedure & Heterogeneous & BC-SBW & -0.88 & -1.24 & -0.92 & -0.89 & -0.82 & -0.55 \\ 
+  States & None & H-SBW & -0.94 & -1.11 & -1.01 & -0.92 & -0.87 & -0.78 \\ 
+  Procedure & None & H-SBW & -0.94 & -1.07 & -0.98 & -0.90 & -0.85 & -0.76 \\ 
+  States & None & BC-HSBW & -1.15 & -1.28 & -1.14 & -1.09 & -1.03 & -0.84 \\ 
+  Procedure & None & BC-HSBW & -1.15 & -1.27 & -1.15 & -1.08 & -1.03 & -0.82 \\ 
+  States & None & SBW & -0.84 & -1.03 & -0.87 & -0.82 & -0.80 & -0.61 \\ 
+  Procedure & None & SBW & -0.84 & -1.02 & -0.87 & -0.81 & -0.80 & -0.60 \\ 
+  States & None & BC-SBW & -0.85 & -1.02 & -0.85 & -0.82 & -0.80 & -0.65 \\ 
+  Procedure & None & BC-SBW & -0.85 & -1.02 & -0.88 & -0.82 & -0.80 & -0.62 \\ 
    \hline
 \end{tabular}
 \end{table}
 
 \begin{table}[ht]
-\caption{OLS HTE estimates}
+\caption{Heterogeneous effect estimates}
 \label{tab:hte}
 \centering
 \begin{tabular}{rllll}
@@ -315,6 +210,46 @@ Estimate & Dataset & Sigma estimate & CI 95 & Weights \\
   0.37 & c2 & sigma\_uu\_i\_modeled & (-0.9, 1.63) & None \\ 
   0.64 & c2 & sigma\_uu\_avg & (-1.77, 3.04) & None \\ 
   -0.11 & c2 & sigma\_zero & (-0.91, 0.68) & None \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:ATOconfint} displays point estimates and confidence intervals for the primary point estimates for the ATO. We display the confidence intervals calculated using both the leave-one-out-states conditional on the covariate adjustment (CI (states)) and recalculating the covariate adjustment for the ATO (CI (proc)). 
+
+\begin{table}[ht]
+\centering
+\caption{ATO primary results inference}
+\label{tab:ATOconfint}
+\begin{tabular}{rllll}
+  \hline
+Psihat & Sigma estimate & Dataset & CI (states) & CI (proc) \\ 
+  \hline
+-1.74 & sigma\_uu\_i\_modeled & c1 & (-2.35, -1.14) & (-2.48, -1.00) \\ 
+  -1.67 & sigma\_uu\_avg & c1 & (-2.34, -0.99) & (-2.52, -0.81) \\ 
+  -1.80 & sigma\_zero & c1 & (-2.50, -1.10) & (-2.50, -1.10) \\ 
+  -1.89 & sigma\_uu\_i\_modeled & c2 & (-2.47, -1.32) & (-2.54, -1.24) \\ 
+  -1.80 & sigma\_uu\_avg & c2 & (-2.43, -1.17) & (-2.57, -1.03) \\ 
+  -1.95 & sigma\_zero & c2 & (-2.65, -1.25) & (-2.65, -1.25) \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:ATOsensitive} presents all point estimates calculate using the overlap weights. Dataset ``c1'' refers to the primary dataset and dataset ``c2'' removes the early expansion states. The numeric column names refer to the covariate group excluded (covariate groups described above).
+
+\begin{table}[ht]
+\centering
+\caption{ATO all point estimates}
+\label{tab:ATOsensitive}
+\begin{tabular}{llrrrrrr}
+  \hline
+Sigma estimate & Dataset & 0 & 1 & 2 & 3 & 4 & 5 \\ 
+  \hline
+sigma\_uu\_i & c1 & -1.64 & -2.60 & -2.96 & -1.86 & -1.86 & -1.77 \\ 
+  sigma\_uu\_i & c2 & -1.81 & -2.53 & -3.10 & -2.18 & -2.04 & -1.96 \\ 
+  sigma\_avg & c1 & -1.58 & -2.62 & -2.85 & -1.76 & -1.76 & -1.78 \\ 
+  sigma\_avg & c2 & -1.74 & -2.54 & -3.00 & -2.10 & -1.96 & -1.95 \\ 
+  sigma\_zero & c1 & -1.80 & -2.55 & -3.11 & -1.98 & -1.94 & -1.83 \\ 
+  sigma\_zero & c2 & -1.95 & -2.51 & -3.25 & -2.12 & -2.10 & -2.00 \\ 
    \hline
 \end{tabular}
 \end{table}

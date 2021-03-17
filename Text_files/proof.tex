@@ -1,10 +1,12 @@
 \section{Proofs}
 
-We show three results regarding the bias of the SBW estimator under the classical errors-in-variables model. First, we show that the bias of the SBW estimator that sets $\delta = 0$ (i.e. exactly balances the means of the covariates) is equal to the bias of the OLS estimator. Second, we show that if the observed covariate values can be replaced by their conditional expectations $\eta$ given the noisy observations, then the SBW estimator will be unbiased. Finally, we consider the case where we can estimate $\eta$ using auxillary data to estimate the covariance matrix of the error terms and show that the SBW estimator is consistent if we replace $\eta$ by an estimate $\hat{\eta}$ in the constraint set.
+We show three results regarding the bias of the SBW estimator under the classical errors-in-variables model. First, we show that the bias of the SBW estimator that sets $\delta = 0$ (i.e. exactly balances the means of the covariates) is equal to the bias of the OLS estimator. Second, we show that if the observed covariate values can be replaced by their conditional expectations $\eta$ given the noisy observations, then the SBW estimator will be unbiased. Finally, we consider the case where we can estimate $\eta$ using auxillary data to estimate the covariance matrix of the error terms and show that the SBW estimator is consistent if we replace $\eta$ by an estimate $\hat{\eta}$ in the constraint set. In contrast to our application, we take the perspective throughout that $X$ is random, noting that this estimator still has desirable properties even when we view $X$ is fixed (see, e.g., \cite{gleser1992importance}).
 
-Consider a dataset of consists of $i = 1, ..., n$ units where we observe the outcomes $Y_i$ and a treatment assignment indicator $A_i \in \{0, 1\}$. Let $n_a$ be the number of units in each treatment group, i.e, $n_a = \sum_{i = 1}^n \mathbbm{1}(A_i = a)$. Let $X_i \in \mathbb{R}^q$ be a vector of covariates. 
+Consider a dataset of consists of $i = 1, ..., n$ units where we observe the outcomes $Y_i$ and a treatment assignment indicator $A_i \in \{0, 1\}$. Let $n_a$ be the number of units in each treatment group, i.e, $n_a = \sum_{i = 1}^n \mathbbm{1}(A_i = a)$. Let $X_i \in \mathbb{R}^q$ be a vector of covariate values where $(X_i \mid A_i) \stackrel{iid}\sim MVN(\upsilon_a, \Sigma_{XX})$. 
 
-Our target parameter is $\psi = \mathbb{E}\{Y_i^1 \mid A_i = 0\}$.\footnote{Note that this is a super-population target; in the application, we are interested in a finite-sample estimand.} We assume unconfoundedness ($Y_i^a \perp A_i \mid X_i$), consistency ($Y_i^a = Y_i \mid A_i = a$), positivity of treatment assignment ($1 - \epsilon > \pi(X_i) > \epsilon)$, and that $\mathbb{E}\{Y_i \mid X_i, A_i = a\} = \alpha_a + X_i^T\beta_a$. We begin by establishing the following identity:
+Our target parameter is $\psi = \mathbb{E}\{Y_i^1 \mid A_i = 0\}$.\footnote{Note that we switch to the super-population target because we view $X$ as random.} We assume unconfoundedness ($Y_i^a \perp A_i \mid X_i$), consistency ($Y_i^a = Y_i \mid A_i = a$), and that $\mathbb{E}\{Y_i \mid X_i, A_i = a\} = \alpha_a + X_i^T\beta_a$. For simplicity we also assume throughout that there exist positive weights $\gamma$ that exactly balance the covariates, i.e. $\sum_{i: A_i = 1}\gamma_iX_{i, r} = \bar{X}_{0, r}$ for all $r = 1, ..., q$ and $\sum_{i: A_i = 1}\gamma_i = 1$, $\gamma_i > 0$. 
+
+We begin by establishing the following identity:
 
 \begin{equation}
 \psi = \mu_y + (\upsilon_0 - \upsilon_1)^T\beta_1
@@ -13,18 +15,18 @@ Our target parameter is $\psi = \mathbb{E}\{Y_i^1 \mid A_i = 0\}$.\footnote{Note
 where $\mu_y = \mathbb{E}\{Y_i \mid A_i = 1\}$ and $\upsilon_a = \mathbb{E}\{X_i \mid A_i = a\}$.
 
 \begin{proof}
-By the law of iterated expectations, $\psi = \int \mathbb{E}\{Y_i^1 \mid X_i, A_i = 0\}p(x \mid a = 0)dx$. Using our causal and modeling assumptions we have that:
+
+Using our causal and modeling assumptions we have that:
 
 \begin{align*}
-\mathbb{E}\{Y_i^1 \mid X_i, A_i = 0\} &= \mathbb{E}\{Y_i^1 \mid X_i, A_i = 1\} \\ 
+\mathbb{E}\{Y_i^1 \mid X_i, A_i = 0\} &= \mathbb{E}\{Y_i^1 \mid X_i, A_i = 1\} \\
 &= \mathbb{E}\{Y_i \mid X_i, A_i = 1\} \\
-&= \alpha + X_i^T\beta \\
+&= \alpha_1 + X_i^T\beta_1 \\
 &= \mu_y + (X_i - \upsilon_1)^T\beta \\
-&\implies \psi = \int (\mu_y + (X_i - \upsilon_1)^T\beta) p(x \mid a = 0)dx \\
-&= \mu_y + (\upsilon_0 - \upsilon_1)^T\beta
+&\implies psi = \mu_y + (\upsilon_0 - \upsilon_1)^T\beta_1
 \end{align*}
 
-where the first equality follows from unconfoundedness, the second equality from consistency, the third from positivity and our parametric modeling assumptions, and the fourth by definition of $\alpha$. The final implication and result follow from plugging these expressions back into the integral and solving.
+where the first equality follows from unconfoundedness, the second equality from consistency, the third from our parametric modeling assumptions, and the fourth by definition of $\alpha$. The final implication comes from plugging $\upsilon_0$ in place of $X_i$.
 
 \end{proof}
 
@@ -46,7 +48,7 @@ In other words the error in the outcome model is uncorrelated with the error in 
 \end{pmatrix}
 \end{equation}
 
-Then we see that $(X_i, W_i) \mid A_i = a \stackrel{iid}{\sim} MVN((\upsilon_a, \upsilon_a), \Sigma)$\footnote{For simplicity we have also assumed that $\Sigma_{WW \mid A = 1} = \Sigma_{WW \mid A = 0} = \Sigma_{WW}$ and $\Sigma_{XX \mid A = 1} = \Sigma_{XX \mid A = 0} = \Sigma_{XX}$. This is not a necessary assumption, but helps simplify notation.} where 
+Then we see that $(X_i, W_i) \mid A_i = a \stackrel{iid}{\sim} MVN((\upsilon_a, \upsilon_a), \Sigma)$\footnote{In contrast to our application, we instead assume here that $\Sigma_{WW \mid A = 1} = \Sigma_{WW \mid A = 0} = \Sigma_{WW}$ and $\Sigma_{XX \mid A = 1} = \Sigma_{XX \mid A = 0} = \Sigma_{XX}$. This is not a necessary assumption, but helps simplify notation.} where 
 
 $$
 \Sigma = \begin{pmatrix} 
@@ -140,9 +142,9 @@ $\mathbb{E}\{\hat{\psi}^{sbw}(\eta)\} = \psi$
 
 By linearity we know that
 
-$$
+\begin{align*}
 Y_i = \alpha + \eta_a(W_i)^T\beta_a + (X_i - \eta_a(W_i))^T\beta_a
-$$
+\end{align*}
 
 We then have that:
 
@@ -213,3 +215,23 @@ As $n \to \infty$, $T \to \infty$, $\hat{\eta}_1 \to \eta_1$, and therefore by d
 
 Our estimation of $\eta_a$ follows a somewhat different procedure which we outline in Appendix B.
 
+\subsection{H-SBW Objective}
+
+We show that the H-SBW estimator minimizes the variance of any estimator within the constraint set given a constant within-group correlation structure.
+
+Consider the outcome model:
+
+\begin{equation}
+    Y_{sc} = X_{sc}^T\beta + c_s + \epsilon_{sc}
+\end{equation}
+
+where $\mathbb{E}\{c_s \mid X_{sc}\} = \mathbb{E}\{\epsilon_{sc} \mid X_{sc}\} = \mathbb{E}\{c_s\epsilon_{sc}\} = 0$, and $Var(\epsilon_{sc}) = \sigma^2$ and $Var(c_s) = \eta^2$.
+
+Then consider the variance of any weighting estimator using weights $\gamma$ in the form of $Y\gamma$ where $\gamma^T1 = n_t$.
+
+\begin{align}
+    Var(n_t^{-1}\sum_{sc: A_s = 1}\gamma_{sc}Y_{sc} \mid X_{sc}, A_{sc}) = n_t^{-2}\sum_{s: A_s = 1}^{m_1}(\sum_{c = 1}^{p_s}\gamma_{sc}^2(\sigma^2 + \eta^2) + \sum_{c \ne d}\gamma_{sc}\gamma{sd}\eta^2) \\
+    &\prop\to n_t^{-2}\sum_{s: A_s = 1}(\sum_{c = 1}^{p_s}(\gamma_{sc}^2 + \sum_{c \ne d}\rho \gamma_{sc}\gamma{sd})
+\end{align}
+
+where the second line follows by dividing by $\eta^2 + \sigma^2$. This suggests the H-SBW objective, which minimizes the (conditional) variance of this estimator for known $\rho$.
