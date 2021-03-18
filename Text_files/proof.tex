@@ -69,7 +69,7 @@ $$
 \hat{\psi}^{reg} = \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T\hat{\beta}_1
 $$ 
 
-where $\hat{\beta}_1$ is the OLS estimator of $\beta_1$, where $\bar{W}_a = n_a^{-1}\sum_{i:A_i = a} W_i$ and $\bar{Y}_a$ is defined analogously. Let 
+where $\hat{\beta}_1$ is the OLS estimator of $\beta_1$, $\bar{W}_a = n_a^{-1}\sum_{i:A_i = a} W_i$ and $\bar{Y}_a$ is defined analogously. Let 
 
 $$
 \hat{\psi}^{sbw} = \sum_{i: A_i = a} \gamma_i Y_i
@@ -225,12 +225,12 @@ Consider the outcome model:
     Y_{sc} = X_{sc}^T\beta + c_s + \epsilon_{sc}
 \end{equation}
 
-where $\mathbb{E}\{c_s \mid X_{sc}\} = \mathbb{E}\{\epsilon_{sc} \mid X_{sc}\} = \mathbb{E}\{c_s\epsilon_{sc}\} = 0$, and $Var(\epsilon_{sc}) = \sigma^2$ and $Var(c_s) = \eta^2$.
+where $\mathbb{E}\{c_s \mid X_{sc}\} = \mathbb{E}\{\epsilon_{sc} \mid X_{sc}\} = \mathbb{E}\{c_s\epsilon_{sc} \mid X_{sc}\} = 0$, and $Var(\epsilon_{sc}) = \sigma^2$ and $Var(c_s) = \eta^2$. Let $\rho = \frac{\eta^2}{\sigma^2 + \eta^2}$.
 
 Then consider the variance of any weighting estimator using weights $\gamma$ in the form of $Y\gamma$ where $\gamma^T1 = n_t$.
 
 \begin{align}
-    Var(n_t^{-1}\sum_{sc: A_s = 1}\gamma_{sc}Y_{sc} \mid X_{sc}, A_{sc}) = n_t^{-2}\sum_{s: A_s = 1}^{m_1}(\sum_{c = 1}^{p_s}\gamma_{sc}^2(\sigma^2 + \eta^2) + \sum_{c \ne d}\gamma_{sc}\gamma{sd}\eta^2) \\
+    Var(n_t^{-1}\sum_{sc: A_s = 1}\gamma_{sc}Y_{sc} \mid X_{sc}, A_{sc}) &= n_t^{-2}\sum_{s: A_s = 1}^{m_1}(\sum_{c = 1}^{p_s}\gamma_{sc}^2(\sigma^2 + \eta^2) + \sum_{c \ne d}\gamma_{sc}\gamma{sd}\eta^2) \\
     &\prop\to n_t^{-2}\sum_{s: A_s = 1}(\sum_{c = 1}^{p_s}(\gamma_{sc}^2 + \sum_{c \ne d}\rho \gamma_{sc}\gamma{sd})
 \end{align}
 

@@ -1,7 +1,7 @@
 \section{Summary Statistics}
 \label{sec:appendixsumstat}
 
-Table~\ref{tab:summarytab1} and Table~\ref{tab:summarytab2} display univariate summary statistics from the primary dataset. We display the mean, interquartile range, and the range (as defined by the maximum value minus the minimum value) for the unadjusted dataset (sigma\_zero), the preferred adjustment (sigma\_uu\_i), and the secondary adjustment (sigma\_uu\_avg). We see that in general the covariate adjustments reduce the variability in the data. However, we also see that the range sometimes increases drastically, particularly for the untreated dataset. Table~\ref{tab:extreme1} displays the overall number of CPUMAs whose adjusted values fall outside of the range of the unadjusted data. Note that for our ETT estimates, we only use the adjustments on the treatment data, while we use both for the ATO estimates. We also calculate these adjustments when leaving out each state one at a time from the primary dataset to calculate our secondary variance estimates; these results are available on request. 
+Table~\ref{tab:summarytab1} and Table~\ref{tab:summarytab2} display univariate summary statistics from the primary dataset. We display the mean, interquartile range, and the range (as defined by the maximum value minus the minimum value) for the unadjusted dataset, the heterogeneous adjustment, and the homogeneous adjustment. We see that in general the covariate adjustments reduce the variability in the data. However, we also see that the range sometimes increases drastically, particularly for the untreated dataset. Table~\ref{tab:extreme1} displays the overall number of CPUMAs whose adjusted values fall outside of the range of the unadjusted data. We emphasize that we only use the untreated data for the heterogeneous treatment effect analysis. We also calculate these adjustments when leaving out each state one at a time from the primary dataset to calculate our secondary variance estimates; these results are available on request. 
 
 \begin{table}[ht]
 \centering
@@ -103,7 +103,7 @@ Table~\ref{tab:extreme1} displays the frequency that the adjusted covariates fel
     \label{tab:extreme1}
 \begin{tabular}{lll}
   \hline
-Variables & Heterogeneous adjustment & Homogeneous adjustment \\ 
+Variables & Heterogeneous & Homogeneous \\ 
   \hline
 Age: 19-29 Pct & (0, 0) & (0, 0) \\ 
   Age: 30-39 Pct & (0, 0) & (0, 0) \\ 
