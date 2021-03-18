@@ -39,3 +39,24 @@ Figure~\ref{fig:ATOimbalance} displays the sum of the weights within each state 
 
 The point estimates are somewhat larger relative to our primary analysis: within the overlap region we estimate a treatment effect -1.74 (-2.35, -1.14) when including all treatment states in our primary analysis, and of -1.89 (-2.47, -1.32) when excluding the early expansion states. These results are quite similar compared to the unadjusted datasets: -1.80 (-2.50, -1.10) on the primary dataset and -1.95 (-2.65, -1.25) when excluding early expansion states. These confidence intervals are much narrower than our previous estimates. This is not entirely surprising: as \cite{li2018balancing} note, the ATO has the minimum conditional variance of any weighted average treatment effect under homoskedastic errors. \footnote{The ATO weights are also not optimized for the hierarchical data structure, but rather are output from a standard logistic regression model. It would be simple to rerun the H-SBW procedure targeting the overlap weight region to generate a set of balancing weights with possibly improved properties for this data structure, though we do not do this.}
 
+
+
+
+We also examine the adjustment procedures on the non-expansion states in Table ~\ref{tab:adjust2}. We emphasize that we do not require or use for any of our estimates of the ETC. We find that the heterogeneous adjustment actually increases the variability of our data. Upon closer inspection, we find that this procedure causes certain values to fall outside of the range of the original support of the data, and even well beyond the support of possible values.\footnote{We also see this in rare cases on the expansion-state data as well; see Table~\ref{tab:extreme1}}. We suspect that this may be a function of the relatively smaller sample sized used to calculate these adjustments (there are 414 control CPUMAs compared to 511 treated CPUMAs). Appendix C contains additional summary statistics about the original and adjusted datasets, including Table~\ref{tab:extreme1}, which displays the frequency of observations that fall outside of the support of the unadjusted data by treatment status. We again do not find this phenomenon on the expansion-state data.
+
+\begin{table}[ht]
+\caption{Sample variance on unadjusted and adjusted datasets, non-expansion data}
+\label{tab:adjust2}
+\begin{tabular}{lrrr}
+  \hline
+Variable & No adjustment & Heterogeneous & Homogeneous \\ 
+  \hline
+Uninsured Pct 2011 & 8.10 & 45.67 & 7.81 \\ 
+  Uninsured Pct 2012 & 8.02 & 29.83 & 7.73 \\ 
+  Uninsured Pct 2013 & 8.02 & 21.59 & 7.73 \\ 
+  Unemployed Pct 2011 & 3.40 & 3.22 & 3.01 \\ 
+  Unemployed Pct 2012 & 3.30 & 11.34 & 2.91 \\ 
+  Unemployed Pct 2013 & 3.10 & 9.34 & 2.71 \\ 
+   \hline
+\end{tabular}
+\end{table}
