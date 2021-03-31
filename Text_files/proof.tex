@@ -23,7 +23,7 @@ Using our causal and modeling assumptions we have that:
 &= \mathbb{E}\{Y_i \mid X_i, A_i = 1\} \\
 &= \alpha_1 + X_i^T\beta_1 \\
 &= \mu_y + (X_i - \upsilon_1)^T\beta \\
-&\implies psi = \mu_y + (\upsilon_0 - \upsilon_1)^T\beta_1
+&\implies \psi = \mu_y + (\upsilon_0 - \upsilon_1)^T\beta_1
 \end{align*}
 
 where the first equality follows from unconfoundedness, the second equality from consistency, the third from our parametric modeling assumptions, and the fourth by definition of $\alpha$. The final implication comes from plugging $\upsilon_0$ in place of $X_i$.
