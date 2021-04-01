@@ -5,7 +5,7 @@ This section presents our results. The first sub-section contains summary statis
 We first examine the effects of our covariate adjustments on the variance of our pre-treatment outcomes and pre-treatment unemployment rates among the expansion states. We most heavily prioritize balancing these covariates, but they are also among the least precisely estimated (all of our other covariates average over three years of data, rather than just one). Table~\ref{tab:adjust1} displays the variance of each covariate on the unadjusted and adjusted datasets. We see that both the homogeneous and heterogeneous adjustment procedures reduce the variability in the data by comparable amounts. Intuitively, the adjustment to address measurement error reduces the likelihood that our balancing weights will over-fit to noise in the data. These results are consistent across most of our other covariates.
 
 \begin{table}[ht]
-\caption{Sample variance on unadjusted and adjusted datasets, expansion data}
+\caption{Sample variance on unadjusted and adjusted datasets, expansion states}
 \label{tab:adjust1}
 \begin{tabular}{lrrr}
   \hline
@@ -47,7 +47,7 @@ We then use ridge-regression augmentation to extrapolate from the data in order 
 
 \begin{figure}[H]
 \begin{center}
-    \caption{Total weights summed by state, primary dataset}
+    \caption{H-SBW versus BC-HSBW, weights summed by state, primary dataset}
     \label{fig:statewghts}
     \includegraphics[scale=0.6]{01_Plots/weights-by-state-hsbw-c1.png}
 \end{center}
@@ -64,10 +64,7 @@ Variables & Unweighted Diff & Weighted Diff (none) & Homogeneous Diff & Heteroge
   \hline
 Uninsured Pct 2011 & -3.09 & -0.05 & -0.11 & 0.92 \\ 
   Uninsured Pct 2012 & -2.99 & -0.05 & -0.21 & -1.06 \\ 
-  Uninsured Pct 2013 & -3.00 & -0.05 & -0.38 & -0.93 \\ 
-  Unemployed Pct 2011 & 0.83 & 0.15 & 0.63 & 0.61 \\ 
-  Unemployed Pct 2012 & 0.63 & 0.15 & 0.29 & 0.48 \\ 
-  Unemployed Pct 2013 & 0.42 & 0.02 & 0.01 & -0.17 \\ 
+  Uninsured Pct 2013 & -3.00 & -0.05 & -0.38 & -0.93 
    \hline
 \end{tabular}
 \end{table}
@@ -81,7 +78,7 @@ We compare the performance of our models by repeating the covariate adjustments 
 \label{tab:pretxpred}
 \begin{tabular}{llrrr}
   \hline
-Sigma estimate & Estimator & 2011 error & 2012 error & RMSE \\ 
+Sigma estimate & Estimator & 2012 error & 2013 error & RMSE \\ 
   \hline
 Homogeneous & SBW & -0.18 & -0.22 & 0.20 \\ 
   Homogeneous & H-SBW & -0.24 & -0.21 & 0.23 \\ 
@@ -99,13 +96,13 @@ Homogeneous & SBW & -0.18 & -0.22 & 0.20 \\
 \end{tabular}
 \end{table}
 
-Finally, we find a consistent negative bias across all of our estimators: that is, all of our models tend to under-predict the true uninsurance rate the following year. If we believe that the sign of this bias will also afflict our estimates of $\hat{Y}^1$, then we should expect our treatment effect estimates to have upward bias (which in this case would bias the estimate toward zero). That is, the true treatment effect may be larger (farther from zero) in absolute magnitude than the estimated treatment effect.
+Finally, we find a consistent negative bias across all of our estimators: that is, all of our models tend to under-predict the true uninsurance rate among the non-expansion states the subsequent year. If we believe that the sign of this bias will also afflict our estimates of $\bar{Y}^1$, then we should expect our treatment effect estimates to have downward bias (which would bias our estimates away from zero). That is, the true treatment effect may be smaller (closer to zero) in absolute magnitude than the estimated treatment effect. If we believe the bias will also have comparable magnitude, these results suggests that the true treatment effect will be approximately 0.2 to 0.5 percentage points closer to zero than the estimated effect.
 
 \subsection{Primary Results}
 
-Using H-SBW we estimate an effect of -2.33 (-3.49, -1.16) percentage points. The SBW results are almost identical with -2.35 & (-3.65, -1.06) percentage points. Compared to the unadjusted data we see very similar estimates at -2.34 & (-2.85, -1.82) percentage points for H-SBW and -2.39 & (-2.95, -1.83) percentage points for SBW. We see that H-SBW reduces the confidence intervals relative to SBW. We also observe that using the adjusted covariate set appears to increases the width of the estimated confidence intervals. This increase in variability is expected because the adjustment procedure generally reduces the variability in the data, as we saw in Table~\ref{tab:adjust1}, thereby requiring that the balancing weights also increase in variability to achieve the desired level of balance. Importantly, this variance estimate conditions on the covariate adjustment, and does not take into account the randomness in this procedure. When we recalculate the entire adjustment procedure, we find that the confidence intervals are of a comparable magnitude. The results are available in Appendix E.
+Using H-SBW we estimate an effect of -2.33 (-3.49, -1.16) percentage points. The SBW results are almost identical with -2.35 (-3.65, -1.06) percentage points. Compared to the unadjusted data we see very similar estimates at -2.34 (-2.85, -1.82) percentage points for H-SBW and -2.39 (-2.95, -1.83) percentage points for SBW. We see that H-SBW reduces the confidence intervals relative to SBW. We also observe that using the adjusted covariate set appears to increases the width of the estimated confidence intervals. This increase in variability is expected because the adjustment procedure generally reduces the variability in the data, as we saw in Table~\ref{tab:adjust1}, thereby requiring that the balancing weights also increase in variability to achieve the desired level of balance. Importantly, this variance estimate conditions on the covariate adjustment, and does not take into account the randomness in this procedure, and may therefore understate the true uncertainty. When we recalculate the entire adjustment procedure, we find that the confidence intervals are of a comparable magnitude. The results are available in Appendix E.
 
-When we add the bias-correction, the absolute magnitude of the point estimate decreases: we estimate -2.05 & (-3.32, -0.79) percentage points for BC-HSBW and -2.00 & (-2.98, -1.01) percentage points for BC-SBW. In contrast to the H-SBW and SBW estimators, we see that the confidence interval for BC-SBW is narrower than for BC-HSBW. Figure~\ref{fig:estimators} presents all of our estimates. All adjusted estimates were closer to zero than the unadjusted estimates, though the point estimates from the SBW and H-SBW were estimators were virtually identical. The heterogeneous adjustments were all closer to zero than the unadjusted estimates; results are available in Appendix E.
+When we add the bias-correction, the absolute magnitude of the point estimate decreases: we estimate -2.05 (-3.32, -0.79) percentage points for BC-HSBW and -2.00 (-2.98, -1.01) percentage points for BC-SBW. In contrast to the H-SBW and SBW estimators, we see that the confidence interval for BC-SBW is narrower than for BC-HSBW. Figure~\ref{fig:estimators} presents all of our estimates. All adjusted estimates were closer to zero than the unadjusted estimates, though the point estimates from the SBW and H-SBW were estimators were virtually identical. The heterogeneous adjustments were all closer to zero than the unadjusted estimates; results are available in Appendix E.
 
 \begin{figure}[H]
 \begin{center}
@@ -115,7 +112,7 @@ When we add the bias-correction, the absolute magnitude of the point estimate de
 \end{center}
 \end{figure}
 
-Lastly, we examine the robustness of our point estimates to the removal of individual states (these are the same point estimates used to calculate our confidence intervals). Figure~\ref{fig:loostateplot} shows how the point estimates for each estimator changes for both the (homogeneous) adjusted and unadjusted datasets. We see similar results in either case: removing Ohio tends to move the point estimates farther from zero. By contrast, removing Iowa, Kentucky, or California tends to move the estimates closer to zero. 
+Lastly, we examine the robustness of our point estimates to the removal of individual states (these are the same point estimates used to calculate our confidence intervals). Figure~\ref{fig:loostateplot} shows how the point estimates for each estimator changes for both the (homogeneous) adjusted and unadjusted datasets. We see similar results in either case: removing Ohio tends to move the point estimates farther from zero (though the change is larger on the adjusted dataset). By contrast, removing North Dakota, Kentucky, or California tends to move the estimates closer to zero. 
 
 \begin{figure}[H]
 \begin{center}
@@ -127,32 +124,19 @@ Lastly, we examine the robustness of our point estimates to the removal of indiv
 
 \subsection{Sensitivity analysis} \label{sssec:sensitivity}
 
-We now consider the sensitivity of our analysis with respect to no anticipatory treatment effects. Several states had partial limited expansions prior to 2014. Following \cite{frean2017premium}, these states are California, Connecticut, Minnesota, New Jersey, and Washington. We rerun our analyses excluding CPUMAs from all five of these states. We have no a priori expectation about how removing these states might affect our estimates: on the one hand, states that expanded early might have a smaller treatment effect after 2014 because they already enrolled newly eligible individuals. On the other hand, if these states were also more motivated to enroll people in Medicaid, they might have experienced larger post-expansion coverage gains. Figure~\ref{fig:weightsbystatec2} displays the H-SBW weights summed by state alongside BC-HSBW, which extrapolates to reduce the imbalances. 
+We now consider the sensitivity of our analysis with respect to no anticipatory treatment effects. Several states had partial limited expansions prior to 2014. Following \cite{frean2017premium}, these states are California, Connecticut, Minnesota, New Jersey, and Washington. We rerun our analyses excluding CPUMAs from all five of these states. We have no a priori expectation about how removing these states might affect our estimates: on the one hand, states that expanded early might have a smaller treatment effect after 2014 because they already enrolled newly eligible individuals. On the other hand, if these states were also more motivated to enroll people in Medicaid, they might have experienced larger post-expansion coverage gains. Figure~\ref{fig:weightsbystatec2} in Appendix D displays the H-SBW weights summed by state alongside BC-HSBW, which extrapolates to reduce the imbalances. 
 
-\begin{figure}[H]
-\begin{center}
-    \caption{Total weights summed by state, early expansion removed}
-    \label{fig:weightsbystatec2}
-    \includegraphics[scale=0.6]{01_Plots/weights-by-state-hsbw-c2.png}
-\end{center}
-\end{figure}
+Excluding early expansion states, we estimate an effect of -2.09 (-2.85, -1.33) percentage points using H-SBW weights and -2.05 (-2.75, -1.35) percentage points for SBW. These estimates are quite similar to though slightly closer to zero than the the primary estimates. We also see that the differential between these estimates and the unadjusted estimates is slightly larger: -2.28  (-2.82, -1.74) percentage points for H-SBW and -2.21 (-2.71, -1.72) percentage points for SBW. 
 
-Excluding early expansion states, we estimate an effect of -2.09 (-2.85, -1.33) percentage points using H-SBW weights and -2.05  (-2.75, -1.35) percentage points for SBW. These estimates are quite similar to though slightly closer to zero than the the primary estimates. We also see that the differential between these estimates and the unadjusted estimates is slightly larger: -2.28  (-2.82, -1.74) percentage points for H-SBW and -2.21 (-2.71, -1.72) percentage points for SBW. 
-
-When we add the bias-correction the point estimates again move closer to zero: -1.94 (-2.96, -0.92) percentage points for BC-HSBW and -1.99 (-3, -0.99) percentage points for SBW. Overall these results suggests that the results are relatively robust to the exclusion of these states, so that potential violations of this causal assumption are not a large factor here.
+When we add the bias-correction the point estimates again move closer to zero: -1.94 (-2.96, -0.92) percentage points for BC-HSBW and -1.99 (-3, -0.99) percentage points for BC-SBW. Overall these results suggests that the results are relatively robust to the exclusion of these states, so that potential violations of this causal assumption do not appear to be a large factor.
 
 \subsection{Covariate importance}
 
 We also investigate our hypothesis that factors associated with Governance are associated with treatment response. As discussed above, we first remove the balance constraints on the Republican governance indicators and estimate $\hat{\psi}^1_v$, and then subtract our original ETC point estimate from this quantity to generate $\hat{\Delta}_v^1$. Because this quantity does not reflect a clear population target, instead of confidence intervals, we present the minimum and maximum leave-one-state-out values in parentheses next to the original estimate.
 
-% Fix these numbers
+For the H-SBW estimator we calculate $\hat{\Delta}^1$ equal to -0.69 (min = -0.83, max = -0.42) and equal to -0.79 (min = -0.90, max = -0.66) on our unadjusted dataset. In other words, our primary estimated treatment effect moved 0.78 percentage points further away from zero when we excluded the Republican governance indicators. This reflects a 33 percent decrease in our point estimate, a not-unsubstantial difference. Moreover, all of these estimates were less than zero, regardless of whether we conditioned on the covariate adjustment or not, regardless of whether we remove the early expansion states or not, and when removing each state. Across all specifications that we ran the minimum change we calculated was -1.34 and the maximum was -0.36. Additional distributional results across all leave-one-state-out estimates are available in Appendix E, Table~\ref{tab:rdiffc1}. Figure~\ref{fig:repub} displays our estimates of $\hat{\Delta}_v^1$ on our primary dataset and removing early expansion states (conditional on the covariate adjustment). 
 
-%  States & Homogeneous & H-SBW & -0.69 & -0.83 & -0.74 & -0.70 & -0.64 & -0.42 \\ 
-%   States & None & H-SBW & -0.79 & -0.90 & -0.81 & -0.80 & -0.76 & -0.66 \\ 
-
-For the H-SBW estimator we calculate $\hat{\Delta}^1$ equal to -0.69 (min = -0.83, max = -0.42) and equal to -0.79 (min = -0.90, max = -0.66) on our unadjusted dataset. In other words, our primary estimated treatment effect moved 0.78 percentage points further away from zero when we excluded the Republican governance indicators. This reflects a 33 percent decrease in our point estimate, a not-unsubstantial difference. Moreover, all of these estimates were less than zero, regardless of whether we conditioned on the covariate adjustment or not, regardless of whether we remove the early expansion states or not, and when removing each state. Across all specifications that we ran the minimum change we calculated was -1.34 and the maximum was -0.36. Additional distributional results across all leave-one-state-out estimates are available in Appendix E, Table~\ref{tab:rdiffc1} and Table~\ref{tab:rdiffc2}. Figure~\ref{fig:repub} displays our estimates of $\hat{\Delta}_v^1$ on our primary dataset and removing early expansion states (conditional on the covariate adjustment). 
-
-We also consider four other covariate sets. We find that our estimates are most sensitive to controlling for pre-treatment outcomes and unemployment rates. This is not unexpected: all else equal, the expansion region had much lower pre-treatment uninsurance rates. If we do not control for these covariates, the comparable region will likely have lower pre-treament uninsurance rates, causing the estimated counterfactual to be closer to zero. The effect estimates were less sensitive to the removal of other covariate groups, and all point estimates are available in Appendix E, Table~\ref{tab:ptests}
+We also consider four other covariate sets. We find that our estimates are most sensitive to controlling for pre-treatment outcomes and unemployment rates. This is not unexpected: all else equal, the expansion region had much lower pre-treatment uninsurance rates. If we do not control for these covariates, the comparable region will likely have lower pre-treament uninsurance rates, causing the estimated counterfactual to be closer to zero. The effect estimates were less sensitive to the removal of other covariate groups, and all point estimates are available in Appendix E, Table~\ref{tab:ptests}.
 
 \begin{figure}[H]
 \begin{center}
