@@ -2,7 +2,7 @@
 
 We show three results regarding the bias of the SBW estimator under the classical errors-in-variables model. First, we show that the bias of the SBW estimator that sets $\delta = 0$ (i.e. exactly balances the means of the covariates) is equal to the bias of the OLS estimator. Second, we show that if the observed covariate values can be replaced by their conditional expectations $\eta$ given the noisy observations, then the SBW estimator will be unbiased. Finally, we consider the case where we can estimate $\eta$ using auxillary data to estimate the covariance matrix of the error terms and show that the SBW estimator is consistent if we replace $\eta$ by an estimate $\hat{\eta}$ in the constraint set. In contrast to our application, we take the perspective throughout that $X$ is random, noting that this estimator still has desirable properties even when we view $X$ is fixed (see, e.g., \cite{gleser1992importance}).
 
-Consider a dataset of consists of $i = 1, ..., n$ units where we observe the outcomes $Y_i$ and a treatment assignment indicator $A_i \in \{0, 1\}$. Let $n_a$ be the number of units in each treatment group, i.e, $n_a = \sum_{i = 1}^n \mathbbm{1}(A_i = a)$. Let $X_i \in \mathbb{R}^q$ be a vector of covariate values where $(X_i \mid A_i) \stackrel{iid}\sim MVN(\upsilon_a, \Sigma_{XX})$. 
+Consider a dataset that consists of $i = 1, ..., n$ units where we observe the outcomes $Y_i$ and a treatment assignment indicator $A_i \in \{0, 1\}$. Let $n_a$ be the number of units in each treatment group, i.e, $n_a = \sum_{i = 1}^n \mathbbm{1}(A_i = a)$. Let $X_i \in \mathbb{R}^q$ be a vector of covariate values where $(X_i \mid A_i) \stackrel{iid}\sim MVN(\upsilon_a, \Sigma_{XX})$. 
 
 Our target parameter is $\psi = \mathbb{E}\{Y_i^1 \mid A_i = 0\}$.\footnote{Note that we switch to the super-population target because we view $X$ as random.} We assume unconfoundedness ($Y_i^a \perp A_i \mid X_i$), consistency ($Y_i^a = Y_i \mid A_i = a$), and that $\mathbb{E}\{Y_i \mid X_i, A_i = a\} = \alpha_a + X_i^T\beta_a$. For simplicity we also assume throughout that there exist positive weights $\gamma$ that exactly balance the covariates, i.e. $\sum_{i: A_i = 1}\gamma_iX_{i, r} = \bar{X}_{0, r}$ for all $r = 1, ..., q$ and $\sum_{i: A_i = 1}\gamma_i = 1$, $\gamma_i > 0$. 
 
@@ -78,11 +78,11 @@ $$
 be the SBW estimator, where
 
 \begin{align*}
-\gamma &= \arg\min_{\theta} \sum_{i: A_i = 1}\theta_i^2 \text{ such that } W_{1, r}\theta = \bar{W}_{0, r} \ \ \ (r = 1, ..., q) \\
+\gamma &= \arg\min_{\theta} \sum_{i: A_i = 1}\theta_i^2 \text{ such that } W_{1, r}^T\theta = \bar{W}_{0, r} \ \ \ (r = 1, ..., q) \\
 &\theta_i > 0, \sum_{i: A_i = 1}\theta_i = 1
 \end{align*}
 
-where $W_{a, r}$ is the $n_a$ dimensional (row) vector associated with covariate $r$.
+where $W_{a, r}$ is the $n_a$ dimensional (column) vector associated with covariate $r$.
 
 \begin{proposition}\label{cl1}
 The bias of $\hat{\psi}^{reg}$ is equal to the bias of $\hat{\psi}^{sbw}$; specifically, 
@@ -177,6 +177,10 @@ $$
 $$
 \end{remark}
 
+\begin{remark}
+If we view $X$ as fixed and substitute $\bar{X}_a$ for $\upsilon_a$ (again assuming quantity is known), the remaining term contributes to a finite-sample bias rather than variance. Moreover, the squared-bias term will decrease with the variance of the weights.
+\end{remark}
+
 Proposition 2 assumes that we know $\eta_a$ and $\upsilon_0$; however, in practice we estimate it from the data. Moreover, the estimation of $\hat{\eta}_1$ typically involves both the observed dataset and auxillary data, which we have not yet specified here. We now consider a simple version of this case.
 
 Recall that $\eta_a(W_i) = \upsilon_a + \kappa^T(W_i - \upsilon_a)$, where $\kappa = \Sigma_{WW}^{-1}\Sigma_{XX}$. We can easily estimate $\upsilon_a$ consistently using $\bar{W}_a$; the challenge is estimating $\kappa$. 
@@ -217,7 +221,7 @@ Our estimation of $\eta_a$ follows a somewhat different procedure which we outli
 
 \subsection{H-SBW Objective}
 
-We show that the H-SBW estimator minimizes the variance of any estimator within the constraint set given a constant within-group correlation structure.
+We show that the H-SBW estimator minimizes the variance of any estimator within the constraint set given a constant within-group correlation structure. Here we assume that the true covariates are measured.
 
 Consider the outcome model:
 
@@ -227,11 +231,11 @@ Consider the outcome model:
 
 where $\mathbb{E}\{c_s \mid X_{sc}\} = \mathbb{E}\{\epsilon_{sc} \mid X_{sc}\} = \mathbb{E}\{c_s\epsilon_{sc} \mid X_{sc}\} = 0$, and $Var(\epsilon_{sc}) = \sigma^2$ and $Var(c_s) = \eta^2$. Let $\rho = \frac{\eta^2}{\sigma^2 + \eta^2}$.
 
-Then consider the variance of any weighting estimator using weights $\gamma$ in the form of $Y\gamma$ where $\gamma^T1 = n_t$.
+Then consider the variance of any weighting estimator using weights $\gamma$ where $\gamma^T1 = n_t$.
 
 \begin{align}
-    Var(n_t^{-1}\sum_{sc: A_s = 1}\gamma_{sc}Y_{sc} \mid X_{sc}, A_{sc}) &= n_t^{-2}\sum_{s: A_s = 1}^{m_1}(\sum_{c = 1}^{p_s}\gamma_{sc}^2(\sigma^2 + \eta^2) + \sum_{c \ne d}\gamma_{sc}\gamma{sd}\eta^2) \\
-    &\prop\to n_t^{-2}\sum_{s: A_s = 1}(\sum_{c = 1}^{p_s}(\gamma_{sc}^2 + \sum_{c \ne d}\rho \gamma_{sc}\gamma{sd})
+    Var(n_t^{-1}\sum_{sc: A_s = 1}\gamma_{sc}Y_{sc} \mid X_{sc}, A_{sc}) &= n_t^{-2}\sum_{s: A_s = 1}^{m_1}(\sum_{c = 1}^{p_s}\gamma_{sc}^2(\sigma^2 + \eta^2) + \sum_{c \ne d}\gamma_{sc}\gamma_{sd}\eta^2) \\
+    &\propto n_t^{-2}\sum_{s: A_s = 1}(\sum_{c = 1}^{p_s}(\gamma_{sc}^2 + \sum_{c \ne d}\rho \gamma_{sc}\gamma_{sd})
 \end{align}
 
 where the second line follows by dividing by $\eta^2 + \sigma^2$. This suggests the H-SBW objective, which minimizes the (conditional) variance of this estimator for known $\rho$.
