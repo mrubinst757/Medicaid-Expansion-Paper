@@ -139,13 +139,7 @@ For $\delta \to \infty$, this objective yields the solution:
 \gamma_{sc} \propto \frac{1}{(p_s - 1)\rho + 1}
 \end{equation}
 
-Setting $\rho \approx 1$, the solution becomes
-
-\begin{equation}\label{eqn:sbwsol}
-\gamma_{sc} \propto \frac{1}{p_s}
-\end{equation}
-
-In other words, this objective will attempt to downweight CPUMAs in states with large numbers of CPUMAs, upweight CPUMAs in states with small numbers of CPUMAs, and assign each CPUMA within a state equal weight. Notice that when $p_s$ is constant across states this objective returns the SBW solution when $\delta \to \infty$, and that SBW is equivalent to setting $\rho = 0$. In short, as we increase $\rho$, the objective will attempt to more uniformly disperse the weights across states. 
+Setting $\rho = 0$ returns the SBW solution: $\gamma_{sc} \propto 1$. By contrast, when setting $\rho \approx 1$, we see that $\gamma_{sc} \propto \frac{1}{p_s}$. In other words, as we increase $\rho$, this objective downweight CPUMAs in states with large numbers of CPUMAs and upweight CPUMAs in states with small numbers of CPUMAs (all while assigning each CPUMA within a state equal weight). Moreover, when $p_s$ is constant across states this objective will also the SBW solution. In short, as we increase $\rho$, the objective will attempt to more uniformly disperse weights across states.
 
 As a brief illustration, we simulate $N = 800$ observations in $m = 40$ regions each with $p_s = 20$ units, and draw $X_{sc} \sim N(\mu_s, 1)$, for $\mu \in \{0, 1\}$ (drawn from a Bernoulli with equal probability); $A_s \sim Bern(expit(\bar{X}_s))$, where $\bar{X}_s$ is the mean covariate value in group $s$. We then generate weights to balance the control to the treated group mean. We run H-SBW variants setting $\rho = 0$ (which is equivalent to SBW), $\rho = 0.5$, and $\rho = 0.99$ all while keeping $\delta$ fixed at zero. Figure 1 shows the weights summed to the group level for all control regions. The color of each set of bars is the overall variance of the weights. We can see that the weights in general are uniform across units for SBW (the variance is lower); however, the weights are not uniformly dispersed across regions (the sum of weights within each region is not even). As we increase $\rho$, the weights disperse more evenly across regions. Despite the increase in the variance of the weights, these weights are optimal under our assumed covariance structure. 
 
