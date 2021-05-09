@@ -2,7 +2,7 @@
 
 We show three results regarding the bias of the SBW estimator under the classical errors-in-variables model. First, we show that the bias of the SBW estimator that sets $\delta = 0$ (i.e. exactly balances the means of the covariates) is equal to the bias of the OLS estimator. Second, we show that if the observed covariate values can be replaced by their conditional expectations $\eta$ given the noisy observations, then the SBW estimator will be unbiased. Finally, we consider the case where we can estimate $\eta$ using auxillary data to estimate the covariance matrix of the error terms and show that the SBW estimator is consistent if we replace $\eta$ by an estimate $\hat{\eta}$ in the constraint set. In contrast to our application, we take the perspective throughout that $X$ is random, noting that this estimator still has desirable properties even when we view $X$ is fixed (see, e.g., \cite{gleser1992importance}).
 
-Consider a dataset that consists of $i = 1, ..., n$ units where we observe the outcomes $Y_i$ and a treatment assignment indicator $A_i \in \{0, 1\}$. Let $n_a$ be the number of units in each treatment group, i.e, $n_a = \sum_{i = 1}^n \mathbbm{1}(A_i = a)$. Let $X_i \in \mathbb{R}^q$ be a vector of covariate values where $(X_i \mid A_i) \stackrel{iid}\sim MVN(\upsilon_a, \Sigma_{XX})$. 
+Consider a dataset that consists of $i = 1, ..., n$ units where we observe the outcomes $Y_i$ and a treatment assignment indicator $A_i \in \{0, 1\}$. Let $n_a$ be the number of units in each treatment group, i.e, $n_a = \sum_{i = 1}^n \mathbbm{1}(A_i = a)$. Let $X_i \in \mathbb{R}^q$ be a vector of covariate values where $X_i \mid A_i = a \stackrel{iid}\sim MVN(\upsilon_a, \Sigma_{XX})$. 
 
 Our target parameter is $\psi = \mathbb{E}\{Y_i^1 \mid A_i = 0\}$.\footnote{Note that we switch to the super-population target because we view $X$ as random.} We assume unconfoundedness ($Y_i^a \perp A_i \mid X_i$), consistency ($Y_i^a = Y_i \mid A_i = a$), and that $\mathbb{E}\{Y_i \mid X_i, A_i = a\} = \alpha_a + X_i^T\beta_a$. For simplicity we also assume throughout that there exist positive weights $\gamma$ that exactly balance the covariates, i.e. $\sum_{i: A_i = 1}\gamma_iX_{i, r} = \bar{X}_{0, r}$ for all $r = 1, ..., q$ and $\sum_{i: A_i = 1}\gamma_i = 1$, $\gamma_i > 0$. 
 
@@ -42,7 +42,7 @@ We now outline the classical errors-in-variables model. Let $Y_i(X_i, a) = \alph
 In other words the error in the outcome model is uncorrelated with the error in the covariates. Let $u_i = (\epsilon_i, v_i)$. We further assume that the covariates are uncorrelated with any of the error terms:
 
 \begin{equation}
-(X_i, u_i) \sim MVN((\upsilon_a, 0), \begin{pmatrix} 
+(X_i, u_i) \mid A_i = a \sim MVN((\upsilon_a, 0), \begin{pmatrix} 
 \Sigma_{XX} & 0 \\ 
 0 & \Sigma_{uu}  
 \end{pmatrix}
@@ -106,21 +106,21 @@ The first equality holds by definition and the second by rearranging terms. The 
 We now derive the bias of $\hat{\psi}^{sbw}$:
 
 \begin{align*}
-    \hat{\psi}^{sbw} - \psi &= \sum_{i: A_i = 1}\gamma_iY_i - (\alpha + \upsilon_0^T\beta) \\
-    &= \sum_{i: A_i = 1} \gamma_i(\alpha + X_i^T\beta + \epsilon_i) - (\alpha + \bar{W}_0^T\beta + (\upsilon_0 - \bar{W}_0)^T\beta) \\
-    &= \sum_{i: A_i = 1} (\gamma_i(W_i - v_i)^T\beta + \gamma_i\epsilon_i) - \bar{W}_0^T\beta + (\upsilon_0 - \bar{W}_0)^T\beta \\
-    &= \underbrace{-\sum_{i: A_i = 1}\gamma_iv_i^T\beta}_{T_1} + \underbrace{\sum_{i: A_i = 1}\gamma_i\epsilon_i}_{T_2}  + \underbrace{(\upsilon_0 - \bar{W}_0)^T\beta}_{T_3}
+    \hat{\psi}^{sbw} - \psi &= \sum_{i: A_i = 1}\gamma_iY_i - (\alpha_1 + \upsilon_0^T\beta_1) \\
+    &= \sum_{i: A_i = 1} \gamma_i(\alpha_1 + X_i^T\beta_1 + \epsilon_i) - (\alpha_1 + \bar{W}_0^T\beta_1 + (\upsilon_0 - \bar{W}_0)^T\beta_1) \\
+    &= \sum_{i: A_i = 1} (\gamma_i(W_i - v_i)^T\beta_1 + \gamma_i\epsilon_i) - \bar{W}_0^T\beta_1 + (\upsilon_0 - \bar{W}_0)^T\beta_1 \\
+    &= \underbrace{-\sum_{i: A_i = 1}\gamma_iv_i^T\beta_1}_{T_1} + \underbrace{\sum_{i: A_i = 1}\gamma_i\epsilon_i}_{T_2}  + \underbrace{(\upsilon_0 - \bar{W}_0)^T\beta_1}_{T_3}
 \end{align*}
 
 Conditioning on $W_i$, we can take expectations over $X_i$, and see that $T_2$ has expectation zero (noting that the weights, conditional on $W_i$, are independent of these errors). $T_3$ is simply the scaled sum of mean zero estimation error and therefore has expectation zero. We conclude by considering $T_1$ and again take expectations over $X_i$ conditional on $W_i$: 
 
 \begin{align*}
-    \sum_{i: A_i = 1} \gamma_i\mathbb{E}\{X_i - W_i \mid W_i\}^T\beta &= \sum_{i: A_i = 1} \gamma_i (\upsilon_1 + \kappa^T(W_i - \upsilon_1))^T\beta - \sum_{i: A_i = 1}\gamma_i W_i^T\beta \\
-    &= (\upsilon_1 + \kappa^T(\bar{W}_0 - \upsilon_1))^T\beta - \bar{W}_0^T\beta \\
-    &= (\kappa^T(\bar{W}_0 - \upsilon_1))^T\beta - (\bar{W}_0 - \upsilon_1)^T\beta  \\
-    &= (\bar{W}_0 - \upsilon_1)^T(\kappa - I_d)\beta \\
-    &= (\upsilon_0 - \upsilon_1)^T(\kappa - I_d)\beta + (\bar{W}_0 - \upsilon_0)^T(\kappa - I_d)\beta \\
-    \implies \mathbb{E}\{\hat{\psi}^{sbw} - \psi\} &= (\upsilon_0 - \upsilon_1)^T(\kappa - I_d)\beta
+    \sum_{i: A_i = 1} \gamma_i\mathbb{E}\{X_i - W_i \mid W_i\}^T\beta_1 &= \sum_{i: A_i = 1} \gamma_i (\upsilon_1 + \kappa^T(W_i - \upsilon_1))^T\beta_1 - \sum_{i: A_i = 1}\gamma_i W_i^T\beta_1 \\
+    &= (\upsilon_1 + \kappa^T(\bar{W}_0 - \upsilon_1))^T\beta_1 - \bar{W}_0^T\beta_1 \\
+    &= (\kappa^T(\bar{W}_0 - \upsilon_1))^T\beta_1 - (\bar{W}_0 - \upsilon_1)^T\beta_1  \\
+    &= (\bar{W}_0 - \upsilon_1)^T(\kappa - I_d)\beta_1 \\
+    &= (\upsilon_0 - \upsilon_1)^T(\kappa - I_d)\beta_1 + (\bar{W}_0 - \upsilon_0)^T(\kappa - I_d)\beta_1 \\
+    \implies \mathbb{E}\{\hat{\psi}^{sbw} - \psi\} &= (\upsilon_0 - \upsilon_1)^T(\kappa - I_d)\beta_1
 \end{align*}
 
 The final line holds because in the second to last line, we can take expectation over $W_i$ and see that the second term is a scaled sum of mean zero estimation error and has expectation zero. 
@@ -129,7 +129,7 @@ The final line holds because in the second to last line, we can take expectation
 Let $\hat{\psi}^{sbw}(\eta)$ be the SBW estimator that reweights $\eta_1(W_i)$ rather than $W_i$; i.e. $\hat{\psi}^{sbw}(\eta) = \sum_{i: A_i = 1}\gamma_i^\star Y_i$ where 
 
 \begin{align*}
-\gamma^\star = &\arg\min_{\theta} \sum_{i: A_i = 1}\theta_i^2 \text{ such that } \eta_1(W_{1, r})\theta = \upsilon_{0, r} \ \ \ (r = 1, ..., q) \\
+\gamma^\star = &\arg\min_{\theta} \sum_{i: A_i = 1}\theta_i^2 \text{ such that } \eta_1(W_{1, r})^T\theta = \upsilon_{0, r} \ \ \ (r = 1, ..., q) \\
 &\theta_i > 0, \sum_{i: A_i = 1} \theta_i = 1
 \end{align*}
 
@@ -143,14 +143,14 @@ $\mathbb{E}\{\hat{\psi}^{sbw}(\eta)\} = \psi$
 By linearity we know that
 
 \begin{align*}
-Y_i = \alpha + \eta_a(W_i)^T\beta_a + (X_i - \eta_a(W_i))^T\beta_a
+Y_i = \alpha_1 + \eta_1(W_i)^T\beta_1 + (X_i - \eta_1(W_i))^T\beta_1
 \end{align*}
 
 We then have that:
 
 \begin{align*}
-    \hat{\psi}^{sbw}(\eta) - \psi &= \sum_{i: A_i = 1}\gamma_i^\star Y_i - (\alpha + \upsilon_0^T\beta) \\
-    &= \sum_{i: A_i = 1}\gamma_i^\star\alpha + \sum_{i: A_i = 1}\gamma_i^\star\eta_1(W_i)^T\beta_1 + \sum_{i: A_i = 1}\gamma_i^\star(X_i - \eta_1(W_i))^T\beta_1 - (\alpha + \upsilon_0^T\beta_1) \\
+    \hat{\psi}^{sbw}(\eta) - \psi &= \sum_{i: A_i = 1}\gamma_i^\star Y_i - (\alpha_1 + \upsilon_0^T\beta_1) \\
+    &= \sum_{i: A_i = 1}\gamma_i^\star\alpha_1 + \sum_{i: A_i = 1}\gamma_i^\star\eta_1(W_i)^T\beta_1 + \sum_{i: A_i = 1}\gamma_i^\star(X_i - \eta_1(W_i))^T\beta_1 - (\alpha + \upsilon_0^T\beta_1) \\
     &= \sum_{i: A_i = 1}\gamma_i^\star(X_i - \eta_1(W_i))^T\beta_1
 \end{align*}
 
@@ -162,7 +162,7 @@ Conditional on $W$, the weights are fixed and $X_i - \eta_1(W_i)$ has expectatio
 While we have assumed no model error, this estimator still has variance, conditional on $W_i$, equal to
 
 $$
-\sum_{i: A_i = 1} \gamma_i^\star^2\beta^TCov(X_i \mid W_i)\beta
+\sum_{i: A_i = 1} \gamma_i^{\star^2}\beta^T Cov(X_i \mid W_i)\beta
 $$
 
 where, assuming that $(X_i, W_i)$ are jointly normally distributed, $Cov(X_i \mid W_i) = \Sigma_{XX} - \Sigma_{XX}\Sigma_{WW}^{-1}\Sigma_{XX}$. Therefore, the variance of this estimator is higher than if we knew the true $X_i$ unless $\Sigma_{WW} = \Sigma_{XX}$ (i.e. we observe $X_i$). 
@@ -173,12 +173,12 @@ where, assuming that $(X_i, W_i)$ are jointly normally distributed, $Cov(X_i \mi
 Assuming there is a model error simply leads to the additional term $\sum_{i: A_i = 1}\gamma_i\epsilon_i$. This again has expectation zero, because the weights remain independent of the error in the outcome model, and adds a term to the total variance (conditional on $W_i$) equal to
 
 $$
-\sigma^2\sum_{i: A_i = 1}\gamma_i^\star^2
+\sigma^2\sum_{i: A_i = 1}\gamma_i^{\star^2}
 $$
 \end{remark}
 
 \begin{remark}
-If we view $X$ as fixed and substitute $\bar{X}_a$ for $\upsilon_a$ (again assuming quantity is known), the remaining term contributes to a finite-sample bias rather than variance. Moreover, the squared-bias term will decrease with the variance of the weights.
+If we view both $W$ and $X$ as fixed and substitute $\bar{X}_a$ for $\upsilon_a$ (again assuming this quantity is known), the remaining term contributes to a finite-sample bias rather than variance. Moreover, the squared-bias term (equivalent to the MSE when $\sigma^2 = 0$) will decrease with the variance of the weights.
 \end{remark}
 
 Proposition 2 assumes that we know $\eta_a$ and $\upsilon_0$; however, in practice we estimate it from the data. Moreover, the estimation of $\hat{\eta}_1$ typically involves both the observed dataset and auxillary data, which we have not yet specified here. We now consider a simple version of this case.
@@ -199,10 +199,10 @@ Let $\tilde{\gamma}$ be the weights that solve the SBW objective with $\sum_{i: 
 
 \begin{proof}
 
-Rewriting the error expression from Lemma A.2 leads to the additional terms $\sum_{i: A_i = 1}\tilde{\gamma}_i(\eta_1(W_i) - \hat{\eta_1}(W_i))^T\beta$ and $(\upsilon_0 - \bar{W}_0)^T\beta$. The second term is scaled estimation error and has expectation zero. It therefore suffices to show that 
+Rewriting the error expression from Lemma A.2 leads to the additional terms $\sum_{i: A_i = 1}\tilde{\gamma}_i(\eta_1(W_i) - \hat{\eta_1}(W_i))^T\beta_1$ and $(\upsilon_0 - \bar{W}_0)^T\beta_1$. The second term is scaled estimation error and has expectation zero. It therefore suffices to show that 
 
 $$
-\sum_{i: A_i = 1}\tilde{\gamma}_i(\eta_1(W_i) - \hat{\eta_1}(W_i))^T\beta \to 0
+\sum_{i: A_i = 1}\tilde{\gamma}_i(\eta_1(W_i) - \hat{\eta_1}(W_i))^T\beta_1 \to 0
 $$
 
 By the weak law of large numbers, $\hat{\Sigma}_{WW} - \hat{\Sigma}_{vv} \to \Sigma_{XX}$ as $n \to \infty$, $T \to \infty$; similarly $\hat{\Sigma}_{WW} \to \Sigma_{WW}$ as $n \to \infty$. By the continuous mapping theorem $\hat{\kappa} \to \kappa$. Since $\bar{W}_0 \to \upsilon_0$, we have that $\hat{\eta} \to \eta$. 
@@ -210,7 +210,7 @@ By the weak law of large numbers, $\hat{\Sigma}_{WW} - \hat{\Sigma}_{vv} \to \Si
 Let $\gamma^\star$ be the weights defined in Lemma A.3. We can then rewrite the error term above as
 
 \begin{align*}
-\sum_{i: A_i = 1}(\tilde{\gamma}_i - \gamma_i^\star)(\hat{\eta}_1(W_i) - \eta(W_i))^T\beta + \sum_{i: A_i = 1}\gamma_i^\star(\hat{\eta}_1(W_i) - \eta_1(W_i))^T\beta
+\sum_{i: A_i = 1}(\tilde{\gamma}_i - \gamma_i^\star)(\hat{\eta}_1(W_i) - \eta(W_i))^T\beta_1 + \sum_{i: A_i = 1}\gamma_i^\star(\hat{\eta}_1(W_i) - \eta_1(W_i))^T\beta_1
 \end{align*}
 
 As $n \to \infty$, $T \to \infty$, $\hat{\eta}_1 \to \eta_1$, and therefore by definition of the SBW objective, $\tilde{\gamma}_i \to \gamma_i^\star$. These two terms therefore both converge in probability to zero. 
@@ -221,21 +221,19 @@ Our estimation of $\eta_a$ follows a somewhat different procedure which we outli
 
 \subsection{H-SBW Objective}
 
-We show that the H-SBW estimator minimizes the variance of any estimator within the constraint set given a constant within-group correlation structure. Here we assume that the true covariates are measured.
-
-Consider the outcome model:
+We show that the H-SBW estimator minimizes the variance of any estimator within the constraint set given a constant within-group correlation structure. Here we assume that the true covariates are measured. Consider the outcome model:
 
 \begin{equation}
-    Y_{sc} = X_{sc}^T\beta + c_s + \epsilon_{sc}
+    Y_{sc}(X_{sc}, a) = \alpha_a + X_{sc}^T\beta_a + c_s + \epsilon_{sc}
 \end{equation}
 
-where $\mathbb{E}\{c_s \mid X_{sc}\} = \mathbb{E}\{\epsilon_{sc} \mid X_{sc}\} = \mathbb{E}\{c_s\epsilon_{sc} \mid X_{sc}\} = 0$, and $Var(\epsilon_{sc}) = \sigma^2$ and $Var(c_s) = \eta^2$. Let $\rho = \frac{\eta^2}{\sigma^2 + \eta^2}$.
+where $\mathbb{E}\{c_s \mid X_{sc}, A_{sc}\} = \mathbb{E}\{\epsilon_{sc} \mid X_{sc}, A_{sc}\} = \mathbb{E}\{c_s\epsilon_{sc} \mid X_{sc}, A_{sc}\} = 0$, and $Var(\epsilon_{sc}) = \sigma^2$ and $Var(c_s) = \eta^2$. Let $\rho = \frac{\eta^2}{\sigma^2 + \eta^2}$.
 
-Then consider the variance of any weighting estimator using weights $\gamma$ where $\gamma^T1 = n_t$.
+The conditional variance of any weighting estimator $\sum_{sc: A_{sc} = 1}\gamma_{sc}Y_{sc}$ using weights $\gamma$ where $\gamma^T1 = n_t$ is then equal to:
 
 \begin{align}
     Var(n_t^{-1}\sum_{sc: A_s = 1}\gamma_{sc}Y_{sc} \mid X_{sc}, A_{sc}) &= n_t^{-2}\sum_{s: A_s = 1}^{m_1}(\sum_{c = 1}^{p_s}\gamma_{sc}^2(\sigma^2 + \eta^2) + \sum_{c \ne d}\gamma_{sc}\gamma_{sd}\eta^2) \\
-    &\propto n_t^{-2}\sum_{s: A_s = 1}(\sum_{c = 1}^{p_s}(\gamma_{sc}^2 + \sum_{c \ne d}\rho \gamma_{sc}\gamma_{sd})
+    &\propto \sum_{s: A_s = 1}(\sum_{c = 1}^{p_s}(\gamma_{sc}^2 + \sum_{c \ne d}\rho \gamma_{sc}\gamma_{sd})
 \end{align}
 
 where the second line follows by dividing by $\eta^2 + \sigma^2$. This suggests the H-SBW objective, which minimizes the (conditional) variance of this estimator for known $\rho$.
