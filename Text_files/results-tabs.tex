@@ -1,15 +1,15 @@
 \section{Additional Results}
 \label{ssec:allresults}
 
-Table~\ref{tab:confintmain} displays the point estimates from all estimators as well as confidence intervals calculated either (a) leave-one-state-out jackknife on the adjusted dataset (CI (states)); (b) leave-one-state-out jackknife repeating the entire adjusted leaving each state out (CI (proc)). This table also includes all analyses calculated on a second version of the adjusted data where we model a separate $\kappa$ for all values (heterogeneous), which is the adjustment suggested by \cite{carroll2006measurement}. Notice that the confidence intervals are identical for ``None'' because this is the unadjusted dataset. ``Homogeneous'' is our preferred covariate adjustment.
+Table~\ref{tab:confintmain} displays the point estimates from all estimators as well as confidence intervals calculated either (a) leave-one-state-out jackknife on the adjusted dataset (``CI (states)''); (b) leave-one-state-out jackknife repeating the entire adjusted leaving each state out (``CI (proc)''). This table also includes all analyses calculated on a second version of the adjusted data where we model a separate $\kappa$ for all values (heterogeneous). The confidence intervals are identical for ``None'' because this is the unadjusted dataset. ``Homogeneous'' is our preferred covariate adjustment, and the results presented in the main paper.
 
-\begin{table}[ht]
+\begin{table}[h!]
 \centering
 \caption{Point estimates and confidence intervals, primary dataset}
 \label{tab:confintmain}
 \begin{tabular}{llrll}
   \hline
-Weight type & Adjustment & Psihat & CI (states) & CI (proc) \\ 
+Weight type & Adjustment & $\hat{\psi}$ & CI (states) & CI (proc) \\ 
   \hline
 H-SBW & Homogeneous & -2.33 & (-3.49, -1.16) & (-3.47, -1.19) \\ 
   H-SBW & Heterogeneous & -2.24 & (-3.23, -1.24) & (-3.40, -1.08) \\ 
@@ -27,48 +27,15 @@ H-SBW & Homogeneous & -2.33 & (-3.49, -1.16) & (-3.47, -1.19) \\
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:ptests} presents all point estimates from estimators that we calculated. The ``Var subset`` column indicates which variables were excluded from the estimation: 0 excludes no variables; 1 removes Republican governance indicators; 2 pre-treatment uninsurance and unemployment rates; 3 urban, age, education, citizenship, marital status, student, disability, or female; 4 race, ethnicity, income, foreign born; 5 children, population growth, and household to person ratio. We see that the largest changes generally occur when excluding the pre-treatment uninsurance and unemployment rates. This is not surprising: controlling for the other covariates, the pre-treatment uninsurance rate was substantially lower in the treated region compared to the control region. Given that pre-treatment uninsurance rates are highly correlated with post-treatment rates, we find that this comparison leads to a larger absolute magnitude point estimate, highlighting the need to control for these covariates.
+Table~\ref{tab:confintmainc2} presents the same results when excluding the early expansion states.
 
-%Wed Jan 13 15:24:43 2021
-\begin{table}[ht]
-\centering
-\caption{Point estimates for all specifications}
-\label{tab:ptests}
-\begin{tabular}{llrrrr}
-  \hline
-Variable subset & Adjustment & H-SBW & BC-HSBW & SBW & BC-SBW \\ 
-  \hline
-0 & Homogeneous & -2.33 & -2.05 & -2.35 & -2.07 \\ 
-  0 & Heterogeneous & -2.24 & -1.98 & -2.28 & -2.00 \\ 
-  0 & None & -2.34 & -2.22 & -2.39 & -2.19 \\ 
-  1 & Homogeneous & -3.02 & -2.98 & -3.03 & -2.76 \\ 
-  1 & Heterogeneous & -3.02 & -2.98 & -3.01 & -2.76 \\ 
-  1 & None & -3.13 & -3.17 & -3.14 & -2.93 \\ 
-  2 & Homogeneous & -5.40 & -4.73 & -5.12 & -4.48 \\ 
-  2 & Heterogeneous & -5.40 & -4.72 & -5.12 & -4.48 \\ 
-  2 & None & -5.40 & -4.81 & -5.12 & -4.55 \\ 
-  3 & Homogeneous & -2.21 & -1.94 & -2.24 & -1.91 \\ 
-  3 & Heterogeneous & -2.14 & -1.86 & -2.18 & -1.85 \\ 
-  3 & None & -2.33 & -2.03 & -2.38 & -2.02 \\ 
-  4 & Homogeneous & -2.34 & -2.18 & -2.29 & -2.15 \\ 
-  4 & Heterogeneous & -2.30 & -2.17 & -2.25 & -2.10 \\ 
-  4 & None & -2.39 & -2.37 & -2.45 & -2.35 \\ 
-  5 & Homogeneous & -2.33 & -2.12 & -2.37 & -2.15 \\ 
-  5 & Heterogeneous & -2.24 & -2.05 & -2.30 & -2.09 \\ 
-  5 & None & -2.34 & -2.25 & -2.38 & -2.26 \\ 
-   \hline
-\end{tabular}
-\end{table}
-
-Table ~\ref{tab:confintmainc2} and Table~\ref{tab:secondaryptests} are identical to the structure of the previous two tables except we exclude the ``early expansion states'' from the pool of expansion state matches. 
-
-\begin{table}[ht]
+\begin{table}[h!]
 \centering
 \caption{Point estimates and confidence intervals, early expansion excluded}
 \label{tab:confintmainc2}
 \begin{tabular}{llrll}
   \hline
-Weight type & Adjustment & Psihat & CI (states) & CI (proc) \\ 
+Weight type & Adjustment & $\hat{\psi}$ & CI (states) & CI (proc) \\ 
   \hline
 H-SBW & Homogeneous & -2.09 & (-2.85, -1.33) & (-3.15, -1.03) \\ 
   H-SBW & Heterogeneous & -2.06 & (-2.91, -1.22) & (-3.26, -0.87) \\ 
@@ -86,126 +53,14 @@ H-SBW & Homogeneous & -2.09 & (-2.85, -1.33) & (-3.15, -1.03) \\
 \end{tabular}
 \end{table}
 
-\begin{table}[ht]
-\centering
-   \caption{Point estimates for all specifications, early expansion excluded}
-    \label{tab:secondaryptests}
-\begin{tabular}{llrrrr}
-  \hline
-Variable subset & Adjustment & H-SBW & BC-HSBW & SBW & BC-SBW \\ 
-  \hline
-0 & Homogeneous & -2.09 & -1.94 & -2.05 & -1.99 \\ 
-  0 & Heterogeneous & -2.06 & -1.93 & -2.03 & -2.00 \\ 
-  0 & None & -2.28 & -2.22 & -2.21 & -2.23 \\ 
-  1 & Homogeneous & -3.06 & -2.97 & -2.99 & -2.93 \\ 
-  1 & Heterogeneous & -3.08 & -3.11 & -2.99 & -2.93 \\ 
-  1 & None & -3.23 & -3.32 & -3.05 & -3.08 \\ 
-  2 & Homogeneous & -5.32 & -4.42 & -4.84 & -4.28 \\ 
-  2 & Heterogeneous & -5.32 & -4.38 & -4.84 & -4.30 \\ 
-  2 & None & -5.32 & -4.44 & -4.85 & -4.30 \\ 
-  3 & Homogeneous & -2.01 & -1.86 & -1.98 & -1.89 \\ 
-  3 & Heterogeneous & -2.01 & -1.85 & -1.99 & -1.91 \\ 
-  3 & None & -2.28 & -2.08 & -2.21 & -2.06 \\ 
-  4 & Homogeneous & -2.25 & -2.07 & -2.24 & -2.01 \\ 
-  4 & Heterogeneous & -2.21 & -2.06 & -2.14 & -1.97 \\ 
-  4 & None & -2.31 & -2.39 & -2.29 & -2.33 \\ 
-  5 & Homogeneous & -2.09 & -1.99 & -2.05 & -2.02 \\ 
-  5 & Heterogeneous & -2.06 & -2.00 & -2.03 & -2.05 \\ 
-  5 & None & -2.28 & -2.19 & -2.21 & -2.24 \\ 
-   \hline
-\end{tabular}
-\end{table}
+Figure~\ref{fig:loostateplot} displays the change in our estimator when removing each state for all four of our estimators on the adjusted dataset (``homogeneous'') and the unadjusted dataset (``none''). These results condition on the covariate adjustment, but are similar when recalculating the entire adjustment procedure. Additional results are available on request.
 
-Table~\ref{tab:rdiffc1} and ~\ref{tab:rdiffc2} display the quantiles of the distribution $\hat{\Delta}_v^1$ estimates when leaving out each state for the primary dataset and removing the early expansion states. The ``resample'' column indicates whether the entire adjustment procedure was recalculated (``Procedure'') or whether we left out each state conditional on the adjustment (``States''). 
+\begin{figure}[H]
+\begin{center}
+    \caption{Estimator sensitivity to states}
+    \label{fig:loostateplot}
+    \includegraphics[scale=0.6]{01_Plots/loostate-sensitivityc1-state-uu-i.png}
+\end{center}
+\end{figure}
 
-\begin{table}[ht]
-\centering
-\label{tab:rdiffc1}
-\caption{$\hat{\Delta}^1_v$ leave-one-state-out estimates, primary dataset}
-\begin{tabular}{lllrrrrrr}
-  \hline
-Inference & Adjustment & Weight type & Original & 0\% & 25\% & 50\% & 75\% & 100\% \\ 
-  \hline
-States & Heterogeneous & H-SBW & -0.78 & -0.88 & -0.80 & -0.78 & -0.73 & -0.59 \\ 
-  Procedure & Heterogeneous & H-SBW & -0.78 & -0.89 & -0.82 & -0.74 & -0.69 & -0.46 \\ 
-  States & Heterogeneous & BC-HSBW & -1.00 & -1.13 & -1.02 & -0.99 & -0.94 & -0.71 \\ 
-  Procedure & Heterogeneous & BC-HSBW & -1.00 & -1.11 & -1.03 & -0.98 & -0.93 & -0.66 \\ 
-  States & Heterogeneous & SBW & -0.74 & -0.93 & -0.77 & -0.73 & -0.70 & -0.52 \\ 
-  Procedure & Heterogeneous & SBW & -0.74 & -0.96 & -0.78 & -0.73 & -0.69 & -0.53 \\ 
-  States & Heterogeneous & BC-SBW & -0.77 & -0.97 & -0.79 & -0.75 & -0.72 & -0.56 \\ 
-  Procedure & Heterogeneous & BC-SBW & -0.77 & -0.96 & -0.80 & -0.76 & -0.69 & -0.50 \\ 
-  States & Homogeneous & H-SBW & -0.69 & -0.83 & -0.74 & -0.70 & -0.64 & -0.42 \\ 
-  Procedure & Homogeneous & H-SBW & -0.69 & -0.86 & -0.76 & -0.71 & -0.65 & -0.36 \\ 
-  States & Homogeneous & BC-HSBW & -0.93 & -1.07 & -0.95 & -0.94 & -0.88 & -0.64 \\ 
-  Procedure & Homogeneous & BC-HSBW & -0.93 & -1.05 & -0.97 & -0.93 & -0.87 & -0.59 \\ 
-  States & Homogeneous & SBW & -0.67 & -0.86 & -0.72 & -0.67 & -0.65 & -0.40 \\ 
-  Procedure & Homogeneous & SBW & -0.67 & -0.90 & -0.73 & -0.69 & -0.65 & -0.47 \\ 
-  States & Homogeneous & BC-SBW & -0.70 & -0.89 & -0.75 & -0.70 & -0.66 & -0.50 \\ 
-  Procedure & Homogeneous & BC-SBW & -0.70 & -0.91 & -0.76 & -0.73 & -0.66 & -0.44 \\ 
-  States & None & H-SBW & -0.79 & -0.90 & -0.81 & -0.80 & -0.76 & -0.66 \\ 
-  Procedure & None & H-SBW & -0.79 & -0.90 & -0.81 & -0.80 & -0.76 & -0.66 \\ 
-  States & None & BC-HSBW & -0.95 & -1.10 & -0.98 & -0.94 & -0.90 & -0.84 \\ 
-  Procedure & None & BC-HSBW & -0.95 & -1.10 & -0.98 & -0.94 & -0.90 & -0.84 \\ 
-  States & None & SBW & -0.75 & -0.89 & -0.77 & -0.75 & -0.73 & -0.58 \\ 
-  Procedure & None & SBW & -0.75 & -0.89 & -0.77 & -0.75 & -0.73 & -0.58 \\ 
-  States & None & BC-SBW & -0.74 & -0.88 & -0.75 & -0.72 & -0.70 & -0.57 \\ 
-  Procedure & None & BC-SBW & -0.74 & -0.88 & -0.75 & -0.72 & -0.70 & -0.57 \\ 
-   \hline
-\end{tabular}
-\end{table}
-
-\begin{table}[ht]
-\label{tab:rdiffc2}
-\caption{$\hat{\Delta}^1_v$ leave-one-state-out estimates, early expansion excluded}
-\centering
-\begin{tabular}{lllrrrrrr}
-  \hline
-Inference & Adjustment & Weight type & Original & 0\% & 25\% & 50\% & 75\% & 100\% \\ 
-  \hline
-States & Heterogeneous & H-SBW & -1.02 & -1.33 & -1.03 & -0.98 & -0.96 & -0.86 \\ 
-  Procedure & Heterogeneous & H-SBW & -1.02 & -1.32 & -1.06 & -1.01 & -0.94 & -0.83 \\ 
-  States & Heterogeneous & BC-HSBW & -1.18 & -1.34 & -1.16 & -1.05 & -0.97 & -0.84 \\ 
-  Procedure & Heterogeneous & BC-HSBW & -1.18 & -1.33 & -1.21 & -1.13 & -1.00 & -0.70 \\ 
-  States & Heterogeneous & SBW & -0.96 & -1.22 & -1.00 & -0.96 & -0.93 & -0.73 \\ 
-  Procedure & Heterogeneous & SBW & -0.96 & -1.24 & -1.06 & -1.02 & -0.95 & -0.76 \\ 
-  States & Heterogeneous & BC-SBW & -0.94 & -1.04 & -0.99 & -0.89 & -0.87 & -0.58 \\ 
-  Procedure & Heterogeneous & BC-SBW & -0.94 & -1.14 & -0.97 & -0.92 & -0.87 & -0.40 \\ 
-  States & Homogeneous & H-SBW & -0.97 & -1.22 & -0.97 & -0.95 & -0.93 & -0.83 \\ 
-  Procedure & Homogeneous & H-SBW & -0.97 & -1.19 & -0.98 & -0.95 & -0.90 & -0.80 \\ 
-  States & Homogeneous & BC-HSBW & -1.03 & -1.25 & -1.10 & -1.01 & -0.97 & -0.87 \\ 
-  Procedure & Homogeneous & BC-HSBW & -1.03 & -1.31 & -1.10 & -1.02 & -0.97 & -0.73 \\ 
-  States & Homogeneous & SBW & -0.94 & -1.07 & -0.99 & -0.93 & -0.90 & -0.71 \\ 
-  Procedure & Homogeneous & SBW & -0.94 & -1.11 & -1.01 & -0.92 & -0.88 & -0.76 \\ 
-  States & Homogeneous & BC-SBW & -0.93 & -1.20 & -0.94 & -0.90 & -0.85 & -0.60 \\ 
-  Procedure & Homogeneous & BC-SBW & -0.93 & -1.21 & -0.94 & -0.90 & -0.85 & -0.50 \\ 
-  States & None & H-SBW & -0.94 & -1.11 & -1.01 & -0.92 & -0.87 & -0.78 \\ 
-  Procedure & None & H-SBW & -0.94 & -1.11 & -1.01 & -0.92 & -0.87 & -0.78 \\ 
-  States & None & BC-HSBW & -1.10 & -1.25 & -1.14 & -1.09 & -1.02 & -0.84 \\ 
-  Procedure & None & BC-HSBW & -1.10 & -1.25 & -1.14 & -1.09 & -1.02 & -0.84 \\ 
-  States & None & SBW & -0.84 & -1.03 & -0.87 & -0.82 & -0.80 & -0.61 \\ 
-  Procedure & None & SBW & -0.84 & -1.03 & -0.87 & -0.82 & -0.80 & -0.61 \\ 
-  States & None & BC-SBW & -0.85 & -1.02 & -0.85 & -0.82 & -0.80 & -0.65 \\ 
-  Procedure & None & BC-SBW & -0.85 & -1.02 & -0.85 & -0.82 & -0.80 & -0.65 \\ 
-   \hline
-\end{tabular}
-\end{table}
-
-Table~\ref{tab:hte} displays the estimated linear combination of model coefficients on the Republican governance indicators with 95 percent confidence intervals (standard errors calculated using leave-one-state-out jackknife, repeating the entire covariate adjustment procedure each time). 
-
-\begin{table}[ht]
-\caption{Effect heterogeneity with respect to Republican governance}
-\label{tab:hte}
-\centering
-\begin{tabular}{rlll}
-  \hline
-Estimate & Adjustment & CI (95\%) & Dataset \\ 
-  \hline
--1.67 & Heterogeneous & (-5.27, 1.94) & Primary \\ 
-  0.78 & Homogeneous & (-5.62, 7.18) & Primary \\ 
-  0.21 & None & (0.02, 0.40) & Primary \\ 
-  -1.80 & Heterogeneous & (-5.46, 1.85) & Early expansion excluded \\ 
-  0.59 & Homogeneous & (-6.13, 7.31) & Early expansion excluded \\ 
-  0.15 & None & (-0.12, 0.42) & Early expansion excluded \\ 
-   \hline
-\end{tabular}
-\end{table}
+\clearpage

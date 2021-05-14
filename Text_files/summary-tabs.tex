@@ -1,9 +1,9 @@
 \section{Summary Statistics}
 \label{sec:appendixsumstat}
 
-Table~\ref{tab:summarytab1} and Table~\ref{tab:summarytab2} display univariate summary statistics from the primary dataset. We display the mean, interquartile range, and the range (as defined by the maximum value minus the minimum value) for the unadjusted dataset, the heterogeneous adjustment, and the homogeneous adjustment. We see that in general the covariate adjustments reduce the variability in the data. However, we also see that the range sometimes increases drastically, particularly for the untreated dataset. Table~\ref{tab:extreme1} displays the overall number of CPUMAs whose adjusted values fall outside of the range of the unadjusted data. We emphasize that we only use the untreated data for the heterogeneous treatment effect analysis. We also calculate these adjustments when leaving out each state one at a time from the primary dataset to calculate our secondary variance estimates; these results are available on request. 
+Table~\ref{tab:summarytab1} and Table~\ref{tab:summarytab2} display univariate summary statistics from the primary dataset. We display the mean, interquartile range, and the range (as defined by the maximum value minus the minimum value) for the unadjusted dataset, the heterogeneous adjustment, and the homogeneous adjustment. We see that in general the covariate adjustments reduce the variability in the data. However, we also see that the range sometimes increases drastically, particularly for the untreated dataset. Table~\ref{tab:extreme1} displays the overall number of CPUMAs whose adjusted values fall outside of the range of the unadjusted data. We emphasize that we only use the untreated data for the heterogeneous treatment effect analysis in Appendix~\ref{ssec:varselection}. We also calculate these adjustments when leaving out each state one at a time from the primary dataset to calculate our secondary variance estimates; these results are available on request. 
 
-\begin{table}[ht]
+\begin{table}[h!]
 \centering
     \caption{Univariate summary statistics (1)}
     \label{tab:summarytab1}
@@ -67,7 +67,7 @@ Treatment & Variable & No adjustment & Heterogeneous & Homogeneous \\
 \end{tabular}
 \end{table}
 
-\begin{table}[ht]
+\begin{table}[h!]
 \centering
     \caption{Univariate summary statistics (2)}
     \label{tab:summarytab2}
@@ -97,7 +97,7 @@ Treatment & Variable & No adjustment & Heterogeneous & Homogeneous \\
 
 Table~\ref{tab:extreme1} displays the frequency that the adjusted covariates fell outside of the support of the unadjusted dataset for the (control, treatment) groups. We see that that frequency is higher for our heterogeneous adjustment than the homogeneous adjustment, though the counts are low in either case. The counts are also slightly higher in the control group than the treated group; this may be a function of the smaller number of CPUMAs for the control versus the treated group $(n_0 = 411; n_1 = 515)$. We also note that these tables include 4 CPUMAs from New Hampshire that we include when conducting the covariate adjustment procedure; however, we exclude New Hampshire from the pool of treated states when computing our weights.
 
-\begin{table}[ht]
+\begin{table}[h!]
 \centering
     \caption{Extreme covariate adjustments (control, treated)}
     \label{tab:extreme1}
@@ -141,10 +141,12 @@ Age: 19-29 Pct & (0, 0) & (0, 0) \\
 
 Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset. The relationships are quite similar when using the adjusted datasets.
 
-\begin{figure}[]
+\begin{figure}[h!]
 \begin{center}
     \caption{Correlation matrix (unadjusted covariates)}
     \label{fig:corrmatrix}
     \includegraphics[scale=0.6]{01_Plots/correlation-plot-c1-sigma-zero.png}
 \end{center}
 \end{figure}
+
+\clearpage
