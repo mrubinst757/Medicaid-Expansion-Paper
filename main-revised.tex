@@ -19,6 +19,7 @@
 %\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
 \RequirePackage{graphicx}% uncomment this for including figures
 \usepackage{hyperref}
+\usepackage{lscape}
 \usepackage[nokeyprefix]{refstyle}
 \usepackage{varioref}
 \startlocaldefs
@@ -439,7 +440,7 @@ Uninsured Pct 2011 & 8.35 & 8.04 & 8.05 \\
 
 \subsection{Covariate balance}
 
-Figure~\ref{fig:loveplotc1} displays the reduction of imbalances using our H-SBW weights. This plot only displays covariates with greater than one percentage point difference between the targeted mean in the expansion region and the mean values in the non-expansion region prior to weighting, and the reweighted treatment values using the homogeneous covariate adjustment $\hat{\eta}_1(W_{sc})$. Before applying our weights, we see that there are substantial imbalances in the Republican governance indicators, as well as pre-treatment uninsurance and unemployment rates. Our weights reduce these differences; however, some remain, particularly among the Republican governance indicators. A complete balance table is available in Appendix D, Table 4. 
+Figure~\ref{fig:loveplotc1} displays the weighted and unweighted imbalances in our adjusted covariate set (using the homogeneous adjustment) using our H-SBW weights. Before applying our weights, we see that there are substantial imbalances in the Republican governance indicators as well as pre-treatment uninsurance rates. Our weights reduce these differences; however, some remain, particularly among the Republican governance indicators. A complete balance table is available in Appendix D, Table 4. 
 
 \begin{figure}[H]
 \begin{center}
@@ -457,7 +458,7 @@ Figure~\ref{fig:loveplotc1} displays the reduction of imbalances using our H-SBW
 \end{center}
 \end{figure}
 
-We then use ridge-regression augmentation to extrapolate from the data in order to reduce all imbalances within 0.5 percentage points. Figure~\ref{fig:sbwvhsbw1} shows the total weights summed across states for three estimators: H-SBW, BC-HSBW, and SBW. For BC-HSBW we display the negative weights separately from the positive weights to show the extent of the extrapolation. This figure illustrates two key points: first, that H-SBW more evenly disperses the weights across states relative to SBW; second, that BC-HSBW extrapolates somewhat heavily in order to achieve the desired level of balance, particularly for CPUMAs in California, This is likely in part because California has the most CPUMAs of any state in the dataset.
+We then augment these weights using ridge-regression, allowing the weights to extrapolate from the data. We increase the parameter $\lambda$ until all imbalances fall within 0.5 percentage points. Figure~\ref{fig:sbwvhsbw1} shows the total weights summed across states for three estimators: H-SBW, BC-HSBW, and SBW. For BC-HSBW we display the negative weights separately from the positive weights to show the extent of the extrapolation. This figure illustrates two key points: first, that H-SBW more evenly disperses the weights across states relative to SBW; second, that BC-HSBW extrapolates somewhat heavily in order to achieve the desired level of balance, particularly for CPUMAs in California (this is likely in part because California has the most CPUMAs of any state in the dataset).
 
 Finally, we examine whether the H-SBW weights generated using the unadjusted data balance the adjusted covariates. While this metric does not reflect the ``true'' imbalances, the comparison gives some indication of whether the unadjusted weights are overfitting to noisy covariate measurements. Table~\ref{tab:balcomp} compares the imbalances among our pre-treatment outcomes using H-SBW weights generated on our unadjusted dataset applied to the adjusted (homogeneous) dataset. The ``Unweighted Difference'' column represents the raw difference in means, while the ``Weighted Diff'' column reflects the weighted difference that we calculate on the unadjusted dataset. The ``Homogeneous Diff'' column displays the weighted imbalance when applying the H-SBW weights to the dataset using the homogeneous adjustment, and likewise for ``Heterogeneous Diff.'' The weighted pre-treatment outcomes are approximately one percentage point lower than we desired in the two years prior to treatment using the heterogeneous adjustment, and -0.2 percentage points lower (on average) using the homogeneous adjustment. Compared with the weighted difference (no adjustment) this is suggestive that the unadjusted weights are overfitting to noisy covariates and may give an overly optimistic view of balance obtained. Given the high degree of expected correlation between pre-treatment and post-treatment outcomes, we may expect the estimator of $\bar{Y}^1_0$ trained on the unadjusted data to have a downward bias.
 
