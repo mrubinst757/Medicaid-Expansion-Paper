@@ -221,7 +221,10 @@ Our estimation of $\eta_1$ follows a somewhat different procedure which we outli
 
 \subsection{H-SBW Objective}
 
-We show that the H-SBW estimator minimizes the variance of any estimator within the constraint set given a constant within-group correlation structure. Here we assume that the true covariates are measured. Consider the outcome model:
+We prove the minimum-variance properties of the H-SBW estimator assuming the true covariates $X$ are observed.
+
+\begin{proposition}
+    Consider the outcome model:
 
 \begin{equation}
     Y_{sc}(X_{sc}, a) = \alpha_a + X_{sc}^T\beta_a + c_s + \epsilon_{sc}
@@ -229,14 +232,94 @@ We show that the H-SBW estimator minimizes the variance of any estimator within 
 
 where $\mathbb{E}\{c_s \mid X_{sc}, A_{sc}\} = \mathbb{E}\{\epsilon_{sc} \mid X_{sc}, A_{sc}\} = \mathbb{E}\{c_s\epsilon_{sc} \mid X_{sc}, A_{sc}\} = 0$, and $Var(\epsilon_{sc}) = \sigma^2$ and $Var(c_s) = \eta^2$. Let $\rho = \frac{\eta^2}{\sigma^2 + \eta^2}$.
 
-The conditional variance of any weighting estimator $\sum_{sc: A_{sc} = 1}\gamma_{sc}Y_{sc}$ using weights $\gamma$ where $\gamma^T1 = n_t$ is then equal to:
+The H-SBW estimator in Equation~\ref{eqn:hsbw} produces the minimum conditional-on-X variance estimator within the constraint set $\Gamma$.
+\end{proposition}
 
+\begin{proof}
 \begin{align}
     Var(n_t^{-1}\sum_{sc: A_s = 1}\gamma_{sc}Y_{sc} \mid X_{sc}, A_{sc}) &= n_t^{-2}\sum_{s: A_s = 1}^{m_1}(\sum_{c = 1}^{p_s}\gamma_{sc}^2(\sigma^2 + \eta^2) + \sum_{c \ne d}\gamma_{sc}\gamma_{sd}\eta^2) \\
     &\propto \sum_{s: A_s = 1}(\sum_{c = 1}^{p_s}(\gamma_{sc}^2 + \sum_{c \ne d}\rho \gamma_{sc}\gamma_{sd})
 \end{align}
 
-where the second line follows by dividing by $\eta^2 + \sigma^2$. This suggests the H-SBW objective, which minimizes the (conditional) variance of this estimator for known $\rho$.
+where the second line follows by dividing by $\eta^2 + \sigma^2$. By definition of the H-SBW objective, which minimizes this function $\rho$, the H-SBW estimator must produce the minimum conditional-on-X variance estimator within the constraint set $\Gamma$.
+\end{proof}
+
+\begin{proposition}
+    Consider the constraint set $\Gamma_U = \{\gamma: \sum_{sc}\gamma_{sc}X_{sc} = \upsilon_1, \sum_{sc}\gamma_{sc} = 1\}$. The H-SBW weights are equivalent to the GLS weights $\upsilon_0^T(X^T\Sigma^{-1}X)^{-1}X_{sc}\Sigma^{-1}$, where the first coordinate of $X_{1, sc}$ and $\upsilon_1$ equals 1.
+\end{proposition}
+
+\begin{proof}
+    By the Gauss-Markov Theorem the GLS estimator $(X^T\Omega^{-1}X)X^T\Omega^{-1}Y = \hat{\beta}^{GLS}$ are the minimum conditional-on-X variance estimators of $\beta$ in the model $Y_{sc} = X_{sc}^T\beta + \epsilon_{cs}$, where $\epsilon_{sc} \sim N(0, \Omega)$. The implied regression weights for some fixed linear combination $\upsilon_1^T\hat{\beta}$ are therefore the proposed GLS weights; these weights are therefore the minimum conditional-on-X variance estimator of $\upsilon_1^T\beta$. Moreover, these weights have the covariate balancing property that $\sum_{sc}X_{sc}\gamma_{sc}^{GLS} = \upsilon_1$, and because an intercept was included, $\sum_{sc}X_{sc} = 1$. These weights therefore satisfy the constraint set $\Gamma_U$.
+    
+    By definition that the H-SBW objective also finds the minimum conditional variance weights for correlation structure $\Omega$; therefore, these weights must be equivalent.
+\end{proof}
+
+\begin{remark}
+    If $\epsilon_{sc} \sim N(0, \sigma^2I_n)$ then this implies that the OLS weights are equivalent to the SBW weights for constraint set $\Gamma$.
+\end{remark}
+
+\begin{proposition}
+Consider covariates $Z_{11}, ..., Z_{mp_m}$. Consider target $\zeta$. Define $\gamma^{GLS}$ to be an n-dimensional vector of weights defined by the formula:
+
+\begin{align*}
+    \gamma_{sc}^{OLS} = \zeta^T(Z^T\Omega^{-1}Z)^{-1}Z_{sc}^T\Omega^{-1} \\
+\end{align*}
+
+Let $\gamma^{H-SBW}$ be the minimizer of the H-SBW objective with $\sum_{s,c}\gamma_{sc}Z_{sc} = \zeta$ (assumed feasible).
+
+For any data $X_{11}, ..., X_{mp_m}$ where the H-SBW objective is feasible with exact balancing weights, there exists a subset of the observations $X_s \subseq X$, $X_{s, 1}, ..., X_{s, k}$ such that $\gamma^{GLS} = \gamma^{H-SBW}$.
+\end{proposition}
+
+\begin{proof}
+
+To show this result, we first observe that there exists a $\lambda$ such that the H-SBW problem is equivalent to the following constrained problem:
+
+\begin{align*}
+    \min_{\gamma} \sum_{sc}\gamma{sc}^2 \text{st} \{\sum_{s=1}^m\sum_{c\ne d}\gamma_{sc}\gamma_{sc} \le \lambda; \sum_{sc}\gamma_{sc}X_{sc} = \upsilon_0\}
+\end{align*}
+
+We next establish the following lemma.
+
+\begin{lemma}
+Let $Co(X)$ indicate the convex hull of points $X = X_1, ..., X_n$ and assume the first coordinate is equal to 1 (i.e. represents an intercept). If $\zeta \in Co(X)$ then there exists weights $a_1, ..., a_n$ satisfying $\sum_{i=1}^n a_i = 1$ such that $\sum a_i X_i = \zeta$ and $a_i \ge 0$. Consider the objective
+
+\begin{align*}
+a^\star = \min_a \sum_{i=1}^n a_i^2 
+\end{align*}
+
+Then $a_{sc}^\star \ge 0$ for all elements.
+\end{lemma}
+
+\begin{proof}
+Define the set $\mathcal{A}$ as the set of all possible convex combinations of points $X_{sc}$ that satisfy $\sum_{s,c} a_{sc}X_{sc} = \zeta$. Suppose $a^\star \not\in \mathcal{A}$, and define $a'$ as element of $\mathcal{A}$ that minimizes the objective. Then $f(a^\star) \le f(a')$. 
+
+By assumption, there exists an element of $a^\star$ associated with point $X_m$ such that $a_m < 0$. Choose some other point $X_j$. 
+
+We know that 
+
+$$
+a_mX_m + a_jX_j = \zeta - \sum_{i \not\in \{k,m\}}a_kX_k = \zeta'
+$$
+
+This implies that there exists a line $a_m = \zeta'/X_m - a_jX_k/X_m$
+
+Either $a_j > 0$ or $a_j < 0$. If $a_j > 0$ then the line has a negative slope and must go through the first quadrant. Notice that the unconstrained minimizer would be to set all weights equal; therefore, the minimal distance to this point must also be in the first quadrant. However, this is a contradiction because this implies that $a_m > 0$. On the other hand if $a_j < 0$ then the line has a positive slope; this is also a contradiction because this would imply that... 
+\end{proof}
+
+Define $v_{sc} = \mathds{1}(\gamma_{sc}^{H-SBW} > 0)$. Let $v_{sc} = 1$ be an indicator of inclusion in $X_s$. Notice that by definition of the H-SBW objective, $\zeta$ is in the convex hull of $X_s$. Then define
+
+\begin{align*}
+    \gamma_{sc}^\star = \zeta^T(X^T\Omega^{-1}X)^{-1}X_j^T\Omega^{-1}
+\end{align*}
+
+By the lemmas established above we can therefore conclude that these weights are all positive, and therefore fall in $\Gamma_U$. We then conclude that $\gamma^\star = \gamma^{H-SBW}$.
+\end{proof}
+
+\begin{remark}
+Taking $\rho = 0$ shows that the SBW weights are equivalent to OLS weights on some subset of the data.
+\end{remark}
+
+This shows the connection between regression weights and H-SBW weights; this also shows us that we can express H-SBW weights as regression weights estimated on a given subset of the data.
 
 \subsection{H-SBW with measurement error}
 
@@ -300,7 +383,7 @@ Y_{sc} = (X_{sc} - \eta^\star_{sc} + \eta^\star_{sc} - \eta_{sc})^T\beta + \eta^
 \end{align*}
 
 \begin{proposition}
-    Any weighting estimator that reweights $\eta^\star$ to $\upsilon_1$ is unbiased.
+    Any weighting estimator that reweights $\eta^\star$ to $\upsilon_0$ is unbiased.
 \end{proposition}
 
 \begin{proof}
@@ -317,11 +400,11 @@ Y_{sc} = (X_{sc} - \eta^\star_{sc} + \eta^\star_{sc} - \eta_{sc})^T\beta + \eta^
     Conditional on $W$, $\gamma_{sc}$ is fixed and $\mathbb{E}\{X_{sc} \mid W\} = \eta^\star$ so this expression is equal to 0.
 \end{proof}
 
-In this paper we instead propose and consider a weighting estimators $\hat{\psi}$ that reweight $\eta_{sc}$ to the desired target $\upsilon_1$.
+In this paper we instead propose and consider a weighting estimators $\hat{\psi}$ that reweight $\eta_{sc}$ to the desired target $\upsilon_0$.
 
 \begin{proposition}
 
-A weighting estimator estimator $\hat{\psi}$ that reweights $\eta_{sc}$ to $\upsilon_1$ is unbiased for $\psi$ under the following conditions:
+A weighting estimator estimator $\hat{\psi}$ that reweights $\eta_{sc}$ to $\upsilon_0$ is unbiased for $\psi$ under the following conditions:
 
 \begin{align}
     \beta &= 0 \\
@@ -453,5 +536,4 @@ For completeness, we consider the more general case below with a full covariate 
 Similar to the univariate case above, we see that balance is not achieved unless $\kappa = I_d$, $\Sigma_{SS} = 0$, or $A_2 = 0$. In other words, we cannot achieve balance asymptotically in expectation unless (1) there is no measurement error; (2) $X_{sc}$ and $X_{sd}$ are independent; (3) $\Omega$ is a diagonal matrix (ie $A_2 = 0$).
 \end{remark}
 
-Our analysis makes use of the connection between regression weights and balancing weights to analyze the bias when using regression calibration techniques. This is equivalent to relaxing the positivity constraint on SBW (\cite{chattopadhyay2021implied}) and imposing exactly balance. Analyzing the bias given the positivity constraints is more challenging; in general we conjecture that the positivity constraint will improve balance (and therefore bias) relative to the regression weights as this constraint in general limits fitting to noisy imputations. Even so, the results will remain biased, which we confirm in our simulations. We leave further analysis of this problem to future work.
-
+Our analysis makes use of the connection between regression weights and balancing weights to analyze the bias when using regression calibration techniques. This is equivalent to relaxing the positivity constraint on SBW (\cite{chattopadhyay2021implied}) and imposing exactly balance. However, by Lemmas XX and YY above, we know that the same analysis holds on some subset of the data. The exact bias will in general be different, however, because the subset of the data will in general include fewer observations per block, and therefore the values $A_1$ and $A_2$ on the subset will be different. Nevertheless, the estimator will still be biased due to the terms $\kappa\Sigma_{SS}$ unless the feasible set $X_s$ only includes 1 unit per block (ie there are no within-state dependencies in the remaining data).
