@@ -2,7 +2,7 @@
 
 We divide our proofs into three sections: first, where we consider the performance of SBW under classical measurement error. Our key results are that the bias of the SBW estimator is equivalent to the bias of the OLS estimator, and that regression-calibration techniques can be used in this setting to correct for this bias. Second, we consider the properties of the H-SBW objective when the true covariates $X$ are observed. We show that if our assumed correlation structure for the outcome errors is correct, H-SBW produces the minimum variance estimator within the constraint set. We also show how H-SBW weights relate to the implied regression weights from Generalized Least Squares. In the third and final section, we consider using H-SBW in the context of measurement error and our proposed regression-calibration covariate adjustment. We show that when using the standard regression-calibration adjustment, SBW will in expectation balance the appropriate targets, while H-SBW may be biased. We conclude by proposing a modification of the regression-calibration procedure to correct for this bias.
 
-\subsection{SBW and classical measurement error}
+\subsection{SBW and classical measurement error}\label{app:AsecI}
 
 We show three results regarding the bias of the SBW estimator under the classical errors-in-variables model. First, we show that the bias of the SBW estimator that sets $\delta = 0$ (i.e. reweights the treated units to exactly balance the control units) is equal to the bias of the OLS estimator. Second, we show that if the observed covariate values for the treated data can be replaced by their conditional expectations $\eta_1$ given the noisy observations, then the SBW estimator will be unbiased. Finally, we consider the case where we can estimate $\eta_1$ using auxillary data to estimate the covariance matrix of the error terms and show that the SBW estimator is consistent if we replace $\eta_1$ by an estimate $\hat{\eta_1}$ in the constraint set. In contrast to our application, we take the perspective throughout that $X$ is random.
 
@@ -230,7 +230,7 @@ As $n \to \infty$, $T \to \infty$, $\hat{\eta}_1 \to \eta_1$, and therefore by d
 While here we have specified a particular form of auxillary data used to estimate $\Sigma_{\nu\nu}$, we can be agnostic about the specifics of the auxillary data so long as $\hat{\Sigma}_{\nu\nu}$ is a consistent estimate of $\Sigma_{\nu\nu}$. For example, in our application we use the replicate survey weights from the ACS microdata to estimate this quantity and we do not require access to a known $X_i^\star$ for any observation for our estimation procedure.
 \end{remark}
 
-\subsection{Properties of the H-SBW objective}
+\subsection{Properties of the H-SBW objective}\label{app:AsecII}
 
 We now consider properties of the H-SBW estimator. In Proposition 4 we prove the properties of the H-SBW estimator assuming the true covariates $X$ are observed. In Proposition 4 we show that under a linear model with equi-correlated within-state errors the H-SBW estimator produces the minimum conditional-on-X variance estimator within the constraint set. In Proposition 5 we show that when relaxing the positivity constraint on $\Gamma$ the H-SBW weights are equivalent to the GLS weights. In Lemma 1 we establish that the solution to the constrained H-SBW weights is equivalent to the GLS solution on some subset of the data. These results nest SBW and OLS as special cases.
 
@@ -346,7 +346,7 @@ Taking $\rho = 0$ (or alternatively $\lambda \to \infty$) shows that the SBW wei
 
 This shows the connection between regression weights and H-SBW weights; this also shows us that we can express H-SBW weights as regression weights estimated on a given subset of the data.
 
-\subsection{H-SBW with measurement error}
+\subsection{H-SBW with measurement error}\label{app:AsecIII}
 
 We conclude by analyzing the performance of H-SBW in the context of measurement error. Throughout our analysis, we assume a positive equi-correlation among our covariates within each state. While our results are specific to this assumed correlation structure of the covariates, this particular example illustrates the potential problems that come from using H-SBW with regression-calibration. In Propositions 7 we define the conditions where the H-SBW objective will yield a solution across $\Gamma(\eta_1(W), \upsilon_0, 0)$ that balances the true covariates $X$ in expectation. In Proposition 8 we show that if our covaiate adjustment procedure correctly models the correlation structure of the covariates then H-SBW will balance the true covariates in expectation and therefore yield an unbiased estimate of the parameter $\bar{Y}_0^1$.
 
