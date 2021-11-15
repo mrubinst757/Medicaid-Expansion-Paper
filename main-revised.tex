@@ -283,25 +283,27 @@ We therefore modify SBW for our setting. The broad steps are: first, we estimate
 
 \cite{zubizarreta2015stable} propose to estimate the set of weights $\gamma$ that minimizes the following objective:
 
-\begin{equation}\label{eqn:objective}
-\gamma = \arg\min_{\tilde{\gamma} \in \Gamma} \sum_{sc: A_{sc} = 1} \tilde{\gamma}_{sc}^2
+\begin{equation}\label{eqn:sbwobjective}
+\gamma = \arg\min_{\tilde{\gamma} \in \Gamma(Z, \upsilon, \delta)} \sum_{sc: A_{sc} = 1} \tilde{\gamma}_{sc}^2
 \end{equation}
 
 \begin{equation}\label{eqn:constraint}
-\Gamma(Z) = \{\tilde{\gamma}: \lvert \tilde{\gamma}^T b(Z_{1, r}) - \bar{b(Z_{0, r})} \lvert \le \delta; \tilde{\gamma}_{sc} > 0, \sum_{sc: A_{sc} = 1}\tilde{\gamma}_{sc} = 1\}
+\Gamma(Z, \upsilon, \delta) = \{\tilde{\gamma}: \lvert \sum_{A_{sc} = 1}\tilde{\gamma}_{sc} b(Z_{sc}) - \upsilon \lvert \le \delta; \tilde{\gamma}_{sc} > 0, \sum_{sc: A_{sc} = 1}\tilde{\gamma}_{sc} = 1\}
 \end{equation}
 %
-for a q-dimensional vector $\delta$. After finding a set of weights satisfying this constraint, we can then estimate $\bar{Y}_0^1$ as
+where the function is parameterized by the covariate matrix $Z$ (with both treated and control observations), $\upsilon \in \mathbb{R}^q$, and $\delta \in \mathbb{R}^{0+, q}$. For example, letting $Z = X$, $\upsilon = \sum_{A_{sc} = 0}b(Z_{sc})$, and $\delta = \delta'$, we obtain weights that estimate the ETC: that is, we are reweighting the treated units to covariate distribution of the control units.
+
+After finding a set of weights that solves this objective, we can then estimate $\bar{Y}_0^1$ as
 
 \begin{equation}\label{eqn:psi}
 \hat{Y}_0^1 = \sum_{s: A_s = 1}^{m_1}\sum_{c = 1}^{p_s}\gamma_{sc}^\star Y_{sc} - n_0^{-1}\sum_{s: A_s = 0}^{m_0}\sum_{c = 1}^{p_s}Y_{sc}
 \end{equation}
 
-In the case where $b$ is the identity function and the outcomes are linear in $Z$, the bias of $\bar{Y}^1_0$ is less than or equal to $\lvert\beta_1\rvert^T\delta$, and therefore equal to zero if $\delta = 0$ is feasible (see, e.g., \cite{zubizarreta2015stable}). Moreover, $\hat{Y}_0^1$ produces the minimum variance estimator -- conditional on $Z$ -- assuming that the errors in the outcome model are independent and identically distributed. For the remainder of our discussion we take $b$ to be the identity.
+In the case where $b$ is the identity function and the outcomes follow the linear model specified in Equation~\ref{eqn:outcomemodel}, the bias of $\bar{Y}^1_0$ is less than or equal to $\lvert\beta_1\rvert^T\delta'$, and therefore equal to zero if $\delta' = 0$ (assuming this is feasible; see, e.g., \cite{zubizarreta2015stable}). Moreover, $\hat{Y}_0^1$ produces the minimum variance estimator -- conditional on $Z$ -- assuming that the errors in the outcome model are independent and identically distributed. For the remainder of our discussion when we refer to $\Gamma(Z, \upsilon, \delta)$ we take $b$ to be the identity.\footnote{The proofs of the consistency of our estimates under our measurement error model uses the linearity of the outcome model.}
 
 \subsubsection{Measurement error}\label{ssec:methodsmsrment}
 
-The first advancement in our estimation strategy comes in our balance constraint set $\Gamma(Z)$. Rather than taking $Z = W$, we let $Z = \hat{\eta}_1(W)$. This corrects for the bias induced by the estimation error from the observed covariates. Considering super-population target $\psi_0^1$, naively optimizing over $\Gamma(W)$ leads to the following bound on the expected imbalance on the true covariates $X$:
+The first advancement in our estimation strategy comes in our balance constraint set $\Gamma(Z)$. Rather than taking $Z = W_1$, we let $Z = \hat{\eta}_1(W_1)$. This corrects for the bias induced by the estimation error from the observed covariates. Considering super-population target $\psi_0^1$, naively optimizing over $\Gamma(W_1, \upsilon_0, \delta')$ leads to the following bound on the expected imbalance:
 
 \begin{align*}
 \mathbb{E}\{\sum_{sc}\gamma_{sc}X_{sc} - \upsilon_0\} \le \lvert(\upsilon_0 - \upsilon_1)^T(\kappa_1 - I_d)\lvert + \delta
@@ -313,7 +315,7 @@ Assuming a linear outcome model, this leads to the following bound on the bias o
 \mathbb{E}\{\hat{\psi}^{1}_0 - \psi^1_0\} = \lvert(\upsilon_0 - \upsilon_1)^T(\kappa_1 - I_d)\beta_1\lvert + \delta^T\lvert\beta\lvert
 \end{align*}
 %
-Notice that when $\delta = 0$ this is equivalent to the bias of a linear combination of coefficient estimates from the OLS-based regression estimator. We prove this result in Appendix A, and also show that if we have access to a consistent estimate of $\eta(W)$, we can obtain an unbiased estimate of $\psi_0^1$ by optimizing over the constraint set $\Gamma(\hat{\eta}(W))$.
+Notice that when $\delta = 0$ this is equivalent to the bias of a linear combination of coefficient estimates from the OLS-based regression estimator. We prove this result in Appendix A, and also show that if we have access to a consistent estimate of $\eta_1(W)$, we can obtain an unbiased estimate of $\psi_0^1$ by optimizing over the constraint set $\Gamma(\hat{\eta}_1(W))$.
 
 The intuition is as follows: exact balancing weights implicitly estimate $\beta_1$ on a subset of the data where we have sufficient covariate overlap. We can think of SBW as returning a solution to some weighted-least squares problem. Assuming that the outcome model holds across all of the data, WLS and OLS are estimating the same $\beta_1$; consequently, the bias that effects the least squares solution will have the same effect on the WLS, and therefore SBW, solution. 
 
@@ -326,13 +328,13 @@ Regardless, we emphasize two critical assumptions for using this procedure in ou
 
 \subsubsection{H-SBW objective}\label{sssec:hsbw}
 
-The next challenge is finding ``the best'' set of weights within $\Gamma(\eta_1(W))$. Unlike the setting outlined in \cite{zubizarreta2015stable}, our application likely has state-level dependencies which may reduce the efficiency of the SBW estimator. We therefore add the tuning parameter $\rho \in [0, 1)$ to penalize the within-state cross product of the weights, as detailed in Equation~\ref{eqn:objective}, representing a constant within-state correlation of the errors.
+The next challenge is finding ``the best'' set of weights within $\Gamma(\eta_1(W), \bar{W}_0, \delta')$. Unlike the setting outlined in \cite{zubizarreta2015stable}, our application likely has state-level dependencies which may reduce the efficiency of the SBW estimator. We therefore add the tuning parameter $\rho \in [0, 1)$ to penalize the within-state cross product of the weights, as detailed in Equation~\ref{eqn:objective}, representing a constant within-state correlation of the errors.
 
 \begin{equation}\label{eqn:objective}
-\gamma = \arg\min_{\tilde{\gamma} \in \Gamma} \quad \sum_{s: A_s = 1}^{m_1}(\sum_{c = 1}^{p_s} \tilde{\gamma}_{sc}^2 + \sum_{c \ne d}\rho \tilde{\gamma}_{sc}\tilde{\gamma}_{sd})\\
+\gamma = \arg\min_{\tilde{\gamma} \in \Gamma(X, \bar{X}_0, \delta')} \quad \sum_{s: A_s = 1}^{m_1}(\sum_{c = 1}^{p_s} \tilde{\gamma}_{sc}^2 + \sum_{c \ne d}\rho \tilde{\gamma}_{sc}\tilde{\gamma}_{sd})\\
 \end{equation}
 
-To build intuition about this objective, for $\delta \to \infty$, the following solution is attained:
+To build intuition about this objective, for $\delta' \to \infty$, the following solution is attained:
 
 \begin{equation}\label{eqn:sbwsol}
 \gamma_{sc} \propto \frac{1}{(p_s - 1)\rho + 1}
@@ -342,13 +344,13 @@ Setting $\rho = 0$ returns the SBW solution: $\gamma_{sc} \propto 1$. When setti
 
 In Appendix A, Proposition X, we show that the H-SBW objective produces the minimum conditional variance estimator under the constraint set for this correlation structure when $X$ is known. In theory we could incorporate any assumed correlation structure into this objective in a similar fashion; however, the number of tuning parameters might change. Broadly speaking, we can think of H-SBW being to SBW what generalized least squares (GLS) is to ordinary least squares (OLS): both SBW and OLS can produce unbiased estimates of model parameters, but H-SBW and GLS can improve the efficiency of an estimator under different assumptions about the correlation structure of the outcomes. 
 
-An important caveat emerges in the context of measurement error. Assuming that $X$ also have positive within state correlations (i.e. $Cov(X_{sc}, X_{sd}) = \Sigma_{SS}$, even if all of our models are correct, Lemma~\ref{lemma:lemma3} in Appendix A informs us that the H-SBW objective will produce the following expected imbalance in $X$:
+An important caveat emerges in the context of measurement error. Let $\upsilon_0 = \mathbb{E}\{X_{sc} \mid A_{sc} = 0\}$. Assuming that $X$ also have positive within state correlations (i.e. $Cov(X_{sc}, X_{sd}) = \Sigma_{SS}$, even if all of our models are correct, Lemma~\ref{lemma:lemma3} in Appendix A informs us that the H-SBW objective optimized over the constraint set $\Gamma(\eta_1(W), \upsilon_0, 0)$ produces the following expected imbalance in $X$:
 
 \begin{equation}
     \mathbb{E}\{\sum_{sc}\gamma_{sc}X_{sc} - \upsilon_0\} = f(\Sigma_{XX}, \Sigma_{SS}, \kappa, \rho)
 \end{equation}
-
-Notice that there is no expected imbalance if one of the following conditions hold: (1) the Xs are uncorrelated; (2) $\rho = 0$; (3) there is no measurement error. We prove this result in Appendix A and also show that this implies that the weights in the constrained set $\Gamma(\eta_1(W_{sc}))$ will in general also not balance the true $X$. The intuition is that when $\rho > 0$ the optimal weights to depend on the estimate of the within-state cross-product $\eta_1(W_{sc})\eta_1(W_{sc})$. However, this estimate is biased by a factor of $\kappa$, causing an imbalance on the true $X_{sc}$.
+%
+Notice that there is no expected imbalance if one of the following conditions hold: (1) the Xs are uncorrelated; (2) $\rho = 0$; (3) there is no measurement error. We prove this result in Appendix A and also show that this implies that the weights in the constrained set $\Gamma(\eta_1(W_{sc}), \upsilon_0, 0)$ will in general also not balance the true $X$. The intuition is that when $\rho > 0$ the optimal weights to depend on the estimate of the within-state cross-product $\eta_1(W_{sc})\eta_1(W_{sc})$. However, this estimate is biased by a factor of $\kappa$, causing an imbalance on the true $X_{sc}$.
 
 Regardless, the H-SBW estimator still may have lower MSE than the SBW estimator depending on the distribution of the data and the relative magnitude of the error terms. In our simulation study available in Appendix X, we find that these imbalances are typically small when $\rho$ is small and/or the measurement errors are small. One potential solution to this problem is to use an estimate $\mathbb{E}\{X_{sc} \mid W, A_s = 1\}$ that accounts for the correlation structure of $X$. However, we do not pursue this avenue for this application.
 
@@ -562,5 +564,7 @@ Analysis programs and supporting materials are available online at github.com /m
 \input{Text_files/results-tabs}
 
 %\input{Text_files/variable-selection}
+
+\input{Text_files/simulation-study}
 
 \end{document}

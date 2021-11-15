@@ -1,8 +1,59 @@
-\begin{landscape}
-
 \section{Weight Diagnostics}
 \label{ssec:balancetables}
 
+Table~\ref{tab:toltable} displays each covariate with the targeted level of maximal imbalance $\delta$ when generating approximate balancing weights. All variables and tolerances are measured in percentage points.
+
+\begin{table}[ht]
+\centering
+\caption{Variables and maximal level of targeted imbalances ($\delta$)}
+\begin{tabular}{lr}\label{tab:toltable}
+Variable & $\delta$ \\ 
+  \hline
+Uninsured Pct 2011 & 0.05 \\ 
+  Uninsured Pct 2012 & 0.05 \\ 
+  Uninsured Pct 2013 & 0.05 \\ 
+  Unemployed Pct 2011 & 0.15 \\ 
+  Unemployed Pct 2012 & 0.15 \\ 
+  Unemployed Pct 2013 & 0.15 \\ 
+  Avg Pop Growth & 0.50 \\ 
+  Avg Adult to Household Ratio & 0.50 \\ 
+  Female Pct & 1.00 \\ 
+  Age: 19-29 Pct & 1.00 \\ 
+  Age: 30-39 Pct & 1.00 \\ 
+  Age: 40-49 Pct & 1.00 \\ 
+  Age: 50-64 Pct & 1.00 \\ 
+  Married Pct & 1.00 \\ 
+  Disability Pct & 1.00 \\ 
+  Hispanic Pct & 1.00 \\ 
+  Race: White Pct & 1.00 \\ 
+  Children: One Pct & 1.00 \\ 
+  Children: Two Pct & 1.00 \\ 
+  Children: Three or More Pct & 1.00 \\ 
+  Children: Missing Pct & 1.00 \\ 
+  Urban Pct & 2.00 \\ 
+  Citizenship Pct & 2.00 \\ 
+  Educ: Less than HS Pct & 2.00 \\ 
+  Educ: HS Degree Pct & 2.00 \\ 
+  Educ: Some College Pct & 2.00 \\ 
+  Educ: College Pct & 2.00 \\ 
+  Student Pct & 2.00 \\ 
+  Inc Pov: $<$ 138 Pct & 2.00 \\ 
+  Inc Pov: 139-299 Pct & 2.00 \\ 
+  Inc Pov: 300-499 Pct & 2.00 \\ 
+  Inc Pov: 500 + Pct & 2.00 \\ 
+  Inc Pov: NA Pct & 2.00 \\ 
+  Race: Other Pct & 2.00 \\ 
+  Foreign Born Pct & 2.00 \\ 
+  Republican Governor 2013 & 25.00 \\ 
+  Republican Lower Leg Control 2013 & 25.00 \\ 
+  Republican Total Control 2013 & 25.00 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+\newpage
+
+\begin{landscape}
 Table~\ref{tab:baltab1} displays the differences between the weighted mean covariate values of the expansion region and the mean of the non-expansion region for our primary dataset and with the early expansion states excluded (calculated using our the homogeneous covariate adjustments). The weights presented here are for the H-SBW estimator. The values under each column are in the following format: (unweighted difference, weighted difference). ``Primary'' and ``Early excluded'' refer to the primary dataset and those that exclude the early expansion states. ``Percent'' indicates that the differences displayed are in percentage points while ``Standardized'' indicates that the standardized mean differences are displayed. Additional results are available on request.
 
 \begin{table}[h!]\caption{Balance table: percent and standardized mean differences, H-SBW weights \\ (Weighted difference, Unweighted difference)}\label{tab:baltab1}
