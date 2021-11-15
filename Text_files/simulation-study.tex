@@ -60,6 +60,16 @@ We present selected results from this study. We consider parameterizations where
 
 We highlight a few interesting results from this plot. First, balancing on $W$ results in bias, and the bias increases with as $\tau$ decreases. Moreover, when all of the covariates are uncorrelated (ie the top panel), balancing on $X$, $Xhat-het$, or $Xhat-hom$ results in approximately unbiased estimates for all values of $\rho$. This aligns with our theoretic results in Appendix A Section I. However, we also see that when $X$ are correlated, setting $\rho > 0$ results in biased estimates for $Xhat-het$ or $Xhat-hom$. On the other hand, if we know the true values of $X$, H-SBW still results in an unbiased estimate. This also aligns with our results in Appendix A, Sections II and III. However, the bias from H-SBW is still much less than the bias for the corresponding estimates that balance on $W$. 
 
+\begin{figure}[H]
+\begin{center}
+    \caption{Simulation study: estimator bias}
+    \label{fig:loveplotc1}
+    \includegraphics[scale=0.5]{01_Plots/bias-plot.png}
+    \subcaption{Averaged across 250 simulations for each specification}
+\end{center}
+\end{figure}
+
+
 These estimates are all assuming that the measurement errors are heterogeneous. When we examine the results when the errors are homogeneous, we find that the heterogeneous adjustment has a small bias even when $\tau = 0$ or $\rho = 0$ (results available on request). Assuming this model is correct when it is not therefore appears to have some cost. This may help explain the worse performance we found in for the heterogeneous adjustment in our study in Section~\ref{ssec:allresults}.
 
 We next calculate the standard deviation of the observed estimates. Figure YY displays these results. Unsurprisingly, we find that we obtain a modest variance reduction as we increase $\rho$. Interestingly, even when $\rho$ is incorrect (assumed $0.5$ instead of $0.25$), we tend to much better than when assuming $\rho = 0$, and the performance is in general comparable between $\rho = 0.25$ and $\rho = 0.5$.
