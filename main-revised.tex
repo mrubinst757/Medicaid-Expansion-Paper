@@ -186,7 +186,7 @@ We begin our study period in 2011 following \cite{courtemanche2017early}, who no
 
 As noted previously, assigning the concept of ``Medicaid expansion'' to a binary treatment simplifies a more complex reality. There are at least three reasons to be cautious about this simplification. First, states differed substantially in their Medicaid coverage policies prior to 2014. Given perfect data we might ideally consider Medicaid expansion as a continuous treatment with values proportional to the number of newly eligible individuals. The challenge, however, is correctly identifying newly eligible individuals in the data (see \cite{frean2017premium}, who attempt to address this). Second, \cite{frean2017premium} note that five states (California, Connecticut, Minnesota, New Jersey, and Washington) and the District of Columbia adopted partial limited Medicaid expansions prior to 2014. The ``2014 expansion'' therefore actually occurred in part prior to 2014 for several states. \footnote{\cite{kaestner2017effects} and \cite{courtemanche2017early} also consider Arizona, Colorado, Hawaii, Illinois, Iowa, Maryland, and Oregon to have had early expansions.} Similarly, timing is an issue even within 2014: among the states that expanded Medicaid in 2014, Michigan's expansion did not go into effect until April 2014, while New Hampshire's expansion did not occur until September 2014.
 
-Our primary analysis excludes New York, Vermont, Massachusetts, Delaware, and the District of Columbia from our pool of expansion states because these states had comparable Medicaid coverage policies prior to 2014 (\cite{kaestner2017effects}). We also exclude New Hampshire because it did not expand Medicaid until September 2014. While Michigan expanded Medicaid in April 2014, we leave this state in our pool of ``treated'' states. We consider the remaining expansion states as ``treated'' and the non-expansion states (including those that later expanded Medicaid) as ``control'' states. We later consider the sensitivity of our results to these classifications by removing the early expansion states indicated by \cite{frean2017premium}. Our final dataset contains aggregated statistics for all of the above variables for 925 CPUMAs in our non-expansion and our pool of expansion states. There are 414 CPUMAs among 24 non-expansion states and 511 CPUMAs among 21 expansion states. When we exclude the early expansion states for sensitivity analyses, we are left with 296 CPUMAs across 17 expansion states. We provide a complete list of states by classification in Appendix AA.
+Our primary analysis excludes New York, Vermont, Massachusetts, Delaware, and the District of Columbia from our pool of expansion states because these states had comparable Medicaid coverage policies prior to 2014 (\cite{kaestner2017effects}). We also exclude New Hampshire because it did not expand Medicaid until September 2014. While Michigan expanded Medicaid in April 2014, we leave this state in our pool of ``treated'' states. We consider the remaining expansion states as ``treated'' and the non-expansion states (including those that later expanded Medicaid) as ``control'' states. We later consider the sensitivity of our results to these classifications by removing the early expansion states indicated by \cite{frean2017premium}. Our final dataset contains aggregated statistics for all of the above variables for 925 CPUMAs in our non-expansion and our pool of expansion states. There are 414 CPUMAs among 24 non-expansion states and 511 CPUMAs among 21 expansion states. When we exclude the early expansion states for sensitivity analyses, we are left with 296 CPUMAs across 17 expansion states. We provide a complete list of states by classification in Appendix~\ref{ssec:balancetables}.
 
 \subsection{Outcome}
 
@@ -281,43 +281,33 @@ We therefore modify SBW for our setting. The broad steps are: first, we estimate
 
 \subsection{Stable balancing weights}
 
-\cite{zubizarreta2015stable} propose to estimate the set of weights $\gamma$ that minimizes the following objective:
+\cite{zubizarreta2015stable} proposes to estimate a set of weights that minimize the following objective:
 
 \begin{equation}\label{eqn:sbwobjective}
-\gamma = \arg\min_{\tilde{\gamma} \in \Gamma(Z, \upsilon, \delta)} \sum_{sc: A_{sc} = 1} \tilde{\gamma}_{sc}^2
+\min_{\gamma \in \Gamma(Z, \upsilon, \delta)} \sum_{sc}\gamma_{sc}^2
 \end{equation}
 
 \begin{equation}\label{eqn:constraint}
-\Gamma(Z, \upsilon, \delta) = \{\tilde{\gamma}: \lvert \sum_{A_{sc} = 1}\tilde{\gamma}_{sc} b(Z_{sc}) - \upsilon \lvert \le \delta; \tilde{\gamma}_{sc} > 0, \sum_{sc: A_{sc} = 1}\tilde{\gamma}_{sc} = 1\}
+\Gamma(Z, \upsilon, \delta) = \{\gamma: \lvert \sum_{sc}\gamma_{sc} Z_{sc} - \upsilon \lvert \le \delta; \gamma_{sc} \ge 0, \sum_{sc}\gamma_{sc} = 1\}
 \end{equation}
 %
-where the function is parameterized by the covariate matrix $Z$ (with both treated and control observations), $\upsilon \in \mathbb{R}^q$, and $\delta \in \mathbb{R}^{0+, q}$. For example, letting $Z = X$, $\upsilon = \sum_{A_{sc} = 0}b(Z_{sc})$, and $\delta = \delta'$, we obtain weights that estimate the ETC: that is, we are reweighting the treated units to covariate distribution of the control units.
-
-After finding a set of weights that solves this objective, we can then estimate $\bar{Y}_0^1$ as
+where the constraint set is parameterized by an $n$ by $q$ dimensional covariate matrix $Z$, $\upsilon \in \mathbb{R}^q$, and $\delta \in \mathbb{R}_{\ge 0}^q$. For example, letting $Z = X_1$ (with normalized columns), $\upsilon = \sum_{A_{sc} = 0}X_{sc} = \bar{X}_0$, and $\delta = \delta'$, we obtain weights that reweight a set of treated units to approximately balance the means of the control units within $\delta'$ standard deviations. Given an n-dimensional vector $\hat{\gamma}$ that solve Equation~\ref{eqn:sbwobjective} over the constraint set $\Gamma(X_1, \bar{X}_0, \delta')$ we can estimate $\bar{Y}_0^1$ as
 
 \begin{equation}\label{eqn:psi}
-\hat{Y}_0^1 = \sum_{s: A_s = 1}^{m_1}\sum_{c = 1}^{p_s}\gamma_{sc}^\star Y_{sc} - n_0^{-1}\sum_{s: A_s = 0}^{m_0}\sum_{c = 1}^{p_s}Y_{sc}
+\hat{Y}_0^1 = \sum_{s: A_s = 1}^{m_1}\sum_{c = 1}^{p_s}\hat{\gamma}_{sc} Y_{sc} - n_0^{-1}\sum_{s: A_s = 0}^{m_0}\sum_{c = 1}^{p_s}Y_{sc}
 \end{equation}
 
-In the case where $b$ is the identity function and the outcomes follow the linear model specified in Equation~\ref{eqn:outcomemodel}, the bias of $\bar{Y}^1_0$ is less than or equal to $\lvert\beta_1\rvert^T\delta'$, and therefore equal to zero if $\delta' = 0$ (assuming this is feasible; see, e.g., \cite{zubizarreta2015stable}). Moreover, $\hat{Y}_0^1$ produces the minimum variance estimator -- conditional on $Z$ -- assuming that the errors in the outcome model are independent and identically distributed. For the remainder of our discussion when we refer to $\Gamma(Z, \upsilon, \delta)$ we take $b$ to be the identity.\footnote{The proofs of the consistency of our estimates under our measurement error model uses the linearity of the outcome model.}
+In the case where the potential outcomes follow the linear model specified in Equation~\ref{eqn:outcomemodel}, the bias of $\bar{Y}^1_0$ is less than or equal to $\lvert\beta_1\rvert^T\delta'$, and therefore equal to zero if $\delta' = 0$ (assuming this is feasible; see, e.g., \cite{zubizarreta2015stable}). Moreover, $\hat{Y}_0^1$ produces the minimum variance estimator -- conditional on $X$ -- assuming that the errors in the outcome model are independent and identically distributed. We can of course generally balance other functions of the covariate distribution beyond the mean; however, the consistency of our estimates under our measurement error model rely on the linearity of the outcome model so we do not consider this for this application.
 
 \subsubsection{Measurement error}\label{ssec:methodsmsrment}
 
-The first advancement in our estimation strategy comes in our balance constraint set $\Gamma(Z)$. Rather than taking $Z = W_1$, we let $Z = \hat{\eta}_1(W_1)$. This corrects for the bias induced by the estimation error from the observed covariates. Considering super-population target $\psi_0^1$, naively optimizing over $\Gamma(W_1, \upsilon_0, \delta')$ leads to the following bound on the expected imbalance:
+The first advancement in our estimation strategy comes in our balance constraint set $\Gamma$. Rather than taking $Z = W_1$, we let $Z = \hat{\eta}_1(W_1)$. This corrects for the bias induced by the estimation error from the observed covariates. Considering super-population target $\psi_0^1$ and letting $\upsilon_0 = \mathbb{E}\{X_{sc} \mid A_{sc} = 0\}$, solving the objective over $\Gamma(W_1, \upsilon_0, 0)$ leads to the following expected bias:
 
 \begin{align*}
-\mathbb{E}\{\sum_{sc}\gamma_{sc}X_{sc} - \upsilon_0\} \le \lvert(\upsilon_0 - \upsilon_1)^T(\kappa_1 - I_d)\lvert + \delta
+\mathbb{E}\{\hat{\psi}^{1}_0 - \psi^1_0\} = (\upsilon_0 - \upsilon_1)^T(\kappa_1 - I_d)\beta_1  
 \end{align*}
 %
-Assuming a linear outcome model, this leads to the following bound on the bias of the estimator:
-
-\begin{align*}
-\mathbb{E}\{\hat{\psi}^{1}_0 - \psi^1_0\} = \lvert(\upsilon_0 - \upsilon_1)^T(\kappa_1 - I_d)\beta_1\lvert + \delta^T\lvert\beta\lvert
-\end{align*}
-%
-Notice that when $\delta = 0$ this is equivalent to the bias of a linear combination of coefficient estimates from the OLS-based regression estimator. We prove this result in Appendix A, and also show that if we have access to a consistent estimate of $\eta_1(W)$, we can obtain an unbiased estimate of $\psi_0^1$ by optimizing over the constraint set $\Gamma(\hat{\eta}_1(W))$.
-
-The intuition is as follows: exact balancing weights implicitly estimate $\beta_1$ on a subset of the data where we have sufficient covariate overlap. We can think of SBW as returning a solution to some weighted-least squares problem. Assuming that the outcome model holds across all of the data, WLS and OLS are estimating the same $\beta_1$; consequently, the bias that effects the least squares solution will have the same effect on the WLS, and therefore SBW, solution. 
+This is equivalent to the bias of a linear combination of coefficient estimates from the OLS-based regression estimator. We prove this result in Appendix A, and also show that if we have access to a consistent estimate of $\eta_1(W)$, we can obtain an unbiased estimate of $\psi_0^1$ by optimizing the SBW objective the constraint set $\Gamma(\hat{\eta}_1(W), \bar{W}_0, 0)$. The intuition for this result is that exact balancing weights implicitly estimate $\beta_1$ on a subset of the data where we have sufficient covariate overlap. We can think of SBW as returning a solution to some weighted-least squares problem. Assuming that the outcome model holds across all of the data, WLS and OLS are estimating the same $\beta_1$; consequently, the bias that effects the least squares solution will have the same effect on the WLS, and therefore SBW, solution. 
 
 To estimate $\eta_1$ for our application we use the ACS microdata's set of 80 replicate survey weights to construct 80 additional CPUMA-level datasets. We then take the empirical variance of these estimates for each CPUMA among the expansion states we derive $\hat{\Sigma}_{\nu\nu, sc}$, which we then average to create $\hat{\Sigma}_{\nu\nu}$. We use the empirical covariance matrix on the original dataset $\hat{\Sigma}_{WW}$ and subtract $\hat{\Sigma}_{\nu\nu}$ to estimate $\hat{\Sigma}_{XX}$. We generate $\hat{\eta}_1(W_1)$ using the empirical analogues of Equation~\ref{eqn:regcal}. 
 
@@ -326,37 +316,31 @@ This approximately aligns with the adjustments suggested by \cite{carroll2006mea
 This is the first application we are aware of to apply regression calibration in the context of balancing weights to address measurement error. However, this method requires access to knowledge about $\Sigma_{\nu\nu}$. We use survey microdata to identify this parameter for our application. Alternatively, region-level datasets often contain region-level variance estimates; if one is willing to assume $\Sigma_{vv}$ is diagonal, one could leverage this information to use this approach. If no auxillary data is available, one could also consider $\Sigma_{vv}$ to be a sensitivity parameter and conduct estimates over a range of possible values (see, e.g. to SMALL ET AL). 
 Regardless, we emphasize two critical assumptions for using this procedure in our context: (1) the outcome model is linear in the true covariates (i.e. $b$ as defined in Equation~\ref{eqn:constraint} is the identity); and (2) the measurement error in the outcome is uncorrelated with the measurement error in the covariates. The first assumption is strong, though commonly used.\footnote{Regression calibration techniques are used sometimes in the context of generalized linear models, when the bias induced by the error is thought to be small (see, e.g., CITE).} The second assumption is reasonable in our setting, because the outcomes are estimated from a different cross-section than the covariates. 
 
-\subsubsection{H-SBW objective}\label{sssec:hsbw}
+\subsubsection{H-SBW criterion}\label{sssec:hsbw}
 
-The next challenge is finding ``the best'' set of weights within $\Gamma(\eta_1(W), \bar{W}_0, \delta')$. Unlike the setting outlined in \cite{zubizarreta2015stable}, our application likely has state-level dependencies which may reduce the efficiency of the SBW estimator. We therefore add the tuning parameter $\rho \in [0, 1)$ to penalize the within-state cross product of the weights, as detailed in Equation~\ref{eqn:objective}, representing a constant within-state correlation of the errors.
+The next challenge is finding ``the best'' set of weights within $\Gamma(\eta_1(W), \bar{W}_0, \delta')$. Unlike the setting outlined in \cite{zubizarreta2015stable}, our application likely has state-level dependencies which may reduce the efficiency of the SBW estimator. We therefore add the tuning parameter $\rho \in [0, 1)$ to penalize the within-state cross product of the weights, as detailed in Equation~\ref{eqn:hsbwobjective}, representing a constant within-state correlation of the errors.
 
-\begin{equation}\label{eqn:objective}
-\gamma = \arg\min_{\tilde{\gamma} \in \Gamma(X, \bar{X}_0, \delta')} \quad \sum_{s: A_s = 1}^{m_1}(\sum_{c = 1}^{p_s} \tilde{\gamma}_{sc}^2 + \sum_{c \ne d}\rho \tilde{\gamma}_{sc}\tilde{\gamma}_{sd})\\
+\begin{equation}\label{eqn:hsbwobjective}
+\min_{\gamma \in \Gamma(\eta_1(W), \bar{W}_0, \delta')} \quad \sum_{sc}^{m}(\sum_{c = 1}^{p_s}\gamma_{sc}^2 + \sum_{c \ne d}\rho \gamma_{sc}\gamma_{sd})\\
 \end{equation}
 
-To build intuition about this objective, for $\delta' \to \infty$, the following solution is attained:
+To build intuition about this objective, for $\delta \to \infty$, the following solution is attained:
 
 \begin{equation}\label{eqn:sbwsol}
-\gamma_{sc} \propto \frac{1}{(p_s - 1)\rho + 1}
+\hat{\gamma}_{sc} \propto \frac{1}{(p_s - 1)\rho + 1}
 \end{equation}
 
-Setting $\rho = 0$ returns the SBW solution: $\gamma_{sc} \propto 1$. When setting $\rho = 1$, we get $\gamma_{sc} \propto \frac{1}{p_s}$. In other words, as we increase $\rho$, this objective downweights CPUMAs in states with large numbers of CPUMAs and upweights CPUMAs in states with small numbers of CPUMAs (assigning each CPUMA within a state equal weight). In short, as we increase $\rho$, the objective will attempt to more uniformly disperse weights across states. 
+Setting $\rho = 0$ returns the SBW solution: $\hat{\gamma}_{sc} \propto 1$. When setting $\rho \approx 1$, we get $\hat{\gamma}_{sc} \propto \frac{1}{p_s}$. In other words, as we increase $\rho$, this objective downweights CPUMAs in states with large numbers of CPUMAs and upweights CPUMAs in states with small numbers of CPUMAs (assigning each CPUMA within a state equal weight). In short, as we increase $\rho$, the objective will attempt to more uniformly disperse weights across states. 
 
-In Appendix A, Proposition X, we show that the H-SBW objective produces the minimum conditional variance estimator under the constraint set for this correlation structure when $X$ is known. In theory we could incorporate any assumed correlation structure into this objective in a similar fashion; however, the number of tuning parameters might change. Broadly speaking, we can think of H-SBW being to SBW what generalized least squares (GLS) is to ordinary least squares (OLS): both SBW and OLS can produce unbiased estimates of model parameters, but H-SBW and GLS can improve the efficiency of an estimator under different assumptions about the correlation structure of the outcomes. 
+In Appendix A, Proposition X, we show that the weights that solve the H-SBW objective under the constraint set $\Gamma(X_1, \bar{X}_0, \delta')$ produce the minimum conditional variance estimator of $\bar{Y}_0^1$. In theory we could incorporate any assumed correlation structure into this objective in a similar fashion; however, the number of tuning parameters might change. Broadly speaking, we can think of H-SBW being to SBW what generalized least squares (GLS) is to ordinary least squares (OLS): both SBW and OLS can produce unbiased estimates of model parameters, but H-SBW and GLS can improve the efficiency of an estimator under different assumptions about the correlation structure of the outcomes. 
 
-An important caveat emerges in the context of measurement error. Let $\upsilon_0 = \mathbb{E}\{X_{sc} \mid A_{sc} = 0\}$. Assuming that $X$ also have positive within state correlations (i.e. $Cov(X_{sc}, X_{sd}) = \Sigma_{SS}$, even if all of our models are correct, Lemma~\ref{lemma:lemma3} in Appendix A informs us that the H-SBW objective optimized over the constraint set $\Gamma(\eta_1(W), \upsilon_0, 0)$ produces the following expected imbalance in $X$:
+An important caveat emerges in the context of measurement error. Assuming that the covariates have constant positive within state correlations (i.e. $Cov(X_{sc}, X_{sd}) = \Sigma_{SS}$, even if all of our models are correct, Propositions X and Z we show the H-SBW objective optimized over the constraint set $\Gamma(\eta_1(W), \upsilon_0, 0)$ does not balance $X$ in expectation unless one of the following conditions hold: (1) $\Sigma_{SS} = 0$ (the Xs are uncorrelated); (2) $p_s = 1$ for all states (which is equivalent to uncorrelated covariates); (3) $\rho = 0$; (4) there is no measurement error. The reason is because when $\rho > 0$ the optimal weights to depend on the estimate of the within-state cross-product $\eta_1(W_{sc})\eta_1(W_{sc})$. However, this estimate is biased by a factor of $\kappa$, causing an imbalance on the true $X_{sc}$.
 
-\begin{equation}
-    \mathbb{E}\{\sum_{sc}\gamma_{sc}X_{sc} - \upsilon_0\} = f(\Sigma_{XX}, \Sigma_{SS}, \kappa, \rho)
-\end{equation}
-%
-Notice that there is no expected imbalance if one of the following conditions hold: (1) the Xs are uncorrelated; (2) $\rho = 0$; (3) there is no measurement error. We prove this result in Appendix A and also show that this implies that the weights in the constrained set $\Gamma(\eta_1(W_{sc}), \upsilon_0, 0)$ will in general also not balance the true $X$. The intuition is that when $\rho > 0$ the optimal weights to depend on the estimate of the within-state cross-product $\eta_1(W_{sc})\eta_1(W_{sc})$. However, this estimate is biased by a factor of $\kappa$, causing an imbalance on the true $X_{sc}$.
-
-Regardless, the H-SBW estimator still may have lower MSE than the SBW estimator depending on the distribution of the data and the relative magnitude of the error terms. In our simulation study available in Appendix X, we find that these imbalances are typically small when $\rho$ is small and/or the measurement errors are small. One potential solution to this problem is to use an estimate $\mathbb{E}\{X_{sc} \mid W, A_s = 1\}$ that accounts for the correlation structure of $X$. However, we do not pursue this avenue for this application.
+Regardless, the H-SBW estimator still may have lower MSE than the SBW estimator depending on the distribution of the data and the relative magnitude of the error terms. In our simulation study available in Appendix~\ref{app:simstudy}, we find that the resulting imbalances are typically small relative to those induced when balancing on $W$. We also see the H-SBW has modest improvements in MSE relative to the SBW estimator in some regimes despite the bias. Finally, we note that potential solution to this problem is to use an estimate $\eta_{1, sc}(W) = \mathbb{E}\{X_{sc} \mid W, A_s = 1\}$ that accounts for the correlation structure of the covariates. However, we do not pursue this avenue for this application.
 
 \subsubsection{Hyperparameter selection}
 
-We seek to make $\delta$ as small as possible; practical guidance in the literature is to reduce the standardized mean differences to be less than 0.1 (CITE). In our application, all of our covariates are measured on the same scale. Additionally, because some of these covariates have very small variances (for example, percent female), we instead target the percentage point differences. We can then estimate $\psi$ using Equation~\ref{eqn:psi}, substituting $J_{sc}$ for $Y_{sc}$ and plugging in the weights $\gamma$.
+We seek to make $\delta$ as small as possible; practical guidance in the literature is to reduce the standardized mean differences to be less than 0.1 (see, e.g., \cite{zhang2019balance}). In our application, all of our covariates are measured on the same scale. Additionally, because some of these covariates have very small variances (for example, percent female), we instead target the percentage point differences. We can then estimate $\psi$ using Equation~\ref{eqn:psi}, substituting $J_{sc}$ for $Y_{sc}$ and plugging in the weights $\hat{\gamma}$.
 
 We choose $\delta$ using domain knowledge about which covariates are most likely to be important predictors of treatment. Specifically, we know that pre-treatment outcomes are often strong predictors of post-treatment outcomes, so we constrain $\delta$ to be 0.05 percentage points (out of 100) for pre-treatment outcomes. Because health insurance is often tied to employment, we also prioritize balancing pre-treatment uninsurance rates, seeking to reduce imbalances below 0.15 percentage points. On the opposite side of the spectrum, we constrain the Republican governance indicators to fall within 25 percentage points. While we believe that Republican governance is important to balance, given the support of the data we are unable to reduce the constraints further without generating extreme weights. We detail the remaining constraints in Appendix AA. 
 
@@ -366,10 +350,10 @@ Data driven procedures for hyperparameter selection are also possible with acces
 
 \subsubsection{Bias-correction for imbalances}
 
-In practice we are unable to reduce the balance constraints to an ideal level without generating very extreme weights. We therefore test the sensitivity of our results to the imbalances in the observed (or adjusted) covariates using ridge-regression augmented weights (proposed by \cite{ben2018augmented}). Letting $\hat{X}_1$ be the matrix of adjusted covariates, and $\gamma^{hsbw}$ be our H-SBW weights, we define these weights as:
+In practice we are unable to reduce the balance constraints to an ideal level without generating very extreme weights. We therefore test the sensitivity of our results to the imbalances in the observed (or adjusted) covariates using ridge-regression augmented weights (proposed by \cite{ben2018augmented}). Letting $\hat{X}_1$ be the matrix of adjusted covariates, and $\hat{\gamma}^{H-SBW}$ be our H-SBW weights, we define these weights as:
 
 \begin{equation}
-\gamma^{aug} = \gamma^{hsbw} + (\gamma^{hsbw}\hat{X}_1 - \bar{W}_0)^T(\hat{X}_1^T\Omega^{-1}\hat{X}_1 + \lambda I_q)^{-1}\hat{X}_1^T\Omega^{-1}
+\hat{\gamma}^{AUG} = \hat{\gamma}^{H-SBW} + (\hat{\gamma}^{H-SBW}\hat{X}_1 - \bar{W}_0)^T(\hat{X}_1^T\Omega^{-1}\hat{X}_1 + \lambda I_q)^{-1}\hat{X}_1^T\Omega^{-1}
 \end{equation}
 
 where $\Omega$ is a block diagonal matrix with diagonal entries equal to one and the within-group off diagonals equal to $\rho$. We choose $\lambda$ so that all imbalances fall within 0.5 percentage points. The cost of this procedure is that we must extrapolate beyond the support of the data, increasing the model dependence of our estimates. We refer to \cite{ben2018augmented} for more details about this procedure. For our results we consider estimators using SBW weights ($\rho = 0$), H-SBW weights ($\rho = 1/6$), and their ridge-augmented versions that we respectively call BC-SBW and BC-HSBW. 
@@ -388,7 +372,7 @@ We use the leave-one-state-out jackknife to estimate the variance of $\hat{Y}_0^
     \hat{Var}(\hat{Y}_0^1) = \frac{M - 1}{M}\sum_{m = 1}^M(\hat{Y}^1_{0,-m} - \bar{Y}^1_{0, m})^2
 \end{equation}
 
-where $\bar{Y}_{0, m} = \frac{1}{M}\sum_{i=1}^M\hat{Y}^1_{0, -m}$. In other settings the jackknife has been shown to be a conservative approximation of the bootstrap (see, e.g., \cite{efron1981jackknife}). In a simulation study mirroring our setting (available in Appendix G), we also find that this procedure is conservative.
+where $\bar{Y}_{0, m} = \frac{1}{M}\sum_{i=1}^M\hat{Y}^1_{0, -m}$. In other settings the jackknife has been shown to be a conservative approximation of the bootstrap (see, e.g., \cite{efron1981jackknife}). In a simulation study mirroring our setting with $M = 25$ units (available in Appendix~\ref{app:simstudy}), we also find that this procedure can be conservative, and frequently provides close to nominal coverage rates.
 
 To obtain an estimate the variance of $\bar{Y}_0^0$ we run an auxillary regression model on the non-expansion states and use the CR-2 standard error adjustment to estimate the variance of the linear combination $\bar{W}_0^T\hat{\beta}_0$. Notice that we have no need to adjust the non-expansion state data to estimate this quantity: a linear regression line always contains the point $(\bar{W}_0, \bar{J}_0)$, which are unbiased estimates of $(\bar{X}_0, \bar{Y}_0)$. Therefore, $\mathbb{E}_W\{\bar{W}_0^T\hat{\beta}_0 \mid X\} = \bar{Y}_0^0$. Our final variance estimate $\hat{Var}(\hat{\psi})$ is the sum of $\hat{Var}(\hat{Y}_0^1)$ and $\hat{Var}(\hat{Y}_0^0)$ (though the latter is in general much smaller than the former). We use standard normal quantiles to generate confidence intervals. 
 
@@ -401,8 +385,7 @@ We first present summary statistics regarding the variability of six time-varyin
 Table~\ref{tab:adjust1} displays the effects of our covariate adjustment procedure on the variance of our pre-treatment outcomes among the expansion states. We most heavily prioritize balancing these covariates, but they are also among the least precisely estimated (all of our other covariates average over multiple years of data). Table~\ref{tab:adjust1} displays the variance of each covariate on the unadjusted and adjusted datasets. We see that both the homogeneous and heterogeneous adjustment procedures reduce the variability in the data by comparable amounts (see Section~\ref{ssec:methodsmsrment} for definitions of these adjustments). Intuitively, these adjustment reduce the likelihood that our balancing weights will fit to noise in the covariate measurements. These results are consistent across most of our other covariates.
 
 \begin{table}[ht]
-\caption{Sample variance on unadjusted and adjusted datasets, expansion states}
-\label{tab:adjust1}
+\caption{Sample variance on unadjusted and adjusted datasets, expansion states}\label{tab:adjust1}
 \begin{tabular}{lrrr}
   \hline
 Variable & No adjustment & Heterogeneous & Homogeneous \\ 
@@ -441,8 +424,7 @@ We then augment these weights using ridge-regression. Figure~\ref{fig:sbwvhsbw1}
 Finally, we examine whether the H-SBW weights generated using the unadjusted data balance the adjusted covariates. While this metric does not reflect the ``true'' imbalances, the comparison gives some indication of whether the unadjusted weights are overfitting to noisy covariate measurements. Table~\ref{tab:balcomp} compares the imbalances among our pre-treatment outcomes using H-SBW weights generated on our unadjusted dataset applied to the adjusted (homogeneous) dataset. The ``Unweighted Difference'' column represents the raw difference in means, while the ``Weighted Diff'' column reflects the weighted difference that we calculate on the unadjusted dataset. The ``Homogeneous Diff'' column displays the weighted imbalance when applying the H-SBW weights to the dataset using the homogeneous adjustment, and likewise for ``Heterogeneous Diff.'' The weighted pre-treatment outcomes are approximately one percentage point lower than we desired in the two years prior to treatment using the heterogeneous adjustment, and -0.2 percentage points lower (on average) using the homogeneous adjustment. Compared with the weighted difference (no adjustment) this is suggestive that the unadjusted weights are overfitting to noisy covariates and may give an overly optimistic view of balance obtained. Given the high degree of expected correlation between pre-treatment and post-treatment outcomes, we may expect the estimator of $\bar{Y}^1_0$ trained on the unadjusted data to have a downward bias.
 
 \begin{table}[ht]
-\caption{Balance comparison: weights estimated on unadjusted data applied to adjusted data}
-\label{tab:balcomp}
+\caption{Balance comparison: weights estimated on unadjusted data applied to adjusted data}\label{tab:balcomp}
 \begin{tabular}{lrrrr}
   \hline
 Variables & Unweighted Diff & Weighted Diff (none) & Homogeneous Diff & Heterogeneous Diff\\ 
@@ -459,8 +441,7 @@ Uninsured Pct 2011 & -3.09 & -0.05 & -0.11 & 0.92 \\
 We compare the performance of our models by repeating the covariate adjustments and calculating our procedure on 2009-2011 ACS data to predict 2012 outcomes, and similarly for 2010-2012 data to predict 2013 outcomes for the treated states. Table~\ref{tab:pretxpred} displays these results, with the rows ordered by RMSE of the prediction errors. Table~\ref{tab:pretxpred} shows that the estimators trained on the covariate adjusted data have substantially better performance than the unadjusted data. Moreover, the estimators trained on the homogeneous adjustment seem to do slightly better than the ones that model the heterogeneity; we present our results using the homogeneous adjustment. In these earlier years we find that SBW tends to have slightly lower RMSE than H-SBW. However, the results are quite similar, as we expected. Finally, we see that the bias corrected estimators tend to perform worse in this application. This may indicate that the extrapolation bias outweighs the cost of reducing the covariate imbalances. While this does not imply that this model will perform badly when predicting $\bar{Y}^1_{0, T}$, it does suggest caution regarding these results. We see this as a function of our models being approximations: we expect in general that assuming the linear outcome models approximately holds on the support of the data where we have sufficient covariate overlap; however, these models may lead us astray when our weights extrapolate excessively from the data. The worst performing estimators are the bias-corrected estimators trained on the unadjusted data.
 
 \begin{table}[ht]
-\caption{Estimator pre-treatment outcome prediction error}
-\label{tab:pretxpred}
+\caption{Estimator pre-treatment outcome prediction error}\label{tab:pretxpred}
 \begin{tabular}{llrrr}
   \hline
 Sigma estimate & Estimator & 2012 error & 2013 error & RMSE \\ 
@@ -527,7 +508,7 @@ Another direction for further work is to calibrate this procedure to determine a
 
 \subsection{Limitations}
 
-We caution that we required strong modeling assumptions throughout this analysis. In particular, we require SUTVA, no anticipatory treatment effects, no unmeasured confounding conditional on the true covariates, and several parametric assumptions about both the outcome and measurement error models. We were able to address some concerns about possible violations of these assumptions. For example, our results were qualitatively similar whether we excluded possible ``early expansion states,'' or used different weighting strategies (including relaxing the positivity restrictions and changing the tuning parameter $\rho$). We also examined two versions of our covariate adjustment and found similar results with either. However, we do not attempt to address concerns about SUTVA violations, particularly the impact of spillovers across regions. And while we believe that no unmeasured confounding is reasonable for this problem, we did not conduct a sensitivity analysis (see, e.g., \cite{bonvini2021sensitivity}) with respect to this assumption. Finally, our approach to correcting for measurement error relies on access to auxillary information that may not be available for many applications. However, even without such information, $\Sigma_{vv}$ could also be considered a sensitivity parameter to evaluate the robustness of results to measurement error (see, e.g., CITE).
+We caution that we required strong modeling assumptions throughout this analysis. In particular, we require SUTVA, no anticipatory treatment effects, no unmeasured confounding conditional on the true covariates, and several parametric assumptions about both the outcome and measurement error models. We were able to address some concerns about possible violations of these assumptions. For example, our results were qualitatively similar whether we excluded possible ``early expansion states,'' or used different weighting strategies (including relaxing the positivity restrictions and changing the tuning parameter $\rho$). We also examined two versions of our covariate adjustment and found similar results with either. However, we do not attempt to address concerns about SUTVA violations, particularly the impact of spillovers across regions. And while we believe that no unmeasured confounding is reasonable for this problem, we did not conduct a sensitivity analysis (see, e.g., \cite{bonvini2021sensitivity}) with respect to this assumption. Finally, our approach to correcting for measurement error relies on access to auxillary information that may not be available for many applications. However, even without such information, $\Sigma_{vv}$ could also be considered a sensitivity parameter to evaluate the robustness of results to measurement error (see, e.g., \cite{huque2014impact}, \cite{illenberger2020impact}).
 
 \subsection{Policy considerations}
 
@@ -541,10 +522,10 @@ This is the first study we are aware of that directly estimates the foregone cov
 
 \section*{Acknowledgements}
 
-The authors gratefully acknowledge invaluable advice and comments from Zachary Branson, Dave Choi, Edward Kennedy, Brian Kovak, Akshaya Jha, Lowell Taylor, and Jose Zubizaretta.
+The authors gratefully acknowledge invaluable advice and comments from Zachary Branson, Dave Choi, Riccardo Fogliato, Edward Kennedy, Brian Kovak, Akshaya Jha, Lowell Taylor, and Jose Zubizaretta.
 
 \begin{supplement}
-Analysis programs and supporting materials are available online at github.com /mrubinst757/medicaid-expansion. Proofs and additional results are available in the Appendix.
+Analysis programs and supporting materials are available online at \url{github.com /mrubinst757/medicaid-expansion}. Proofs and additional results are available in the Appendix.
 \end{supplement}
 
 \bibliographystyle{imsart-nameyear} % Style BST file
