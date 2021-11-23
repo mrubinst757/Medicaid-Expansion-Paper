@@ -50,7 +50,7 @@ For our simulations we generate population datasets of $M = 5000$ that consider 
     \item $\rho_y \in \{0, 0.25, 0.5\}$
 \end{itemize}
 
-For each data parameterization we take 250 random samples of size $M = 25$ and estimate H-SBW weights with targeting $\upsilon_0 = c(1, 1, 1)$. We set $\delta = 0$ and consider $\rho \in \{0, 0.25, 0.5\}$. We then estimate weights balancing on the following datasets: ($W$, $X$, $\hat{\eta}^{HOM}(W))$, $\hat{\eta}^{HET}(W)$) where HOM and HET represent the homogeneous and heterogeneous adjustments. We estimate the variance for each estimator using the leave-one-state-out jackknife, described in Section~\ref{sec:methods}. 
+For each data parameterization we take 500 random samples of size $M = 25$ and estimate H-SBW weights with targeting $\upsilon_0 = c(1, 1, 1)$. We set $\delta = 0$ and consider $\rho \in \{0, 0.25, 0.5\}$. We then estimate weights balancing on the following datasets: ($W$, $X$, $\hat{\eta}^{HOM}(W))$, $\hat{\eta}^{HET}(W)$) where HOM and HET represent the homogeneous and heterogeneous adjustments. We estimate the variance for each estimator using the leave-one-state-out jackknife, described in Section~\ref{sec:methods}. 
  
 Note: for $\hat{\eta}$ we use the empirical covariance matrix of $W$, the estimated means $\bar{W}$, and $\hat{\Sigma}_{\nu\nu, sc}$, where we draw $\hat{\Sigma}_{\nu\nu, sc}$ from $\Sigma_{\nu\nu, sc} + N(0, 0.001*N*I_d)$. In other words, when averaged together we assume that $\hat{\Sigma}_{\nu\nu}$ have a fairly precise estimate of $\Sigma_{vv}$.
 
@@ -65,7 +65,7 @@ We highlight a few interesting results. First, balancing on $W$ results in bias,
     \caption{Simulation study: estimator bias}\label{fig:simbias}
     \label{fig:loveplotc1}
     \includegraphics[scale=0.5]{01_Plots/bias-plot.png}
-    \subcaption{Averaged across 250 simulations for each specification}
+    \subcaption{Averaged across 500 simulations for each specification}
 \end{center}
 \end{figure}
 
@@ -78,7 +78,7 @@ We next calculate the variance our estimates across all simulations and display 
     \caption{Simulation study: estimator variance}\label{fig:simvar}
     \label{fig:loveplotc1}
     \includegraphics[scale=0.5]{01_Plots/var-plot.png}
-    \subcaption{Averaged across 250 simulations for each specification}
+    \subcaption{Averaged across 500 simulations for each specification}
 \end{center}
 \end{figure}
 
@@ -89,34 +89,32 @@ In Figure~\ref{fig:simmse} we display the MSE of these estimators. We find that 
     \caption{Simulation study: estimator mean-square-error}\label{fig:simmse}
     \label{fig:loveplotc1}
     \includegraphics[scale=0.5]{01_Plots/var-plot.png}
-    \subcaption{Averaged across 250 simulations for each specification}
+    \subcaption{Averaged across 500 simulations for each specification}
 \end{center}
 \end{figure}
 
-Finally, we evaluate the performance of the leave-one-state-out jackknife procedure and evaluate confidence interval coverage. We display these results in Figures~\ref{fig:simcoverage1} and ~\ref{fig:simcoverage2}. For the first plot, for the estimators run on the adjusted data we condition on the adjustment. For the second plot we compare coverage when we recalculate the adjustment at each iteration of the jackknife procedure.
+Finally, we evaluate the performance of the leave-one-state-out jackknife procedure and evaluate confidence interval coverage and length. We display these results in Figures~\ref{fig:simcoverage1} and ~\ref{fig:simcoverage2}. 
 
-We first discuss Figure~\ref{fig:simcoverage1}. When $\rho_y = 0$ we find that we obtain approximately nominal coverage rates across all specifications that use $X$ or some version of $\hat{X}$. However, we fail to get even close to nominal coverage rates when balancing on $W$, even when $\tau$ is quite high. We do see the performance of our estimates deteriorate as we increase $\rho_x$, even when balancing on the true covariates. We also see that our coverage rates tend to get worse for $\hat{X}^{het}$ and $\hat{X}^{hom}$ in the settings where we found the highest bias.
+We first discuss Figure~\ref{fig:simcoverage1}. When $\rho_y = 0$ we find that we obtain approximately nominal coverage rates across all specifications that use $X$ or some version of $\hat{X}$. However, we fail to get even close to nominal coverage rates when balancing on $W$, even when $\tau$ is quite high. We do see the performance of our estimates deteriorate as we increase $\rho_x$, even when balancing on the true covariates. We also see that our coverage rates tend to get worse for $\hat{X}^{het}$ and $\hat{X}^{hom}$ in the settings where we found the highest bias. On the other hand, we also find that our coverage rates are often quite conservative, particularly for estimators generated on $\hat{X}$. 
 
 \begin{figure}[H]
 \begin{center}
     \caption{Simulation study: jackknife coverage rates}\label{fig:simcoverage1}
     \includegraphics[scale=0.5]{01_Plots/coverage-plot-1.png}
-    \subcaption{Averaged across 250 simulations for each specification}
+    \subcaption{Averaged across 500 simulations for each specification}
 \end{center}
 \end{figure}
 
 The figure displays one final and subtle but interesting feature: when we observe $X$, setting $\rho > 0$ appears to improve the coverage rates. We speculate this may be because H-SBW more evenly dispersing weights across states, increasing the ``effective sample size'' of the states, and thereby improving the asymptotic approximation of the variance estimates. 
 
-Figure~\ref{fig:simcoverage1} takes the covariate adjustment as given. We therefore should expect -- and we do find -- that we get slightly smaller than nominal coverage rates because we haven't accounted for the variability in the adjustment estimates. We therefore conclude by conducting the same procedure but recalculating the covariate adjustment at each state in the leave-one-state out estimates, and we compare the results in Figure~\ref{fig:simcoverage2} below.
+Finally, in Figure~\ref{fig:ciwdth} we evaluate the confidence interval lengths. As expected, we find that the H-SBW estimator is associated with lower lengths, reflecting that the estimators have decreased variability under our correlation structures.
 
 \begin{figure}[H]\label{fig:simcoverage2}
 \begin{center}
-    \caption{Jackknife coverage rates: conditioning on covariate adjustment versus accounting for estimation induced variability}\label{fig:simcoverage2}
-    \includegraphics[scale=0.5]{01_Plots/coverage-plot-2.png}
-    \subcaption{Averaged across 250 simulations for each specification}
+    \caption{95 percent confidence interval length: averaged across 500 simulations}\label{fig:simcoverage2}
+    \includegraphics[scale=0.5]{01_Plots/ci-length-plot.png}
+    \subcaption{Averaged across 500 simulations for each specification}
 \end{center}
 \end{figure}
 
-As expected, we see that our coverage rates increase; however, we often find that our inference is often conservative in regimes where we expect the estimates to be unbiased. When the estimates are biased, we still often fail to achieve nominal coverage rates though even in the worst cases for either variance estimates we do not fall below 85 percent coverage rates.
-
-The results are similar when considering $\rho_y \in \{0, 0.5\}$ and considering homoskedastic measurement errors. One interesting takeaway throughout is that our simulations do not find much evidence that the ``heterogeneous adjustment'' results in much improvement of our estimates, even in an ideal setting. A second interesting finding is that while $\rho > 0$ can bias our estimates in the context of measurement error, the bias is generally small relative to the bias of balancing on the noisy covariate measurements $W$. Of course, this simulation study assumes throughout that we know the true data generating model, in contrast to our study in Section~\ref{sec:results}.
+The results are similar when considering $\rho_y \in \{0, 0.5\}$ and considering homoskedastic measurement errors. One interesting takeaway throughout is that our simulations do not find any evidence that the ``heterogeneous adjustment'' improves our estimates along any dimension, even in an ideal setting. However, this may in part reflect the distribution of sample sizes we generated, which we took to be uniform. A second interesting finding is that while $\rho > 0$ can bias our estimates in the context of measurement error, the bias is generally small relative to the bias of balancing on the noisy covariate measurements $W$. Of course, this simulation study assumes throughout that we know the true data generating model, in contrast to our study in Section~\ref{sec:results}.
