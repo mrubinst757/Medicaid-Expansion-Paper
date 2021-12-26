@@ -86,13 +86,13 @@ We next calculate the variance our estimates across all simulations and display 
 \end{center}
 \end{figure}
 
-In Figure~\ref{fig:simmse} we display the MSE of these estimators (we remove $\tilde{X}_{A=1}^{cor}$ since we have already seen that it has poor performance relative to the other procedures considered). We find that despite the increase in bias for H-SBW with $\hat{X}_{A=1}^{hom}$ or $\hat{X}_{A=1}^{het}$, we may still find a modest MSE reduction. Of course, whether or not there are MSE reductions more generally also depends on $\rho_y$, which we have fixed here throughout: if we were to set $\rho_y = 0$, we would expect the MSE of these estimators to increase with $\rho$, even when we observe $X$. 
+In Figure~\ref{fig:simmse} we display the MSE of these estimators (we remove $\tilde{X}_{A=1}^{cor}$ since we have already seen that it has poor performance relative to the other procedures considered). We find that despite the increase in bias for H-SBW with $\hat{X}_{A=1}^{hom}$ or $\hat{X}_{A=1}^{het}$, we may still find a modest MSE reduction. In particular, we see that this is more likely in regimes with low measurement error and less correlated covariates. Of course, more generally this also depends on $\rho_y$, which we have fixed here throughout: if we were to set $\rho_y = 0$, we would expect the MSE of these estimators to increase for all estimators as $\rho$ increased, even when we observe $X$. 
 
 \begin{figure}[H]
 \begin{center}
     \caption{Simulation study: estimator mean-square-error}\label{fig:simmse}
     \label{fig:loveplotc1}
-    \includegraphics[scale=0.5]{01_Plots/var-plot.png}
+    \includegraphics[scale=0.5]{01_Plots/mse-plot.png}
     \subcaption{Averaged across 500 simulations for each specification}
 \end{center}
 \end{figure}
