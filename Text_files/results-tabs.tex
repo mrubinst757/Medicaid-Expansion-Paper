@@ -1,5 +1,35 @@
-\section{Additional Results}
-\label{ssec:allresults}
+\section{Additional Results}\label{app:allresults}
+
+Table~\ref{tab:pretxpredfull} presents the full model validation results that also include estimators using the Oaxaca-Blinder OLS and GLS weights (see, e.g, \cite{kline2011oaxaca}), with the rows ordered by RMSE of the prediction errors. We find in general that these estimators perform quite poorly, again showing that the cost of extrapolation is quite high in our application.
+
+\begin{table}[ht]
+\caption{Estimator pre-treatment outcome prediction error}\label{tab:pretxpredfull}
+\begin{tabular}{llrrr}
+  \hline
+Sigma estimate & Estimator & 2011 error & 2012 error & RMSE \\ 
+  \hline
+Homogeneous & SBW & -0.18 & -0.22 & 0.20 \\ 
+  Homogeneous & H-SBW & -0.24 & -0.21 & 0.23 \\ 
+  Heterogeneous & SBW & -0.25 & -0.30 & 0.27 \\ 
+  Heterogeneous & H-SBW & -0.32 & -0.39 & 0.36 \\ 
+  Homogeneous & BC-SBW & -0.42 & -0.35 & 0.39 \\ 
+  Heterogeneous & BC-SBW & -0.45 & -0.39 & 0.42 \\ 
+  None & SBW & -0.50 & -0.61 & 0.56 \\ 
+  None & H-SBW & -0.52 & -0.61 & 0.57 \\ 
+  Homogeneous & BC-HSBW & -0.53 & -0.62 & 0.58 \\ 
+  Heterogeneous & BC-HSBW & -0.53 & -0.72 & 0.63 \\ 
+  None & BC-SBW & -0.82 & -0.93 & 0.88 \\ 
+  None & OLS & -0.91 & -0.84 & 0.88 \\ 
+  None & GLS & -0.87 & -0.91 & 0.89 \\ 
+  None & BC-HSBW & -0.93 & -0.99 & 0.96 \\ 
+  Homogeneous & OLS & -1.75 & -1.21 & 1.50 \\ 
+  Homogeneous & GLS & -1.76 & -1.45 & 1.61 \\ 
+  Heterogeneous & GLS & -1.18 & -17.60 & 12.47 \\ 
+  Heterogeneous & OLS & -0.85 & -22.90 & 16.21 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
 
 Table~\ref{tab:confintmain} displays the point estimates and confidence intervals from all estimators, including estimates calculated on a second version of the adjusted data where we model a separate $\kappa$ for all values (the ``heterogeneous adjustment''). ``Homogeneous'' corresponds to our preferred covariate adjustment, and are the results presented in the main paper.
 

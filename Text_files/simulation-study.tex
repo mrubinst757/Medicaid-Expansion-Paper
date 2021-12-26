@@ -1,4 +1,4 @@
-\section{Simulation Study}
+\section{Simulation Study}\label{app:simstudy}
 
 This section presents a simulation study evaluating the performance of our proposed estimators on a known data-generating process. The first subsection outlines our simulation study. The section section presents selected results about the bias and mean-square error of our estimators, and the coverage rates for our proposed variance estimation procedure.
 
@@ -93,6 +93,8 @@ In Figure~\ref{fig:simmse} we display the MSE of these estimators. We find that 
 \end{center}
 \end{figure}
 
+On the other hand, we also find throughout that the measurement error corrections often increase the MSE of the estimators.
+
 Finally, we evaluate the performance of the leave-one-state-out jackknife procedure and evaluate confidence interval coverage and length. We display these results in Figures~\ref{fig:simcoverage1} and ~\ref{fig:simcoverage2}. 
 
 We first discuss Figure~\ref{fig:simcoverage1}. When $\rho_y = 0$ we find that we obtain approximately nominal coverage rates across all specifications that use $X$ or some version of $\hat{X}$. However, we fail to get even close to nominal coverage rates when balancing on $W$, even when $\tau$ is quite high. We do see the performance of our estimates deteriorate as we increase $\rho_x$, even when balancing on the true covariates. We also see that our coverage rates tend to get worse for $\hat{X}^{het}$ and $\hat{X}^{hom}$ in the settings where we found the highest bias. On the other hand, we also find that our coverage rates are often quite conservative, particularly for estimators generated on $\hat{X}$. 
@@ -107,11 +109,11 @@ We first discuss Figure~\ref{fig:simcoverage1}. When $\rho_y = 0$ we find that w
 
 The figure displays one final and subtle but interesting feature: when we observe $X$, setting $\rho > 0$ appears to improve the coverage rates. We speculate this may be because H-SBW more evenly dispersing weights across states, increasing the ``effective sample size'' of the states, and thereby improving the asymptotic approximation of the variance estimates. 
 
-Finally, in Figure~\ref{fig:ciwdth} we evaluate the confidence interval lengths. As expected, we find that the H-SBW estimator is associated with lower lengths, reflecting that the estimators have decreased variability under our correlation structures.
+Finally, in Figure~\ref{fig:ciwdth} we evaluate the confidence interval lengths. As expected, we find that the H-SBW estimator is associated with lower lengths, reflecting that the estimators have decreased variability under our correlation structures. The optimal $\rho$ throughout is 0.25; however, we see that even $\rho = 0.5$ we obtain more precise inferences than when $\rho = 0$. Of course, in the context of measurement error, this also risks inducing more bias, though without measurement error this suggests benefits to using H-SBW even when our estimate of $\rho$ is a guess.
 
-\begin{figure}[H]\label{fig:simcoverage2}
+\begin{figure}[H]\label{fig:ciwidth}
 \begin{center}
-    \caption{95 percent confidence interval length: averaged across 500 simulations}\label{fig:simcoverage2}
+    \caption{Confidence interval length}\label{fig:simcoverage2}
     \includegraphics[scale=0.5]{01_Plots/ci-length-plot.png}
     \subcaption{Averaged across 500 simulations for each specification}
 \end{center}
