@@ -12,28 +12,6 @@ We first assume that equations (\ref{eqn:unconfoundedness}) - (\ref{eqn:Xgaussia
 Y_{sc}^a = \alpha_a + X_{sc}^T\beta_a + \epsilon_{sc} & & \text{and} & & (\epsilon_{sc}, \nu_{sc}) \stackrel{\text{iid}}{\sim} \operatorname{MVN}\left(0, \left[\begin{array}{cc} \sigma_{\epsilon}^2 & 0 \\ 0 & \Sigma_{\nu} \end{array}\right] \right).
 \end{align}
 
-We consider our target parameter $\psi_0^1$ defined in ~\eqref{eqn:psi}. We begin by establishing the following identity:
-
-\begin{equation}\label{eqn:psi10_identity}
-\psi^1_0 = \mu_y + (\bar{X}_0 - \upsilon_1)^T\beta_1
-\end{equation}
-%
-where $\mu_y = \mathbb{E}[Y_{sc} \mid A_{sc} = 1]$ and $\upsilon_1 = \mathbb{E}[X_{sc} \mid A_{sc} = a]$.
-
-\begin{proof}[Proof of (\ref{eqn:psi10_identity})]
-Using our causal and modeling assumptions we have that:
-
-\begin{align*}
-\mathbb{E}[Y_{sc}^1 \mid X_{sc}, A_{sc} = 0] &= \mathbb{E}[Y_{sc}^1 \mid X_{sc}, A_{sc} = 1] \\
-&= \mathbb{E}[Y_{sc} \mid X_{sc}, A_{sc} = 1] \\
-&= \alpha_1 + X_{sc}^T\beta_1 \\
-&= \mu_y + (X_{sc} - \upsilon_1)^T\beta \\
-&\implies \psi_0^1 = \mu_y + (\bar{X}_0 - \upsilon_1)^T\beta_1
-\end{align*}
-%
-where the first equality follows from unconfoundedness, the second equality from consistency, the third from our parametric modeling assumptions, and the fourth by definition of $\alpha$. The final equation follows from averaging over the control units.
-\end{proof}
-%
 We consider estimating $\psi_0^1$. Let 
 
 \begin{align*}
@@ -61,7 +39,260 @@ The bias of $\hat{\psi}^{1, reg}_0$ is equal to the bias of $\hat{\psi}^{1, sbw}
 \end{align*}
 \end{proposition}
 
-\begin{proof}
+
+\begin{remark}  
+    This bias expression is exact for $\psi_0^1$ assuming the joint normality of the treated data. Without loss of generality, assume that $\upsilon_1 = 0$. However, for the OLS estimator, we require far weaker assumptions on the distribution of $X_{sc} \mid A_{sc} = 1$: in particular, as long as $\mathbb{E}\{X_{sc}X_{sc}^T \mid A_{sc} = 1\} = \Sigma_X$ and a law of large numbers holds, still assuming that the measurement errors are iid, this implies $n^{-1}\sum_{sc: A_{sc} = 1}W_{sc}W_{sc}^T \to^p \Sigma_W$, and therefore this expression reflects the asymptotic bias: 
+    
+    \begin{align*}
+    \mathbb{E}[\hat{\beta}_1] &= \mathbb{E}[(\sum_{A_{sc} = 1}W_{sc}W_{sc}^T)^{-1}\sum_{A_{sc} = 1}W_{sc}Y_{sc}] \to^p \Sigma_W^{-1}\mathbb{E}[W_{sc}Y_{sc}] \\ 
+    &= \Sigma_W^{-1}\mathbb{E}[(X_{sc} + \nu_{sc})(X_{sc}^T\beta_1 + \epsilon_{sc})] \\
+    &= \Sigma_W^{-1}\Sigma_X\beta_1 = \kappa \beta_1
+    \end{align*}
+    %
+    where the first line follows by the law of large numbers and the continuous mapping theorem, and the second line follows by \eqref{eqn:additivenoise} and \eqref{eqn:cevoutcomemodel}, and the final line again by \eqref{eqn:cevoutcomemodel}. On the other hand, notice that our proof of the bias for the SBW estimator required the joint normality of $(X_{sc}, W_{sc} \mid A_{sc} = 1)$ to derive an expression for $\mathbb{E}[X_{sc} \mid W_{sc}, A_{sc} = 1]$ and hence an expression for the bias.
+\end{remark}
+
+\begin{proposition}\label{cl2}
+Let $\tilde{X}_{A=1} = \{\upsilon_1 + \kappa (W_{sc} - \upsilon_1): \forall sc: A_{sc} = 1\}$. Let $\gamma^\star$ be the solution to the SBW objective defined over the constraint set $\Gamma(\tilde{X}_1, \bar{X}_0, 0)$, and let $\hat{\psi}^1_0$ be the SBW estimator $\sum_{sc: A_{sc} = 1}\gamma^\star_{sc}Y_{sc}$. This estimator is unbiased for $\psi_0^1$.
+\end{proposition}
+
+
+
+\begin{remark}
+While we have assumed $\epsilon_{sc}=0$, this estimator still has variance, conditional on $W$, equal to
+
+\begin{align}
+\nonumber Var[\sum_{sc: A_{sc} = 1}\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^T\beta_1 \mid W] &= \sum_{sc: A_{sc} = 1} Var(\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^T\beta_1 \mid W) \\
+\nonumber &= \sum_{sc: A_{sc} = 1} \gamma_{sc}^{\star^2}\beta_1^T(\Sigma_{X} - \Sigma_{X}\Sigma_{W}^{-1}\Sigma_{X})\beta_1  \\
+& = \|\gamma^*\|^2 \cdot \beta_1^T(\Sigma_{X} - \Sigma_{X}\Sigma_{W}^{-1}\Sigma_{X})\beta_1  \label{eqn:variance}
+\end{align}
+%
+where the first equality uses the fact that the $(X_{sc}, W_{sc})$ are i.i.d, and the second uses the fact that $\gamma_{sc}$ is fixed given $W$ and that $(X_{sc}, W_{sc})$ are jointly normal. %It can be seen that the variance of this estimator is higher than if we knew the true $X_{sc}$ unless $\Sigma_W = \Sigma_X$ (i.e. we observe $X_{sc}$). % Dave writes: commented sentence is a little confusing since the variance is zero if you know true X 
+\end{remark}
+
+
+Proposition \ref{prop:variance_rate} shows that this variance goes to zero, implying consistency. 
+\begin{proposition}\label{prop:variance_rate}
+Let $V^*$ denote the variance given by \eqref{eqn:variance}. It holds that $V^* = O_P(n_1^{-1})$ as $n_1 \rightarrow \infty$.
+\end{proposition}
+
+
+
+\begin{remark}
+    Assuming there is a model error simply leads to the additional term $\sum_{sc: A_{sc} = 1}\gamma_{sc}\epsilon_{sc}$. This again has expectation zero, because the weights remain independent of the error in the outcome model, and adds a term to the total variance (conditional on $W$) equal to
+    \begin{align*}
+    \sigma^2_{\epsilon}\sum_{sc: A_{sc} = 1}\gamma_{sc}^{\star^2}
+    \end{align*}
+\end{remark}
+
+Proposition~\ref{cl2} assumes that we know $\tilde{X}$, $\upsilon_1$, and $\bar{X}_0$; however, in practice we estimate it from the data. Moreover, the estimation of $\tilde{X}$ typically involves both the observed dataset and auxillary data, which we have not yet specified here. Let $\hat{X}_{A=1}$ be defined as...
+
+%We give an example of this below.
+
+%Recall that $\tilde{X}_{sc} = \upsilon_1 + \kappa^T(W_{sc} - \upsilon_1)$, where $\kappa = \Sigma_W^{-1}\Sigma_X$. We can obtain an unbiased estimate of $\upsilon_1$ using $\bar{W}_1$; the challenge is estimating $\kappa$. Following \cite{gleser1992importance}, consider the setting where we observe $T$ independent vectors of measurements $W_i^\star$ from known values $X_i^\star$, so that $\nu_i^\star = W_i^\star - X_i^\star$. Assume that $\Sigma_{\nu^\star} = \Sigma_{\nu}$. We can then estimate $\hat{\Sigma}_{\nu, i} = \frac{1}{T}\sum_{i=1}^T(W_i^\star - X_i^\star)'(W_i^\star - X_i^\star)$. We can then estimate
+
+%\begin{align*}
+%\hat{\kappa} = (n\hat{\Sigma}_W)^{-1}(n(\hat{\Sigma}_W - \hat{\Sigma}_{\nu}))
+%\end{align*}
+%
+%assuming $n(\hat{\Sigma}_W - \hat{\Sigma}_{\nu})$ is positive semi-definite, and where $\hat{\Sigma}_W = \frac{1}{n}\sum_{i=1}^n (W_{sc} - \bar{W}_1)(W_{sc} - \bar{W}_1)'$. Let $\hat{X}_1$ contain the estimates of $\tilde{X}_{A=1}$: that is, $\hat{X}_{sc} = \{\bar{W}_1 + \hat{\kappa}^T(W_{sc} - \bar{W}_1): \forall sc: A_{sc} = 1\}$. 
+
+\begin{proposition}\label{cl3}
+Let $\hat{\gamma}$ be the weights that solve the SBW objective over the constraint set $\Gamma(\hat{X}_{A=1}, \bar{W}_0, 0)$, and let $\hat{\psi}^{1, sbw}_0(\hat{X}_{A=1}, \bar{X}_0, 0)$ be the corresponding SBW estimator. This estimator is consistent for $\psi_0^1$ as $n \to \infty$, $T \to \infty$.
+\end{proposition}
+
+
+% \begin{remark}
+%     While here we have specified a particular form of auxillary data used to estimate $\Sigma_{\nu}$, we can be agnostic about the specifics of the auxillary data so long as $\hat{\Sigma}_{\nu}$ is a consistent estimate of $\Sigma_{\nu}$. For example, in our application we use the replicate survey weights from the ACS microdata to estimate this quantity and we do not require access to a known $X_{sc}^\star$ for any observation for our estimation procedure.
+% \end{remark}
+
+\begin{remark}
+    We have made the simplifying assumption that $\mathbb{E}[X_{sc} \mid W_{sc}, A_{sc} = 1]$ follows a linear model. This limits the possible distributions of $(X_{sc}, W_{sc}) \mid A_{sc} = 1$ and if the errors are homoskedastic, is equivalent to assuming that $(X_{sc}, W_{sc})$ are jointly normal (see, e.g., \cite{gleser1992importance}). \cite{gleser1992importance} shows that for the regression-based estimators of model parameters $(\alpha_1, \beta_1)$, the regression-calibration estimator outlined above is consistent even when this linear model is misspecified, but making few other no distributional assumptions on $X$ except that the empirical covariance matrix converges to some (non-singular) limit $\Sigma_X$ as $n \to \infty$.\footnote{The consistency of the estimate relies on several other relatively weak conditions as well; we refer to the paper for more details.} However, this is not true for the SBW estimator. We show these results in Propositions~\ref{cl8} and ~\ref{cl9}.
+\end{remark}
+
+Given the challenges of modeling $\mathbb{E}[X \mid W, A = 1]$, it would be desirable if at least the OLS or SBW weights were consistent even if we used the misspecified linear model: while this is true when running OLS on the adjusted dataset $\tilde{X}_{A=1}$, this is not in general true with SBW. We show this in Propositions~\ref{cl8} and ~\ref{cl9}.
+
+\begin{proposition}\label{cl8}
+    The OLS estimates of $\psi_0^1$ that use the adjusted covariate set $\tilde{X}_{A=1}$ is consistent under no assumptions on the distribution of $X_{sc}$ except that $n_1^{-1}\sum (X_{sc} - \bar{X}_1) (X_{sc} - \bar{X}_1)^T \to^p \Sigma_X$, and that the measurement errors are homoskedastic with finite variance and that $\Sigma_{\nu} = \Sigma_{\nu, sc}$. 
+\end{proposition}
+
+
+\begin{remark}
+    In practice we must estimate $\tilde{X}$ with some estimator $\hat{X}$ that relies on an estimate $\hat{\kappa}$. As long as $\hat{\kappa}$ is consistent for $\kappa$ then the OLS estimator will also be consistent by the continuous mapping theorem.
+\end{remark}
+
+
+\begin{proposition}\label{cl9}
+    The SBW estimator using weights $\hat{\gamma}^{sbw}$ defined over the constraint set $\Gamma(\tilde{X}_{A=1}, \bar{X}_0, 0)$ is generally biased for $\psi^1_0$.
+\end{proposition}
+
+\begin{remark}
+    The complication comes from the dependence of the weights on $\hat{\theta}$: unlike with the OLS weights, $\kappa^T\hat{\Sigma}_W(\hat{\theta})\kappa \not\approx \hat{\Sigma}_X(\hat{\theta})\kappa$ unless $\hat{\theta} = 1$ for all observations. 
+\end{remark}
+
+\begin{remark}
+    In contrast to the previous results, we avoid taking probability limits or expectations of the expression $T_1$ in order to avoid making assumptions on the random variable $\hat{\theta}_{sc}$. However, if we were to assume that $\hat{\Sigma}_X(\hat{\theta})$ and $\hat{\Sigma}_W(\hat{\theta})$ had an expectation and equivalent probability limit, we do know that $\kappa_n \to^p \kappa$, and therefore we can replace the estimated quantities in $T_1$ with their expectations to view this as a limiting expression for the expected imbalance. The challenge is showing the conditions when these assumptions would be true, which is beyond the scope of the present paper.
+\end{remark}
+
+\subsection{Properties of the H-SBW objective}\label{app:AsecII}
+    In this section we consider properties of the H-SBW estimator assuming the true covariates are observed. In Proposition~\ref{cl4} we show that under an outcome model with equicorrelated errors, given data $X_{A=1}$, target $\bar{X}_0$, and maximum tolerated imbalance $\delta$, the H-SBW estimator produces the minimum conditional-on-X variance estimator of $\psi_0^1$ within the constraint set. In Proposition~\ref{cl5} we consider any positive definite covariance structure $\Omega$ and show that when relaxing the positivity constraint on the weights but enforcing exact balance, the generic SBW weights that minimize the criterion $f(\gamma) = \gamma^T\Omega\gamma$ are equivalent to the corresponding regression weights from Generalized Least Squares (GLS). In Proposition~\ref{cl6} we establish that there exists a subset of the rows of the matrix $Z$ where the solution to H-SBW across $\Gamma(Z, \zeta, 0)$ is equivalent to the GLS weights. These results nest SBW and OLS as special cases.
+
+\begin{proposition}\label{cl4}
+    Consider the outcome model in ~\eqref{eqn:linmod}. Assume the errors are homoskedastic and have finite variance $\sigma^2_{\epsilon}$ and $\sigma^2_{\varepsilon}$, and let $\rho$ be the within-state correlation of the error terms. Let $\hat{\gamma}^{hsbw}$ be the weights that solve \eqref{eqn:hsbwobjective} for known parameter $\rho$ across the constraint set $\Gamma(X_{A=1}, \bar{X}_0, \delta)$ for any $\delta$. 
+    
+    The H-SBW estimator $\sum_{s: A_s = 1}\sum_{c=1}^{p_s}\hat{\gamma}_{sc}^{hsbw}Y_{sc}$ is the minimum conditional-on-X variance estimator of $\psi_0^1$ within the constraint set $\Gamma(X_{A=1}, \bar{X}_0, \delta)$.
+\end{proposition}
+
+
+\begin{remark}
+    For simplicity we assumed the outcomes followed \eqref{eqn:linmod} and the constraints balanced the means of the covariates; however, we can allow for any outcome model and our balance constraints can include any function of the covariate distribution and this result still holds conditional on $X$ (though of course the estimator may be badly biased). The key assumption is that the variability in the estimates comes from the outcome model errors, which are assumed to be equicorrelated within state for known parameter $\rho$.
+\end{remark}
+
+\begin{remark}
+    The SBW criterion takes the generic form $\gamma^T\Omega\gamma$: SBW takes $\Omega = I_n$, while H-SBW specifies an $\Omega$ that allows for positive within-state equicorrelation. Similar results would hold for any assumed covariance structure $\Omega$. However, the number of parameters that characterize $\Omega$, and therefore the objective function, may differ.
+\end{remark}
+
+We now highlight some connections between what we call general SBW weights and GLS weights for any positive definite covariance matrix $\Omega$.
+
+\begin{proposition}\label{cl5}
+    Let $\Omega$ be any positive definite covariance matrix representing a model of covariance structure of the error terms in a linear outcome model. Consider a general form of SBW that optimizes the criterion $f(\gamma) = \gamma^T\Omega\gamma$. Define $\Gamma_U(Z, \zeta, 0) = \{\gamma: \sum_{sc}\gamma_{sc}Z_{sc} = \zeta, \sum_{A_{sc} = 1}\gamma_{sc} = 1\}$. This is the constraint set where the positivity constraint on the weights has been relaxed. Let $\hat{\gamma}^{hsbw}(\Gamma_U(Z, \zeta, 0))$ be the general SBW weights that minimize $f(\gamma)$ over $\Gamma_U(Z, \zeta, 0)$ for any input matrix $Z$ and target $\zeta$.
+    
+    Define $V = (1, Z)$ and let $\zeta^\star = (1, \zeta)$. The general SBW weights $\hat{\gamma}^{gsbw}(\Gamma_U(Z, \zeta, 0))$ are equivalent to the GLS weights $\hat{\gamma}^{gls} = (\zeta^\star^T(V^T\Omega^{-1}V)^{-1}V\Omega^{-1})^T$. 
+\end{proposition}
+
+
+\begin{remark}
+    Because the first element of the vector $\zeta^\star$ and the first column of the matrix $V$ are 1, this implies that $\sum_{A_{sc} = 1}\hat{\gamma}_{sc}^{gls}V_{sc} = \sum_{A_{sc} = 1}\hat{\gamma}^{gls}_{sc}1 = 1$; therefore, the summing to one constraint was implied by the inclusion of an intercept.
+\end{remark}
+
+\begin{remark}
+    If $\Omega = \sigma^2I_n$ this proposition implies that OLS weights are equivalent to the SBW weights for constraint set $\Gamma_U(Z, \zeta, 0)$. This and other generalizations of this connection between balancing weights and ridge-regression weights are found in \cite{ben2021augmented}; see also \cite{chattopadhyay2021implied}.
+\end{remark}
+
+\begin{remark}\label{rmk:olsweightsfixed}
+    Recall that $\hat{\beta}$ defined in the GLS dual program $\hat{\beta} = (V^T\Omega^{-1}V)^{-1}\zeta^\star$ and the relationship between the solutions: 
+    
+    \begin{align*}
+        \hat{\gamma}_{sc} = (\Omega^{-1}V\hat{\beta})_{sc}
+    \end{align*}
+
+    The OLS weights that take $\Omega = I_n$ are a linear function of the input data point $V_{sc}$, the inverse covariance matrix, and the target $\zeta^\star$. However, for a more general covariance matrix $\Omega$, the optimal weights depend on some combination of the units within the entire dataset $V$, as well as the weighted inverse covariance matrix and the target. 
+\end{remark}
+
+\begin{proposition}\label{cl6}
+    Let $\hat{\gamma}^{gls}(Z, \zeta)$ be the GLS weights defined in Proposition~\ref{cl5}, and let $\hat{\gamma}^{gsbw}(Z, \zeta, 0)$  the general SBW weights that minimize $f(\gamma)$ over the constraint set $\Gamma(Z, \zeta, 0)$ (assumed feasible). There exists a subset of points $Z_{\hat{\theta} = 1} = \{Z_{sc}: \hat{\theta}_{sc} = 1\}$ such that the GLS weights estimated on this subset $(\hat{\gamma}^{gls}(Z_{\hat{\theta} = 1}, \zeta))$ are equivalent to the non-zero general SBW weights generated on the full dataset.
+\end{proposition}
+
+\begin{remark}
+    Taking $\Omega = I_n$ shows that the non-zero SBW weights are equivalent to OLS weights on some subset of the data. 
+\end{remark}
+
+\begin{remark}
+    In Proposition~\ref{cl5}, we saw that the GLS weights are determined by the $q + 1$ dimensional vector $\hat{\beta}^{gls}$ -- i.e. $\hat{\gamma}^{gls} = \Omega^{-1}V\hat{\beta}^{gls}$, where $\hat{\beta}^{gls} = (V^T\Omega^{-1}V)^{-1}\zeta^\star$. Letting $V_{\hat{\theta}=1}$ be analagous to the result above, we see that the generic SBW dual problem has the solution:
+    
+    \begin{align}
+    \hat{\beta}^{gsbw} = (V_{\hat{\theta}=1}^T\Omega^{-1}V_{\hat{\theta}=1})^{-1}\zeta^\star
+    \end{align}
+\end{remark}
+
+\begin{remark}
+    The generic SBW objective that enforces exact balance and positive weights is identical to the problem considered in Proposition~\ref{cl5} except with a positivity constraint. We can minimize the Lagrangian subject to $\gamma \ge 0$ to derive a solution $\hat{\gamma}^{gsbw} = \max\{0, \Omega^{-1}V\hat{\beta}^{gsbw}\}$, where $\hat{\beta}^{gsbw}$ exists by assumption. We can therefore also express $\hat{\theta}_{sc}$ in terms of the dual variables: $\hat{\theta}_{sc} = \mathds{1}(\Omega^{-1}V\hat{\beta} > 0)$.
+\end{remark}
+
+Proposition~\ref{cl6} highlights the connection between regression weights and H-SBW weights, and reveals that we can express H-SBW weights that achieve exact balance as regression weights estimated on a subset of the data. We will use this fact in the following section. 
+
+\subsection{H-SBW and measurement error}\label{app:AsecIII}
+
+We return to the measurement error framework developed in Appendix~\ref{app:AsecI}. However, the assumptions in Appendix~\ref{app:AsecI} required that the true covariates were drawn iid from a multivariate normal distribution that allowed us to derive a linear model for $\mathbb{E}[X_{sc} \mid W_{sc}, A_{sc} = 1]$. We then denoted the corresponding set of predicted values for the treated observations $\tilde{X}_{A=1}$. In Proposition~\ref{cl7} we show that we can generally balance on $\tilde{X}^\star_{A=1} = \{\mathbb{E}[X_{sc} \mid W, A_{sc} = 1], \forall sc: A_{sc} = 1\}$ to obtain an unbiased estimate of $\psi_0^1$ when using H-SBW. However, this requires knowledge of this conditional expectation function. Encouragingly, in Proposition~\ref{cl8}, we show that under only weak assumptions on the covariate distribution, we can obtain a consistent estimate using OLS weights and the set of best linear approximations $\tilde{X}_{A=1}$. While previous results from \cite{gleser1992importance} imply this, we derive this result explicitly in terms of the implied regression weights from linear regression with a causal parameter written as a function of model coefficients. Less encouragingly, in Proposition~\ref{cl9}, we show that SBW weights that balance $\tilde{X}_{A=1}$ do not balance the true covariates, and therefore that we should not expect SBW to provide approximately/asymptotically unbiased estimates unless we model $\mathbb{E}[X \mid W]$ correctly. The key takeaway is that we require stronger and perhaps unrealistic distributional assumptions on $X_{sc}$ for SBW or H-SBW to yield consistent estimates than we do for OLS weights. 
+
+\begin{proposition}\label{cl7}
+    Consider the H-SBW estimator $\hat{\psi}_0^{1, hsbw}$ using weights $\hat{\gamma}^{hsbw}$ that solves \eqref{eqn:hsbwobjective} across $\Gamma(\tilde{X}^\star_{A=1}, \bar{X}_0, 0)$. This estimator is unbiased for $\psi_0^1$.
+\end{proposition}
+
+\begin{proof}[Proof of Proposition \ref{cl7}]
+    Following Propositions~\ref{cl2} and \ref{cl3}, assume that \eqref{eqn:cevoutcomemodel} holds without any error in the outcome model. We have previously shown in \eqref{eqn:sbwregcalerror} that this implies that the error of the H-SBW estimator can be expressed as:
+    
+    \begin{align*}
+        \hat{\psi}^{1, hsbw}_0 - \psi^1_0 = \sum_{sc: A_{sc} = 1}\hat{\gamma}^{hsbw}_{sc}(X_{sc} - \tilde{X}_{sc}^\star)^T\beta_1
+    \end{align*}
+    
+    Conditional on $W$, $\hat{\gamma}_{sc}$ is fixed and this expression equals 0. 
+\end{proof}
+
+\begin{remark}
+    Assuming that $(X_{sc}, W_{sc}) \mid A_{sc} = 1$ are Gaussian, this proposition implies that if we correctly model the correlation structure of the data in our regression calibration step, we can use GLS or H-SBW without inducing bias (assuming all of our models are correct). This is the approach followed in \cite{huque2014impact}, who consider running GLS with a spatial correlation structure in the context of a one-dimensional covariate measured with error. 
+\end{remark}
+
+\begin{remark}
+        Interestingly we find in our simulation study in Appendix~\ref{app:simstudy} that when the covariates are Gaussian, even if they are dependent, the simple adjustment provided in \eqref{eqn:regcal} is sufficient to obtain an approximately unbiased estimate when using SBW. We conjecture that this is because the set where $\hat{\theta}_{sc} = 1$ has some limiting boundary. If true, this set is fixed when $n$ is large enough, and therefore $\hat{\theta}_{sc}$ is only a function of the input data point $W_{sc}$ (since $\kappa$ is fixed). The characterization of SBW weights as regression weights in Proposition~\ref{cl6}, would then imply that the SBW weight $\hat{\gamma}_{sc}^{sbw}$ is fixed conditional on input data $W_{sc}$ (see also Remark~\ref{rmk:olsweightsfixed}). The error of the estimator can therefore decompose as a function of $(X_{sc} - \tilde{X}_{sc})$, which is independent of $\hat{\gamma}_{sc}$ given $W_{sc}$, implying that it would suffice to balance on $\tilde{X}_{A=1}$.
+\end{remark}
+
+
+\begin{remark}
+    This result of Proposition \ref{cl8} also holds in general for GLS weights. To illustrate, let $\Omega$ again represent the assumed constant equicorrelation structure characterized by fixed parameter $\rho \in [0, 1)$ and assume $p_s = p$ for all states. Notice that $\Omega^{-1}$ is then characterized by the constants $a_1 > 0$ and $a_2 \le 0$, where $a_1$ lies on the diagonal and $a_2$ lies on the within-state off diagonal (where $a_2 = 0$ if $\rho = 0$).
+    
+    Assume that we draw our sample of $m_1$ states each with $p$ units $(n_1 = pm_1)$, and that the covariates within each state have constant within-state correlations denoted by the matrix $\Sigma_S$, but that the units are independent across states. Let $\Sigma_Z(\Omega)$ denote the expected value and probability limit of $n_1^{-1}Z^T\Omega^{-1}Z$ as $m_1 \to \infty$ for any covariate set $Z$. Therefore
+    
+    \begin{align*}
+    \hat{\Sigma}_{\tilde{X}_{A=1}}(\Omega) &= n_1^{-1}(\sum_{A_s=1} a_1\kappa^TW_{sc}W_{sc}^T\kappa + \sum_{c\ne d}a_2\kappa^TW_{sc}W_{sd}^T\kappa) \\
+    &\to^p \kappa^T(a_1\Sigma_W + a_2(p-1)\Sigma_S)\kappa \\
+    &= a_1\Sigma_X\kappa + a_2(p-1)\kappa^T\Sigma_S\kappa \\
+    &= \kappa^T\Sigma_W(\Omega)\kappa
+    \end{align*}
+
+    We then see that:
+    
+    \begin{align*}
+        \mathbb{E}[\sum_{sc: A_{sc} = 1}X_{sc}\hat{\gamma}^{gls}_{sc}] &= \mathbb{E}[(\sum_{sc: A_{sc} = 1}\bar{X}_0 X_{sc}(\Omega^{-1}\tilde{X}_{A=1})_{sc}(\tilde{X}^T_{A=1}\Omega^{-1}\tilde{X}_{A=1})^{-1})] \\
+        &\to^p \mathbb{E}[X_{sc}(\Omega^{-1}W)_{sc}](\kappa^T\Sigma_W(\Omega)\kappa)^{-1}\bar{X}_0
+    \end{align*}
+    
+    Finally, note that
+    
+    \begin{align*}
+        \mathbb{E}[X_{sc}(\Omega^{-1}W)\kappa] &= \mathbb{E}[n_1^{-1}(\sum_{sc: A_{sc} =1}^ma_1X_{sc}W_{sc}^T\kappa + \sum_{c\ne d}a_2X_{sc}W_{sd}^T\kappa)] \\
+        &= (a_1\Sigma_X + a_2(p-1)\Sigma_S)\kappa
+    \end{align*}
+    
+    Therefore the asymptotic expression for the expected balance using GLS weights is equal to:
+    
+    \begin{align*}
+    [a_1\Sigma_X\kappa + a_2(p-1)\Sigma_S\kappa][a_1\Sigma_X\kappa + a_2(p-1)\kappa^T\Sigma_S\kappa]^{-1}\bar{X}_0 
+    \end{align*}
+
+    This expression does not in general equal $\bar{X}_0$. Four exceptions include the following: (1) $\Sigma_S = 0$ (the data are uncorrelated); (2) $a_2 = 0$ (implying $\Omega = I_{q+1}$, or that we ran OLS), (3) $p = 1$ (there is only one unit per state, so the data are again uncorrelated); (4) $\kappa = I_{q+1}$ (there is no measurement error). Also observe that the balance generally gets worse as $\rho$ increases (which implies that the constant $a_2$ grows in absolute magnitude).
+    
+    GLS weights generally have a more complicated dependence on the data; therefore, using the simple regression calibration adjustment with GLS will not in general balance the true covariates either approximately or asymptotically.
+\end{remark}
+
+
+\subsection{Proofs}
+
+
+We consider our target parameter $\psi_0^1$ defined in ~\eqref{eqn:psi}. We begin by establishing the following identity:
+
+\begin{equation}\label{eqn:psi10_identity}
+\psi^1_0 = \mu_y + (\bar{X}_0 - \upsilon_1)^T\beta_1
+\end{equation}
+%
+where $\mu_y = \mathbb{E}[Y_{sc} \mid A_{sc} = 1]$ and $\upsilon_1 = \mathbb{E}[X_{sc} \mid A_{sc} = 1]$.
+
+\begin{proof}[Proof of (\ref{eqn:psi10_identity})]
+Using our causal and modeling assumptions we have that:
+
+\begin{align*}
+\mathbb{E}[Y_{sc}^1 \mid X_{sc}, A_{sc} = 0] &= \mathbb{E}[Y_{sc}^1 \mid X_{sc}, A_{sc} = 1] \\
+&= \mathbb{E}[Y_{sc} \mid X_{sc}, A_{sc} = 1] \\
+&= \alpha_1 + X_{sc}^T\beta_1 \\
+&= \mu_y + (X_{sc} - \upsilon_1)^T\beta \\
+&\implies \psi_0^1 = \mu_y + (\bar{X}_0 - \upsilon_1)^T\beta_1
+\end{align*}
+%
+where the first equality follows from unconfoundedness, the second equality from consistency, the third from our parametric modeling assumptions, and the fourth by definition of $\alpha$. The final equation follows from averaging over the control units.
+\end{proof}
+%
+
+\begin{proof}[Proof of Propositon \ref{cl1}]
 To show that these estimators have identical bias, we compute their expectations:
 
 \begin{align}
@@ -90,23 +321,8 @@ We now derive the expected values of $\hat{\psi}^{1, sbw}$:
 where \eqref{eqn:prop1.4} holds by the assumed linear model for $Y_{sc}$ given by \eqref{eqn:cevoutcomemodel}; \eqref{eqn:prop1.5} and \eqref{eqn:prop1.10} hold because the SBW algorithm enforces that $\sum \hat{\gamma}_{sc} W_{sc} = \bar{W}_0$, which has expectation $\bar{X}_0$, and because $\epsilon_{sc}$ is zero-mean and independent of $W_{sc}$ and hence independent of $\hat{\gamma}_{sc}$; \eqref{eqn:prop1.6} holds by definition of $\psi_0^1$ and the assumed linear model in \eqref{eqn:linmod}; \eqref{eqn:prop1.7} is the tower property of expectations; \eqref{eqn:prop1.8} follows because $\gamma_{sc}$ and $W_{sc}$ are deterministic given $W$; and \eqref{eqn:prop1.9} uses the expression for the conditional expectation given by \eqref{eqn:regcal} under assumption of \eqref{eqn:cevoutcomemodel}.
 \end{proof}
 
-\begin{remark}  
-    This bias expression is exact for $\psi_0^1$ assuming the joint normality of the treated data. Without loss of generality, assume that $\upsilon_1 = 0$. However, for the OLS estimator, we require far weaker assumptions on the distribution of $X_{sc} \mid A_{sc} = 1$: in particular, as long as $\mathbb{E}\{X_{sc}X_{sc}^T \mid A_{sc} = 1\} = \Sigma_X$ and a law of large numbers holds, still assuming that the measurement errors are iid, this implies $n^{-1}\sum_{sc: A_{sc} = 1}W_{sc}W_{sc}^T \to^p \Sigma_W$, and therefore this expression reflects the asymptotic bias: 
-    
-    \begin{align*}
-    \mathbb{E}[\hat{\beta}_1] &= \mathbb{E}[(\sum_{A_{sc} = 1}W_{sc}W_{sc}^T)^{-1}\sum_{A_{sc} = 1}W_{sc}Y_{sc}] \to^p \Sigma_W^{-1}\mathbb{E}[W_{sc}Y_{sc}] \\ 
-    &= \Sigma_W^{-1}\mathbb{E}[(X_{sc} + \nu_{sc})(X_{sc}^T\beta_1 + \epsilon_{sc})] \\
-    &= \Sigma_W^{-1}\Sigma_X\beta_1 = \kappa \beta_1
-    \end{align*}
-    %
-    where the first line follows by the law of large numbers and the continuous mapping theorem, and the second line follows by \eqref{eqn:additivenoise} and \eqref{eqn:cevoutcomemodel}, and the final line again by \eqref{eqn:cevoutcomemodel}. On the other hand, notice that our proof of the bias for the SBW estimator required the joint normality of $(X_{sc}, W_{sc} \mid A_{sc} = 1)$ to derive an expression for $\mathbb{E}[X_{sc} \mid W_{sc}, A_{sc} = 1]$ and hence an expression for the bias.
-\end{remark}
 
-\begin{proposition}\label{cl2}
-Let $\tilde{X}_{A=1} = \{\upsilon_1 + \kappa (W_{sc} - \upsilon_1): \forall sc: A_{sc} = 1\}$. Let $\gamma^\star$ be the solution to the SBW objective defined over the constraint set $\Gamma(\tilde{X}_1, \bar{X}_0, 0)$, and let $\hat{\psi}^1_0$ be the SBW estimator $\sum_{sc: A_{sc} = 1}\gamma^\star_{sc}Y_{sc}$. This estimator is unbiased for $\psi_0^1$.
-\end{proposition}
-
-\begin{proof}
+\begin{proof}[Proof of Proposition \ref{cl2}]
 Assuming $\epsilon_{sc} = 0$, by linearity we know that
 
 \begin{equation}\label{eqn:outcomerevised}
@@ -124,54 +340,7 @@ We then have that:
 where \eqref{eqn:outcomerevised_proof1} follows from \eqref{eqn:outcomerevised}, and \eqref{eqn:sbwregcalerror} holds since $\sum \gamma_{sc}^* = 1$ and $\sum \gamma_{sc}^* \tilde_{X}_{sc} = \bar{X}_0$. Conditioned on $W$, it can be seen that $\gamma^*$ is fixed and $X_{sc} - \tilde{X}_{sc}$ has expectation zero; therefore, \eqref{eqn:sbwregcalerror} implies that the estimator is unbiased.
 \end{proof}
 
-\begin{remark}
-While we have assumed $\epsilon_{sc}=0$, this estimator still has variance, conditional on $W$, equal to
-
-\begin{align}
-\nonumber Var[\sum_{sc: A_{sc} = 1}\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^T\beta_1 \mid W] &= \sum_{sc: A_{sc} = 1} Var(\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^T\beta_1 \mid W) \\
-\nonumber &= \sum_{sc: A_{sc} = 1} \gamma_{sc}^{\star^2}\beta_1^T(\Sigma_{X} - \Sigma_{X}\Sigma_{W}^{-1}\Sigma_{X})\beta_1  \\
-& = \|\gamma^*\|^2 \cdot \beta_1^T(\Sigma_{X} - \Sigma_{X}\Sigma_{W}^{-1}\Sigma_{X})\beta_1  \label{eqn:variance}
-\end{align}
-%
-where the first equality uses the fact that the $(X_{sc}, W_{sc})$ are i.i.d, and the second uses the fact that $\gamma_{sc}$ is fixed given $W$ and that $(X_{sc}, W_{sc})$ are jointly normal. %It can be seen that the variance of this estimator is higher than if we knew the true $X_{sc}$ unless $\Sigma_W = \Sigma_X$ (i.e. we observe $X_{sc}$). % Dave writes: commented sentence is a little confusing since the variance is zero if you know true X 
-\end{remark}
-
-
-Proposition \ref{prop:variance_rate} shows that this variance goes to zero, implying consistency. 
-\begin{proposition}\label{prop:variance_rate}
-Let $V^*$ denote the variance given by \eqref{eqn:variance}. It holds that $V^* = O_P(n_1^{-1})$ as $n_1 \rightarrow \infty$.
-\end{proposition}
-
-\begin{proof} We will prove this proposition by constructing a feasible solution $\gamma'$ to the SBW objective over the constraint set $\Gamma(\tilde{X}, \bar{X}_0, 0)$ such that $\|\gamma'\|^2 = O_P(n^{-1})$. As the optimal solution $\gamma^*$ satisfies $\|\gamma^*\|^2 \leq \|\gamma'\|^2$, the result follows.
-
-Our construction is the following. Divide the $n_1$ treated units into subsets of size $n^{\text{sub}}$, discarding the remainder units, resulting in $L = \lfloor n_1/n^{\text{sub}} \rfloor$ subsets. For each subset $\ell=1,\ldots,L$, let $X^{(\ell)}$ denote its covariates, $\tilde{X}^{(\ell)}$ the conditional expectation $\mathbb{E}[X^{(\ell)}|W, A]$, and  $\gamma^{(\ell)}$ the solution to the SBW objective over the constraint set $\Gamma(\tilde{X}^{(\ell)}, \bar{X}_0, 0)$, with $\gamma^{(\ell)}=0$ if the constraint set is infeasible. As the units are assumed to be i.i.d., it follows that $\gamma^{(1)}, \ldots, \gamma^{(L)}$ are also i.i.d. Let $n^{\text{sub}}$ be large enough so that each $\gamma^{(\ell)}$ has positive probability of being non-zero. Let $L'$ denote the number of subsets whose $\gamma^{(\ell)}$ is non-zero.
-
-As each non-zero weight vector $\gamma^{(\ell)}$ is feasible for $\Gamma(\tilde{X}^{(\ell)}, \bar{X}_0, 0)$, it can be seen that the concatenated vector $\gamma' = (\gamma^{(1)}/L', \ldots, \gamma^{(L)}/L')$ is feasible for $\Gamma(\tilde{X},\bar{X}_0,0)$. As the weights $\gamma^{(\ell)}$ are i.i.d, it follows that $\| \gamma'\|^2$ converges in probability to $\frac{\mathbb{E}\|\gamma^{(1)}\|^2}{\mathbb{E}L'} = O(n_1^{-1})$, proving the result.
-\end{proof}
-
-
-\begin{remark}
-    Assuming there is a model error simply leads to the additional term $\sum_{sc: A_{sc} = 1}\gamma_{sc}\epsilon_{sc}$. This again has expectation zero, because the weights remain independent of the error in the outcome model, and adds a term to the total variance (conditional on $W$) equal to
-    \begin{align*}
-    \sigma^2_{\epsilon}\sum_{sc: A_{sc} = 1}\gamma_{sc}^{\star^2}
-    \end{align*}
-\end{remark}
-
-Proposition~\ref{cl2} assumes that we know $\tilde{X}$, $\upsilon_1$, and $\bar{X}_0$; however, in practice we estimate it from the data. Moreover, the estimation of $\tilde{X}$ typically involves both the observed dataset and auxillary data, which we have not yet specified here. We give an example of this below.
-
-Recall that $\tilde{X}_{sc} = \upsilon_1 + \kappa^T(W_{sc} - \upsilon_1)$, where $\kappa = \Sigma_W^{-1}\Sigma_X$. We can obtain an unbiased estimate of $\upsilon_1$ using $\bar{W}_1$; the challenge is estimating $\kappa$. Following \cite{gleser1992importance}, consider the setting where we observe $T$ independent vectors of measurements $W_i^\star$ from known values $X_i^\star$, so that $\nu_i^\star = W_i^\star - X_i^\star$. Assume that $\Sigma_{\nu^\star} = \Sigma_{\nu}$. We can then estimate $\hat{\Sigma}_{\nu, i} = \frac{1}{T}\sum_{i=1}^T(W_i^\star - X_i^\star)'(W_i^\star - X_i^\star)$. We can then estimate
-
-\begin{align*}
-\hat{\kappa} = (n\hat{\Sigma}_W)^{-1}(n(\hat{\Sigma}_W - \hat{\Sigma}_{\nu}))
-\end{align*}
-%
-assuming $n(\hat{\Sigma}_W - \hat{\Sigma}_{\nu})$ is positive semi-definite, and where $\hat{\Sigma}_W = \frac{1}{n}\sum_{i=1}^n (W_{sc} - \bar{W}_1)(W_{sc} - \bar{W}_1)'$. Let $\hat{X}_1$ contain the estimates of $\tilde{X}_{A=1}$: that is, $\hat{X}_{sc} = \{\bar{W}_1 + \hat{\kappa}^T(W_{sc} - \bar{W}_1): \forall sc: A_{sc} = 1\}$. 
-
-\begin{proposition}\label{cl3}
-Let $\hat{\gamma}$ be the weights that solve the SBW objective over the constraint set $\Gamma(\hat{X}_{A=1}, \bar{W}_0, 0)$, and let $\hat{\psi}^{1, sbw}_0(\hat{X}_{A=1}, \bar{X}_0, 0)$ be the corresponding SBW estimator. This estimator is consistent for $\psi_0^1$ as $n \to \infty$, $T \to \infty$.
-\end{proposition}
-
-\begin{proof}
+\begin{proof}[Proof of Proposition \ref{cl3}]
 Following Proposition~\ref{cl2}, assuming no model error we can decompose the error of the estimator as follows:
 
 \begin{align*}\nonumber
@@ -185,24 +354,14 @@ The third term has expectation zero. By definition of the constraint set, $\hat{
 By the weak law of large numbers, $\hat{\Sigma}_W - \hat{\Sigma}_{\nu} \to \Sigma_{X}$ as $n \to \infty$, $T \to \infty$. Similarly $\hat{\Sigma}_W \to \Sigma_W$ as $n \to \infty$. By the continuous mapping theorem $\hat{\kappa} \to^p \kappa$. Since $\bar{W}_1 \to^p \bar{X}_1$, we conclude that $\hat{X}_{sc} \to \tilde{X}_{sc}$. 
 \end{proof}
 
-\begin{remark}
-    While here we have specified a particular form of auxillary data used to estimate $\Sigma_{\nu}$, we can be agnostic about the specifics of the auxillary data so long as $\hat{\Sigma}_{\nu}$ is a consistent estimate of $\Sigma_{\nu}$. For example, in our application we use the replicate survey weights from the ACS microdata to estimate this quantity and we do not require access to a known $X_{sc}^\star$ for any observation for our estimation procedure.
-\end{remark}
+\begin{proof}[Proof of Proposition \ref{prop:variance_rate}] We will prove this proposition by constructing a feasible solution $\gamma'$ to the SBW objective over the constraint set $\Gamma(\tilde{X}, \bar{X}_0, 0)$ such that $\|\gamma'\|^2 = O_P(n^{-1})$. As the optimal solution $\gamma^*$ satisfies $\|\gamma^*\|^2 \leq \|\gamma'\|^2$, the result follows.
 
-\begin{remark}
-    We have made the simplifying assumption that $\mathbb{E}[X_{sc} \mid W_{sc}, A_{sc} = 1]$ follows a linear model. This limits the possible distributions of $(X_{sc}, W_{sc}) \mid A_{sc} = 1$ and if the errors are homoskedastic, is equivalent to assuming that $(X_{sc}, W_{sc})$ are jointly normal (see, e.g., \cite{gleser1992importance}). \cite{gleser1992importance} shows that for the regression-based estimators of model parameters $(\alpha_1, \beta_1)$, the regression-calibration estimator outlined above is consistent even when this linear model is misspecified, but making few other no distributional assumptions on $X$ except that the empirical covariance matrix converges to some (non-singular) limit $\Sigma_X$ as $n \to \infty$.\footnote{The consistency of the estimate relies on several other relatively weak conditions as well; we refer to the paper for more details.} However, this is not true for the SBW estimator. We show these results in Propositions~\ref{cl8} and ~\ref{cl9}.
-\end{remark}
+Our construction is the following. Divide the $n_1$ treated units into subsets of size $n^{\text{sub}}$, discarding the remainder units, resulting in $L = \lfloor n_1/n^{\text{sub}} \rfloor$ subsets. For each subset $\ell=1,\ldots,L$, let $X^{(\ell)}$ denote its covariates, $\tilde{X}^{(\ell)}$ the conditional expectation $\mathbb{E}[X^{(\ell)}|W, A]$, and  $\gamma^{(\ell)}$ the solution to the SBW objective over the constraint set $\Gamma(\tilde{X}^{(\ell)}, \bar{X}_0, 0)$, with $\gamma^{(\ell)}=0$ if the constraint set is infeasible. As the units are assumed to be i.i.d., it follows that $\gamma^{(1)}, \ldots, \gamma^{(L)}$ are also i.i.d. Let $n^{\text{sub}}$ be large enough so that each $\gamma^{(\ell)}$ has positive probability of being non-zero. Let $L'$ denote the number of subsets whose $\gamma^{(\ell)}$ is non-zero.
 
-\subsection{Properties of the H-SBW objective}\label{app:AsecII}
-    In this section we consider properties of the H-SBW estimator assuming the true covariates are observed. In Proposition~\ref{cl4} we show that under an outcome model with equicorrelated errors, given data $X_{A=1}$, target $\bar{X}_0$, and maximum tolerated imbalance $\delta$, the H-SBW estimator produces the minimum conditional-on-X variance estimator of $\psi_0^1$ within the constraint set. In Proposition~\ref{cl5} we consider any positive definite covariance structure $\Omega$ and show that when relaxing the positivity constraint on the weights but enforcing exact balance, the generic SBW weights that minimize the criterion $f(\gamma) = \gamma^T\Omega\gamma$ are equivalent to the corresponding regression weights from Generalized Least Squares (GLS). In Proposition~\ref{cl6} we establish that there exists a subset of the rows of the matrix $Z$ where the solution to H-SBW across $\Gamma(Z, \zeta, 0)$ is equivalent to the GLS weights. These results nest SBW and OLS as special cases.
+As each non-zero weight vector $\gamma^{(\ell)}$ is feasible for $\Gamma(\tilde{X}^{(\ell)}, \bar{X}_0, 0)$, it can be seen that the concatenated vector $\gamma' = (\gamma^{(1)}/L', \ldots, \gamma^{(L)}/L')$ is feasible for $\Gamma(\tilde{X},\bar{X}_0,0)$. As the weights $\gamma^{(\ell)}$ are i.i.d, it follows that $\| \gamma'\|^2$ converges in probability to $\frac{\mathbb{E}\|\gamma^{(1)}\|^2}{\mathbb{E}L'} = O(n_1^{-1})$, proving the result.
+\end{proof}
 
-\begin{proposition}\label{cl4}
-    Consider the outcome model in ~\eqref{eqn:linmod}. Assume the errors are homoskedastic and have finite variance $\sigma^2_{\epsilon}$ and $\sigma^2_{\varepsilon}$, and let $\rho$ be the within-state correlation of the error terms. Let $\hat{\gamma}^{hsbw}$ be the weights that solve \eqref{eqn:hsbwobjective} for known parameter $\rho$ across the constraint set $\Gamma(X_{A=1}, \bar{X}_0, \delta)$ for any $\delta$. 
-    
-    The H-SBW estimator $\sum_{s: A_s = 1}\sum_{c=1}^{p_s}\hat{\gamma}_{sc}^{hsbw}Y_{sc}$ is the minimum conditional-on-X variance estimator of $\psi_0^1$ within the constraint set $\Gamma(X_{A=1}, \bar{X}_0, \delta)$.
-\end{proposition}
-
-\begin{proof}
+\begin{proof}[Proof of Proposition \ref{cl4}]
 \begin{align*}
     Var[n_t^{-1}\sum_{s: A_s = 1}\sum_{c = 1}^{p_s}\gamma_{sc}Y_{sc} \mid X_{sc}, A_{sc}] &= n_t^{-2}\sum_{s: A_s = 1}[\sum_{c = 1}^{p_s}\gamma_{sc}^2(\sigma^2_{\epsilon} + \sigma^2_{\varepsilon}) + \sum_{c \ne d}\gamma_{sc}\gamma_{sd}\sigma^2_{\varepsilon}] \\
     &\propto \sum_{s: A_s = 1}[\sum_{c = 1}^{p_s}\gamma_{sc}^2 + \sum_{c \ne d}\rho \gamma_{sc}\gamma_{sd}]
@@ -211,23 +370,7 @@ By the weak law of large numbers, $\hat{\Sigma}_W - \hat{\Sigma}_{\nu} \to \Sigm
 where the second line follows by dividing by $\sigma^2_{\epsilon} + \sigma^2_{\varepsilon}$. By definition of the H-SBW objective, which minimizes this function for known $\rho$, the H-SBW estimator must produce the minimum conditional-on-X variance estimator within the constraint set.
 \end{proof}
 
-\begin{remark}
-    For simplicity we assumed the outcomes followed \eqref{eqn:linmod} and the constraints balanced the means of the covariates; however, we can allow for any outcome model and our balance constraints can include any function of the covariate distribution and this result still holds conditional on $X$ (though of course the estimator may be badly biased). The key assumption is that the variability in the estimates comes from the outcome model errors, which are assumed to be equicorrelated within state for known parameter $\rho$.
-\end{remark}
-
-\begin{remark}
-    The SBW criterion takes the generic form $\gamma^T\Omega\gamma$: SBW takes $\Omega = I_n$, while H-SBW specifies an $\Omega$ that allows for positive within-state equicorrelation. Similar results would hold for any assumed covariance structure $\Omega$. However, the number of parameters that characterize $\Omega$, and therefore the objective function, may differ.
-\end{remark}
-
-We now highlight some connections between what we call general SBW weights and GLS weights for any positive definite covariance matrix $\Omega$.
-
-\begin{proposition}\label{cl5}
-    Let $\Omega$ be any positive definite covariance matrix representing a model of covariance structure of the error terms in a linear outcome model. Consider a general form of SBW that optimizes the criterion $f(\gamma) = \gamma^T\Omega\gamma$. Define $\Gamma_U(Z, \zeta, 0) = \{\gamma: \sum_{sc}\gamma_{sc}Z_{sc} = \zeta, \sum_{A_{sc} = 1}\gamma_{sc} = 1\}$. This is the constraint set where the positivity constraint on the weights has been relaxed. Let $\hat{\gamma}^{hsbw}(\Gamma_U(Z, \zeta, 0))$ be the general SBW weights that minimize $f(\gamma)$ over $\Gamma_U(Z, \zeta, 0)$ for any input matrix $Z$ and target $\zeta$.
-    
-    Define $V = (1, Z)$ and let $\zeta^\star = (1, \zeta)$. The general SBW weights $\hat{\gamma}^{gsbw}(\Gamma_U(Z, \zeta, 0))$ are equivalent to the GLS weights $\hat{\gamma}^{gls} = (\zeta^\star^T(V^T\Omega^{-1}V)^{-1}V\Omega^{-1})^T$. 
-\end{proposition}
-
-\begin{proof}
+\begin{proof}[Proof of Proposition \ref{cl5}]
     We show this by using the duality of the optimization problem. We first consider the primal problem:
     
     \begin{align*}
@@ -269,29 +412,8 @@ We now highlight some connections between what we call general SBW weights and G
     These are simply the GLS weights, thus concluding the proof.
 \end{proof}
 
-\begin{remark}
-    Because the first element of the vector $\zeta^\star$ and the first column of the matrix $V$ are 1, this implies that $\sum_{A_{sc} = 1}\hat{\gamma}_{sc}^{gls}V_{sc} = \sum_{A_{sc} = 1}\hat{\gamma}^{gls}_{sc}1 = 1$; therefore, the summing to one constraint was implied by the inclusion of an intercept.
-\end{remark}
 
-\begin{remark}
-    If $\Omega = \sigma^2I_n$ this proposition implies that OLS weights are equivalent to the SBW weights for constraint set $\Gamma_U(Z, \zeta, 0)$. This and other generalizations of this connection between balancing weights and ridge-regression weights are found in \cite{ben2021augmented}; see also \cite{chattopadhyay2021implied}.
-\end{remark}
-
-\begin{remark}\label{rmk:olsweightsfixed}
-    Recall that $\hat{\beta}$ defined in the GLS dual program $\hat{\beta} = (V^T\Omega^{-1}V)^{-1}\zeta^\star$ and the relationship between the solutions: 
-    
-    \begin{align*}
-        \hat{\gamma}_{sc} = (\Omega^{-1}V\hat{\beta})_{sc}
-    \end{align*}
-
-    The OLS weights that take $\Omega = I_n$ are a linear function of the input data point $V_{sc}$, the inverse covariance matrix, and the target $\zeta^\star$. However, for a more general covariance matrix $\Omega$, the optimal weights depend on some combination of the units within the entire dataset $V$, as well as the weighted inverse covariance matrix and the target. 
-\end{remark}
-
-\begin{proposition}\label{cl6}
-    Let $\hat{\gamma}^{gls}(Z, \zeta)$ be the GLS weights defined in Proposition~\ref{cl5}, and let $\hat{\gamma}^{gsbw}(Z, \zeta, 0)$  the general SBW weights that minimize $f(\gamma)$ over the constraint set $\Gamma(Z, \zeta, 0)$ (assumed feasible). There exists a subset of points $Z_{\hat{\theta} = 1} = \{Z_{sc}: \hat{\theta}_{sc} = 1\}$ such that the GLS weights estimated on this subset $(\hat{\gamma}^{gls}(Z_{\hat{\theta} = 1}, \zeta))$ are equivalent to the non-zero general SBW weights generated on the full dataset.
-\end{proposition}
-
-\begin{proof}
+\begin{proof}[Proof of Proposition \ref{cl6}]
 We assume $\zeta$ and $Z$ are fixed inputs and that exact balancing weights are feasible. Define $\hat{\gamma}^{gsbw}(Z)$ as the general SBW weights that exactly balance $Z$ to $\zeta$ for some input covariate matrix $Z$ and positive definite covariance matrix $\Omega$. We begin by proving Lemma~\ref{lemma:a1}.
 
 \begin{lemma}\label{lemma:a1}
@@ -338,57 +460,7 @@ This implies that $\hat{\gamma}^{gsbw}_{\hat{\theta} = 1}$ would be the minimize
 Finally, let $V = (1, Z)$ and define the GLS weights as in Proposition~\ref{cl5}. By construction we know that a generic SBW solution satisfying $\hat{\gamma}_{sc}^{gsbw} > 0$ for all elements is feasible on the subset $Z_{\hat{\theta} = 1}$. We can invoke Lemma~\ref{lemma:a1} to conclude that $\hat{\gamma}^{gls}(Z_{\hat{\theta} = 1}, \zeta) = \hat{\gamma}^{gsbw}(Z, \zeta, 0)$, which are equivalent to the non-zero elements of $\hat{\gamma}^{gls}(Z)$. 
 \end{proof}
 
-\begin{remark}
-    Taking $\Omega = I_n$ shows that the non-zero SBW weights are equivalent to OLS weights on some subset of the data. 
-\end{remark}
-
-\begin{remark}
-    In Proposition~\ref{cl5}, we saw that the GLS weights are determined by the $q + 1$ dimensional vector $\hat{\beta}^{gls}$ -- i.e. $\hat{\gamma}^{gls} = \Omega^{-1}V\hat{\beta}^{gls}$, where $\hat{\beta}^{gls} = (V^T\Omega^{-1}V)^{-1}\zeta^\star$. Letting $V_{\hat{\theta}=1}$ be analagous to the result above, we see that the generic SBW dual problem has the solution:
-    
-    \begin{align}
-    \hat{\beta}^{gsbw} = (V_{\hat{\theta}=1}^T\Omega^{-1}V_{\hat{\theta}=1})^{-1}\zeta^\star
-    \end{align}
-\end{remark}
-
-\begin{remark}
-    The generic SBW objective that enforces exact balance and positive weights is identical to the problem considered in Proposition~\ref{cl5} except with a positivity constraint. We can minimize the Lagrangian subject to $\gamma \ge 0$ to derive a solution $\hat{\gamma}^{gsbw} = \max\{0, \Omega^{-1}V\hat{\beta}^{gsbw}\}$, where $\hat{\beta}^{gsbw}$ exists by assumption. We can therefore also express $\hat{\theta}_{sc}$ in terms of the dual variables: $\hat{\theta}_{sc} = \mathds{1}(\Omega^{-1}V\hat{\beta} > 0)$.
-\end{remark}
-
-Proposition~\ref{cl6} highlights the connection between regression weights and H-SBW weights, and reveals that we can express H-SBW weights that achieve exact balance as regression weights estimated on a subset of the data. We will use this fact in the following section. 
-
-\subsection{H-SBW and measurement error}\label{app:AsecIII}
-
-We return to the measurement error framework developed in Appendix~\ref{app:AsecI}. However, the assumptions in Appendix~\ref{app:AsecI} required that the true covariates were drawn iid from a multivariate normal distribution that allowed us to derive a linear model for $\mathbb{E}[X_{sc} \mid W_{sc}, A_{sc} = 1]$. We then denoted the corresponding set of predicted values for the treated observations $\tilde{X}_{A=1}$. In Proposition~\ref{cl7} we show that we can generally balance on $\tilde{X}^\star_{A=1} = \{\mathbb{E}[X_{sc} \mid W, A_{sc} = 1], \forall sc: A_{sc} = 1\}$ to obtain an unbiased estimate of $\psi_0^1$ when using H-SBW. However, this requires knowledge of this conditional expectation function. Encouragingly, in Proposition~\ref{cl8}, we show that under only weak assumptions on the covariate distribution, we can obtain a consistent estimate using OLS weights and the set of best linear approximations $\tilde{X}_{A=1}$. While previous results from \cite{gleser1992importance} imply this, we derive this result explicitly in terms of the implied regression weights from linear regression with a causal parameter written as a function of model coefficients. Less encouragingly, in Proposition~\ref{cl9}, we show that SBW weights that balance $\tilde{X}_{A=1}$ do not balance the true covariates, and therefore that we should not expect SBW to provide approximately/asymptotically unbiased estimates unless we model $\mathbb{E}[X \mid W]$ correctly. The key takeaway is that we require stronger and perhaps unrealistic distributional assumptions on $X_{sc}$ for SBW or H-SBW to yield consistent estimates than we do for OLS weights. 
-
-\begin{proposition}\label{cl7}
-    Consider the H-SBW estimator $\hat{\psi}_0^{1, hsbw}$ using weights $\hat{\gamma}^{hsbw}$ that solves \eqref{eqn:hsbwobjective} across $\Gamma(\tilde{X}^\star_{A=1}, \bar{X}_0, 0)$. This estimator is unbiased for $\psi_0^1$.
-\end{proposition}
-
-\begin{proof}
-    Following Propositions~\ref{cl2} and \ref{cl3}, assume that \eqref{eqn:cevoutcomemodel} holds without any error in the outcome model. We have previously shown in \eqref{eqn:sbwregcalerror} that this implies that the error of the H-SBW estimator can be expressed as:
-    
-    \begin{align*}
-        \hat{\psi}^{1, hsbw}_0 - \psi^1_0 = \sum_{sc: A_{sc} = 1}\hat{\gamma}^{hsbw}_{sc}(X_{sc} - \tilde{X}_{sc}^\star)^T\beta_1
-    \end{align*}
-    
-    Conditional on $W$, $\hat{\gamma}_{sc}$ is fixed and this expression equals 0. 
-\end{proof}
-
-\begin{remark}
-    Assuming that $(X_{sc}, W_{sc}) \mid A_{sc} = 1$ are Gaussian, this proposition implies that if we correctly model the correlation structure of the data in our regression calibration step, we can use GLS or H-SBW without inducing bias (assuming all of our models are correct). This is the approach followed in \cite{huque2014impact}, who consider running GLS with a spatial correlation structure in the context of a one-dimensional covariate measured with error. 
-\end{remark}
-
-\begin{remark}
-        Interestingly we find in our simulation study in Appendix~\ref{app:simstudy} that when the covariates are Gaussian, even if they are dependent, the simple adjustment provided in \eqref{eqn:regcal} is sufficient to obtain an approximately unbiased estimate when using SBW. We conjecture that this is because the set where $\hat{\theta}_{sc} = 1$ has some limiting boundary. If true, this set is fixed when $n$ is large enough, and therefore $\hat{\theta}_{sc}$ is only a function of the input data point $W_{sc}$ (since $\kappa$ is fixed). The characterization of SBW weights as regression weights in Proposition~\ref{cl6}, would then imply that the SBW weight $\hat{\gamma}_{sc}^{sbw}$ is fixed conditional on input data $W_{sc}$ (see also Remark~\ref{rmk:olsweightsfixed}). The error of the estimator can therefore decompose as a function of $(X_{sc} - \tilde{X}_{sc})$, which is independent of $\hat{\gamma}_{sc}$ given $W_{sc}$, implying that it would suffice to balance on $\tilde{X}_{A=1}$.
-\end{remark}
-
-Given the challenges of modeling $\mathbb{E}[X \mid W, A = 1]$, it would be desirable if at least the OLS or SBW weights were consistent even if we used the misspecified linear model: while this is true when running OLS on the adjusted dataset $\tilde{X}_{A=1}$, this is not in general true with SBW. We show this in Propositions~\ref{cl8} and ~\ref{cl9}.
-
-\begin{proposition}\label{cl8}
-    The OLS estimates of $\psi_0^1$ that use the adjusted covariate set $\tilde{X}_{A=1}$ is consistent under no assumptions on the distribution of $X_{sc}$ except that $n_1^{-1}\sum (X_{sc} - \bar{X}_1) (X_{sc} - \bar{X}_1)^T \to^p \Sigma_X$, and that the measurement errors are homoskedastic with finite variance and that $\Sigma_{\nu} = \Sigma_{\nu, sc}$. 
-\end{proposition}
-
-\begin{proof}
+\begin{proof}[Proof of Proposition \ref{cl8}]
     Let $\hat{\gamma}^{ols}$ be the OLS weights, $\tilde{X}_{A=1}(\tilde{X}_{A=1}^T\tilde{X}_{A=1})^{-1}\bar{X}_0$, where we take the first coordinate of $\tilde{X}_{A=1}$ to be an intercept and the first element of $\bar{X}_0$ to be 1 (see Proposition~\ref{cl5}).
     Without loss of generality, assume that $\upsilon_1 = 0$ so that \eqref{eqn:regcal} reduces to $\tilde{X}_{sc} = \kappa^TW_{sc}$.
     
@@ -403,52 +475,8 @@ Given the challenges of modeling $\mathbb{E}[X \mid W, A = 1]$, it would be desi
     where we used the fact that the measurement errors are homoskedastic with covariance matrix $\Sigma_{\nu}$ and that $n_1^{-1}\sum_{sc: A_{sc} = 1}X_{sc}X_{sc}^T \to^p \Sigma_X$ which implies that $n_1^{-1}\sum_{sc: A_{sc} = 1}W_{sc}W_{sc}^T \to^p \Sigma_W$. 
 \end{proof}
 
-\begin{remark}
-    In practice we must estimate $\tilde{X}$ with some estimator $\hat{X}$ that relies on an estimate $\hat{\kappa}$. As long as $\hat{\kappa}$ is consistent for $\kappa$ then the OLS estimator will also be consistent by the continuous mapping theorem.
-\end{remark}
 
-\begin{remark}
-    This result does hold in general for GLS weights. To illustrate, let $\Omega$ again represent the assumed constant equicorrelation structure characterized by fixed parameter $\rho \in [0, 1)$ and assume $p_s = p$ for all states. Notice that $\Omega^{-1}$ is then characterized by the constants $a_1 > 0$ and $a_2 \le 0$, where $a_1$ lies on the diagonal and $a_2$ lies on the within-state off diagonal (where $a_2 = 0$ if $\rho = 0$).
-    
-    Assume that we draw our sample of $m_1$ states each with $p$ units $(n_1 = pm_1)$, and that the covariates within each state have constant within-state correlations denoted by the matrix $\Sigma_S$, but that the units are independent across states. Let $\Sigma_Z(\Omega)$ denote the expected value and probability limit of $n_1^{-1}Z^T\Omega^{-1}Z$ as $m_1 \to \infty$ for any covariate set $Z$. Therefore
-    
-    \begin{align*}
-    \hat{\Sigma}_{\tilde{X}_{A=1}}(\Omega) &= n_1^{-1}(\sum_{A_s=1} a_1\kappa^TW_{sc}W_{sc}^T\kappa + \sum_{c\ne d}a_2\kappa^TW_{sc}W_{sd}^T\kappa) \\
-    &\to^p \kappa^T(a_1\Sigma_W + a_2(p-1)\Sigma_S)\kappa \\
-    &= a_1\Sigma_X\kappa + a_2(p-1)\kappa^T\Sigma_S\kappa \\
-    &= \kappa^T\Sigma_W(\Omega)\kappa
-    \end{align*}
-
-    We then see that:
-    
-    \begin{align*}
-        \mathbb{E}[\sum_{sc: A_{sc} = 1}X_{sc}\hat{\gamma}^{gls}_{sc}] &= \mathbb{E}[(\sum_{sc: A_{sc} = 1}\bar{X}_0 X_{sc}(\Omega^{-1}\tilde{X}_{A=1})_{sc}(\tilde{X}^T_{A=1}\Omega^{-1}\tilde{X}_{A=1})^{-1})] \\
-        &\to^p \mathbb{E}[X_{sc}(\Omega^{-1}W)_{sc}](\kappa^T\Sigma_W(\Omega)\kappa)^{-1}\bar{X}_0
-    \end{align*}
-    
-    Finally, note that
-    
-    \begin{align*}
-        \mathbb{E}[X_{sc}(\Omega^{-1}W)\kappa] &= \mathbb{E}[n_1^{-1}(\sum_{sc: A_{sc} =1}^ma_1X_{sc}W_{sc}^T\kappa + \sum_{c\ne d}a_2X_{sc}W_{sd}^T\kappa)] \\
-        &= (a_1\Sigma_X + a_2(p-1)\Sigma_S)\kappa
-    \end{align*}
-    
-    Therefore the asymptotic expression for the expected balance using GLS weights is equal to:
-    
-    \begin{align*}
-    [a_1\Sigma_X\kappa + a_2(p-1)\Sigma_S\kappa][a_1\Sigma_X\kappa + a_2(p-1)\kappa^T\Sigma_S\kappa]^{-1}\bar{X}_0 
-    \end{align*}
-
-    This expression does not in general equal $\bar{X}_0$. Four exceptions include the following: (1) $\Sigma_S = 0$ (the data are uncorrelated); (2) $a_2 = 0$ (implying $\Omega = I_{q+1}$, or that we ran OLS), (3) $p = 1$ (there is only one unit per state, so the data are again uncorrelated); (4) $\kappa = I_{q+1}$ (there is no measurement error). Also observe that the balance generally gets worse as $\rho$ increases (which implies that the constant $a_2$ grows in absolute magnitude).
-    
-    GLS weights generally have a more complicated dependence on the data; therefore, using the simple regression calibration adjustment with GLS will not in general balance the true covariates either approximately or asymptotically.
-\end{remark}
-
-\begin{proposition}\label{cl9}
-    The SBW estimator using weights $\hat{\gamma}^{sbw}$ defined over the constraint set $\Gamma(\tilde{X}_{A=1}, \bar{X}_0, 0)$ is generally biased for $\psi^1_0$.
-\end{proposition}
-
-\begin{proof}
+\begin{proof}[Proof of Proposition \ref{cl9}]
     We show that $\sum_{sc: A_{sc} = 1}X_{sc}\hat{\gamma}^{sbw}_{sc}$ does not in general approximately equal $\bar{X}_0$, and for simplicity, we assume that we have access to both $(X, W)$ and condition our analysis on this observed data. Define:
     
     \begin{align*}
@@ -474,98 +502,3 @@ Given the challenges of modeling $\mathbb{E}[X \mid W, A = 1]$, it would be desi
     
     In general we see that unless $T_1 \approx I_q$ and so these weights do not achieve approximate balance and therefore the resulting estimator will be biased.
 \end{proof}
-
-\begin{remark}
-    The complication comes from the dependence of the weights on $\hat{\theta}$: unlike with the OLS weights, $\kappa^T\hat{\Sigma}_W(\hat{\theta})\kappa \not\approx \hat{\Sigma}_X(\hat{\theta})\kappa$ unless $\hat{\theta} = 1$ for all observations. 
-\end{remark}
-
-\begin{remark}
-    In contrast to the previous results, we avoid taking probability limits or expectations of the expression $T_1$ in order to avoid making assumptions on the random variable $\hat{\theta}_{sc}$. However, if we were to assume that $\hat{\Sigma}_X(\hat{\theta})$ and $\hat{\Sigma}_W(\hat{\theta})$ had an expectation and equivalent probability limit, we do know that $\kappa_n \to^p \kappa$, and therefore we can replace the estimated quantities in $T_1$ with their expectations to view this as a limiting expression for the expected imbalance. The challenge is showing the conditions when these assumptions would be true, which is beyond the scope of the present paper.
-\end{remark}
-
-
-%We conclude by analyzing the performance of GLS weights in the context of homoskedastic measurement error when the covariates are multivariate normal, but our model of $\tilde{X}$ treats the observations as independent -- i.e. $\tilde{X} = \upsilon_1 + \kappa^T(W_{sc} - \upsilon_1)$. 
-
-%The set-up for this analysis requires some effort, but the results are simple: unless the covariates are uncorrelated, the GLS and H-SBW weights that reweight $\tilde{X}_{A=1}$ to $\bar{X}_0$ will be biased. However, the OLS weights will not be biased. Intuitively, this bias comes arises because the GLS and H-SBW weights depend on an incorrect estimate of $X_{sc}X_{sd}^T$, while the OLS and SBW weights do not have this dependence. We demonstrate this by specifying an example of correlated data and analyzing the resulting asymptotic imbalance in Proposition~\ref{cl10}.
-
-%Assume $X_{sc} \sim MVN(\mu_j, \Sigma_X)$ and $\mu_j \sim MVN(\upsilon_1, \Sigma_S)$. Therefore $Cov(X_{sc}, X_{s'c'}) = \Sigma_S\mathds{1}(s = s', c \ne c') + \Sigma_X\mathds{1}(s = s', c = c')$. Together with our measurement error models, we conclude that $Cov(W_{sc}, W_{s'c'}) = \Sigma_S\mathds{1}(s = s', c \ne c') + \Sigma_W\mathds{1}(s = s', c = c')$ and that $Cov(W_{sc}, X_{s'c'}) = \Sigma_S\mathds{1}(s = s', c \ne c') + \Sigma_X\mathds{1}(s = s', c \ne c')$. We assume throughout that each state has $p_s$ regions, and for simplicity we further assume that $p_s$ is constant across all states -- i.e. $p_s = p$.
-
-%We then have the entire data $X = (X_{11}, ..., X_{1p_1}, ..., X_{sp_s})$ reflects a single draw from the distribution $MVN(\mathbf{\upsilon}_1, \mathbf{\Sigma}_X)$, where $\mathbf{\upsilon}_1$ is a $qn_1$ dimensional vector that repeats the $q$ dimensional vector of means $\upsilon_1$ defined previously $n_1$ times. Meanwhile $W = W_{11}, ..., W_{1p_1}, ..., W_{sp_s})$ reflects a single draw from the distribution $N(X, \Sigma_{\nu})$. Let $\Sigma_W = \Sigma_W + \Sigma_{\nu}$. $(X, W)$ are then jointly normal with covariance matrix $\Sigma$: 
-
-%\begin{align*}
-%\Sigma &= \begin{pmatrix}
-%\mathbf{\Sigma}_X & \mathbf{\Sigma}_X \\
-%\mathbf{\Sigma}_X & \mathbf{\Sigma}_W
-%\end{pmatrix} 
-%\end{align*}
-%
-%Notice that $\mathbf{\Sigma}_X$ and $\mathbf{\Sigma}_W$ are block-diagonal matrices with $qp_s$ by $qp_s$ blocks indexed by $b_s$ $\Sigma_{X, b_s}$ and $\Sigma_{W, b_s}$, with each element containing a $q$ by $q$ matrix: 
-
-%\begin{align*}
-%\Sigma_{X, b_s} &= \begin{pmatrix}
-%\Sigma_{X}, \Sigma_{S}', ..., \Sigma_{S}' \\
-%\Sigma_{S}, \Sigma_{X}, ..., \Sigma_{S}' \\
-%... \\
-%\Sigma_{S}, \Sigma_{S}, ..., \Sigma_{X}
-%\end{pmatrix};
-%\Sigma_{W, b_s} = \begin{pmatrix}
-%\Sigma_{W}, \Sigma_{S}', ..., \Sigma_{S}' \\
-%\Sigma_{S}, \Sigma_{W}, ..., \Sigma_{S}' \\
-%... \\
-%\Sigma_{S}, \Sigma_{S}, ..., \Sigma_{W} \\
-%\end{pmatrix}
-%\end{align*}
-%
-%Let $\mathbf{\kappa} = \mathbf{\Sigma_W}^{-1}\mathbf{\Sigma_X}$. We then have that by the conditional normal distribution:
-
-%\begin{align*}
-%    \mathbb{E}[X \mid W, A = 1] &= \tilde{X}^\star =  \mathbf{\upsilon}_1 + \mathbf{\kappa}^T(W - \mathbf{\upsilon}_1)
-%\end{align*}
-%
-%As a special case, notice that if $\Sigma_S = 0$ (i.e. the data is uncorrelated), then $\mathbf{\kappa}$ is diagonal with elements $\Sigma_W^{-1}\Sigma_X$, which returns us to the adjustment proposed in \eqref{eqn:regcal}. This is therefore a simple generalization of \eqref{eqn:regcal} that accounts for positive equicorrelation among the covariates.
-
-%We consider the case where instead of reweighting $\tilde{X}^\star$, we reweight $\tilde{X}$ (as defined in \eqref{eqn:regcal}) to known target $\bar{X}_0$. Without loss of generality, we assume throughout that $\upsilon_1 = 0$.
-
-%\begin{proposition}\label{cl10}
-%    Let $\Omega$ be block-diagonal with $p_s$ by $p_s$ blocks for each state containing $1$ in the diagonal elements and $\rho \in [0, 1)$ in the off-diagonals. The GLS weights that fall in the constraint set $\Gamma_U(\tilde{X}_{A=1}, \bar{X}_0, 0)$ do not balance the true covariates asymptotically in expectation unless one of the following conditions holds:
-%    \begin{itemize}
-%    \item $\Sigma_S = 0$; that is, $X$ is uncorrelated across regions
-%    \item $p_s = 1$; that is, there is only one region per state (note that this forces the first condition to be true)
-%    \item $\kappa = I_q$; that is, there is no measurement error
-%    \item $\Omega = I_n$; that is, the GLS weights are OLS weights
-%    \end{itemize}
-%\end{proposition}
-
-%\begin{proof}
-%    Let $\tilde{X} = W_{A=1}\kappa$. Consider $\hat{\gamma}_{sc} = \bar{X}_0^T(\tilde{X}^T\Omega^{-1}\tilde{X})^{-1}(\tilde{X}\Omega^{-1})_{sc}$. We want to derive an expression for 
-    
-%    \begin{align*}
-%        \mathbb{E}[\sum_{s=1}^m\sum_{c=1}^p\hat{\gamma}_{sc}X_{sc}] &= \mathbb{E}[\sum_{s=1}^m\sum_{c=1}^pX_{sc}(\bar{X}_0^T(\tilde{X}^T\Omega^{-1}\tilde{X})^{-1}(\tilde{X}\Omega^{-1})_{sc})] \\ 
-%        &= \mathbb{E}[\underbrace{\bar{X}_0^T(\tilde{X}^T\Omega^{-1}\tilde{X})^{-1}}_{T_1}\underbrace{\sum_{s=1}^m\sum_{c=1%}^pX_{sc}(\tilde{X}\Omega^{-1})_{sc}^T}_{T_2}]
-%    \end{align*}
-    
-%    We then obtain:
-
-%    \begin{align*}
-%        \mathbb{E}[n^{-1}T_1^{-1}] = \mathbb{E}[n^{-1}\tilde{X}^T\Omega^{-1}\tilde{X}] &= n^{-1}\sum_{s=1}^m\sum_{c=1}^p\mathbb{E}[a_1\tilde{X}_{sc}\tilde{X}_{sc}^T + \sum_{c\ne d}a_2\tilde{X}_{sc}\tilde{X}_{sd}^T] \\ &=n^{-1}\sum_{s=1}^m\sum_{c=1}^p\mathbb{E}[\kappa^Ta_1W_iW_i^T\kappa + \sum_{c\ne d}a_2\kappa^TW_iW_i^T\kappa] \\
-%        &= n^{-1}\sum_{s=1}^m \kappa^T(a_1p\Sigma_{WW} + p(p - 1)a_2\Sigma_{SS})\kappa]\\
-%        &= a_1 \Sigma_{XX} \kappa + a_2(p - 1)\kappa^T \Sigma_{SS} \kappa  \\
-%        \mathbb{E}[n^{-1}T_2] = \mathbb{E}[n^{-1}\sum_{s=1}^m\sum_{c=1}^pX_{sc}(\tilde{X}\Omega^{-1})_{sc}^T] &= n^{-1}\sum_{s=1}^m\sum_{c=1}^p\mathbb{E}[X_{sc}(a_1\tilde{X}_{sc}^T + a_2\sum_{c\ne d}\tilde{X}_{sd}^T)] \\
-%        &= a_1\Sigma_{XX}\kappa + a_2(p-1)\Sigma_{SS}\kappa
-%    \end{align*}
-    
-%    A sufficient condition for these weights to asymptotically balance $X_{sc}$ to $\bar{X}_0$ is if $\mathbb{E}[T_1T_2] \to^p I_q$. By Slutsky's Theorem, we see that this does not hold unless one of the aforementioned conditions are met.
-%\end{proof}
-
-%\begin{remark}
-%    We see that balance is not achieved asymptotically in expectation unless $\kappa = I_q$, $\Sigma_S = 0$, $p_s = 1$, or $a_2 = 0$ (i.e. $\Omega = I_n$). In other words, we cannot achieve balance unless (1) there is no measurement error; (2) $X_{sc}$ and $X_{sd}$ are uncorrelated; (3) there is only one county per state; (4) $\Omega$ is a diagonal matrix (which implies that $a_2 = 0$). 
-%\end{remark}
-
-%\begin{remark}
-%    While for simplicity we assumed constant units per state, we conjecture that we could extend this result for a random $p_s$. However, doing so is beyond the scope of this paper, as this example is only meant to shed light on the source of this bias. 
-%\end{remark}
-
-%\begin{remark}
-%    We derived the exact expression of the expected asymptotic imbalance for OLS and GLS weights, but not SBW or H-SBW weights. As we noted above in Proposition~\ref{cl9}, the H-SBW weights are equivalent to the GLS weights on some subset of the data. While the exact bias may differ (for example, $a_1$ and $a_2$ would then vary by state, since in general $p$ would no longer be constant for each state), the source of this bias -- the dependence of the weights on the correlation structure of the data -- also applies to the H-SBW weights optimized over the constraint set $\Gamma(\tilde{X}, \bar{X}_0, 0)$.
-%\end{remark}
-
