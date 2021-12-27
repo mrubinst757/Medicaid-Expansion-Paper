@@ -1,6 +1,6 @@
 \section{Additional Results}\label{app:allresults}
 
-Table~\ref{tab:pretxpredfull} presents the full model validation results that also include estimators using the Oaxaca-Blinder OLS and GLS weights (see, e.g, \cite{kline2011oaxaca}), with the rows ordered by RMSE of the prediction errors. We find in general that these estimators perform quite poorly, again showing that the cost of extrapolation is quite high in our application.
+Table~\ref{tab:pretxpredfull} presents the full model validation results that also include estimators using the Oaxaca-Blinder OLS and GLS weights (see, e.g, \cite{kline2011oaxaca}), with the rows ordered by RMSE of the prediction errors. We find in general that these estimators perform quite poorly, again showing that the cost of extrapolation is quite high in our application. We see some particularly extreme numbers for the error using the heterogeneous adjustment in 2012: one reason for this may be because in practice that the heterogeneous adjustment is more likely to impute values that fall outside of the support of the data. In some cases we have found that these imputations are quite extreme. The estimators that extrapolate from the data are then more likely to fit to these values, leading to poor estimator performance overall. This result makes the heterogeneous adjustment potentially less desirable, particularly for estimators that allow extrapolation.
 
 \begin{table}[ht]
 \caption{Estimator pre-treatment outcome prediction error}\label{tab:pretxpredfull}
