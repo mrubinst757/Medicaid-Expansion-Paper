@@ -1,6 +1,21 @@
-\section{Summary Statistics}\label{sec:appendixsumstat}
+\section{Summary Statistics}\label{app:sumstats}
 
-Table~\ref{tab:summarytab1} displays univariate summary statistics for the treated CPUMAs. We display the mean, interquartile range, and the range (as defined by the maximum value minus the minimum value) for the unadjusted dataset, the heterogeneous adjustment, and the homogeneous adjustment. We see that in general the covariate adjustments reduce the variability in the data. However, we also see that the range sometimes increases drastically, particularly for the untreated dataset. Table~\ref{tab:extreme1} displays the overall number of CPUMAs whose adjusted values fall outside of the range of the unadjusted data. We emphasize that we only use the untreated data for the heterogeneous treatment effect analysis in Appendix~\ref{ssec:varselection}. We also calculate these adjustments when leaving out each state one at a time from the primary dataset to calculate our secondary variance estimates; these results are available on request. 
+In this section we display summary statistics about the dataset. In Table~\ref{tab:txassign} we list the states that are in each group: the first two columns include the treatment states and control states in our primary analysis. The third column lists the treatment states for our sensitivity analysis that excludes ``early expansion'' states. The final column indicates states that were always excluded from the analysis. Table~\ref{tab:summarytab1} displays univariate summary statistics for the treated CPUMAs. We display the mean, interquartile range, and the range (as defined by the maximum value minus the minimum value) for the unadjusted dataset, the heterogeneous adjustment, and the homogeneous adjustment. We see that in general the covariate adjustments reduce the variability in the data. Table~\ref{tab:extreme1} displays the overall number of CPUMAs whose adjusted values fall outside of the range of the unadjusted data. We also calculate these adjustments when leaving out each state one at a time from the primary dataset to calculate our secondary variance estimates; these results are available on request. 
+
+
+\begin{table}[h!]
+\centering
+\caption{Treatment assignment classification}\label{tab:txassign}
+\begin{tabular}{llll}
+\begin{tabularx}{\textwidth}{|X|X|X|X|}
+  \hline
+Treated states & Control states & Treated states (early expansion excluded) & Always excluded \\
+  \hline
+AR, AZ, CA, CO, CT, HI, IA, IL, KY, MD, MI, MN, ND, NJ, NM, NV, OH, OR, RI, WA, WV & AK, AL, FL, GA, ID, IN, KS, LA, ME, MO, MS, MT, NC, NE, OK, PA, SC, SD, TN, TX, UT, VA, WI, WY & AR, AZ, CO, HI, IA, IL, KY, MD, MI, ND, NM, NV, OH, OR, RI, WV & DE, MA, NH, NY, VT, DC \\ 
+   \hline
+\end{tabularx}
+\end{tabular}
+\end{table}
 
 \begin{table}[h!]
 \centering
@@ -91,7 +106,7 @@ Age: 19-29 Pct & 0 & 0 \\
 \end{tabular}
 \end{table}
 
-Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset (including both treated and untreated units). We caution that the point estimates may be biased due to the measurement error in the covariates. We can nevertheless use these relationships to better understand which variables may be important confounders. For example, pre-treatment outcomes are likely correlated with post-treatment outcomes; we can therefore examine which covariates are both correlated with pre-treatment outcomes and treatment assignment to understand which variables may be important confounders. We see that Republican governance is strongly associated with treatment and slightly negatively correlated with the pre-treatment outcomes, suggesting this may be an important confounder. Other strong associations between pre-treatment uninsurance rates including percent with low income, percent with high school education or less, and percent Hispanic; however, these covariates appear only weakly correlated with treatment assignment.
+Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset (including both treated and untreated units). We caution that these point estimates may be biased due to the measurement error in the covariates. Nevertheless, this matrix is useful for at least two reasons: first, assuming the correlations among the treated and untreated units are similar, the more heavily correlated the data the easier it should be to attain covariate balance (see, e.g., \cite{d2021overlap}). This matrix helps give a general sense of how correlated the data are, even if the estimates are biased. Second, these correlations can suggest potential confounders by revealing which variables are most heavily associated with treatment assignment and the pre-treatment outcomes. For example, we see that Republican governance is strongly associated with treatment, and somewhat associated with pre-treatment outcomes. We can also examine associations between the variables and pre-treatment outcomes to get a sense of which variables may be important to the outcome model: for example, we see strong associations between the pre-treatment uninsurance rates, though they are more weakly associated with treatment assignment. 
 
 \begin{figure}[h!]
 \begin{center}
