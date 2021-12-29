@@ -23,19 +23,19 @@ where $\Omega$ is a block-diagonal matrix representing the equicorrelation struc
 
 \begin{align*}
     \Omega = \begin{pmatrix}
-    \Omega_1 & 0 & 0, ..., & 0 \\
-    0 & \Omega_2 & 0, ..., & 0 \\
-    ... \\
+    \Omega_1 & 0 & 0 &, ... ,& 0 \\
+    0 & \Omega_2 & 0 & , ..., & 0 \\
+    & & , ..., & & \\
     0 & 0 & 0, ..., & \Omega_{M_1} 
     \end{pmatrix}
 \end{align*}
 
 \begin{align*}
     \Omega_s = \begin{pmatrix}
-    \sigma^2_{\epsilon} + \sigma^2_{\varepsilon}, \sigma^2_{\varepsilon}, \sigma^2_{\varepsilon}, ..., \sigma^2_{\varepsilon} \\
-    \sigma^2_{\varepsilon}, \sigma^2_{\epsilon} + \sigma^2_{\varepsilon}, \sigma^2_{\varepsilon}, ..., \sigma^2_{\epsilon} \\
-    ... \\
-    \sigma^2_{\varepsilon}, \sigma^2_{\varepsilon}, \sigma^2_{\epsilon} + \sigma^2_{\varepsilon}, ..., \sigma^2_{\varepsilon}
+    \sigma^2_{\epsilon} + \sigma^2_{\varepsilon} & \sigma^2_{\varepsilon} & \sigma^2_{\varepsilon} & ... & \sigma^2_{\varepsilon} \\
+    \sigma^2_{\varepsilon} & \sigma^2_{\epsilon} + \sigma^2_{\varepsilon} & \sigma^2_{\varepsilon}& ... & \sigma^2_{\epsilon} \\
+    & & ... & & \\
+    \sigma^2_{\varepsilon} & \sigma^2_{\varepsilon} & \sigma^2_{\varepsilon} & ... & \sigma^2_{\epsilon} + \sigma^2_{\varepsilon}
     \end{pmatrix}
 \end{align*}
 %
@@ -44,7 +44,7 @@ In other words $\sigma^2_{\varepsilon}$ represents the variance component from a
 We next generate our noisy outcome and covariate estimates $(J, W)$:
 
 \begin{align*}
-J_{sc}, W_{sc} \mid Y_{sc}, X_{sc} \stackrel{iid}\sim N((Y_{sc}, X_{sc}), \Sigma_{\nu, sc})
+(J_{sc}, W_{sc}) \mid (Y_{sc}, X_{sc}) \stackrel{iid}\sim N((Y_{sc}, X_{sc}), \Sigma_{\nu, sc})
 \end{align*}
 
 \begin{align*}
@@ -58,9 +58,9 @@ J_{sc}, W_{sc} \mid Y_{sc}, X_{sc} \stackrel{iid}\sim N((Y_{sc}, X_{sc}), \Sigma
 
 We allow $\sigma^2_{\nu, sc}$ to either be constant or a function of the sample size of an underlying survey that generates the estimate. In the latter case we simulate these sample sizes $r_{sc} \stackrel{iid}\sim Unif(300, 2300)$. Let $R_{sc}$ be a 3x3 diagonal matrix with diagonal elements $r_{sc}$. Let $\sigma_{\nu}^{2\star}$ be defined as the limit as $m_1 \to \infty$ of $n_1^{-1}\sum_{sc}\sigma^2_{\nu, sc}$. Let $\tau = \sigma^2_x/\sigma^2_w$. We fix a value $\sigma_{\nu}^{2\star}$ so that that as $m_1 \to \infty$, $n_1^{-1} \tau \sum_{sc}\frac{\sigma^2_{\nu, sc}}{r_{sc}} \to^p \sigma^2_{\nu}$. In other words, $\sigma_{\nu}^2$ represents the common variance that generate all errors in the ``heterogeneous adjustment'' model. 
 
-Define $\rho^\star = \sigma^2_{\varepsilon}/(\sigma^2_{\epsilon} + \sigma^2_{\varepsilon} + \sigma^2_{\nu})$. $\rho^\star$ represents the within-state correlation of the outcome model errors, including the measurement errors in the outcome. We fix this to be 0.25 for our primary simulation results.
+Define $\rho^\star = \sigma^2_{\varepsilon}/(\sigma^2_{\epsilon} + \sigma^2_{\varepsilon} + \sigma^2_{\nu})$. $\rho^\star$ represents the within-state correlation of the outcome model errors given the true covariates $X$, but including the measurement errors in the outcome. We fix this to be 0.25 for our primary simulation results.
 
-We then consider all XX combinations of the following parameters:
+We then consider all 18 combinations of the following parameters:
 
 \begin{itemize}
     \item $r_{sc} \stackrel{iid}\sim Unif(300, 2300); r_{sc} = 1$ 
@@ -68,7 +68,7 @@ We then consider all XX combinations of the following parameters:
     \item $\tau \in \{0.85, 0.9, 0.95\}$
 \end{itemize}
 
-For each parameterization we take 500 random samples of size $m_1 = 25$ states (and $n_1$ total CPUMAs) and estimate a series of H-SBW weights that set $\delta = 0$ and the target $\upsilon_0 = (1, 1, 1)$. Let $\rho$ denote the assumed $\rho^\star$ in the H-SBW objective. We generate weights for all combinations of input datasets $Z$ and correlation-parameters $\rho$:
+For each parameterization we take 500 random samples of size $m_1 = 25$ states (and $n_1$ total CPUMAs) and estimate a series of H-SBW weights that set $\delta = 0$ and the target $\upsilon_0 = (1, 1, 1)$. Let $\rho$ denote the assumed $\rho^\star$ in the H-SBW objective.\footnote{In the setting with measurement error in the covariates $\rho^\star$ there are additional error terms due to this measurement error and so the optimal $\rho$ for the H-SBW objective will be strictly less than $\rho^\star$ (since the measurement errors are always drawn independently across units).} We generate weights for all combinations of input datasets $Z$ and correlation-parameters $\rho$:
 
 \begin{itemize}
     \item Z \in \{$W_{A=1}$, $X_{A=1}$, $\hat{X}_{A=1}^{hom}$, $\hat{X}_{A=1}^{hom}$, $\hat{X}_{A=1}^{cor}$\}
@@ -154,22 +154,22 @@ We consider additional simulations for the setting where $X$ is known and the ou
 
 Figure~\ref{fig:hsbwvarx} displays the empirical variance of the H-SBW estimators averaged over 1000 simulations. Each panel reflects different values of $\rho^\star$, while the x-axis throughout displays the assumed value of $\rho$ in the H-SBW objective. The red bars indicate when $\rho$ is optimally selected -- $\rho = \rho^\star$. We see that this selection corresponds with the lowest variance estimator, we would expect. Consistent with our previous results, we find that when $\rho^\star > 0$, we find that any assumed $\rho$ improves the variance of the resulting estimator relative to SBW. Of course, this requires in general that our assumed correlation structure of the error terms is correct.
 
-%\begin{figure}[H]
-%\begin{center}
-%    \caption{Variance of H-SBW estimator for known X}\label{fig:hsbwvarx}
-%    \includegraphics[scale=0.5]{01_Plots/variance-x-plot.png}
-%    \subcaption{Averaged across 1000 simulations for each specification}
-%\end{center}
-%\end{figure}
+\begin{figure}[H]
+\begin{center}
+    \caption{Variance of H-SBW estimator for known covariates}\label{fig:hsbwvarx}
+    \includegraphics[scale=0.5]{01_Plots/variance-x-plot.png}
+    \subcaption{Averaged across 1000 simulations for each specification}
+\end{center}
+\end{figure}
 
-We conclude by examining the confidence interval coverage for the leave-one-state-out-jackknife. Figure~\ref{fig:hsbwx} displays the results. Consistent with our previous findings, we see that we obtain slightly less than nominal coverage rates: this may be a function of the jackknife being an approximation to the bootstrap, which itself is only an asymptotically unbiased estimate of the variance. Given our sample of $m_1 - 25$, this slight under-coverage is not entirely surprising. However, this does contrast with our finding that this procedure in general is conservative in the presence of measurement error. We speculate that this may be because the measurement errors are not correlated across units and the variance estimation procedure is overly conservative with respect to estimating this component of the total variance. 
+We conclude by examining the confidence interval coverage for the leave-one-state-out-jackknife. Figure~\ref{fig:hsbwcoveragex} displays the results. Consistent with our previous findings, we see that we generally obtain slightly less than nominal coverage rates (though these coverage rates improve as $\rho^\star$ increases). We speculate that this may be a function of the jackknife being an approximation to the bootstrap, which itself is only an asymptotically unbiased estimate of the variance. Given our sample of $m_1 = 25$, this slight under-coverage is not entirely surprising. On the other hand, this does contrast with our finding that this procedure in general is conservative in the presence of measurement error. 
 
-We conclude by observing that coverage improves when setting $\rho > 0$ when $\rho^\star > 0$. We speculate that by more evenly dispersing the weights across states, H-SBW may be increasing the effective sample size of states, improving the asymptotic approximation of the jackknife. This again illustrates a possible value of using this procedure. Analyzing the theoretic properties of these variances estimators to better understand these results in this setting would be useful future work; however, it is beyond the scope of the present study.
+We conclude by observing that coverage improves when setting $\rho > 0$ when $\rho^\star > 0$. We speculate that by more evenly dispersing the weights across states, H-SBW may be increasing the effective sample size of states, improving the asymptotic approximation of the jackknife. This again illustrates a possible value of using this procedure. Analyzing the theoretic properties of these variances estimators to better understand these results in this setting would be useful future work. However, this is beyond the scope of the present study.
 
-%\begin{figure}[H]\label{fig:hsbwcoveragex}
-%\begin{center}
-%    \caption{H-SBW coverage for known X}\label{fig:simcoverage2}
-%    \includegraphics[scale=0.5]{01_Plots/coverage-x-plot.png}
-%    \subcaption{Averaged across 1000 simulations for each specification}
-%\end{center}
-%\end{figure}
+\begin{figure}[H]
+\begin{center}
+    \caption{H-SBW coverage for known covariates}\label{fig:hsbwcoveragex}
+    \includegraphics[scale=0.5]{01_Plots/coverage-x-plot.png}
+    \subcaption{Averaged across 1000 simulations for each specification}
+\end{center}
+\end{figure}
