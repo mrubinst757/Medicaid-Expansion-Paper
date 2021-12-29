@@ -6,13 +6,33 @@ We divide our proofs into three sections: first, where we consider the performan
 
 We begin by showing four results regarding the bias of the SBW estimator under the classical errors-in-variables model. First, we show that without adjustment for errors-in-covariates, the bias of the SBW estimator that sets $\delta = 0$ (i.e. reweights the treated units to exactly balance the control units) is equal to the bias of the OLS estimator. Second, we show that if the observed covariate values for the treated data can be replaced by their conditional expectations $\tilde{X}$ given the noisy observations, then the SBW estimator will be unbiased and consistent. Third, we consider the case where $\tilde{X}$ must be estimated, and show that the SBW estimator is consistent if we replace $\tilde{X}$ by a consistent estimate $\hat{X}$. Finally, we remove the assumption that $X$ is gaussian, and show that while the OLS estimator remains unbiased under weaker assumptions, the SBW estimator does not. We take the perspective throughout that $X$ is random among the treated units but fixed for the control units.
 
-We assume that equations (\ref{eqn:unconfoundedness}) - (\ref{eqn:Xgaussian}) hold, with  $\Sigma_{\nu,sc} = \Sigma_{\nu}$ for all units $(s,c)$. The covariate observations of the treated units can then be seen to be i.i.d., with covariance matrix
+We assume that equations (\ref{eqn:unconfoundedness}) - (\ref{eqn:Xgaussian}) hold. For simplicity, we additionally assume that
+\begin{equation}\label{eqn:simplifications}
+\epsilon_{sc} = 0, \quad \varepsilon_s = 0,\quad \xi_{sc} = 0,\quad  \Sigma_{\nu,sc} = \Sigma_\nu, \qquad \forall s,c
+\end{equation}
+noting that $\xi_{sc}=0$ implies $J_{sc} = Y_{sc}$. The covariate observations of the treated units can then be seen to be i.i.d., with covariance matrix
 \[ \Sigma_{W|1} = \Sigma_{X|1} + \Sigma_\nu,\]
 and the conditional expectation of $X_{sc}$ given $W_{sc}$ for the treated units can be seen to equal
 \[ \tilde{X}_{sc} = v_1 + \kappa^T (W_{sc} - v_1), \qquad \forall sc: A_{sc}=1,\]
 where
 \[ \kappa = (\Sigma_{X|1} + \Sigma_{\nu})^{-1} \Sigma_{X|1}.\]
-To ease notation, we abbreviate $\Sigma_X = \Sigma_{X \mid 1}$ and similarly $ \Sigma_W = \Sigma_{W \mid 1}$. For simplicity, we assume that $\xi_{sc} = 0$, so that $W_{sc} = Y_{sc}$, and also assume that $\epsilon_{sc} = \varepsilon_{sc}=0$ as well.
+To ease notation, we abbreviate $\Sigma_X = \Sigma_{X \mid 1}$ and similarly $ \Sigma_W = \Sigma_{W \mid 1}$. 
+
+In Propositions \ref{cl8}, \ref{cl9}, and part of Proposition \ref{cl1}, we will remove the Gaussian covariate assumption given by \eqref{eqn:Xgaussian}. In its place, we will instead consider the weaker assumption that the empirical covariance of $X$ has a limit $S_X$,
+
+\begin{equation}\label{eqn:limitX}
+ \frac{1}{n_1} \sum_{A_{sc}=1} (X_{sc} - \bar{X}_1)(X_{sc} - \bar{X}_1)^T \rightarrow^p S_X,
+\end{equation}
+which implies a similar limit $S_W$ for the noisy observations $W$,
+
+\begin{equation}\label{eqn:limitW}
+ \frac{1}{n_1} \sum_{A_{sc}=1} (W_{sc} - \bar{W}_1)(W_{sc} - \bar{W}_1)^T \rightarrow^p S_W = S_X + \Sigma_{\nu},
+\end{equation}
+where we have used the independence of the noise terms $\nu_{sc}$, and similarly that 
+\begin{equation}\label{eqn:limitWY}
+ \frac{1}{n_1} \sum_{A_{sc}=1} (W_{sc} - \bar{W}_1)(Y_{sc} - \bar{Y}_1)^T \rightarrow^p S_X \beta_1,
+\end{equation}
+where we have additionally used the linear model for $Y_{sc}$ given by \eqref{eqn:linmod}.
 
 % Without loss of generality, we assume that we observe $Y_{sc}$ (equivalently, the error term $\epsilon_{sc}$ can include mean zero measurement-error). We also assume that the errors in the outcome model and the measurement errors are jointly normal, independent from each other, and drawn iid, so that 
 
@@ -22,7 +42,9 @@ To ease notation, we abbreviate $\Sigma_X = \Sigma_{X \mid 1}$ and similarly $ \
 
 We first consider estimation without adjustment for errors in covariates. 
 Proposition \ref{cl1} states that the unadjusted OLS and SBW estimators have equal bias, with the bias of the OLS estimator remaining unchanged if the gaussian assumption of \eqref{eqn:gaussiannoise} is removed.
+
 \begin{proposition}\label{cl1}
+Let (\ref{eqn:unconfoundedness}) - (\ref{eqn:Xgaussian}) and (\ref{eqn:simplifications}) hold.
 Let $(\hat{\alpha}, \hat{\beta})$ denote the unadjusted OLS estimator of $(\alpha_1, \beta_1)$, 
 \begin{equation}\label{eqn:prop1.beta}
 (\hat{\alpha}, \hat{\beta}) = \arg \min_{\alpha, \beta} \sum_{sc:A_{sc}=1} (Y_{sc} - \alpha -  W_{sc}^T\beta)^2,
@@ -30,42 +52,39 @@ Let $(\hat{\alpha}, \hat{\beta})$ denote the unadjusted OLS estimator of $(\alph
 which induces the OLS estimator of $\psi_0^1$ given by
 
 \begin{align*}
-\hat{\psi}^{1,\textup{reg}}_0 = \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T\hat{\beta}_1.
+\hat{\psi}^{1,\textup{ols}}_0 = \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T\hat{\beta}_1.
 \end{align*}
 %
-Let $\check{\gamma}$ denote the unadjusted SBW weights under exact balance, found by solving \eqref{eqn:SBWobjective} with constraint set $\Gamma( W_{A=1}, \bar{W}_0, 0)$, which induces the SBW estimator of $\psi_0^1$ given by
+Let ${\gamma}$ denote the unadjusted SBW weights under exact balance, found by solving \eqref{eqn:SBWobjective} with constraint set $\Gamma( W_{A=1}, \bar{W}_0, 0)$, which induces the SBW estimator of $\psi_0^1$ given by
 
 \begin{align*}
-\hat{\psi}^{1,W}_0 = \sum_{sc: A_{sc} = 1} \check{\gamma}_{sc} Y_{sc}.
+\hat{\psi}^{1,\textup{sbw}}_0 = \sum_{sc: A_{sc} = 1} {\gamma}_{sc} Y_{sc}.
 \end{align*}
 %
-Then the estimators $\hat{\psi}^{1, reg}_0$ and $\hat{\psi}^{1, W}_0$ have equal bias, satisfying
+Then the estimators $\hat{\psi}^{1, \textup{ols}}_0$ and $\hat{\psi}^{1, \textup{sbw}}_0$ have equal bias, satisfying
 
 \begin{align*}
-\mathbb{E}[\hat{\psi}_0^{1,\textup{reg}}] &= \mathbb{E}[\hat{\psi}^{1, W}_0]  = \psi_0^1 + (\bar{X}_0 - \upsilon_1)^T(\mathbf{\kappa} - I_q)\beta.
+\mathbb{E}[\hat{\psi}_0^{1,\textup{ols}}] &= \mathbb{E}[\hat{\psi}^{1, \textup{sbw}}_0]  = \psi_0^1 + (\bar{X}_0 - \upsilon_1)^T(\mathbf{\kappa} - I_q)\beta.
 \end{align*}
-Additionally, the bias of $\hat{\psi}_0^{1,\textup{reg}}$ is asymptotically unchanged if the gaussian assumption given by \eqref{eqn:gaussiannoise} is removed, so long as the second moment structure of $X_{A=1}$ has a limit,
-\begin{equation}\label{eqn:prop1.assumption}
- \frac{1}{n_1} \sum_{A_{sc}=1} (X_{sc} - \bar{X}_1)(X_{sc} - \bar{X}_1)^T \rightarrow^p \Sigma_X.
- \end{equation}
+Additionally, the bias of $\hat{\psi}_0^{1,\textup{ols}}$ is asymptotically unchanged if the gaussian covariate assumption given by \eqref{eqn:Xgaussian} is replaced by \eqref{eqn:limitX}.
 \end{proposition}
 
 To study the SBW estimator with covariate adjustment, we first consider an idealized version where $\Sigma_X$ and $\Sigma_\nu$ are known, so that $\tilde{X}_{A=1}$ is also known. Proposition \ref{cl2} shows that the resulting estimate of $\psi_0^1$ is unbiased if $\delta = 0$.
 
 \begin{proposition}\label{cl2}
-Let $\tilde{X}_{A=1}$ equal the conditional expectation of $X_{A=1}$ given $W$,
+Let (\ref{eqn:unconfoundedness}) - (\ref{eqn:Xgaussian}) and (\ref{eqn:simplifications}) hold. Let $\tilde{X}_{A=1}$ equal the conditional expectation of $X_{A=1}$ given $W$,
 
-\[ \tilde{X}_{sc} = \upsilon_1 + \kappa^T (W_{sc} - \upsilon_1), \qquad \forall sc: A_{sc} = 1,\] let $\gamma^*$ be the solution to the SBW objective defined over the constraint set $\Gamma(\tilde{X}_{A=1}, \bar{X}_0, 0)$, and let $\hat{\psi}^{1, \tilde{X}}_0$ be the SBW estimator $\sum_{sc: A_{sc} = 1}\gamma^\star_{sc}Y_{sc}$. This estimator is unbiased for $\psi_0^1$.
+\[ \tilde{X}_{sc} = \upsilon_1 + \kappa^T (W_{sc} - \upsilon_1), \qquad \forall sc: A_{sc} = 1,\] let $\gamma^*$ be the solution to the SBW objective defined over the constraint set $\Gamma(\tilde{X}_{A=1}, \bar{X}_0, 0)$, and let $\hat{\psi}^{1, \textup{ideal}}_0$ be the SBW estimator $\sum_{sc: A_{sc} = 1}\gamma^\star_{sc}Y_{sc}$. This estimator is unbiased for $\psi_0^1$.
 \end{proposition}
 
 
 
 Proposition \ref{prop:variance_rate} shows that the variance of this idealized SBW estimator goes to zero, implying consistency. 
 \begin{proposition}\label{prop:variance_rate}
-Let $\gamma^*$ and $\hat{\psi}_0^{1,\tilde{X}}$ be defined as in Proposition \ref{cl2}. Then the conditional variance is given by
+Let (\ref{eqn:unconfoundedness}) - (\ref{eqn:Xgaussian}) and (\ref{eqn:simplifications}) hold, and let $\gamma^*$ and $\hat{\psi}_0^{1, \textup{ideal}}$ be defined as in Proposition \ref{cl2}. Then the conditional variance is given by
 
 \begin{align*}
-\operatorname{Var}\left( \hat{\psi}_0^{1,\tilde{X}} | W\right)  = \|\gamma^*\|^2 \cdot \beta_1^T(\Sigma_{X} - \Sigma_{X}\Sigma_{W}^{-1}\Sigma_{X})\beta_1, 
+\operatorname{Var}\left( \hat{\psi}_0^{1, \textup{ideal}} | W\right)  = \|\gamma^*\|^2 \cdot \beta_1^T(\Sigma_{X} - \Sigma_{X}\Sigma_{W}^{-1}\Sigma_{X})\beta_1, 
 \end{align*}
 which behaves as $O_P(n_1^{-1})$ as $n_1 \rightarrow \infty$.
 \end{proposition}
@@ -85,10 +104,10 @@ which behaves as $O_P(n_1^{-1})$ as $n_1 \rightarrow \infty$.
 In practice, the idealized SBW estimator considered in Propositions \ref{cl2} and \ref{prop:variance_rate} cannot be used, as $\Sigma_X$ and $\Sigma_{\nu}$ are not known, but instead must be estimated from auxilliary data. Proposition \ref{cl3} states that if these estimates are consistent, then the resulting adjusted SBW estimator for $\psi_0^1$ is also consistent if $\delta = 0$.
 
 \begin{proposition}\label{cl3}
-Given estimates $\hat{\Sigma}_X$ and $\hat{\Sigma}_\nu$ that are consistent for $\Sigma_X$ and $\Sigma_\nu$, let $\hat{X}_{A=1}$ be given by 
+Let (\ref{eqn:unconfoundedness}) - (\ref{eqn:Xgaussian}) and (\ref{eqn:simplifications}) hold. Given estimates $\hat{\Sigma}_X$ and $\hat{\Sigma}_\nu$ that are consistent for $\Sigma_X$ and $\Sigma_\nu$, let $\hat{X}_{A=1}$ be given by 
 
 \[ \hat{X}_{sc} = \bar{W}_1 + \hat{\kappa}^T(W_{sc} - \bar{W}_1), \]
-where $\hat{\kappa} = (\hat{\Sigma}_X + \hat{\Sigma}_{\nu})^{-1} \hat{\Sigma}_X$. Let $\hat{\gamma}$ be the weights that solve the SBW objective over the constraint set $\Gamma(\hat{X}_{A=1}, \bar{W}_0, 0)$, and let $\hat{\psi}^{1, \hat{X}}_0 = \sum_{sc: A_{sc} = 1} \hat{\gamma}_{sc} Y_{sc}$ be the corresponding SBW estimator. This estimator is consistent for $\psi_0^1$ as $n_1 \to \infty$.
+where $\hat{\kappa} = (\hat{\Sigma}_X + \hat{\Sigma}_{\nu})^{-1} \hat{\Sigma}_X$. Let $\hat{\gamma}$ be the weights that solve the SBW objective over the constraint set $\Gamma(\hat{X}_{A=1}, \bar{W}_0, 0)$, and let $\hat{\psi}^{1, \textup{adjusted}}_0 = \sum_{sc: A_{sc} = 1} \hat{\gamma}_{sc} Y_{sc}$ be the corresponding SBW estimator. This estimator is consistent for $\psi_0^1$ as $n_1 \to \infty$.
 \end{proposition}
 
 % Proposition~\ref{cl2} assumes that we know $\tilde{X}$, $\upsilon_1$, and $\bar{X}_0$; however, in practice we estimate it from the data. Moreover, the estimation of $\tilde{X}$ typically involves both the observed dataset and auxillary data, which we have not yet specified here. Let $\hat{X}_{A=1}$ be defined as...
@@ -98,36 +117,41 @@ where $\hat{\kappa} = (\hat{\Sigma}_X + \hat{\Sigma}_{\nu})^{-1} \hat{\Sigma}_X$
 
 
 
-As the gaussian assumption given by \eqref{eqn:gaussiannoise} is strong, it would be desirable if the adjusted OLS or SBW estimators were consistent even for non-gaussian $X$. Proposition \ref{cl8} shows under mild assumptions that this is in fact true when running OLS on the adjusted dataset $\tilde{X}_{A=1}$.
+As the gaussian covariate assumption given by \eqref{eqn:Xgaussian} is strong, it would be desirable if the adjusted OLS or SBW estimators were consistent even for non-gaussian $X$. Proposition \ref{cl8} shows under mild assumptions that this is in fact true when running OLS on the adjusted covariates. 
 
 \begin{proposition}\label{cl8}
-Assume that the covariance structure of $X_{A=1}$ has a limit
-    
-    \[n_1^{-1}\sum (X_{sc} - \bar{X}_1) (X_{sc} - \bar{X}_1)^T \to^p \Sigma_X,\] 
-which is invertible, and let $(\hat{\alpha}, \hat{\beta})$ denote the adjusted OLS estimates of $(\alpha_1, \beta_1)$, solving
+Let (\ref{eqn:unconfoundedness}) - (\ref{eqn:gaussiannoise}), and (\ref{eqn:simplifications})- (\ref{eqn:limitX}) hold, with $S_X$ invertible. Let $(\check{\alpha}, \check{\beta})$ denote the adjusted OLS estimates of $(\alpha_1, \beta_1)$, solving
 
-\[ \min_{\alpha,\beta} \sum_{A_{sc}=1} (Y_{sc} - \alpha - \tilde{X}_{sc}^T \beta)^2, \]
-where $\tilde{X}_{sc} = v_1 + \kappa^T(W_{sc} - v_1)$ with $\kappa = (\Sigma_X + \Sigma_\nu)^{-1}\Sigma_X$. Then the adjusted OLS estimator of $\psi_0^1$ given by
-\[ \bar{Y}_1 - (\bar{W}_0 - \bar{W}_1)^T \hat{\beta},\]
+\[ \min_{\alpha,\beta} \sum_{A_{sc}=1} (Y_{sc} - \alpha - \check{X}_{sc}^T \beta)^2, \]
+where $\check{X}_{sc} = \bar{W}_1 + \check{\kappa}^T(W_{sc} - \bar{W}_1)$ with $\check{\kappa} = (S_X + \Sigma_\nu)^{-1}S_X$. Then the adjusted OLS estimator of $\psi_0^1$ given by
+\[ \bar{Y}_1 - (\bar{W}_0 - \bar{W}_1)^T \check{\beta},\]
 remains consistent if the gaussian assumption given by \eqref{eqn:gaussiannoise} is removed.
 \end{proposition}
 
-However, the same does not hold for the adjusted SBW estimator. Proposition \ref{cl9} gives an expression for its bias when the covariates are non-gaussian.
+However, the same does not hold for the adjusted SBW estimator. Proposition \ref{cl9} gives an expression for its bias when the covariates are non-gaussian. 
 
 \begin{proposition}\label{cl9}
-Let $\hat{\gamma}$ and $\hat{\psi}_0^{1, \hat{X}}$ be defined as in Proposition \ref{cl3}, let $\Theta$ denote the set of units with non-zero weights under $\hat{\gamma}$,
+Let the assumptions of Proposition \ref{cl8} hold. Let $\check{\gamma}$ solve the SBW objective over the constraint set $\Gamma(\check{X}_{A=1}, \bar{W}_0, 0)$ where $\check{X}_{A=1}$ and $\check{\kappa}$ are defined as in Proposition \ref{cl8}. Let $Q$ denote the set of indices where $\check{\gamma}$ is non-zero,
 
-\[ \Theta = \{sc: \hat{\gamma}_{sc} > 0\}, \]
-and let $\bar{X}_\Theta$ and $\Sigma_{X,\Theta}$ denote the empirical mean and covariance of $\{X_{sc}:sc \in \Theta\}$,
-\[ \bar{X}_\Theta = \frac{1}{|\Theta|}\sum_{sc \in \Theta} X_{sc},\qquad \Sigma_{X,\Theta} = \frac{1}{|\Theta|} \sum_{sc \in \Theta} (X_{sc} - \bar{X}_\Theta)(X_{sc} - \bar{X}_\Theta)^T,\]
-with $\bar{W}_\Theta$ and $\Sigma_{W,\Theta}$ defined analogously for the noisy observations $W$. Then if the gaussian assumption given by \eqref{eqn:gaussiannoise} is removed, the adjusted SBW estimator $\hat{\psi}_0^{1,\hat{X}}$ may be biased for $\psi_0^1$, with bias converging to
+\[ Q = \{sc: \check{\gamma}_{sc} > 0\},\]
+with cardinality $n_Q = |Q|$, and let $\bar{W}_Q$ and $S_{W_Q}$ denote the empirical mean and covariance of $\{W_{sc}:sc \in Q\}$,
 
-\[ \beta^T(I -  \Sigma_{X,\theta}\Sigma_{W,\theta}^{-1} \Sigma_W \Sigma_X^{-1}) \bar{X}_0,\]
-which generally need not equal zero unless $\Sigma_{X,\Theta} = \Sigma_X$ and $\Sigma_{W,\Theta} = \Sigma_W$.
+\[ \bar{W}_Q = \frac{1}{n_Q}\sum_{sc \in Q} W_{sc},\qquad S_{W_Q} = \frac{1}{n_Q} \sum_{sc \in Q} (W_{sc} - \bar{W}_Q)(W_{sc} - \bar{W}_Q)^T,\]
+with $\bar{X}_Q$ the analogous empirical mean of $\{X_{sc}:sc \in Q\}$ and $S_{XW_Q}$ the empirical cross covariance,
+\[ S_{XW_Q} = \frac{1}{n_Q} \sum_{sc \in Q} (X_{sc} - \bar{X}_Q)(W_{sc} - \bar{W}_Q)^T.\]
+Then if the gaussian assumption given by \eqref{eqn:gaussiannoise} is removed, the adjusted SBW estimator for $\psi_0^1$ given by 
+
+\[\sum_{A_{sc}=1} Y_{sc} \check{\gamma}_{sc},\]
+may be biased for $\psi_0^1$, with error converging to
+
+\begin{align*} \beta_1^T\left[(S_{XW_Q}S_{W_Q}^{-1}S_WS_X^{-1} - I)\bar{X}_0  + (\bar{X}_Q - S_{XW_Q}S_{W_Q}^{-1} S_W S_X^{-1} \bar{X}_1) - S_{XW_Q}S_{W_Q}^{-1}(\bar{X}_Q - \bar{X}_1)\right], 
+\end{align*}
+which need not converge to zero unless $\bar{X}_Q \to \bar{X}_1$, $S_{XW_Q} \to S_X$, and $S_{W_Q} \to S_W$.
 \end{proposition}
 
+
 \begin{remark}
-    While we have assumed that $\epsilon_{sc}=0$ for simplicity, assuming non-zero error terms $\epsilon_{sc}$ simply leads to the additional term $\sum_{sc: A_{sc} = 1}\gamma_{sc}\epsilon_{sc}$ in the error of the SBW estimator of $\psi_0^1$. This again has expectation zero, because the weights remain independent of the error $\epsilon_{sc}$ in the outcomes. Allowing non-zero $\epsilon_{sc}$ also adds a term to the estimator variance (conditional on $W$) equal to $\sigma^2_{\epsilon}\cdot \|\gamma^*\|^2$,    which does not change the variance bound given by Proposition \ref{prop:variance_rate}.
+    While we have assumed that $\epsilon_{sc}=0$ for simplicity, removing this assumption simply leads to the additional term $\sum_{sc: A_{sc} = 1}\gamma_{sc}\epsilon_{sc}$ in the error of the SBW estimator of $\psi_0^1$. This again has expectation zero, because the weights remain independent of the error $\epsilon_{sc}$ in the outcomes. Allowing non-zero $\epsilon_{sc}$ also adds a term to the estimator variance (conditional on $W$) equal to $\sigma^2_{\epsilon}\cdot \|\gamma^*\|^2$,    which does not change the variance bound given by Proposition \ref{prop:variance_rate}.
 \end{remark}
 
 
@@ -141,9 +165,9 @@ which generally need not equal zero unless $\Sigma_{X,\Theta} = \Sigma_X$ and $\
 \end{remark}
 
 \begin{remark}
-Example of bias in Proposition \ref{cl9}...
-
+If the set $Q$ in Proposition \ref{cl9} is a random sample, then the set $\{X_{sc}:sc \in Q\}$ will not differ systematically from $X$, and the noise terms $\{\nu_{sc}:sc \in Q\}$ will not differ systematically from zero-mean independent noise, so that $\bar{X}_Q$, $S_{XW_Q}$ and $S_{W_Q}$ will converge to their desired counterparts. But if $Q$ is such that the sets $\{X_{sc}: sc \in Q\}$ and $\{\nu_{sc}: sc \in Q\}$ differ systematically from their populations, the proposition suggests that the adjusted SBW estimate will be biased in non-gaussian settings. While the error expression is asymptotic, an exact formula is given in  \eqref{eqn:cl9.proof3} which is very similar; the only asymptotic approximations are the convergence of $\bar{W}_1$ to $\bar{X}_1$ and $\bar{W}_0$ to $\bar{X}_0$.
 \end{remark}
+
 
 
 % \begin{remark}
@@ -154,97 +178,126 @@ Example of bias in Proposition \ref{cl9}...
 %     In contrast to the previous results, in Proposition \ref{cl9} we avoid taking probability limits or expectations, when doing so would imply a limiting structure on the random set $\Theta$. However, if we were to assume that $\hat{\Sigma}_X(\hat{\theta})$ and $\hat{\Sigma}_W(\hat{\theta})$ had an expectation and equivalent probability limit, we do know that $\kappa_n \to^p \kappa$, and therefore we can replace the estimated quantities in $T_1$ with their expectations to view this as a limiting expression for the expected imbalance. The challenge is showing the conditions when these assumptions would be true, which is beyond the scope of the present paper.
 % \end{remark}
 
-\subsection{Properties of the H-SBW objective}\label{app:AsecII}
-    In this section we consider properties of the H-SBW estimator assuming the true covariates are observed. In Proposition~\ref{cl4} we show that under an outcome model with equicorrelated errors, given data $X_{A=1}$, target $\bar{X}_0$, and maximum tolerated imbalance $\delta$, the H-SBW estimator produces the minimum conditional-on-X variance estimator of $\psi_0^1$ within the constraint set. In Proposition~\ref{cl5} we consider any positive definite covariance structure $\Omega$ and show that when relaxing the positivity constraint on the weights but enforcing exact balance, the generic SBW weights that minimize the criterion $f(\gamma) = \gamma^T\Omega\gamma$ are equivalent to the corresponding regression weights from Generalized Least Squares (GLS). In Proposition~\ref{cl6} we establish that there exists a subset of the rows of the matrix $Z$ where the solution to H-SBW across $\Gamma(Z, \zeta, 0)$ is equivalent to the GLS weights. These results nest SBW and OLS as special cases.
+\subsection{Properties of H-SBW}\label{app:AsecII}
+
+
+    % In this section we consider properties of the H-SBW estimator assuming the true covariates are observed. In Proposition~\ref{cl4} we show that under an outcome model with equicorrelated errors, given data $X_{A=1}$, target $\bar{X}_0$, and maximum tolerated imbalance $\delta$, the H-SBW estimator produces the minimum conditional-on-X variance estimator of $\psi_0^1$ within the constraint set. In Proposition~\ref{cl5} we consider any positive definite covariance structure $\Omega$ and show that when relaxing the positivity constraint on the weights but enforcing exact balance, the generic SBW weights that minimize the criterion $f(\gamma) = \gamma^T\Omega\gamma$ are equivalent to the corresponding regression weights from Generalized Least Squares (GLS). In Proposition~\ref{cl6} we establish that there exists a subset of the rows of the matrix $Z$ where the solution to H-SBW across $\Gamma(Z, \zeta, 0)$ is equivalent to the GLS weights. These results nest SBW and OLS as special cases.
+
+
+Here we consider an H-SBW setting where $\nu_{sc}=0$ so that the true covariates are observed. By \eqref{eqn:linmod}, the outcomes have CPUMA level noise terms  $\epsilon_{sc}$, and also state-level noise terms $\varepsilon_s$ that correlate the outcomes of CPUMAs in the same state. Proposition \ref{cl4} states that if $\rho$ is the within-state correlation of these error terms, the H-SBW estimator produces the minimum conditional-on-X variance estimator of $\psi_0^1$ within the constraint set.
 
 \begin{proposition}\label{cl4}
-    Consider the outcome model in ~\eqref{eqn:linmod}. Assume the errors are homoskedastic and have finite variance $\sigma^2_{\epsilon}$ and $\sigma^2_{\varepsilon}$, and let $\rho$ be the within-state correlation of the error terms. Let $\hat{\gamma}^{hsbw}$ be the weights that solve \eqref{eqn:hsbwobjective} for known parameter $\rho$ across the constraint set $\Gamma(X_{A=1}, \bar{X}_0, \delta)$ for any $\delta$. 
-    
-    The H-SBW estimator $\sum_{s: A_s = 1}\sum_{c=1}^{p_s}\hat{\gamma}_{sc}^{hsbw}Y_{sc}$ is the minimum conditional-on-X variance estimator of $\psi_0^1$ within the constraint set $\Gamma(X_{A=1}, \bar{X}_0, \delta)$.
+    Consider the outcome model in ~\eqref{eqn:linmod}. Assume the errors are homoskedastic and have finite variance $\sigma^2_{\epsilon}$ and $\sigma^2_{\varepsilon}$, and let $\rho$ be the within-state correlation of the error terms. Let $\hat{\gamma}^{\textup{hsbw}}$ be the weights that solve \eqref{eqn:hsbwobjective} for known parameter $\rho$ across the constraint set $\Gamma(X_{A=1}, \bar{X}_0, \delta)$ for any $\delta$. Then the H-SBW estimator of $\psi_0^1$,
+
+    \[\sum_{s: A_s = 1}\sum_{c=1}^{p_s}\hat{\gamma}_{sc}^{hsbw}Y_{sc}\] 
+    is the minimum conditional-on-X variance estimator of $\psi_0^1$ within the constraint set $\Gamma(X_{A=1}, \bar{X}_0, \delta)$.
 \end{proposition}
 
+The SBW and H-SBW objective functions take the generic form $\gamma^T\Omega\gamma$: SBW takes $\Omega = I_n$, while H-SBW specifies an $\Omega$ that allows for positive within-state equicorrelation. Analogous versions hence exist for any assumed covariance structure $\Omega$. Proposition \ref{cl56} highlights connections between this generic form and generalized least-squares (or least-norm) problems, showing that under exact balance we can express the weights as regression weights estimated on a subset of the data.
 
-\begin{remark}
-    For simplicity we assumed the outcomes followed \eqref{eqn:linmod} and the constraints balanced the means of the covariates; however, we can allow for any outcome model and our balance constraints can include any function of the covariate distribution and this result still holds conditional on $X$ (though of course the estimator may be badly biased). The key assumption is that the variability in the estimates comes from the outcome model errors, which are assumed to be equicorrelated within state for known parameter $\rho$.
-\end{remark}
+\begin{proposition}\label{cl56}
+Let $\gamma^*$ solve the optimization problem
 
-\begin{remark}
-    The SBW criterion takes the generic form $\gamma^T\Omega\gamma$: SBW takes $\Omega = I_n$, while H-SBW specifies an $\Omega$ that allows for positive within-state equicorrelation. Similar results would hold for any assumed covariance structure $\Omega$. However, the number of parameters that characterize $\Omega$, and therefore the objective function, may differ.
-\end{remark}
-
-We now highlight some connections between what we call general SBW weights and GLS weights for any positive definite covariance matrix $\Omega$.
-
-\begin{proposition}\label{cl5}
-    Let $\Omega$ be any positive definite covariance matrix representing a model of covariance structure of the error terms in a linear outcome model. Consider a general form of SBW that optimizes the criterion $f(\gamma) = \gamma^T\Omega\gamma$. Define $\Gamma_U(Z, \zeta, 0) = \{\gamma: \sum_{sc}\gamma_{sc}Z_{sc} = \zeta, \sum_{A_{sc} = 1}\gamma_{sc} = 1\}$. This is the constraint set where the positivity constraint on the weights has been relaxed. Let $\hat{\gamma}^{hsbw}(\Gamma_U(Z, \zeta, 0))$ be the general SBW weights that minimize $f(\gamma)$ over $\Gamma_U(Z, \zeta, 0)$ for any input matrix $Z$ and target $\zeta$.
-    
-    Define $V = (1, Z)$ and let $\zeta^\star = (1, \zeta)$. The general SBW weights $\hat{\gamma}^{gsbw}(\Gamma_U(Z, \zeta, 0))$ are equivalent to the GLS weights $\hat{\gamma}^{gls} = (\zeta^\star^T(V^T\Omega^{-1}V)^{-1}V\Omega^{-1})^T$. 
-\end{proposition}
-
-
-\begin{remark}
-    Because the first element of the vector $\zeta^\star$ and the first column of the matrix $V$ are 1, this implies that $\sum_{A_{sc} = 1}\hat{\gamma}_{sc}^{gls}V_{sc} = \sum_{A_{sc} = 1}\hat{\gamma}^{gls}_{sc}1 = 1$; therefore, the summing to one constraint was implied by the inclusion of an intercept.
-\end{remark}
-
-\begin{remark}
-    If $\Omega = \sigma^2I_n$ this proposition implies that OLS weights are equivalent to the SBW weights for constraint set $\Gamma_U(Z, \zeta, 0)$. This and other generalizations of this connection between balancing weights and ridge-regression weights are found in \cite{ben2021augmented}; see also \cite{chattopadhyay2021implied}.
-\end{remark}
-
-\begin{remark}\label{rmk:olsweightsfixed}
-    Recall that $\hat{\beta}$ defined in the GLS dual program $\hat{\beta} = (V^T\Omega^{-1}V)^{-1}\zeta^\star$ and the relationship between the solutions: 
-    
-    \begin{align*}
-        \hat{\gamma}_{sc} = (\Omega^{-1}V\hat{\beta})_{sc}
-    \end{align*}
-
-    The OLS weights that take $\Omega = I_n$ are a linear function of the input data point $V_{sc}$, the inverse covariance matrix, and the target $\zeta^\star$. However, for a more general covariance matrix $\Omega$, the optimal weights depend on some combination of the units within the entire dataset $V$, as well as the weighted inverse covariance matrix and the target. 
-\end{remark}
-
-\begin{proposition}\label{cl6}
-    Let $\hat{\gamma}^{gls}(Z, \zeta)$ be the GLS weights defined in Proposition~\ref{cl5}, and let $\hat{\gamma}^{gsbw}(Z, \zeta, 0)$  the general SBW weights that minimize $f(\gamma)$ over the constraint set $\Gamma(Z, \zeta, 0)$ (assumed feasible). There exists a subset of points $Z_{\hat{\theta} = 1} = \{Z_{sc}: \hat{\theta}_{sc} = 1\}$ such that the GLS weights estimated on this subset $(\hat{\gamma}^{gls}(Z_{\hat{\theta} = 1}, \zeta))$ are equivalent to the non-zero general SBW weights generated on the full dataset.
+\begin{equation}\label{eqn:a1.1}
+ \min_\gamma \gamma^T \Omega \gamma \quad \text{ subject to } \quad  \sum_i \gamma_i Z_i = v,\ \sum_i \gamma_i = 1,\ \textup{ and } \gamma \geq 0%\gamma \in \Phi(Z, v, 0),
+\end{equation}
+ with $\Omega$ positive definite, and let $Q = \{i: \gamma^*_i > 0\}$ denote the indices of its non-zero entries. Then $\gamma^*$ also solves the generalized least squares problem,
+  
+  \begin{equation}\label{eqn:a1.2}
+   \min_{\gamma}  \ \gamma^T \Omega \gamma  \quad \textup{subject to }\quad \sum_{i \in Q} \gamma_i Z_i = v,\ \sum_{i \in Q} \gamma_i = 1,\ \textup{ and }   \gamma_i = 0\  \forall\ i \not\in Q,
+  \end{equation}
+ and hence has non-zero entries $\gamma^*_Q = \{\gamma_i^*: i \in Q\}$ satisfying
+ 
+ \begin{equation}\label{eqn:a1.3}
+ \gamma^*_{Q} = \Omega_{Q}^{-1} (Z_{Q} - \mu)^T\left[ (Z_Q - \mu) \Omega_{Q}^{-1} (Z_Q - \mu)^T\right]^{-1} (v - \mu) + \frac{\Omega^{-1}_Q {\bf 1} }{{\bf 1}^T \Omega^{-1}_Q {\bf 1}},
+ \end{equation}
+where $Z_{Q}$ is the matrix whose columns are $\{Z_i: i \in Q\}$, $\Omega_Q$ is the submatrix of $\Omega$ whose rows and columns are in $Q$, ${\bf 1}$ is the column vector of ones, and $\mu$ is the vector $\frac{Z_{Q}\Omega_{Q}^{-1} {\bf 1}}{ {\bf 1}^T \Omega^{-1}_Q {\bf 1}}$. 
 \end{proposition}
 
 \begin{remark}
-    Taking $\Omega = I_n$ shows that the non-zero SBW weights are equivalent to OLS weights on some subset of the data. 
+To lighten notation, we have used $Z_Q - \mu$ (a vector subtracted from a matrix) to mean $Z_Q - \mu{\bf 1}^T$, so that each column of $Z_{Q}$ is centered by $\mu$.
 \end{remark}
 
-\begin{remark}
-    In Proposition~\ref{cl5}, we saw that the GLS weights are determined by the $q + 1$ dimensional vector $\hat{\beta}^{gls}$ -- i.e. $\hat{\gamma}^{gls} = \Omega^{-1}V\hat{\beta}^{gls}$, where $\hat{\beta}^{gls} = (V^T\Omega^{-1}V)^{-1}\zeta^\star$. Letting $V_{\hat{\theta}=1}$ be analagous to the result above, we see that the generic SBW dual problem has the solution:
+% \begin{remark}
+%     The SBW criterion takes the generic form $\gamma^T\Omega\gamma$: SBW takes $\Omega = I_n$, while H-SBW specifies an $\Omega$ that allows for positive within-state equicorrelation. Similar results would hold for any assumed covariance structure $\Omega$. However, the number of parameters that characterize $\Omega$, and therefore the objective function, may differ.
+% \end{remark}
+
+
+% \begin{proposition}\label{cl5}
+%     Let $\Omega$ be any positive definite covariance matrix representing a model of covariance structure of the error terms in a linear outcome model. Consider a general form of SBW that optimizes the criterion $f(\gamma) = \gamma^T\Omega\gamma$. Define $\Gamma_U(Z, \zeta, 0) = \{\gamma: \sum_{sc}\gamma_{sc}Z_{sc} = \zeta, \sum_{A_{sc} = 1}\gamma_{sc} = 1\}$. This is the constraint set where the positivity constraint on the weights has been relaxed. Let $\hat{\gamma}^{hsbw}(\Gamma_U(Z, \zeta, 0))$ be the general SBW weights that minimize $f(\gamma)$ over $\Gamma_U(Z, \zeta, 0)$ for any input matrix $Z$ and target $\zeta$.
     
-    \begin{align}
-    \hat{\beta}^{gsbw} = (V_{\hat{\theta}=1}^T\Omega^{-1}V_{\hat{\theta}=1})^{-1}\zeta^\star
-    \end{align}
-\end{remark}
+%     Define $V = (1, Z)$ and let $\zeta^\star = (1, \zeta)$. The general SBW weights $\hat{\gamma}^{gsbw}(\Gamma_U(Z, \zeta, 0))$ are equivalent to the GLS weights $\hat{\gamma}^{gls} = (\zeta^\star^T(V^T\Omega^{-1}V)^{-1}V\Omega^{-1})^T$. 
+% \end{proposition}
 
-\begin{remark}
-    The generic SBW objective that enforces exact balance and positive weights is identical to the problem considered in Proposition~\ref{cl5} except with a positivity constraint. We can minimize the Lagrangian subject to $\gamma \ge 0$ to derive a solution $\hat{\gamma}^{gsbw} = \max\{0, \Omega^{-1}V\hat{\beta}^{gsbw}\}$, where $\hat{\beta}^{gsbw}$ exists by assumption. We can therefore also express $\hat{\theta}_{sc}$ in terms of the dual variables: $\hat{\theta}_{sc} = \mathds{1}(\Omega^{-1}V\hat{\beta} > 0)$.
-\end{remark}
 
-Proposition~\ref{cl6} highlights the connection between regression weights and H-SBW weights, and reveals that we can express H-SBW weights that achieve exact balance as regression weights estimated on a subset of the data. We will use this fact in the following section. 
+% \begin{remark}
+%     Because the first element of the vector $\zeta^\star$ and the first column of the matrix $V$ are 1, this implies that $\sum_{A_{sc} = 1}\hat{\gamma}_{sc}^{gls}V_{sc} = \sum_{A_{sc} = 1}\hat{\gamma}^{gls}_{sc}1 = 1$; therefore, the summing to one constraint was implied by the inclusion of an intercept.
+% \end{remark}
 
-\subsection{H-SBW and measurement error}\label{app:AsecIII}
+% \begin{remark}
+%     If $\Omega = \sigma^2I_n$, Proposition \ref{cl56} implies that OLS weights are equivalent to the SBW weights for constraint set $\Gamma_U(Z, \zeta, 0)$. This and other generalizations of this connection between balancing weights and ridge-regression weights are found in \cite{ben2021augmented}; see also \cite{chattopadhyay2021implied}.
+% \end{remark}
 
-We return to the measurement error framework developed in Appendix~\ref{app:AsecI}. However, the assumptions in Appendix~\ref{app:AsecI} required that the true covariates were drawn iid from a multivariate normal distribution that allowed us to derive a linear model for $\mathbb{E}[X_{sc} \mid W_{sc}, A_{sc} = 1]$. We then denoted the corresponding set of predicted values for the treated observations $\tilde{X}_{A=1}$. In Proposition~\ref{cl7} we show that we can generally balance on $\tilde{X}^\star_{A=1} = \{\mathbb{E}[X_{sc} \mid W, A_{sc} = 1], \forall sc: A_{sc} = 1\}$ to obtain an unbiased estimate of $\psi_0^1$ when using H-SBW. However, this requires knowledge of this conditional expectation function. Encouragingly, in Proposition~\ref{cl8}, we show that under only weak assumptions on the covariate distribution, we can obtain a consistent estimate using OLS weights and the set of best linear approximations $\tilde{X}_{A=1}$. While previous results from \cite{gleser1992importance} imply this, we derive this result explicitly in terms of the implied regression weights from linear regression with a causal parameter written as a function of model coefficients. Less encouragingly, in Proposition~\ref{cl9}, we show that SBW weights that balance $\tilde{X}_{A=1}$ do not balance the true covariates, and therefore that we should not expect SBW to provide approximately/asymptotically unbiased estimates unless we model $\mathbb{E}[X \mid W]$ correctly. The key takeaway is that we require stronger and perhaps unrealistic distributional assumptions on $X_{sc}$ for SBW or H-SBW to yield consistent estimates than we do for OLS weights. 
+% \begin{remark}\label{rmk:olsweightsfixed}
+%     Recall that $\hat{\beta}$ defined in the GLS dual program $\hat{\beta} = (V^T\Omega^{-1}V)^{-1}\zeta^\star$ and the relationship between the solutions: 
+    
+%     \begin{align*}
+%         \hat{\gamma}_{sc} = (\Omega^{-1}V\hat{\beta})_{sc}
+%     \end{align*}
+
+%     The OLS weights that take $\Omega = I_n$ are a linear function of the input data point $V_{sc}$, the inverse covariance matrix, and the target $\zeta^\star$. However, for a more general covariance matrix $\Omega$, the optimal weights depend on some combination of the units within the entire dataset $V$, as well as the weighted inverse covariance matrix and the target. 
+% \end{remark}
+
+% \begin{proposition}\label{cl6}
+%     Let $\hat{\gamma}^{gls}(Z, \zeta)$ be the GLS weights defined in Proposition~\ref{cl5}, and let $\hat{\gamma}^{gsbw}(Z, \zeta, 0)$  the general SBW weights that minimize $f(\gamma)$ over the constraint set $\Gamma(Z, \zeta, 0)$ (assumed feasible). There exists a subset of points $Z_{\hat{\theta} = 1} = \{Z_{sc}: \hat{\theta}_{sc} = 1\}$ such that the GLS weights estimated on this subset $(\hat{\gamma}^{gls}(Z_{\hat{\theta} = 1}, \zeta))$ are equivalent to the non-zero general SBW weights generated on the full dataset.
+% \end{proposition}
+
+% \begin{remark}
+%     Taking $\Omega = I_n$ shows that the non-zero SBW weights are equivalent to OLS weights on some subset of the data. 
+% \end{remark}
+
+% \begin{remark}
+%     In Proposition~\ref{cl5}, we saw that the GLS weights are determined by the $q + 1$ dimensional vector $\hat{\beta}^{gls}$ -- i.e. $\hat{\gamma}^{gls} = \Omega^{-1}V\hat{\beta}^{gls}$, where $\hat{\beta}^{gls} = (V^T\Omega^{-1}V)^{-1}\zeta^\star$. Letting $V_{\hat{\theta}=1}$ be analagous to the result above, we see that the generic SBW dual problem has the solution:
+    
+%     \begin{align}
+%     \hat{\beta}^{gsbw} = (V_{\hat{\theta}=1}^T\Omega^{-1}V_{\hat{\theta}=1})^{-1}\zeta^\star
+%     \end{align}
+% \end{remark}
+
+% \begin{remark}
+%     The generic SBW objective that enforces exact balance and positive weights is identical to the problem considered in Proposition~\ref{cl5} except with a positivity constraint. We can minimize the Lagrangian subject to $\gamma \ge 0$ to derive a solution $\hat{\gamma}^{gsbw} = \max\{0, \Omega^{-1}V\hat{\beta}^{gsbw}\}$, where $\hat{\beta}^{gsbw}$ exists by assumption. We can therefore also express $\hat{\theta}_{sc}$ in terms of the dual variables: $\hat{\theta}_{sc} = \mathds{1}(\Omega^{-1}V\hat{\beta} > 0)$.
+% \end{remark}
+
+% Proposition~\ref{cl6} highlights the connection between regression weights and H-SBW weights, and reveals that we can express H-SBW weights that achieve exact balance as regression weights estimated on a subset of the data. We will use this fact in the following section. 
+
+% \subsection{H-SBW and measurement error}\label{app:AsecIII}
+
+ Proposition \ref{cl7} shows that if the conditional expectations can be computed for the treated units (which may be computationally difficult or require strong modeling assumptions if the data is non-gaussian, or if dependencies exist between CPUMAs), then H-SBW (which equals SBW when $\rho=0$) yields unbiased estimates. 
 
 \begin{proposition}\label{cl7}
-    Consider the H-SBW estimator $\hat{\psi}_0^{1, hsbw}$ using weights $\hat{\gamma}^{hsbw}$ that solves \eqref{eqn:hsbwobjective} across $\Gamma(\tilde{X}^\star_{A=1}, \bar{X}_0, 0)$. This estimator is unbiased for $\psi_0^1$.
+    Let $\tilde{X}^*$ denote the conditional expectation,
+    \[\tilde{X}^*_{sc} = \mathbb{E}[X_{sc} | W, A_{sc}=1],\]
+    and consider the H-SBW estimator $\hat{\psi}_0^{1, \textup{hsbw}}$ using weights $\hat{\gamma}^{hsbw}$ that solve \eqref{eqn:hsbwobjective} across $\Gamma(\tilde{X}^\star_{A=1}, \bar{X}_0, 0)$. This estimator is unbiased for $\psi_0^1$.
 \end{proposition}
 
-\begin{proof}[Proof of Proposition \ref{cl7}]
-    Following Propositions~\ref{cl2} and \ref{cl3}, assume that \eqref{eqn:cevoutcomemodel} holds without any error in the outcome model. We have previously shown in \eqref{eqn:sbwregcalerror} that this implies that the error of the H-SBW estimator can be expressed as:
-    
-    \begin{align*}
-        \hat{\psi}^{1, hsbw}_0 - \psi^1_0 = \sum_{sc: A_{sc} = 1}\hat{\gamma}^{hsbw}_{sc}(X_{sc} - \tilde{X}_{sc}^\star)^T\beta_1
-    \end{align*}
-    
-    Conditional on $W$, $\hat{\gamma}_{sc}$ is fixed and this expression equals 0. 
-\end{proof}
+
+
+% We return to the measurement error framework developed in Appendix~\ref{app:AsecI}. However, the assumptions in Appendix~\ref{app:AsecI} required that the true covariates were drawn iid from a multivariate normal distribution that allowed us to derive a linear model for $\mathbb{E}[X_{sc} \mid W_{sc}, A_{sc} = 1]$. We then denoted the corresponding set of predicted values for the treated observations $\tilde{X}_{A=1}$. In Proposition~\ref{cl7} we show that we can generally balance on $\tilde{X}^\star_{A=1} = \{\mathbb{E}[X_{sc} \mid W, A_{sc} = 1], \forall sc: A_{sc} = 1\}$ to obtain an unbiased estimate of $\psi_0^1$ when using H-SBW. However, this requires knowledge of this conditional expectation function. Encouragingly, in Proposition~\ref{cl8}, we show that under only weak assumptions on the covariate distribution, we can obtain a consistent estimate using OLS weights and the set of best linear approximations $\tilde{X}_{A=1}$. While previous results from \cite{gleser1992importance} imply this, we derive this result explicitly in terms of the implied regression weights from linear regression with a causal parameter written as a function of model coefficients. Less encouragingly, in Proposition~\ref{cl9}, we show that SBW weights that balance $\tilde{X}_{A=1}$ do not balance the true covariates, and therefore that we should not expect SBW to provide approximately/asymptotically unbiased estimates unless we model $\mathbb{E}[X \mid W]$ correctly. The key takeaway is that we require stronger and perhaps unrealistic distributional assumptions on $X_{sc}$ for SBW or H-SBW to yield consistent estimates than we do for OLS weights. 
+
 
 \begin{remark}
-    Assuming that $(X_{sc}, W_{sc}) \mid A_{sc} = 1$ are Gaussian, this proposition implies that if we correctly model the correlation structure of the data in our regression calibration step, we can use GLS or H-SBW without inducing bias (assuming all of our models are correct). This is the approach followed in \cite{huque2014impact}, who consider running GLS with a spatial correlation structure in the context of a one-dimensional covariate measured with error. 
+    In Proposition \ref{cl4}, we assumed the outcomes followed \eqref{eqn:linmod} and the constraints balanced the means of the covariates; however, we can allow for any outcome model and our balance constraints can include any function of the covariate distribution and this result still holds conditional on $X$ (though of course the estimator may be badly biased). The key assumption is that the variability in the estimates comes from the outcome model errors, which are assumed to be equicorrelated within state for known parameter $\rho$.
 \end{remark}
 
+
 \begin{remark}
-        Interestingly we find in our simulation study in Appendix~\ref{app:simstudy} that when the covariates are gaussian, even if they are dependent, the simple adjustment provided in \eqref{eqn:regcal} is sufficient to obtain an approximately unbiased estimate when using SBW. We conjecture that this is because the set where $\hat{\theta}_{sc} = 1$ has some limiting boundary. If true, this set is fixed when $n$ is large enough, and therefore $\hat{\theta}_{sc}$ is only a function of the input data point $W_{sc}$ (since $\kappa$ is fixed). The characterization of SBW weights as regression weights in Proposition~\ref{cl6}, would then imply that the SBW weight $\hat{\gamma}_{sc}^{sbw}$ is fixed conditional on input data $W_{sc}$ (see also Remark~\ref{rmk:olsweightsfixed}). The error of the estimator can therefore decompose as a function of $(X_{sc} - \tilde{X}_{sc})$, which is independent of $\hat{\gamma}_{sc}$ given $W_{sc}$, implying that it would suffice to balance on $\tilde{X}_{A=1}$.
+    Assuming that $(X_{sc}, W_{sc}) \mid A_{sc} = 1$ are Gaussian, Proposition \ref{cl7} implies that if we correctly model the correlations between the CPUMAs in our regression calibration step, we can use GLS or H-SBW without inducing bias (assuming all of our models are correct). This is the approach followed in \cite{huque2014impact}, who consider running GLS with a spatial correlation structure in the context of a one-dimensional covariate measured with error. 
+\end{remark}
+
+
+\begin{remark}
+        Interestingly we find in our simulation study in Appendix~\ref{app:simstudy} that when the covariates are gaussian, even if they are dependent, the simple adjustment provided in \eqref{eqn:regcal} is sufficient to obtain an approximately unbiased estimate when using SBW. We conjecture that this is because the set where $Q$ has some limiting boundary. If true, this set is fixed when $n$ is large enough, and therefore $\hat{\theta}_{sc}$ is only a function of the input data point $W_{sc}$ (since $\kappa$ is fixed). The characterization of SBW weights as regression weights in Proposition~\ref{cl56}, would then imply that the SBW weight $\hat{\gamma}_{sc}^{sbw}$ is fixed conditional on input data $W_{sc}$ %(see also Remark~\ref{rmk:olsweightsfixed}). 
+        The error of the estimator can therefore decompose as a function of $(X_{sc} - \tilde{X}_{sc})$, which is independent of $\hat{\gamma}_{sc}$ given $W_{sc}$, implying that it would suffice to balance on $\tilde{X}_{A=1}$.
 \end{remark}
 
 
@@ -328,42 +381,38 @@ for $\epsilon_{sc}' = \beta_1^T\nu_{sc}' + \epsilon_{sc}$. It follows that the O
 \begin{equation}\label{eqn:prop1.0}
 \mathbb{E}[\hat{\beta}|W_{A=1}] = \kappa \beta_1, \qquad \text{and} \qquad \mathbb{E}[\bar{W}_1 \hat{\beta}] = \bar{X}_1 \kappa \beta_1.
 \end{equation}
-To show that $\hat{\psi}_0^{1,\textup{reg}}$ and $\hat{\psi}_0^{1,W}$ have identical bias, we compute their expectations:
+To show that $\hat{\psi}_0^{1,\textup{ols}}$ and $\hat{\psi}_0^{1, \textup{sbw}}$ have identical bias, we compute their expectations:
 
 \begin{align}
-\nonumber	\mathbb{E}[\hat{\psi}_0^{1,\textup{reg}}] &= \mathbb{E}[ \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T \hat{\beta}] \\
+\nonumber	\mathbb{E}[\hat{\psi}_0^{1,\textup{ols}}] &= \mathbb{E}[ \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T \hat{\beta}] \\
 	& = \bar{\mu}_y + (\bar{X}_0 - \upsilon_1)^T\kappa\beta_1 \label{eqn:prop1.1}\\
 	& = \psi_0^1 + (\bar{X}_0 - \upsilon_1)^T(\kappa - I_q)\beta_1 \label{eqn:prop1.2}
 \end{align}
-where \eqref{eqn:prop1.1} holds by \eqref{eqn:prop1.0}, and \eqref{eqn:prop1.2} holds by \eqref{eqn:psi10_identity}. We next derive the expected value of $\hat{\psi}^{1, W}$:
+where \eqref{eqn:prop1.1} holds by \eqref{eqn:prop1.0}, and \eqref{eqn:prop1.2} holds by \eqref{eqn:psi10_identity}. We next derive the expected value of $\hat{\psi}^{1, \textup{sbw}}$:
 
 \begin{align}
-\nonumber	\mathbb{E}[\hat{\psi}_0^{1, W}] & = \mathbb{E}\left[ \sum_{A_{sc} = 1} \check{\gamma}_{sc} Y_{sc}\right] \\
-	& = \mathbb{E}\left[ \sum_{A_{sc}=1} \check{\gamma}_{sc} \left(\alpha_1 + (W_{sc} - W_{sc} + X_{sc})^T \beta_1 + \epsilon_{sc}\right)\right] \label{eqn:prop1.4}\\
-\nonumber	& = \mathbb{E}\left[ \alpha_1 + \sum_{A_{sc} = 1} \check{\gamma}_{sc} W_{sc}^T \beta_1 + \sum_{A_{sc}=1} \check{\gamma}_{sc} (X_{sc} - W_{sc})^T \beta_1 + \sum_{A_{sc}=1} \check{\gamma}_{sc} \epsilon_{sc} \right] \\
-	& = \alpha_1 + \bar{X}_0^T\beta_1 + \mathbb{E}\left[ \sum_{A_{sc} = 1} \check{\gamma}_{sc}(X_{sc} - W_{sc})^T \beta_1\right] \label{eqn:prop1.5}\\
-	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1} \check{\gamma}_{sc}(X_{sc} - W_{sc})^T \beta_1 \right] \label{eqn:prop1.6} \\
-	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1} \mathbb{E}\left[ \check{\gamma}_{sc}(X_{sc} - W_{sc})^T \beta_1 | W \right] \right] \label{eqn:prop1.7} \\
-	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1}  \check{\gamma}_{sc} (\mathbb{E}[X_{sc}|W] - W_{sc})^T \beta_1 \right] \label{eqn:prop1.8} \\
-	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1}  \check{\gamma}_{sc} (\upsilon_1 + \kappa^T(W_{sc} - \upsilon_1) - W_{sc})^T \beta_1 \right] \label{eqn:prop1.9} \\
-\nonumber	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1}  \check{\gamma}_{sc} (W_{sc} - \upsilon_1)^T(\kappa - I)\beta_1 \right] \\
-\nonumber	& = \psi_0^1 + \left(\mathbb{E}\left[\sum_{A_{sc} = 1} \check{\gamma}_{sc} W_{sc}\right] - \upsilon_1\right)^T(\kappa - I)\beta_1  \\
+\nonumber	\mathbb{E}[\hat{\psi}_0^{1, \textup{sbw}}] & = \mathbb{E}\left[ \sum_{A_{sc} = 1} {\gamma}_{sc} Y_{sc}\right] \\
+	& = \mathbb{E}\left[ \sum_{A_{sc}=1} {\gamma}_{sc} \left(\alpha_1 + (W_{sc} - W_{sc} + X_{sc})^T \beta_1 + \epsilon_{sc}\right)\right] \label{eqn:prop1.4}\\
+\nonumber	& = \mathbb{E}\left[ \alpha_1 + \sum_{A_{sc} = 1} {\gamma}_{sc} W_{sc}^T \beta_1 + \sum_{A_{sc}=1} {\gamma}_{sc} (X_{sc} - W_{sc})^T \beta_1 + \sum_{A_{sc}=1} {\gamma}_{sc} \epsilon_{sc} \right] \\
+	& = \alpha_1 + \bar{X}_0^T\beta_1 + \mathbb{E}\left[ \sum_{A_{sc} = 1} {\gamma}_{sc}(X_{sc} - W_{sc})^T \beta_1\right] \label{eqn:prop1.5}\\
+	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1} {\gamma}_{sc}(X_{sc} - W_{sc})^T \beta_1 \right] \label{eqn:prop1.6} \\
+	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1} \mathbb{E}\left[ {\gamma}_{sc}(X_{sc} - W_{sc})^T \beta_1 | W \right] \right] \label{eqn:prop1.7} \\
+	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1}  {\gamma}_{sc} (\mathbb{E}[X_{sc}|W] - W_{sc})^T \beta_1 \right] \label{eqn:prop1.8} \\
+	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1}  {\gamma}_{sc} (\upsilon_1 + \kappa^T(W_{sc} - \upsilon_1) - W_{sc})^T \beta_1 \right] \label{eqn:prop1.9} \\
+\nonumber	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1}  {\gamma}_{sc} (W_{sc} - \upsilon_1)^T(\kappa - I)\beta_1 \right] \\
+\nonumber	& = \psi_0^1 + \left(\mathbb{E}\left[\sum_{A_{sc} = 1} {\gamma}_{sc} W_{sc}\right] - \upsilon_1\right)^T(\kappa - I)\beta_1  \\
 	& = \psi_0^1 + \left(\bar{X}_0 - \upsilon_1\right)^T(\kappa - I_q)\beta_1,  \label{eqn:prop1.10}
 \end{align}
 %
-where \eqref{eqn:prop1.4} holds by the assumed linear model for $Y_{sc}$ given by  \eqref{eqn:linmod}; \eqref{eqn:prop1.5} and \eqref{eqn:prop1.10} hold because the SBW algorithm enforces that $\sum \hat{\gamma}_{sc} W_{sc} = \bar{W}_0$, which has expectation $\bar{X}_0$, and because $\epsilon_{sc}$ is zero-mean and independent of $W_{sc}$ and hence independent of $\hat{\gamma}_{sc}$; \eqref{eqn:prop1.6} holds by definition of $\psi_0^1$ and the assumed linear model in \eqref{eqn:linmod}; \eqref{eqn:prop1.7} is the tower property of expectations; \eqref{eqn:prop1.8} follows because $\gamma_{sc}$ and $W_{sc}$ are deterministic given $W$; and \eqref{eqn:prop1.9} uses the expression for the conditional expectation given by \eqref{eqn:regcal}. It can be seen that \eqref{eqn:prop1.2} and \eqref{eqn:prop1.10} are equal, and hence show that $\hat{\psi}_0^{1,\textup{reg}}$ and $\hat{\psi}_0^{1,W}$ have equal bias.
+where \eqref{eqn:prop1.4} holds by the assumed linear model for $Y_{sc}$ given by  \eqref{eqn:linmod}; \eqref{eqn:prop1.5} and \eqref{eqn:prop1.10} hold because the SBW algorithm enforces that $\sum \hat{\gamma}_{sc} W_{sc} = \bar{W}_0$, which has expectation $\bar{X}_0$, and because $\epsilon_{sc}$ is zero-mean and independent of $W_{sc}$ and hence independent of $\hat{\gamma}_{sc}$; \eqref{eqn:prop1.6} holds by definition of $\psi_0^1$ and the assumed linear model in \eqref{eqn:linmod}; \eqref{eqn:prop1.7} is the tower property of expectations; \eqref{eqn:prop1.8} follows because $\gamma_{sc}$ and $W_{sc}$ are deterministic given $W$; and \eqref{eqn:prop1.9} uses the expression for the conditional expectation given by \eqref{eqn:regcal}. It can be seen that \eqref{eqn:prop1.2} and \eqref{eqn:prop1.10} are equal, and hence show that $\hat{\psi}_0^{1,\textup{ols}}$ and $\hat{\psi}_0^{1, \textup{sbw}}$ have equal bias.
 
-It remains to show that the bias of the OLS estimator is unchanged if the gaussian assumption is relaxed so that \eqref{eqn:regcal} no longer holds. To do this, we observe that as the noise terms $\nu_{sc}$ are iid and independent of the covariates $X$, it follows that
-\begin{align}
-    \frac{1}{n_1} \sum_{A_{sc}=1} (W_{sc} - \bar{W}_1)(W_{sc} - \bar{W}_1)^T & \rightarrow^p \Sigma_X + \Sigma_{\nu} \label{eqn:prop1.11}\\
-    \frac{1}{n_1} \sum_{A_{sc}=1} (W_{sc} - \bar{W}_1)(Y_{sc} - \bar{Y}_1)^T & \rightarrow^p \Sigma_X \beta_1 \label{eqn:prop1.12}
-\end{align}
-where both inequalities have used \eqref{eqn:prop1.assumption}, independence of the noise terms $\nu_{sc}$ and $\epsilon_{sc}$, and the second equality uses the linear model given by \eqref{eqn:linmod}. It then follows from \eqref{eqn:prop1.beta} that $\hat{\beta}$ is asymptotically given by
+It remains to show that the bias of the OLS estimator is unchanged if the gaussian assumption is relaxed so that \eqref{eqn:regcal} no longer holds. It follows from \eqref{eqn:prop1.beta} that $\hat{\beta}$ is asymptotically given by
 
     \begin{align*}
-    \hat{\beta} & \rightarrow^p  (\Sigma_X + \Sigma_\nu)^{-1}\Sigma_X \beta_1 = \kappa \beta_1 
+    \hat{\beta} &= \left(\sum_{A_{sc}=1} (W_{sc} - \bar{W}_1)(W_{sc} - \bar{W}_1)^T \right)^{-1} \left(\sum_{A_{sc}=1} (W_{sc} - \bar{W}_1)(Y_{sc} - \bar{Y}_1)^T\right) \\
+     & \rightarrow^p  (S_X + \Sigma_\nu)^{-1}S_X \beta_1 = \check{\kappa} \beta_1, 
     \end{align*}
-where we have used \eqref{eqn:prop1.11} and \eqref{eqn:prop1.12}. Plugging into $\psi_0^{1,\textup{reg}}$ yields
+where we have used \eqref{eqn:limitW} and \eqref{eqn:limitWY}. Plugging into $\psi_0^{1,\textup{ols}}$ yields
     % \begin{align*}
     % \mathbb{E}[\hat{\beta}_1] &= \mathbb{E}[(\sum_{A_{sc} = 1}W_{sc}W_{sc}^T)^{-1}\sum_{A_{sc} = 1}W_{sc}Y_{sc}] \to^p \Sigma_W^{-1}\mathbb{E}[W_{sc}Y_{sc}] \\ 
     % &= \Sigma_W^{-1}\mathbb{E}[(X_{sc} + \nu_{sc})(X_{sc}^T\beta_1 + \epsilon_{sc})] \\
@@ -372,8 +421,8 @@ where we have used \eqref{eqn:prop1.11} and \eqref{eqn:prop1.12}. Plugging into 
     % %
 
 \begin{align*}    
-    \mathbb{E}\hat{\psi}_0^{1,\textup{reg}} = \mathbb{E}[ \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T \hat{\beta}] \\
-    \rightarrow^p  \bar{\mu}_y + (\bar{X}_0 - \bar{X}_1)\kappa \beta_1,
+    \mathbb{E}[\hat{\psi}_0]^{1,\textup{ols}} = \mathbb{E}[ \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T \hat{\beta}] \\
+    \rightarrow^p  \bar{\mu}_y + (\bar{X}_0 - \bar{X}_1)\check{\kappa} \beta_1,
 \end{align*}
 from which the result follows by the same steps used to show \eqref{eqn:prop1.2}.
     % where the first line follows by the law of large numbers and the continuous mapping theorem, and the second line follows by \eqref{eqn:additivenoise} and \eqref{eqn:cevoutcomemodel}, and the final line again by \eqref{eqn:cevoutcomemodel}. On the other hand, notice that our proof of the bias for the SBW estimator required the joint normality of $(X_{sc}, W_{sc} \mid A_{sc} = 1)$ to derive an expression for $\mathbb{E}[X_{sc} \mid W_{sc}, A_{sc} = 1]$ and hence an expression for the bias.
@@ -406,7 +455,7 @@ Y_{sc} = \alpha_1 + \tilde{X}_{sc}^T\beta_1 + (X_{sc} - \tilde{X}_{sc})^T\beta_1
 We then have that:
 
 \begin{align}\nonumber
-    \hat{\psi}^1_0 - \psi_0^1 &= \sum_{sc: A_{sc} = 1}\gamma_{sc}^\star Y_{sc} - (\alpha_1 + \bar{X}_0^T\beta_1) \\
+    \hat{\psi}_0^{1,\textup{ideal}} - \psi_0^1 &= \sum_{sc: A_{sc} = 1}\gamma_{sc}^\star Y_{sc} - (\alpha_1 + \bar{X}_0^T\beta_1) \\
     \nonumber &= \sum_{sc: A_{sc} = 1}\gamma_{sc}^\star\alpha_1 + \sum_{sc: A_{sc} = 1}\gamma_{sc}^\star\tilde{X}_{sc}^T\beta_1 \\ 
     &+ \sum_{sc: A_{sc} = 1}\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^T\beta_1 - (\alpha_1 + \bar{X}_0^T\beta_1) \label{eqn:outcomerevised_proof1}\\
     &= \sum_{sc: A_{sc} = 1}\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^T\beta_1\label{eqn:sbwregcalerror},
@@ -416,10 +465,10 @@ where \eqref{eqn:outcomerevised_proof1} follows from \eqref{eqn:outcomerevised},
 
 
 \begin{proof}[Proof of Proposition \ref{prop:variance_rate}] 
-To derive $\operatorname{Var}\left(\hat{\psi}_0^{1,\tilde{X}} | W\right)$, we use
+To derive $\operatorname{Var}\left(\hat{\psi}_0^{1,\textup{ideal}} | W\right)$, we use
 
 \begin{align}
-\operatorname{Var}\left(\hat{\psi}_0^{1,\tilde{X}} | W\right) &= \operatorname{Var}\left[\sum_{sc: A_{sc} = 1}\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^T\beta_1 \mid W\right] \label{eqn:prop:variance.1}\\
+\operatorname{Var}\left(\hat{\psi}_0^{1,\textup{ideal}} | W\right) &= \operatorname{Var}\left[\sum_{sc: A_{sc} = 1}\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^T\beta_1 \mid W\right] \label{eqn:prop:variance.1}\\
  &= \sum_{sc: A_{sc} = 1} \operatorname{Var}(\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^T\beta_1 \mid W) \label{eqn:prop:variance.2}\\
  &= \sum_{sc: A_{sc} = 1} \gamma_{sc}^{\star^2}\beta_1^T(\Sigma_{X} - \Sigma_{X}\Sigma_{W}^{-1}\Sigma_{X})\beta_1  \label{eqn:prop:variance.3}\\
 & = \|\gamma^*\|^2 \cdot \beta_1^T(\Sigma_{X} - \Sigma_{X}\Sigma_{W}^{-1}\Sigma_{X})\beta_1,  \label{eqn:variance}
@@ -443,7 +492,7 @@ Let $L'$ denote the number of subsets whose $\gamma^{(\ell)}$ is non-zero. As ea
 Following Proposition~\ref{cl2}, assuming $\epsilon_{sc}=0$ we can decompose the error of the estimator as follows:
 
 \begin{align}
-\nonumber    \hat{\psi}^{1,\hat{X}}_0 - \psi_0^1 &= \sum_{A_{sc}=1} \hat{\gamma}_{sc} Y_{sc} - \psi_0^1 \\
+\nonumber    \hat{\psi}^{1,\textup{adjusted}}_0 - \psi_0^1 &= \sum_{A_{sc}=1} \hat{\gamma}_{sc} Y_{sc} - \psi_0^1 \\
     & = \sum_{A_{sc}=1} \hat{\gamma}_{sc} (\alpha_1 + X_{sc}^T \beta_1) - \psi_0^1 \label{eqn:cl3.1}\\
     \nonumber & = \sum_{A_{sc}=1} \hat{\gamma}_{sc} (\alpha_1 + \hat{X}_{sc}^T \beta_1 + (X_{sc} - \hat{X}_{sc})^T \beta_1 ) - \psi_0^1 \label{eqn:cl3.2}\\
     \nonumber & = \alpha_1 + \sum_{A_{sc}=1} \hat{\gamma}_{sc} \hat{X}_{sc}^T \beta_1 + \sum_{A_{sc}=1} \hat{\gamma}_{sc}(X_{sc} - \hat{X}_{sc})^T \beta_1  - \psi_0^1 \label{eqn:cl3.3}\\
@@ -452,7 +501,7 @@ Following Proposition~\ref{cl2}, assuming $\epsilon_{sc}=0$ we can decompose the
 \end{align}
 where \eqref{eqn:cl3.1} holds by \eqref{eqn:linmod}, \eqref{eqn:cl3.3} uses that $\sum \hat{\gamma}_{sc} \hat{X}_{sc} = \bar{W}_0$, and \eqref{eqn:cl3.4} uses that $\psi_{0}^1 = \alpha_1 + \bar{X}_0^T \beta_1$.
 
-We observe that term (i) goes to zero by the law of large numbers. To show that (ii) and (iii) converge, we observe that as  $\hat{\Sigma}_X$ and $\hat{\Sigma}_\nu$ converge, $\hat{X}$ converges to $\tilde{X}$ uniformly over all units; as $\hat{\gamma}$ is a continuous function of the constraints determined by $\hat{X}$, it follows that $\hat{\gamma}$ converges to $\gamma^*$ as well, so that (ii) goes to zero by Propositions \ref{cl2} and \ref{prop:variance_rate}. As we have shown that $\|\hat{\gamma}\| \to \|\gamma^*\| \to 0$ and $\|(\tilde{X} - \hat{X})^T \beta_1\|\to 0$, it follows that Term (iii) goes to zero as well.
+We observe that term (i) goes to zero by the law of large numbers. To show that (ii) and (iii) converge, we observe that as  $\hat{\Sigma}_X$ and $\hat{\Sigma}_\nu$ converge, $\hat{X}$ converges to $\tilde{X}$ uniformly over all units; as $\hat{\gamma}$ is a continuous function of the constraints determined by $\hat{X}$, it follows that $\hat{\gamma}$ converges to $\gamma^*$ as well. As $\hat{\gamma} \to \gamma^*$, term (ii) goes to 0 by Propositions \ref{cl2} and \ref{prop:variance_rate}. As  $\|\hat{\gamma}\|$ is bounded, term (iii) goes to zero as $\hat{X} \to \tilde{X}$.
 
 
 % \begin{align*}
@@ -469,22 +518,23 @@ We observe that term (i) goes to zero by the law of large numbers. To show that 
 
 
 \begin{proof}[Proof of Proposition \ref{cl8}]
-Let $\bar{\mu}_{\tilde{X}}$ denote 
-\[ \bar{\mu}_{\tilde{X}} = \frac{1}{n_1} \sum_{A_{sc} = 1} \tilde{X}_{sc}.\]
-
-It can be seen that 
-\[ \tilde{X}_{sc} - \bar{\mu}_{\tilde{X}} = \kappa^T(W_{sc} - \bar{W}_1),\]
+Let $\mu$ denote 
+\[ \mu = \frac{1}{n_1} \sum_{A_{sc} = 1} \check{X}_{sc},\]
+so that
+\[ \check{X}_{sc} - \mu = \check{\kappa}^T(W_{sc} - \bar{W}_1),\]
 and hence that 
 \begin{align}
- \nonumber \hat{\beta} &=  \left(\sum_{A_{sc}=1} (\tilde{X}_{sc} - \bar{\mu}_{\tilde{X}})(\tilde{X}_{sc} - \bar{\mu}_{\tilde{X}})^T\right)^{-1} \sum_{A_{sc}=1} (\tilde{X}_{sc} - \bar{\mu}_{\tilde{X}})(Y_{sc} - \bar{Y}_1) \\
- \nonumber & = \left(\sum_{A_{sc}=1} \kappa^T (W_{sc} - \bar{W}_1)(W_{sc} - \bar{W}_1)^T \kappa\right)^{-1} \sum_{A_{sc}=1} \kappa^T(W_{sc} - \bar{W}_1)(Y_{sc} - \bar{Y}_1) \\
- & \to^p (\kappa^T (\Sigma_X + \Sigma_\nu) \kappa)^{-1} \kappa^T \Sigma_X \beta_1  \label{eqn:cl8.1}\\
- \nonumber & = \kappa^{-1} (\Sigma_X + \Sigma_{\nu})^{-1} \Sigma_X \beta_1 \\
- \nonumber & = \beta_1
+ \nonumber \check{\beta} &=  \left(\sum_{A_{sc}=1} (\check{X}_{sc} - \mu)(\check{X}_{sc} - \mu)^T\right)^{-1} \sum_{A_{sc}=1} (\check{X}_{sc} - \mu)(Y_{sc} - \bar{Y}_1) \\
+ \nonumber & = \left(\sum_{A_{sc}=1} \check{\kappa}^T (W_{sc} - \bar{W}_1)(W_{sc} - \bar{W}_1)^T \check{\kappa}\right)^{-1} \sum_{A_{sc}=1} \check{\kappa}^T(W_{sc} - \bar{W}_1)(Y_{sc} - \bar{Y}_1) \\
+ & \to^p (\check{\kappa}^T (S_X + \Sigma_\nu) \check{\kappa})^{-1} \check{\kappa}^T S_X \beta_1  \label{eqn:cl8.1}\\
+ \nonumber 
+ & = \check{\kappa}^{-1} (S_X + \Sigma_{\nu})^{-1} S_X \beta_1 \\
+ \nonumber 
+ & = \beta_1
  \end{align}
- where \eqref{eqn:cl8.1} follows by \eqref{eqn:prop1.11} and \eqref{eqn:prop1.12}, and the last step follows from the definition of $\kappa$. It then follows that 
- \[ \bar{Y}_1 - (\bar{W}_0 - \bar{W}_1)^T \hat{\beta} \to^p \alpha_1 + \bar{X}_0^T \beta_1 = \psi_0^1,\]
- proving consistency of the adjusted OLS estimator of $\psi_0^1$.
+ where \eqref{eqn:cl8.1} follows by \eqref{eqn:limitW} and \eqref{eqn:limitWY}, and the last step follows from the definition of $\check{\kappa}$. It then follows that 
+ \[ \bar{Y}_1 - (\bar{W}_0 - \bar{W}_1)^T \check{\beta} \to^p \alpha_1 + \bar{X}_0^T \beta_1 = \psi_0^1,\]
+ proving consistency.
     % Let $\hat{\gamma}^{ols}$ be the OLS weights, $\tilde{X}_{A=1}(\tilde{X}_{A=1}^T\tilde{X}_{A=1})^{-1}\bar{X}_0$, where we take the first coordinate of $\tilde{X}_{A=1}$ to be an intercept and the first element of $\bar{X}_0$ to be 1 (see Proposition~\ref{cl5}).
     % Without loss of generality, assume that $\upsilon_1 = 0$ so that \eqref{eqn:regcal} reduces to $\tilde{X}_{sc} = \kappa^TW_{sc}$.
     
@@ -499,48 +549,62 @@ and hence that
     % where we used the fact that the measurement errors are homoskedastic with covariance matrix $\Sigma_{\nu}$ and that $n_1^{-1}\sum_{sc: A_{sc} = 1}X_{sc}X_{sc}^T \to^p \Sigma_X$ which implies that $n_1^{-1}\sum_{sc: A_{sc} = 1}W_{sc}W_{sc}^T \to^p \Sigma_W$. 
 \end{proof}
 
-To prove Proposition \ref{cl9}, we will require the following lemma, which states that for optimization problems of the form (which includes the SBW objective of \eqref{eqn:SBWobjective}),
+% To prove Proposition \ref{cl9}, we will require the following lemma, which considers optimization problems of the form,
+% \begin{equation}\label{eqn:a1.1}
+%  \min_\gamma \gamma^T \Omega \gamma \quad \text{ subject to } \quad  \sum_i \gamma_i Z_i = v,\ \sum_i \gamma_i = 1,\ \textup{ and } \gamma \geq 0%\gamma \in \Phi(Z, v, 0),
+% \end{equation}
+% which equals the SBW \eqref{eqn:SBWobjective} when $\Omega = I$. The proposition states that the optimal solution $\gamma^*$ can be expressed in closed form given $Q = \{i: \gamma^*_i > 0\}$, the indices for which it is non-zero.
 
-\[ \min_\gamma \gamma^T \Omega \gamma \quad \text{ subject to } \quad  \gamma \in \Phi(Z, v, 0),\]
-the optimal $\gamma^*$ can be expressed in closed form given $\mathcal{S} = \{i: \gamma^*_i > 0\}$, the indices for which it is non-zero.
+% \begin{lemma}\label{lemma:a1}
+%   Let $\gamma^*$ solve \eqref{eqn:a1.1} with $\Omega$ positive definite, and let $Q = \{i: \gamma^*_i > 0\}$ denote the indices of its non-zero entries. Then $\gamma^*$ also solves the optimization problem
+  
+%   \begin{equation}\label{eqn:a1.2}
+%   \min_{\gamma}  \ \gamma^T \Omega \gamma  \quad \textup{subject to }\quad \sum_{i \in Q} \gamma_i Z_i = v,\ \sum_{i \in Q} \gamma_i = 1,\ \textup{ and }   \gamma_i = 0\  \forall\ i \not\in Q,
+%   \end{equation}
+%  and has non-zero entries $\gamma^*_Q = \{\gamma_i^*: i \in Q\}$ satisfying
+ 
+%  \begin{equation}\label{eqn:a1.3}
+%  \gamma^*_{Q} = \Omega_{Q}^{-1} (Z_{Q} - \mu)^T\left[ (Z_Q - \mu) \Omega_{Q}^{-1} (Z_Q - \mu)^T\right]^{-1} (v - \mu) + \frac{\Omega^{-1}_Q {\bf 1} }{{\bf 1}^T \Omega^{-1}_Q {\bf 1}},
+%  \end{equation}
+% where $Z_{Q}$ is the matrix whose columns are $\{Z_i: i \in Q\}$, $\Omega_Q$ is the submatrix of $\Omega$ whose rows and columns are in $Q$, ${\bf 1}$ is the column vector of ones, and $\mu$ is the vector $\frac{Z_{Q}\Omega_{Q}^{-1} {\bf 1}}{ {\bf 1}^T \Omega^{-1}_Q {\bf 1}}$. 
+% \end{lemma}
 
-\begin{lemma}\label{lemma:a1}
-    Define $\mathcal{S}_1 := \{\sum_{i=1}^n a_{i}X_{sc} = \zeta, a_{i} \ge 0\}$ and $\mathcal{S}_2 := \{\sum_{i=1}^n a_{i}X_{i} = \zeta\}$. Define $f(\gamma) = \gamma'\Omega\gamma$ for $\Omega \succ 0$. Then let $a_1$ be a solution (assumed feasible) to $\min_a f(a) \text{ st } a \in \mathcal{S}_1$ and $a_2$ be a solution to $\min_a f(a) \text{ st } a \in \mathcal{S}_2$. If $a_{1, i} > 0$ for all elements, then $a_1 = a_2$.
-\end{lemma}
+% \begin{lemma}\label{lemma:a1}
+%     Define $Q_1 := \{\sum_{i=1}^n a_{i}X_{sc} = \zeta, a_{i} \ge 0\}$ and $Q_2 := \{\sum_{i=1}^n a_{i}X_{i} = \zeta\}$. Define $f(\gamma) = \gamma'\Omega\gamma$ for $\Omega \succ 0$. Then let $a_1$ be a solution (assumed feasible) to $\min_a f(a) \text{ st } a \in Q_1$ and $a_2$ be a solution to $\min_a f(a) \text{ st } a \in Q_2$. If $a_{1, i} > 0$ for all elements, then $a_1 = a_2$.
+% \end{lemma}
 
-\begin{proof}
-    We show the contrapositive: if $a_1 \ne a_2$ then there must be an element $i$ such that $a_{1, i} = 0$. Because $\mathcal{S}_1 \subseteq \mathcal{S}_2$, if $a_2 \in \mathcal{S}_1$, then it must also minimize $f(\gamma) \text{ st } \gamma \in \mathcal{S}_1$. This implies that if $a_2 \ne a_1$, then $a_2 \not\in \mathcal{S}_1$.
     
-    Consider the case where $a_2 \ne a_1$. We know that $f(a_2) \le f(a_1)$. Define $\mathcal{S}_{a_1} := \{a: f(a) \le f(a_1)\}$ and note that $a_2$ must be in this set. Because $f$ is convex, this set is convex and there exists a line within the set connecting $a_1$ and $a_2$. Since $a_1 \in \mathcal{S}_1$ and $a_2 \not\in\mathcal{S}_1$ then this line segment must intersect $\mathcal{S}_1$ at the boundary at a point $a^\star \in \mathcal{S}_{a_1}$. But then we know that $f(a^\star) \le f(a_1)$; moreover, because $a^\star \in \mathcal{S}_1$ this implies by definition that $a^\star = a_1$. Since $a_1$ is on the boundary of $\mathcal{S}_1$, we know that some element in $a_1$ must be equal to zero. 
-\end{proof}
-
 
 \begin{proof}[Proof of Proposition \ref{cl9}]
-    We show that $\sum_{sc: A_{sc} = 1}X_{sc}\hat{\gamma}^{sbw}_{sc}$ does not in general approximately equal $\bar{X}_0$, and for simplicity, we assume that we have access to both $(X, W)$ and condition our analysis on this observed data. Define:
-    
-    \begin{align*}
-    \hat{\Sigma}_Z(\hat{\theta}) = (\sum_{sc} \hat{\theta}_{sc})^{-1}\sum_{sc}\hat{\theta}_{sc}Z_{sc}Z_{sc}^T
-    \end{align*} 
-    %
-    for any matrix $Z$. For simplicity, we assume that $\bar{X}_1 = \bar{W}_1 = 0$. We let 
-    
-    \begin{align*}
-    \kappa_n = (\sum_{sc: A_{sc} = 1} W_{sc}W_{sc}^T)^{-1} \sum_{sc: A_{sc} = 1} X_{sc}X_{sc}^T
-    \end{align*}
-    %
-    and re-define $\tilde{X}_{sc} = \kappa_n^TW_{sc}$. 
-    
-    Using Proposition~\ref{cl5}, we can re-express $\hat{\gamma}^{sbw}_{sc}$ as regression weights to further study the quantity $\sum_{sc: A_{sc} = 1}X_{sc}\hat{\gamma}^{sbw}_{sc}$. 
-    \begin{align}
-        \nonumber\sum_{sc: A_{sc} = 1}X_{sc}\hat{\gamma}_{sc} &= \sum_{sc: A_{sc} = 1} \hat{\theta}_{sc}X_{sc}\tilde{X}_{sc}^T(\sum_{sc: A_{sc} = 1} \hat{\theta}_{sc}\tilde{X}_{sc}\tilde{X}_{sc}^T)^{-1}\bar{X}_0 \\
-        \nonumber&= \sum_{sc: A_{sc} = 1} \hat{\theta}_{sc}X_{sc}W_{sc}^T\kappa_n(\sum_{sc: A_{sc} = 1} \kappa_n^T\hat{\theta}_{sc}W_{sc}W_{sc}^T\kappa_n)^{-1}\bar{X}_0\label{prop1a} \\
-        \nonumber&= [\sum_{sc: A_{sc} = 1} \hat{\theta}_{sc}X_{sc}X_{sc}^T + \sum_{sc: A_{sc} = 1} \hat{\theta}_{sc}X_{sc}\nu_{sc}^T]\kappa_n(\sum_{sc: A_{sc} = 1} \kappa_n^T\hat{\theta}_{sc}W_{sc}W_{sc}^T\kappa_n)^{-1}\bar{X}_0\label{prop1a} \\
-        \nonumber&\approx \underbrace{\hat{\Sigma}_X(\hat{\theta})\kappa_n(\kappa_n^T\hat{\Sigma}_W(\hat{\theta})\kappa_n)^{-1}}_{T_1}\bar{X}_0 \label{prop1d}
-        \end{align}
-    where the first line follows by definition of the SBW weights, the second by the definition of $\tilde{X}_{sc}$, the third from \eqref{eqn:additivenoise}, and the final line from the independence of $\nu$ and $X$ and ignoring any dependence of $\hat{\theta}_{sc}$ on $\nu_{sc}$.
-    
-    In general we see that unless $T_1 \approx I_q$ and so these weights do not achieve approximate balance and therefore the resulting estimator will be biased.
+
+We will use Proposition \ref{cl56} which is proved later in this section. To apply it, we let $\Omega = I$, $Z = \check{X}_{A=1}$, and $v = \bar{W}_0$. Using  $\check{X}_{sc} = \bar{W}_1 + \check{\kappa}^T(W_{sc} - \bar{W}_1)$, we find that 
+\begin{align}
+    \nonumber \mu & = \frac{1}{n_Q} \sum_{sc \in Q} \check{X}_{sc} \\
+    \label{eqn:cl9.mu} & = \bar{W}_1 + \check{\kappa}^T(\bar{W}_Q - \bar{W}_1),
+\end{align}
+and hence that $\check{X}_{sc} - \mu = \check{\kappa}^T(W_{sc} - \bar{W}_Q)$. Plugging into \eqref{eqn:a1.3} yields 
+
+\begin{align}
+ \nonumber \check{\gamma}_{sc} & = \frac{1}{n_Q}(W_{sc} - \bar{W}_Q)^T \check{\kappa} (\check{\kappa}^T S_{W_Q} \kappa)^{-1}(\bar{W}_0 - \mu) + \frac{1}{n_Q} \\
+ \label{eqn:cl9.proof.gamma}& = \frac{1}{n_Q}(W_{sc} - \bar{W}_Q)^T S_{W_Q}^{-1} \check{\kappa}^{-T}(\bar{W}_0 - \mu) + \frac{1}{n_Q}, \qquad \forall \ sc \in Q,
+\end{align}
+As $Y_{sc} = \alpha_1 + \beta_1^T (\bar{X}_Q + X_{sc} - \bar{X}_Q)$ for the treated units, the SBW estimator of $\psi_0^1$ can be seen to equal
+\begin{align}
+    \nonumber \sum_{A_{sc}=1} Y_{sc}\check{\gamma}_{sc} & = \sum_{A_{sc}=1} (\alpha_1 + \beta_1^T \bar{X}_Q) \check{\gamma}_{sc} + \sum_{A_{sc}=1}  \beta_1^T (X_{sc} - \bar{X}_Q)\check{\gamma}_{sc} \\
+ \label{eqn:cl9.proof1}    & = (\alpha_1 + \beta_1^T \bar{X}_Q)\\
+    \nonumber & \hskip.5cm {} + \sum_{sc \in Q}  \beta_1^T(X_{sc} - \bar{X}_Q)\left[\frac{1}{n_Q} (W_{sc} - \bar{W}_Q)^T S_{W_Q}^{-1} \check{\kappa}^{-T}(\bar{W}_0 - \mu) +  \frac{1}{n_Q}\right] \\
+\label{eqn:cl9.proof2}    & = (\alpha_1 + \beta_1^T \bar{X}_Q)\\
+    \nonumber & \hskip.5cm {} +  \beta_1^TS_{XW_Q} S_{W_Q}^{-1} \check{\kappa}^{-T}(\bar{W}_0 - \mu) + \underbrace{\frac{1}{n_Q}\sum_{sc \in Q}   \beta_1^T (X_{sc} - \bar{X}_Q) }_{= 0} \\ %+ o_p(1) \\
+\label{eqn:cl9.proof3}    & = \alpha_1 + \beta_1^T \bar{X}_0 - \underbrace{(\beta_1^T \bar{X}_0 -  \beta_1^TS_{XW_Q} S_{W_Q}^{-1} \check{\kappa}^{-T}\bar{W}_0)}_{(i)} \\
+    \nonumber & \hskip.5cm {} + \underbrace{\beta_1^T (\bar{X}_Q - S_{XW_Q} S_{W_Q}^{-1} \check{\kappa}^{-T}\bar{W}_1)}_{(ii)} - \underbrace{\beta_1^TS_{X_Q}S_{W_Q}^{-1}(\bar{W}_Q - \bar{W}_1))}_{(iii)}\\
+\label{eqn:cl9.proof4}    & \to^p \psi_0^1 - \underbrace{\beta_1^T(I - S_{XW_Q}S_{W_Q}^{-1}S_WS_X^{-1})\bar{X}_0}_{(i)} \\
+    \nonumber & \hskip.5cm {} + \underbrace{\beta_1^T(\bar{X}_Q - S_{XW_Q}S_{W_Q}^{-1} S_W S_X^{-1} \bar{X}_1)}_{(ii)} - \underbrace{\beta_1^TS_{XW_Q}S_{W_Q}^{-1}(\bar{X}_Q - \bar{X}_1)}_{(iii)}, 
+\end{align}
+where \eqref{eqn:cl9.proof1} uses the expression for $\check{\gamma}$ given by (\ref{eqn:cl9.proof.gamma}; \eqref{eqn:cl9.proof2} follows by algebraic manipulations, and notes that $n_Q^{-1}\sum_{sc \in Q} (X_{sc} - \bar{X}_Q) = 0$; \eqref{eqn:cl9.proof3} adds and subtracts $\beta_1^T \bar{X}_0$,  substitutes for $\mu$ using (\ref{eqn:cl9.mu}), and groups the terms into (i), (ii), and (iii); and \eqref{eqn:cl9.proof4} substitutes for $\check{\kappa}$ and uses $\bar{W}_0 \to^p \bar{X}_0$ and $\bar{W}_1 \to^p \bar{X}_1$.
+
+It can be seen that terms (i), (ii), and (iii) each go to zero if $S_{XW_Q} \to S_X$, $S_{W_Q} \to S_W$, and $\bar{X}_Q \to \bar{X}_1$, proving the result. 
 \end{proof}
+
 
 
 \begin{proof}[Proof of Proposition \ref{cl4}]
@@ -552,82 +616,126 @@ the optimal $\gamma^*$ can be expressed in closed form given $\mathcal{S} = \{i:
 where the second line follows by dividing by $\sigma^2_{\epsilon} + \sigma^2_{\varepsilon}$. By definition of the H-SBW objective, which minimizes this function for known $\rho$, the H-SBW estimator must produce the minimum conditional-on-X variance estimator within the constraint set.
 \end{proof}
 
-\begin{proof}[Proof of Proposition \ref{cl5}]
-    We show this by using the duality of the optimization problem. We first consider the primal problem:
-    
-    \begin{align*}
-        \min_{\gamma} \frac{1}{2}\gamma^T\Omega\gamma \text{ st } V^T\gamma = \zeta^\star
-    \end{align*}
-    
-    The Lagrangian is
-    
-    \begin{align*}
-        \mathcal{L}(\gamma, \beta) = \frac{1}{2}\gamma^T\Omega\gamma - (V^T\gamma - \zeta^\star)^T\beta
-    \end{align*}
-    
-    Taking the first order conditions with respect to $\gamma$ implies that the minimizer $\hat{\gamma}$ satisfies:
-    
-    \begin{align*}
-        \hat{\gamma} = \Omega^{-1}V\beta
-    \end{align*}
 
-    We can then define the dual problem $q(\beta)$:
+\begin{proof}[Proof of Proposition \ref{cl56}]
+
+    To show that $\gamma^*$ solves (\ref{eqn:a1.2}), we first observe that it is a feasible solution, by definition of $Q$. The result can then be proven by contradiction: if $\gamma^*$ is feasible but does not solve (\ref{eqn:a1.2}), then a feasible $\tilde{\gamma}$ must exist with lower objective value. Then for some convex combination $\gamma_\lambda = \lambda \tilde{\gamma} + (1-\lambda)\gamma^*$ with $\lambda > 0$, we can show that that $\gamma_\lambda$ is both feasible for (\ref{eqn:a1.1}), and has lower objective value than $\gamma^*$:
+    \begin{enumerate}
+        \item     To establish that $\gamma_\lambda$ is feasible, we observe that $\tilde{\gamma}$ is feasible for (\ref{eqn:a1.2}). This implies that if $\gamma^*_i=0$, then $\tilde{\gamma}_i=0$ as well; as a result, there exists $\lambda > 0$ such that the convex combination $\gamma_\lambda$ satisfies $\gamma_\lambda \geq 0$ and hence is feasible for (\ref{eqn:a1.1}).
+    \item     To show that this $\gamma_\lambda$ has lower objective value than $\gamma^*$, we observe that if $\tilde{\gamma}$ has lower objective value than $\gamma^*$, then by strict convexity of the objective any convex combination with $\lambda > 0$ must have lower objective value than $\gamma^*$ as well.
+    \end{enumerate}
+    This shows that if $\gamma^*$ is not optimal for (\ref{eqn:a1.2}), then it is not optimal for (\ref{eqn:a1.1}) either. But as $\gamma^*$ is the optimal solution to (\ref{eqn:a1.1}), this is a contradiction; hence by taking the contrapositive it follows that $\gamma^*$ must solve (\ref{eqn:a1.2}).
+    
+To show \eqref{eqn:a1.3}, we observe that \eqref{eqn:a1.2} can be written as
+
+\[ \min_{\gamma_Q} \gamma_Q^T \Omega_Q \gamma_Q \quad \text{subject to} \quad Z_Q \gamma_Q = v \ \text{ and } \ {\bf 1}^T \gamma_Q = 1,\] 
+which can be rewritten as
+
+\[ \min_{\gamma_Q} \gamma_Q^T \Omega_Q \gamma_Q \quad \text{subject to} \quad \left[ \begin{array}{c} Z_Q - \mu {\bf 1}^T\\ {\bf 1}^T \end{array}\right] \gamma_Q = \left[\begin{array}{c} v - \mu & 1 \end{array}\right],\] 
+where we have subtracted $\mu{\bf 1}^T \gamma_Q$ (which equals $\mu$) from both sides of the constraint. This is a least norm problem, and when feasible has solution
+
+\begin{equation}\label{eq:a1.least_norm}
+ \gamma_Q^* = \Omega^{-1}_Q A^T (A\Omega^{-1}_QA^T)^{-1} b,
+\end{equation}
+where $A = \left[ \begin{array}{c} Z_Q - \mu {\bf 1}^T\\ {\bf 1}^T \end{array}\right]$ and $b = \left[\begin{array}{c} v - \mu & 1 \end{array}\right]$. As $(Z_{Q} - \mu{\bf 1}^T)\Omega_Q^{-1} {\bf 1} = 0$, it follows that $A\Omega^{-1}A^T$ is block diagonal
+
+\[ A\Omega_Q^{-1}A^T = \left[\begin{array}{cc} (Z_Q - \mu)\Omega_Q^{-1} (Z_Q- \mu)^T & 0  \\ 0 & {\bf 1}^T \Omega^{-1}{\bf 1}\end{array}\right], \]
+so that plugging into \eqref{eq:a1.least_norm} yields
+ \begin{equation*}
+ \gamma^*_{Q} = \Omega_{Q}^{-1} (Z_{Q} - \mu)^T\left[ (Z_Q - \mu) \Omega_{Q}^{-1} (Z_Q - \mu)\right]^{-1} (v - \mu) + \frac{\Omega^{-1}_Q {\bf 1} }{{\bf 1}^T \Omega^{-1}_Q {\bf 1}},
+ \end{equation*}
+proving the result.
+
+\end{proof}    
+    
+
+\begin{proof}[Proof of Proposition \ref{cl7}]
+   It can be seen that the derivation of \eqref{eqn:sbwregcalerror} holds for the H-SBW weights $\hat{\gamma}^{hsbw}$, and by similar steps it can be shown that 
     
     \begin{align*}
-        q(\beta) = -\frac{1}{2}(V\beta)^T\Omega^{-1}(V\beta) + \zeta^\star^T\beta
+        \hat{\psi}^{1, hsbw}_0 - \psi^1_0 = \sum_{sc: A_{sc} = 1}\hat{\gamma}^{hsbw}_{sc}(X_{sc} - \tilde{X}_{sc}^\star)^T\beta_1
     \end{align*}
-    
-    We can then solve for $\min_{\beta} -q(\beta)$ by taking the first order conditions with respect to $\beta$ and solving for the minimizer $\hat{\beta}$. This yields:
-    
-    \begin{align*}
-        & V^T\Omega^{-1}V\beta = \zeta^\star \\
-        &\implies \hat{\beta} = (V^T\Omega^{-1}V)^{-1}\zeta^\star
-    \end{align*}
-    
-    By strong duality the dual problem which minimizes $-q(\beta)$ is equivalent to the primal problem. Given $\hat{\beta}$, we then see that $\hat{\gamma}$ satisfies:
-    
-    \begin{align*}
-        \hat{\gamma} &= \Omega^{-1}V(V^T\Omega^{-1}V)^{-1}\zeta^\star \\
-        &= (\zeta^\star^T(V^T\Omega^{-1}V)^{-1}V^T\Omega^{-1})^T
-    \end{align*}
-    
-    These are simply the GLS weights, thus concluding the proof.
+Conditional on $W$, $\hat{\gamma}_{sc}$ is fixed and $X_{sc} - \tilde{X}_{sc}^*$ equals $X_{sc} - \mathbb{E}[X_{sc}|W, A=1]$ which has mean zero, proving the result.
 \end{proof}
 
+% \begin{proof}[Proof of Proposition \ref{cl5}]
+%     We show this by using the duality of the optimization problem. We first consider the primal problem:
+    
+%     \begin{align*}
+%         \min_{\gamma} \frac{1}{2}\gamma^T\Omega\gamma \text{ st } V^T\gamma = \zeta^\star
+%     \end{align*}
+    
+%     The Lagrangian is
+    
+%     \begin{align*}
+%         \mathcal{L}(\gamma, \beta) = \frac{1}{2}\gamma^T\Omega\gamma - (V^T\gamma - \zeta^\star)^T\beta
+%     \end{align*}
+    
+%     Taking the first order conditions with respect to $\gamma$ implies that the minimizer $\hat{\gamma}$ satisfies:
+    
+%     \begin{align*}
+%         \hat{\gamma} = \Omega^{-1}V\beta
+%     \end{align*}
 
-\begin{proof}[Proof of Proposition \ref{cl6}]
-We assume $\zeta$ and $Z$ are fixed inputs and that exact balancing weights are feasible. Define $\hat{\gamma}^{gsbw}(Z)$ as the general SBW weights that exactly balance $Z$ to $\zeta$ for some input covariate matrix $Z$ and positive definite covariance matrix $\Omega$. We begin by proving Lemma~\ref{lemma:a1}.
+%     We can then define the dual problem $q(\beta)$:
+    
+%     \begin{align*}
+%         q(\beta) = -\frac{1}{2}(V\beta)^T\Omega^{-1}(V\beta) + \zeta^\star^T\beta
+%     \end{align*}
+    
+%     We can then solve for $\min_{\beta} -q(\beta)$ by taking the first order conditions with respect to $\beta$ and solving for the minimizer $\hat{\beta}$. This yields:
+    
+%     \begin{align*}
+%         & V^T\Omega^{-1}V\beta = \zeta^\star \\
+%         &\implies \hat{\beta} = (V^T\Omega^{-1}V)^{-1}\zeta^\star
+%     \end{align*}
+    
+%     By strong duality the dual problem which minimizes $-q(\beta)$ is equivalent to the primal problem. Given $\hat{\beta}$, we then see that $\hat{\gamma}$ satisfies:
+    
+%     \begin{align*}
+%         \hat{\gamma} &= \Omega^{-1}V(V^T\Omega^{-1}V)^{-1}\zeta^\star \\
+%         &= (\zeta^\star^T(V^T\Omega^{-1}V)^{-1}V^T\Omega^{-1})^T
+%     \end{align*}
+    
+%     These are simply the GLS weights, thus concluding the proof.
+% \end{proof}
 
-Now define $\hat{\theta}_{sc} = \mathds{1}(\hat{\gamma}_{sc}^{gsbw} > 0)$ and let $Z_{\hat{\theta} = 1} = \{Z_{sc}: \hat{\theta}_{sc} = 1\}$. Let $\hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1})$ be the minimizer of $f(\gamma)$ across $\Gamma(Z_{\hat{\theta} = 1}, \zeta, 0)$. Notice that $f(\gamma)$ is now implicitly defined with respect to the covariance matrix on the subset $Z_{\hat{\theta} = 1}$, which we denote $\Omega_{Z_1}$. 
 
-We define a length $n_1$ version of this same vector $\hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1})^\star$ that equals 0 if $\hat{\theta}_{sc}(Z) = 0$ and equals $\hat{\gamma}^{gsbw}_{sc}(Z_{\hat{\theta} = 1})$ if $\hat{\theta}_{sc} = 1$. Similarly, define $\hat{\gamma}^{gsbw}_{\hat{\theta} = 1}(Z)$ as the subset of the general SBW weights obtained on the full dataset that are strictly positive (i.e. where $\hat{\theta} = 1$).
+% \begin{proof}[Proof of Proposition \ref{cl6}]
 
-We first assert that $\hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1})^\star  = \hat{\gamma}^{gsbw}(Z)$.
+% We assume $\zeta$ and $Z$ are fixed inputs and that exact balancing weights are feasible. Define $\hat{\gamma}^{gsbw}(Z)$ as the general SBW weights that exactly balance $Z$ to $\zeta$ for some input covariate matrix $Z$ and positive definite covariance matrix $\Omega$. We begin by proving Lemma~\ref{lemma:a1}.
 
-First, observe that 
+% Now define $\hat{\theta}_{sc} = \mathds{1}(\hat{\gamma}_{sc}^{gsbw} > 0)$ and let $Z_{\hat{\theta} = 1} = \{Z_{sc}: \hat{\theta}_{sc} = 1\}$. Let $\hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1})$ be the minimizer of $f(\gamma)$ across $\Gamma(Z_{\hat{\theta} = 1}, \zeta, 0)$. Notice that $f(\gamma)$ is now implicitly defined with respect to the covariance matrix on the subset $Z_{\hat{\theta} = 1}$, which we denote $\Omega_{Z_1}$. 
 
-\begin{align*}
-\sum_{sc: A_{sc} = 1}\hat{\gamma}_{sc}^{gsbw}(Z) Z_{sc} = \sum_{sc: A_{sc} = 1}\hat{\gamma}^{gsbw}_{sc}(Z_{\hat{\theta} = 1})^\star Z_{sc} = \zeta \end{align*}
+% We define a length $n_1$ version of this same vector $\hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1})^\star$ that equals 0 if $\hat{\theta}_{sc}(Z) = 0$ and equals $\hat{\gamma}^{gsbw}_{sc}(Z_{\hat{\theta} = 1})$ if $\hat{\theta}_{sc} = 1$. Similarly, define $\hat{\gamma}^{gsbw}_{\hat{\theta} = 1}(Z)$ as the subset of the general SBW weights obtained on the full dataset that are strictly positive (i.e. where $\hat{\theta} = 1$).
 
-Additionally, 
+% We first assert that $\hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1})^\star  = \hat{\gamma}^{gsbw}(Z)$.
 
-\begin{align*}
- \sum_{sc: \hat{\theta}_{sc} = 1}\hat{\gamma}_{sc}^{gsbw}(Z) Z_{sc} = \sum_{sc: \hat{\theta}_{sc} = 1}\hat{\gamma}_{sc}^{gsbw}(Z_{\hat{\theta} = 1}) Z_{sc} = \zeta   
-\end{align*}
+% First, observe that 
 
-Finally, note both vectors also satisfy the summing to one constraint. Therefore both vectors therefore satisfy the balance constraints on the set on the input datasets $Z$ and $Z_{\hat{\theta} = 1}$. 
+% \begin{align*}
+% \sum_{sc: A_{sc} = 1}\hat{\gamma}_{sc}^{gsbw}(Z) Z_{sc} = \sum_{sc: A_{sc} = 1}\hat{\gamma}^{gsbw}_{sc}(Z_{\hat{\theta} = 1})^\star Z_{sc} = \zeta \end{align*}
 
-Assume that $\hat{\gamma}^{gsbw}(Z)'\Omega\hat{\gamma}^{gsbw}(Z) > \hat{\gamma}^{gsbw}(Z_{\hat{\theta} - 1})^\star \Omega\hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1})^\star$. But this implies that $\hat{\gamma}^{gsbw}(Z)$ is not the minimizer of $f(\gamma)$ across $\Gamma(Z, \zeta, 0)$, which is a contradiction. 
+% Additionally, 
 
-Assume instead that $\hat{\gamma}^{gsbw}(Z)'\Omega\hat{\gamma}^{gsbw}(Z) < \hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1})^\star \Omega\hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1})^\star$. By definition, $\hat{\gamma}^{gsbw}_{sc}(Z) = 0 \implies \hat{\gamma}^{gsbw}_{sc}(Z_{\hat{\theta} = 1}) = 0$; therefore 
+% \begin{align*}
+%  \sum_{sc: \hat{\theta}_{sc} = 1}\hat{\gamma}_{sc}^{gsbw}(Z) Z_{sc} = \sum_{sc: \hat{\theta}_{sc} = 1}\hat{\gamma}_{sc}^{gsbw}(Z_{\hat{\theta} = 1}) Z_{sc} = \zeta   
+% \end{align*}
 
-\begin{align*}
-\hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1})^\star^T\Omega\gamma^{gsbw}(Z_{\hat{\theta} = 1})^\star &= \hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1})^T\Omega_{Z_1}\hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1}) \\
-&> \hat{\gamma}^{gsbw}(Z)^T\Omega\hat{\gamma}^{gsbw}(Z) \\
-&= \hat{\gamma}^{gsbw}_{\hat{\theta} = 1}^T\Omega_{Z_1}\hat{\gamma}^{gsbw}_{\hat{\theta} = 1}    
-\end{align*}
+% Finally, note both vectors also satisfy the summing to one constraint. Therefore both vectors therefore satisfy the balance constraints on the set on the input datasets $Z$ and $Z_{\hat{\theta} = 1}$. 
 
-This implies that $\hat{\gamma}^{gsbw}_{\hat{\theta} = 1}$ would be the minimizer of the criterion on the set $\Gamma(Z_{\hat{\theta} = 1}, \zeta, 0)$, which is again a contradiction. Therefore the non-zero weights of $\hat{\gamma}^{gsbw}(Z)$ and $\hat{\gamma}^{gsbw}(Z_{\hat{\theta} =1})$ must be equivalent.
+% Assume that $\hat{\gamma}^{gsbw}(Z)'\Omega\hat{\gamma}^{gsbw}(Z) > \hat{\gamma}^{gsbw}(Z_{\hat{\theta} - 1})^\star \Omega\hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1})^\star$. But this implies that $\hat{\gamma}^{gsbw}(Z)$ is not the minimizer of $f(\gamma)$ across $\Gamma(Z, \zeta, 0)$, which is a contradiction. 
 
-Finally, let $V = (1, Z)$ and define the GLS weights as in Proposition~\ref{cl5}. By construction we know that a generic SBW solution satisfying $\hat{\gamma}_{sc}^{gsbw} > 0$ for all elements is feasible on the subset $Z_{\hat{\theta} = 1}$. We can invoke Lemma~\ref{lemma:a1} to conclude that $\hat{\gamma}^{gls}(Z_{\hat{\theta} = 1}, \zeta) = \hat{\gamma}^{gsbw}(Z, \zeta, 0)$, which are equivalent to the non-zero elements of $\hat{\gamma}^{gls}(Z)$. 
-\end{proof}
+% Assume instead that $\hat{\gamma}^{gsbw}(Z)'\Omega\hat{\gamma}^{gsbw}(Z) < \hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1})^\star \Omega\hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1})^\star$. By definition, $\hat{\gamma}^{gsbw}_{sc}(Z) = 0 \implies \hat{\gamma}^{gsbw}_{sc}(Z_{\hat{\theta} = 1}) = 0$; therefore 
+
+% \begin{align*}
+% \hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1})^\star^T\Omega\gamma^{gsbw}(Z_{\hat{\theta} = 1})^\star &= \hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1})^T\Omega_{Z_1}\hat{\gamma}^{gsbw}(Z_{\hat{\theta} = 1}) \\
+% &> \hat{\gamma}^{gsbw}(Z)^T\Omega\hat{\gamma}^{gsbw}(Z) \\
+% &= \hat{\gamma}^{gsbw}_{\hat{\theta} = 1}^T\Omega_{Z_1}\hat{\gamma}^{gsbw}_{\hat{\theta} = 1}    
+% \end{align*}
+
+% This implies that $\hat{\gamma}^{gsbw}_{\hat{\theta} = 1}$ would be the minimizer of the criterion on the set $\Gamma(Z_{\hat{\theta} = 1}, \zeta, 0)$, which is again a contradiction. Therefore the non-zero weights of $\hat{\gamma}^{gsbw}(Z)$ and $\hat{\gamma}^{gsbw}(Z_{\hat{\theta} =1})$ must be equivalent.
+
+% Finally, let $V = (1, Z)$ and define the GLS weights as in Proposition~\ref{cl5}. By construction we know that a generic SBW solution satisfying $\hat{\gamma}_{sc}^{gsbw} > 0$ for all elements is feasible on the subset $Z_{\hat{\theta} = 1}$. We can invoke Lemma~\ref{lemma:a1} to conclude that $\hat{\gamma}^{gls}(Z_{\hat{\theta} = 1}, \zeta) = \hat{\gamma}^{gsbw}(Z, \zeta, 0)$, which are equivalent to the non-zero elements of $\hat{\gamma}^{gls}(Z)$. 
+% \end{proof}
+
