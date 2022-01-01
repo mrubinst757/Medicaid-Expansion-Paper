@@ -1,19 +1,86 @@
-\section{Summary Statistics}\label{app:sumstats}
+\section{Summary Statistics and Covariates}\label{app:sumstats}
 
-In this section we display summary statistics about the dataset. In Table~\ref{tab:txassign} we list the states that are in each group: the first two columns include the treatment states and control states in our primary analysis. The third column lists the treatment states for our sensitivity analysis that excludes ``early expansion'' states. The final column indicates states that were always excluded from the analysis. Table~\ref{tab:summarytab1} displays univariate summary statistics for the treated CPUMAs. We display the mean, interquartile range, and the range (as defined by the maximum value minus the minimum value) for the unadjusted dataset, the heterogeneous adjustment, and the homogeneous adjustment. We see that in general the covariate adjustments reduce the variability in the data. Table~\ref{tab:extreme1} displays the overall number of CPUMAs whose adjusted values fall outside of the range of the unadjusted data. We also calculate these adjustments when leaving out each state one at a time from the primary dataset to calculate our secondary variance estimates; these results are available on request. 
+In this section we display summary statistics about the CPUMA-level datasets, and additional details about how we derive our initial (unadjusted) covariate estimates. The first two tables pertain to treatment assignment classifications within the dataset. Table~\ref{tab:txassign} lists the states that are in each group: the first two columns include the treatment states and control states in our primary analysis. The third column lists the treatment states for our sensitivity analysis that excludes ``early expansion'' states. The final column indicates states that were always excluded from the analysis. Table~\ref{tab:cpumasperstate} displays the total number of CPUMAs per state, as well as a column reiterating the state's treatment assignment and whether it was an early expansion state.
 
+The following tables display summary information about the expansion state data and the covarite adjustments detailed in Appendix~\ref{app:adjustmentdetails}. Table~\ref{tab:summarytab1} displays univariate summary statistics for the treated CPUMAs. We display the mean, interquartile range, and the range (as defined by the maximum value minus the minimum value) for the unadjusted dataset, the heterogeneous adjustment, and the homogeneous adjustment. We see that in general the covariate adjustments reduce the variability in the data. Table~\ref{tab:extreme1} displays the overall number of CPUMAs whose adjusted values fall outside of the range of the unadjusted data. We also calculate these adjustments when leaving out each state one at a time from the primary dataset to calculate our secondary variance estimates; these results are available on request. We conclude by providing more extensive details on how we derive CPUMA-level estimates from the ACS microdata.
 
 \begin{table}[h!]
 \centering
 \caption{Treatment assignment classification}\label{tab:txassign}
-\begin{tabular}{llll}
-\begin{tabularx}{\textwidth}{|X|X|X|X|}
+%\begin{tabular}
+\begin{tabularx}{\textwidth}{|X|X|X|X|}  \hline
+Treated states & Control states & Treated states (early expansion excluded$^\textrm{b}$) & Always excluded \\
   \hline
-Treated states & Control states & Treated states (early expansion excluded) & Always excluded \\
-  \hline
-AR, AZ, CA, CO, CT, HI, IA, IL, KY, MD, MI, MN, ND, NJ, NM, NV, OH, OR, RI, WA, WV & AK, AL, FL, GA, ID, IN, KS, LA, ME, MO, MS, MT, NC, NE, OK, PA, SC, SD, TN, TX, UT, VA, WI, WY & AR, AZ, CO, HI, IA, IL, KY, MD, MI, ND, NM, NV, OH, OR, RI, WV & DE, MA, NH, NY, VT, DC \\ 
+AR, AZ, CA, CO, CT, HI, IA, IL, KY, MD, MI$^\textrm{a}$, MN, ND, NJ, NM, NV, OH, OR, RI, WA, WV & AK, AL, FL, GA, ID, IN, KS, LA, ME, MO, MS, MT, NC, NE, OK, PA, SC, SD, TN, TX, UT, VA, WI, WY & AR, AZ, CO, HI, IA, IL, KY, MD, MI, ND, NM, NV, OH, OR, RI, WV & DE$^\textrm{d}$, MA$^\textrm{d}$, NH$^\textrm{c}$, NY$^\textrm{d}$, VT^$^\textrm{d}$, DC$^\textrm{d}$ \\ 
    \hline
 \end{tabularx}
+     \vspace{1ex}
+
+     {\raggedright $^\textrm{a}$ Expanded April 2014 \par \\
+    \raggedright $^\textrm{b}$ Excludes CA, CT, MN, NJ, WA \par \\
+     \raggedright $^\textrm{c}$ Expanded September 2014; included for adjustment estimates but not as a possible weight donor \par \\
+    \raggedright $^\textrm{d}$ Comparable coverage policies prior to 2014 \par}
+%\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Number of CPUMAs per state}\label{tab:cpumasperstate}
+\begin{tabular}{lllrl}
+  \hline
+State Full & State & Treatment & Number CPUMAs & Early Expansion \\ 
+  \hline
+Delaware & DE & Excluded &   4 & No \\ 
+  Massachusetts & MA & Excluded &  15 & No \\ 
+  New York & NY & Excluded & 123 & No \\ 
+  Vermont & VT & Excluded &   4 & No \\ 
+  Arizona & AZ & Expansion &  11 & No \\ 
+  Arkansas & AR & Expansion &  15 & No \\ 
+  Colorado & CO & Expansion &  15 & No \\ 
+  Hawaii & HI & Expansion &   8 & No \\ 
+  Illinois & IL & Expansion &  47 & No \\ 
+  Iowa & IA & Expansion &   7 & No \\ 
+  Kentucky & KY & Expansion &  23 & No \\ 
+  Maryland & MD & Expansion &  36 & No \\ 
+  Michigan & MI & Expansion &  44 & No \\ 
+  Nevada & NV & Expansion &   7 & No \\ 
+  New Hampshire & NH & Expansion &   4 & No \\ 
+  New Mexico & NM & Expansion &   6 & No \\ 
+  North Dakota & ND & Expansion &   2 & No \\ 
+  Ohio & OH & Expansion &  44 & No \\ 
+  Oregon & OR & Expansion &  17 & No \\ 
+  Rhode Island & RI & Expansion &   6 & No \\ 
+  West Virginia & WV & Expansion &   4 & No \\ 
+  California & CA & Expansion & 110 & Yes \\ 
+  Connecticut & CT & Expansion &  22 & Yes \\ 
+  Minnesota & MN & Expansion &  27 & Yes \\ 
+  New Jersey & NJ & Expansion &  38 & Yes \\ 
+  Washington & WA & Expansion &  22 & Yes \\ 
+  Alabama & AL & Non-expansion &  18 & No \\ 
+  Alaska & AK & Non-expansion &   4 & No \\ 
+  Florida & FL & Non-expansion &  59 & No \\ 
+  Georgia & GA & Non-expansion &  20 & No \\ 
+  Idaho & ID & Non-expansion &   1 & No \\ 
+  Indiana & IN & Non-expansion &  24 & No \\ 
+  Kansas & KS & Non-expansion &   9 & No \\ 
+  Louisiana & LA & Non-expansion &  15 & No \\ 
+  Maine & ME & Non-expansion &   5 & No \\ 
+  Mississippi & MS & Non-expansion &   7 & No \\ 
+  Missouri & MO & Non-expansion &  16 & No \\ 
+  Montana & MT & Non-expansion &   1 & No \\ 
+  Nebraska & NE & Non-expansion &  11 & No \\ 
+  North Carolina & NC & Non-expansion &  27 & No \\ 
+  Oklahoma & OK & Non-expansion &   8 & No \\ 
+  Pennsylvania & PA & Non-expansion &  55 & No \\ 
+  South Carolina & SC & Non-expansion &  10 & No \\ 
+  South Dakota & SD & Non-expansion &   1 & No \\ 
+  Tennessee & TN & Non-expansion &  28 & No \\ 
+  Texas & TX & Non-expansion &  49 & No \\ 
+  Utah & UT & Non-expansion &   8 & No \\ 
+  Virginia & VA & Non-expansion &  15 & No \\ 
+  Wisconsin & WI & Non-expansion &  21 & No \\ 
+  Wyoming & WY & Non-expansion &   2 & No \\ 
+   \hline
 \end{tabular}
 \end{table}
 
@@ -106,7 +173,23 @@ Age: 19-29 Pct & 0 & 0 \\
 \end{tabular}
 \end{table}
 
-Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset (including both treated and untreated units). We caution that these point estimates may be biased due to the measurement error in the covariates. Nevertheless, this matrix is useful for at least two reasons: first, assuming the correlations among the treated and untreated units are similar, the more heavily correlated the data the easier it should be to attain covariate balance (see, e.g., \cite{d2021overlap}). This matrix helps give a general sense of how correlated the data are, even if the estimates are biased. Second, these correlations can suggest potential confounders by revealing which variables are most heavily associated with treatment assignment and the pre-treatment outcomes. For example, we see that Republican governance is strongly associated with treatment, and somewhat associated with pre-treatment outcomes. We can also examine associations between the variables and pre-treatment outcomes to get a sense of which variables may be important to the outcome model: for example, we see strong associations between the pre-treatment uninsurance rates, though they are more weakly associated with treatment assignment. 
+Table~\ref{tab:timetrends} displays the trends in the outcome over time by treatment group. We use these estimates to compute the difference-in-differences estimator of the ETT in note \ref{footnote_did}. 
+
+\begin{table}[ht]
+\centering
+\caption{Mean uninsurance rates over time}\label{tab:timetrends}
+\begin{tabular}{lrrrrrr}
+  \hline
+Treatment Group & 2009 & 2010 & 2011 & 2012 & 2013 & 2014 \\ 
+  \hline
+Non-expansion & 21.84 & 22.97 & 22.72 & 22.41 & 22.01 & 19.07 \\ 
+  Expansion (primary) & 19.52 & 20.20 & 19.63 & 19.42 & 19.01 & 14.02 \\ 
+  Expansion (early excluded) & 19.40 & 20.08 & 19.21 & 19.01 & 18.55 & 13.64 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset (including both treated and untreated units). We caution that these point estimates may be biased due to the measurement error in the covariates. Nevertheless, this matrix is useful for at least two reasons: first, assuming the correlations among the treated and untreated units are similar, the more heavily correlated the data the easier it should be to attain covariate balance (see, e.g., \cite{d2021overlap}). This matrix gives a general sense of how correlated the data are, even if the estimates are biased. Second, these correlations can suggest potential confounders by revealing which variables are most heavily associated with treatment assignment and the pre-treatment outcomes. For example, the plot shows a strong association between Republican governance and treatment, and a smaller association with pre-treatment outcomes. We can also examine associations between the variables and pre-treatment outcomes to get a sense of which variables may be important to the outcome model: for example, the plot shows strong associations between the pre-treatment uninsurance rates, though they are more weakly associated with treatment assignment. 
 
 \begin{figure}[h!]
 \begin{center}
@@ -115,5 +198,7 @@ Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for 
     \includegraphics[scale=0.25]{01_Plots/correlation-plot-c1-sigma-zero.png}
 \end{center}
 \end{figure}
+
+We conclude by detailing our initial (unadjusted) covariate estimation procedure using the ACS microdata. Because we are ultimately interested in calculating rates, each variable includes both numerator and denominator counts. For each CPUMA we estimate: the total non-elderly adult population for each year 2011-2014; the total labor force population (among non-elderly adults) for each year 2011-2013; and the total number of households averaged from 2011-2013. We also construct an average of the total non-elderly adult population from 2011-2013. These are our denominator variables. For our numerator counts, we estimate the total number of: females; whites; people of Hispanic ethnicity; people born outside of the United States; citizens; people with disabilities; married individuals; students; people with less than a high school education, high school degrees, some college, or college graduates or higher; people living under 138 percent of the FPL, between 139 and 299 percent, 300 and 499 percent, more than 500 percent, and who did not respond to the income survey question; people aged 19-29, 30-39, 40-49, 50-64; households with one, two, or three or more children, and households that did not respond about the number of children. We average these estimated counts from 2011-2013. For each individual year from 2011-2013, we then estimate the total number of people who were unemployed and uninsured at the time of the survey (calculated among all non-elderly adults and all non-elderly adults within the labor force, respectively). We divide the numerator totals by the corresponding denominator totals to estimate the percentage in each category. For the demographics, these include the average number of non-elderly adults from 2011-2013. For the time-varying variables, we use the corresponding year (where uninsurance rates are calculated as a fraction of the labor force rather than the non-elderly adult population). We also calculate the average non-elderly adult population growth and the average number of households to adults across 2011-2013. 
 
 \clearpage

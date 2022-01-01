@@ -23,10 +23,10 @@ where $\Omega$ is a block-diagonal matrix representing the equicorrelation struc
 
 \begin{align*}
     \Omega = \begin{pmatrix}
-    \Omega_1 & 0 & 0 &, ... ,& 0 \\
-    0 & \Omega_2 & 0 & , ..., & 0 \\
-    & & , ..., & & \\
-    0 & 0 & 0, ..., & \Omega_{M_1} 
+    \Omega_1 & 0 & 0 & ... & 0 \\
+    0 & \Omega_2 & 0 &  ...  & 0 \\
+    & & ...  & & \\
+    0 & 0 & 0 &, ..., & \Omega_{M_1} 
     \end{pmatrix}
 \end{align*}
 
@@ -56,9 +56,25 @@ We next generate our noisy outcome and covariate estimates $(J, W)$:
     \end{pmatrix}
 \end{align*}
 
-We allow $\sigma^2_{\nu, sc}$ to either be constant or a function of the sample size of an underlying survey that generates the estimate. In the latter case we simulate these sample sizes $r_{sc} \stackrel{iid}\sim Unif(300, 2300)$. Let $R_{sc}$ be a 3x3 diagonal matrix with diagonal elements $r_{sc}$. Let $\sigma_{\nu}^{2\star}$ be defined as the limit as $m_1 \to \infty$ of $n_1^{-1}\sum_{sc}\sigma^2_{\nu, sc}$. Let $\tau = \sigma^2_x/\sigma^2_w$. We fix a value $\sigma_{\nu}^{2\star}$ so that that as $m_1 \to \infty$, $n_1^{-1} \tau \sum_{sc}\frac{\sigma^2_{\nu, sc}}{r_{sc}} \to^p \sigma^2_{\nu}$. In other words, $\sigma_{\nu}^2$ represents the common variance that generate all errors in the ``heterogeneous adjustment'' model. 
+We allow $\sigma^2_{\nu, sc}$ to either be constant or a function of the sample size of an underlying survey that generates the estimate. In the latter case we simulate these sample sizes $r_{sc} \stackrel{iid}\sim Unif(300, 2300)$. We then generate $\sigma_{\nu, sc}$ from the common variance model assumed in the ``heterogeneous adjustment:''
 
-Define $\rho^\star = \sigma^2_{\varepsilon}/(\sigma^2_{\epsilon} + \sigma^2_{\varepsilon} + \sigma^2_{\nu})$. $\rho^\star$ represents the within-state correlation of the outcome model errors given the true covariates $X$, but including the measurement errors in the outcome. We fix this to be 0.25 for our primary simulation results.
+\begin{align*}
+    \sqrt{r_{sc}}\sigma^2_{\nu, sc} \stackrel{iid}\sim N(0, \sigma^2_{\nu}^\star)
+\end{align*}
+%
+where $\sigma_{\nu}^\star$ represents the common variance under this model. We then define $\sigma_{\nu}^2$ as follows:
+
+\begin{align*}
+     n_1^{-1}\sum_{sc}\sigma^2_{\nu, sc} \to^p \sigma_{\nu}^2
+\end{align*}
+
+\begin{align*}
+    \tau = \sigma^2_x/(\sigma^2_x + \sigma^2_{\nu})
+\end{align*}
+
+Throughout our simulations, we fix a $\tau$ and then calculate the $\sigma_\nu^{2\star}$ that satisfies that $\tau$. Given $\tau$, $\sigma_{\nu}^{2\star}$, and $r_{sc}$, we then calculate $\sigma_{\nu, sc}$ for each CPUMA.
+
+Define $\rho^\star = \sigma^2_{\varepsilon}/(\sigma^2_{\epsilon} + \sigma^2_{\varepsilon} + \sigma^2_{\nu})$. $\rho^\star$ represents the within-state correlation of the outcome model errors given the true covariates $X$, but including the measurement errors in the outcome. We fix this to be 0.25 for our primary simulation results. We sometimes refer to $\rho^\star$ as the ``optimal rho'', but caveat that when the covariates are measured with error, the true optimal rho will be stricly less than this value. This is due to the contribution of additional terms in the variance from the noisy covariate measurements, and these errors are independent across units.
 
 We then consider all 18 combinations of the following parameters:
 
@@ -68,26 +84,24 @@ We then consider all 18 combinations of the following parameters:
     \item $\tau \in \{0.85, 0.9, 0.95\}$
 \end{itemize}
 
-For each parameterization we take 500 random samples of size $m_1 = 25$ states (and $n_1$ total CPUMAs) and estimate a series of H-SBW weights that set $\delta = 0$ and the target $\upsilon_0 = (1, 1, 1)$. Let $\rho$ denote the assumed $\rho^\star$ in the H-SBW objective.\footnote{In the setting with measurement error in the covariates $\rho^\star$ there are additional error terms due to this measurement error and so the optimal $\rho$ for the H-SBW objective will be strictly less than $\rho^\star$ (since the measurement errors are always drawn independently across units).} We generate weights for all combinations of input datasets $Z$ and correlation-parameters $\rho$:
+For each parameterization we take 500 random samples of size $m_1 = 25$ states (with $n_1$ total CPUMAs). For each sample we estimate a series of H-SBW weights that set $\delta = 0$ and the target $\upsilon_0 = (1, 1, 1)$. Let $\rho$ denote the assumed $\rho^\star$ in the H-SBW objective. We generate weights for all combinations of input datasets $Z$ and correlation-parameters $\rho$:
 
 \begin{itemize}
-    \item Z \in \{$W_{A=1}$, $X_{A=1}$, $\hat{X}_{A=1}^{hom}$, $\hat{X}_{A=1}^{hom}$, $\hat{X}_{A=1}^{cor}$\}
+    \item Z \in \{$W$, $X$, $\hat{X}^{hom}$, $\hat{X}^{hom}$, $\hat{X}^{cor}$\}
     \item $\rho \in \{0, 0.25, 0.5\}$
 \end{itemize}
 
-We then estimate the variance for each estimator using the leave-one-state-out jackknife, described in Section~\ref{sec:methods}. 
+We estimate the variance for each estimator using the leave-one-state-out jackknife, described in Section~\ref{sec:methods}. 
 
 Note: for $\hat{\kappa}$ we use the empirical covariance matrix of $W$, the estimated means $\bar{W}$, and $\hat{\Sigma}_{\nu, sc}$, where we draw $\hat{\Sigma}_{\nu, sc}$ from $\Sigma_{\nu, sc} + N(0, 0.001*n_1*I_d)$. In other words, when averaged together we assume that $\hat{\Sigma}_{\nu}$ have a fairly precise estimate of $\Sigma_{\nu}$.
 
 \subsection{Selected results}
 
-We present the results where the measurement error variances are heterogeneous (that is, the ``heterogeneous adjustment'' model is correct). The results for the homoskedastic measurement errors are quite similar and we note in the text where they differ. Figure~\ref{fig:simbias} displays the bias associated with each estimator. From left to right, the panels reflect different values of $\tau$ ($\sigma^2_x/\sigma^2_w)$: the left-most panels have the most measurement error while the right-most panels have the least. From top to bottom the panels reflect different values of $\rho_x$: the top-most panel has no correlation structure among the covariates, while the bottom-most panels are more highly correlated within state. Within each panel we organize the results by the input covariate set: $W$ represents the estimators generated without any covariate adjustment; $X$ reflects estimators generated on the true covariates; ``Xhat-het'' represents the heterogeneous adjustment ($\hat{X}_{A=1}^{het}$), ``Xhat-hom'' represents the homogeneous adjustment ($\hat{X}_{A=1}^{hom}$), and ``Xhat-cor'' represents the correlated adjustment ($\hat{X}_{A=1}^{cor}$). The estimators are colored by the assumed value of $\rho$ in the H-SBW objective. Across all of the present simulations, the true correlation for the outcome model ($\rho^\star$) is 0.25.
+We present the results where the measurement error variances are heterogeneous (that is, the ``heterogeneous adjustment'' model is correct). The results for the homoskedastic measurement errors are quite similar and we note in the text where they differ. Figure~\ref{fig:simbias} displays the bias associated with each estimator. From left to right, the panels reflect different values of $\tau$ ($\sigma^2_x/(\sigma^2_x + \sigma^2_{\nu}))$: the left-most panels have the most measurement error while the right-most panels have the least. From top to bottom the panels reflect different values of $\rho_x$: the top-most panel has no correlation structure among the covariates, while the bottom-most panels are more highly correlated within state. Within each panel we organize the results by the input covariate set: $W$ represents the estimators generated without any covariate adjustment; $X$ reflects estimators generated on the true covariates; ``Xhat-het'' represents the heterogeneous adjustment ($\hat{X}^{het}$), ``Xhat-hom'' represents the homogeneous adjustment ($\hat{X}^{hom}$), and ``Xhat-cor'' represents the correlated adjustment ($\hat{X}^{cor}$). The estimators are colored by the assumed value of $\rho$ in the H-SBW objective. Across all of the present simulations, the true correlation for the outcome model ($\rho^\star$) is 0.25.
 
 We highlight a few general but expected results. First, if we know the true values of $X$, we see that all of our estimators are unbiased. Second, balancing on $W$ results in bias; moreover, this bias increases as $\tau$ decreases. Third, setting $\rho > 0$ exacerbates this bias. These results are consistent with our theoretic results in Section~\ref{app:AsecI}.
 
-When attempting to mitigate this bias by using some estimate of $\mathbb{E}[X \mid W, A]$, we see that when the covariates  uncorrelated (i.e. the top set of panels), balancing on $\hat{X}_{A=1}^{hom}$, $\hat{X}_{A=1}^{het}$, or $\hat{X}_{A=1}^{cor}$ results in approximately unbiased estimates for all values of $\rho$. This aligns with our theoretic results in Appendix~\ref{app:AsecI}. We also see that when $X$ are correlated, setting $\rho > 0$ results in biased estimates for $\hat{X}_{A=1}^{het}$ or $\hat{X}_{A=1}^{hom}$; however, we still obtain approximately unbaised estimates for $\rho = 0$ (SBW). Even so the bias from H-SBW is still much less than the bias for the corresponding estimates that balance on $W$ when using $\hat{X}_{A=1}^{het}$ or $\hat{X}_{A=1}^{hom}$.
-
-%Interestingly, $\hat{X}_{A=1}^{cor}$, which unlike the other adjustments is consistent when using H-SBW with correlated data, appears to make this bias worse under the sample size considered here. In Section~\ref{appssec:simstudyresults2}, we show results verifying that this procedure is consistent as we increase $m_1$.
+When attempting to mitigate this bias by using some estimate of $\mathbb{E}[X \mid W]$, we see that when the covariates  uncorrelated (i.e. the top set of panels), balancing on $\hat{X}^{hom}$, $\hat{X}^{het}$, or $\hat{X}^{cor}$ results in approximately unbiased estimates for all values of $\rho$. This aligns with our theoretic results in Appendix~\ref{app:AsecI}. When $X$ are correlated across observations, setting $\rho > 0$ results in biased estimates for $\hat{X}^{het}$ or $\hat{X}^{hom}$, where the bias increases with $\rho$. In settings where $\rho_x = 0.25$, we see the estimators using that $\hat{X}^{cor}$ do not show this pattern, and remain approximately unbiased. However, when $\rho_x = 0.5$ these estimators exhibit more noticeable finite-sample bias. Regardless of the adjustment set, we see that these biases are still quite a bit less than the bias for the corresponding estimates that naively balance on $W$. 
 
 \begin{figure}[H]
 \begin{center}
@@ -98,11 +112,11 @@ When attempting to mitigate this bias by using some estimate of $\mathbb{E}[X \m
 \end{center}
 \end{figure}
 
-All of these simulations had heterogeneous measurement. When we examine the results when the errors are homogeneous (results not displayed but available upon request), we find that the estimators that balance on $\tilde{X}^{het}_{A=1}$ have a small bias even when $\tau = 0$ or $\rho = 0$. Assuming this model is correct when it is not appears to have some cost. This may help explain the worse performance we found when applying the heterogeneous adjustment to our validation study in Section~\ref{sec:results}.
+All of these simulations had heterogeneous measurement. When we examine the results when the errors are homogeneous (results not displayed but available upon request), we find that the estimators that balance on $\tilde{X}^{het}$ have a small bias even when $\tau = 0$ or $\rho = 0$. Assuming this model is correct when it is not appears to have some cost. This may help explain the worse performance we found when applying the heterogeneous adjustment to our validation study in Section~\ref{sec:results}.
 
-We next calculate the variance our estimators across all simulations and display these results in Figure~\ref{fig:simvar}. We find that we obtain a modest reduction in variance as we increase $\rho$. Even when $\rho$ is chosen sub-optimally (i.e. $\rho \ne 0.25$), we tend to get nearly identical improvements to choosing $\rho = 0.25$. When we consider a wider range of parameterizations of $(\rho, \rho^\star)$ in Section~\ref{appssec:simstudyresults2} we find similar results.
+We next calculate the variance our estimators across all simulations and display these results in Figure~\ref{fig:simvar}. We find that we obtain a modest reduction in variance as we increase $\rho$. Even when assumed $\rho$ is far from optimal (i.e. $\rho = 0.50$), we tend to get nearly identical improvements to choosing $\rho = 0.25$ (again noting that the optimal $\rho$ in the context of measurement error is strictly less than this value). When we consider a wider range of parameterizations of $(\rho, \rho^\star)$ in a context without measurement error (see Section~\ref{appssec:simstudyresults2}) we find similar results.
 
-%We also see that balancing on $\tilde{X}^{cor}_{A=1}$ can lead to a much more variable estimate, again suggesting a large cost to using this procedure given a small sample size.
+We also see that balancing on $\tilde{X}^{cor}$ can lead to a much more variable estimate, particularly when the covariates have larger within-state correlations. Only in the setting with uncorrelated covariates and little measurement error does the variability induced by this adjustment not appear to have a cost.
 
 \begin{figure}[H]
 \begin{center}
@@ -113,7 +127,7 @@ We next calculate the variance our estimators across all simulations and display
 \end{center}
 \end{figure}
 
-Figure~\ref{fig:simmse} displays the MSE of these estimators (we remove $\tilde{X}_{A=1}^{cor}$ since we have already seen that it has poor performance relative to the other procedures considered). We find that despite the increase in bias for H-SBW with $\hat{X}_{A=1}^{hom}$ or $\hat{X}_{A=1}^{het}$, we may still find a modest MSE reduction when using H-SBW. In particular, we see that this is more likely as the magnitude of the measurement error measurement error decreases and/or the within-state correlation decreases. Of course, more generally whether an MSE improvement is possible also depends on $\rho^\star$: if we were to set $\rho^\star = 0$, we would expect the MSE of these estimators to increase for all estimators as $\rho$ increases, even when we observe $X$ (see also Section~\ref{appssec:simstudyresults2}).
+Figure~\ref{fig:simmse} displays the MSE of these estimators. We observe that the estimators generated on $\hat{X}^{cor}$ have larger MSE, largely driven by the increase in variability we saw previously. Despite the increase in bias for H-SBW with $\hat{X}^{hom}$ or $\hat{X}^{het}$, we may still find a modest MSE reduction when using H-SBW relative to SBW. This appears more likely as the magnitude of the measurement error measurement error decreases and/or the within-state correlation decreases (i.e. moving towards the top-right of the plot). Of course, more generally whether an MSE improvement is possible also depends on $\rho^\star$: if we were to set $\rho^\star = 0$, we would expect the MSE of these estimators to increase for all estimators as $\rho$ increases, even when we observe $X$ (see also Section~\ref{appssec:simstudyresults2}). The results are similar when considering homoskedastic measurement errors, though the space where we see MSE improvements for H-SBW relative to SBW on the uncorrelated adjustments appears to increase slightly (results available on request). 
 
 \begin{figure}[H]
 \begin{center}
@@ -124,9 +138,11 @@ Figure~\ref{fig:simmse} displays the MSE of these estimators (we remove $\tilde{
 \end{center}
 \end{figure}
 
-We next evaluate the performance of the leave-one-state-out jackknife procedure and evaluate confidence interval coverage and length, and display these results in Figures~\ref{fig:simcoverage1} and ~\ref{fig:simcoverage2}. 
+We next evaluate the performance of the leave-one-state-out jackknife procedure and evaluate confidence interval coverage (for 95\% confidence intervals) and length, and display these results in Figures~\ref{fig:simcoverage1} and ~\ref{fig:simcoverage2}. 
 
-We first discuss Figure~\ref{fig:simcoverage1}. When $\rho = 0$ we find that we obtain approximately nominal coverage rates across all specifications that use $X$ or some version of $\hat{X}$. However, we fail to get even close to nominal coverage rates when balancing on $W$, even when $\tau$ is quite high. The performance of our estimates appears to deteriorate as we increase $\rho_x$, even when balancing on the true covariates. We also see that our coverage rates tend to get worse for $\hat{X}^{het}$ and $\hat{X}^{hom}$ in the settings where we found the highest bias. On the other hand, we also find that our coverage rates are often quite conservative for estimators generated on $\hat{X}$. By contrast the coverage rates are slightly less than nominal for estimators using $X$; we investigate and discuss this further in Section~\ref{appssec:simstudyresults2}. 
+We first discuss Figure~\ref{fig:simcoverage1}. When $\rho = 0$ we find that we obtain approximately nominal coverage rates across all specifications that use $X$ or some version of $\hat{X}$. However, we fail to get even close to nominal coverage rates when balancing on $W$, even when $\tau$ is quite high. This suggests that even when the amount of measurement error is small, so that the bias is small, our variance estimates may still not have appropriate coverage.
+
+The performance of our variance estimates appears to deteriorate as we increase $\rho_x$, even when balancing on the true covariates. We also see that our coverage rates worsen for $\hat{X}^{het}$ and $\hat{X}^{hom}$ in the settings where we found the highest bias. On the other hand, we find that our coverage rates are often quite conservative for estimators generated on $\hat{X}$, particularly those using $\hat{X}^{cor}$. By contrast the coverage rates appear to be slightly less than desired for estimators using $X$; we investigate and discuss this further in Section~\ref{appssec:simstudyresults2}. 
 
 \begin{figure}[H]
 \begin{center}
@@ -136,7 +152,7 @@ We first discuss Figure~\ref{fig:simcoverage1}. When $\rho = 0$ we find that we 
 \end{center}
 \end{figure}
 
-Figure~\ref{fig:ciwdth} compares the mean confidence interval lengths using the leave-one-state-out jackknife. As expected, we find that the H-SBW estimator is associated with more precise estimates, reflecting that the estimators have decreased variability under our assumed correlation structures. We again see that even when we choose $\rho$ sub-optimally ($\rho = 0.5$) we obtain more precise inferences than when $\rho = 0$. This again suggests benefits to using H-SBW even when our estimate of $\rho$ is a guess. The results are similar when considering homoskedastic measurement errors. 
+Figure~\ref{fig:ciwidth} compares the mean confidence interval lengths using the leave-one-state-out jackknife. We see the H-SBW estimator is associated with slightly more precise estimates, reflecting that the estimators have decreased variability under our assumed correlation structures. We again see that even when we choose $\rho$ quite sub-optimally ($\rho = 0.5$) we obtain more precise inferences than when $\rho = 0$. This again suggests benefits to using H-SBW even when our estimate of $\rho$ is a guess. As the previous results would suggest, we also find that the confidence intervals using $\hat{X}^{cor}$ are quite large. The results are similar when considering homoskedastic measurement errors. 
 
 \begin{figure}[H]\label{fig:ciwidth}
 \begin{center}
@@ -146,7 +162,7 @@ Figure~\ref{fig:ciwdth} compares the mean confidence interval lengths using the 
 \end{center}
 \end{figure}
 
-We emphasize three takeaways from this simulation study. First, setting $\rho > 0$ can increase the bias of our estimates in the context of measurement error; however, the bias is generally small relative to the bias of balancing on the noisy covariate measurements $W$, and MSE improvements using H-SBW are still possible relative to SBW despite the bias. Second, accounting for the correlation in the data when using H-SBW and the data are measured with error may not be worth it given a small sample of states, despite the improved theoretic properties. This simulation study assumes throughout that we know the true data generating model for the outcome, and that are data are gaussian. First, we find no evidence that the ``heterogeneous adjustment'' improves our estimates along any dimension, even in an ideal setting. Moreover it may even induce bias when the model is incorrect. However, this may in part reflect the distribution of sample sizes we generated, which we took to be uniform; perhaps with a different distribution these results would differ. Overall this study complements our validation study in Section~\ref{sec:results}, which has more direct bearing on understanding how these estimators might perform in our application.
+We emphasize three takeaways from this simulation study. First, setting $\rho > 0$ can increase the bias of our estimates in the context of measurement error; however, the bias is generally small relative to the bias of balancing on the noisy covariate measurements $W$, and MSE improvements using H-SBW are still possible relative to SBW despite the bias. Second, accounting for the correlation in the data when using H-SBW and the data are measured with error may not be worth the cost in variance given a small sample of states, despite the improved theoretic properties. This simulation study assumes throughout that we know the true data generating model for the outcome, and that are data are gaussian. Finally, we find no evidence that the ``heterogeneous adjustment'' improves our estimates along any dimension, even in an ideal setting. Moreover this adjustment may even induce bias when the model is incorrect. This finding may in part reflect the distribution of sample sizes we generated, which we took to be uniform; perhaps with a different distribution these results would differ. Overall this study complements our validation study in Section~\ref{sec:results}, which has more direct bearing on understanding how these estimators might perform in our application.
 
 \subsection{Additional results: H-SBW without measurement error}\label{appssec:simstudyresults2}
 
@@ -162,9 +178,9 @@ Figure~\ref{fig:hsbwvarx} displays the empirical variance of the H-SBW estimator
 \end{center}
 \end{figure}
 
-We conclude by examining the confidence interval coverage for the leave-one-state-out-jackknife. Figure~\ref{fig:hsbwcoveragex} displays the results. Consistent with our previous findings, we see that we generally obtain slightly less than nominal coverage rates (though these coverage rates improve as $\rho^\star$ increases). We speculate that this may be a function of the jackknife being an approximation to the bootstrap, which itself is only an asymptotically unbiased estimate of the variance. Given our sample of $m_1 = 25$, this slight under-coverage is not entirely surprising. On the other hand, this does contrast with our finding that this procedure in general is conservative in the presence of measurement error. 
+We conclude by examining the confidence interval coverage for the leave-one-state-out-jackknife. Figure~\ref{fig:hsbwcoveragex} displays the results. Consistent with our previous findings, we see that we generally obtain slightly less than nominal coverage rates, particularly when $\rho^\star$ is small. We speculate that this may be a function of the jackknife being an approximation to the bootstrap, which itself is only an asymptotically unbiased estimate of the variance. Given our sample of $m_1 = 25$, this slight under-coverage is not entirely surprising. On the other hand, this does contrast with our finding that this procedure in general is conservative in the presence of measurement error. 
 
-We conclude by observing that coverage improves when setting $\rho > 0$ when $\rho^\star > 0$. We speculate that by more evenly dispersing the weights across states, H-SBW may be increasing the effective sample size of states, improving the asymptotic approximation of the jackknife. This again illustrates a possible value of using this procedure. Analyzing the theoretic properties of these variances estimators to better understand these results in this setting would be useful future work. However, this is beyond the scope of the present study.
+We conclude by observing that coverage improves when setting $\rho > 0$, even when $\rho^\star = 0$. We speculate that by more evenly dispersing the weights across states, H-SBW may be increasing the effective sample size of states, improving the asymptotic approximation of the jackknife. This again illustrates a possible value of using this procedure. Analyzing the theoretic properties of these variances estimators to better understand these results in this setting would be useful future work; however, this is beyond the scope of the present study.
 
 \begin{figure}[H]
 \begin{center}

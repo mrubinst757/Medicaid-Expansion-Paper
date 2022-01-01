@@ -36,7 +36,7 @@ To estimate $\Sigma_{\nu, sc}^m$, we first pool our initial estimates of the CPU
 
 This adjustment accounts for CPUMA-level variability in the measurement error, and should more greatly affect outlying values of imprecisely estimated covariates, while leaving precisely estimated covariates closer to their observed value in the dataset. Moreover, unlike using the original individual-level CPUMA estimates $\hat{\Sigma}_{\nu, sc}^{\text{raw}}$, we are able to use the full efficiency of using all units in the modeling. On the other hand, this model assumes that all differences in the sampling variability are due to the sample sizes, and assumes away heterogeneity due to heteroskedasticity. In our simulation results in Appendix~\ref{app:simstudy}, we also find that this estimator leads to bias if the measurement errors are in truth homoskedastic. 
 
-As a final adjustment we can also build on the homogeneous adjustment to account for the correlation structure of the data. We use this adjustment in the simulation study in Appendix~\ref{app:simstudy}. To motivate this adjustment we view the entire data $X = (X_{11}, ..., X_{1p_1}, ..., X_{sp_s})$ as reflecting a single draw from the distribution $MVN(\boldsymbol{\upsilon}_1, \mathbf{\Sigma}_X)$, where $\boldsymbol{\upsilon}_1$ is a $qn_1$ dimensional vector that repeats the $q$ dimensional vector of means $\upsilon_1$ defined previously $n_1$ times. Meanwhile $W = (W_{11}, ..., W_{1p_1}, ..., W_{sp_s})$ reflects a single draw from the distribution $N(X, \boldsymbol{\Sigma}_{\nu})$, where $\boldsymbol{\Sigma}_{\nu}$ is a diagonal matrix with $\Sigma_{\nu}$ in the diagonals. That is, we assume that the measurement errors are drawn independently across units with constant variance matrix $\Sigma_{\nu}$.
+As a final adjustment we can also build on the homogeneous adjustment to account for the correlation structure of the data. We use this adjustment in the simulation study in Appendix~\ref{app:simstudy}. To motivate this adjustment we view the entire data among the treated states $X = (X_{11}, ..., X_{1p_1}, ..., X_{sp_s})$ as reflecting a single draw from the distribution $MVN(\boldsymbol{\upsilon}_1, \mathbf{\Sigma}_X)$, where $\boldsymbol{\upsilon}_1$ is a $qn_1$ dimensional vector that repeats the $q$ dimensional vector of means $\upsilon_1$ (defined previously) $n_1$ times. Meanwhile $W = (W_{11}, ..., W_{1p_1}, ..., W_{sp_s})$ reflects a single draw from the distribution $N(X, \boldsymbol{\Sigma}_{\nu})$, where $\boldsymbol{\Sigma}_{\nu}$ is a diagonal matrix with $\Sigma_{\nu}$ in the diagonals. That is, we assume that the measurement errors are drawn independently across units with constant variance matrix $\Sigma_{\nu}$.
 
 We then let $\Sigma_S$ represent the correlation of different CPUMAs within the same state, which we assume is constant across all CPUMAs and states. 
 
@@ -49,16 +49,16 @@ Let $\boldsymbol{\Sigma}_W = \boldsymbol{\Sigma}_X + \boldsymbol{\Sigma}_{\nu}$.
 \end{pmatrix} 
 \end{align*}
 
-Notice that $\mathbf{\Sigma}_X$ and $\mathbf{\Sigma}_W$ are block-diagonal matrices with $qp_s$ by $qp_s$ blocks indexed by $b_s$ that we call $\Sigma_{X, b_s}$ and $\Sigma_{W, b_s}$, where each element contains a $q$ by $q$ matrix: 
+Notice that $\mathbf{\Sigma}_X$ and $\mathbf{\Sigma}_W$ are block-diagonal matrices with $qp_s$ by $qp_s$ blocks indexed by $s$ that we call $\Sigma_{X, s}$ and $\Sigma_{W, s}$. Each element of these matrices contains the $q$ by $q$ matrices defined previously: 
 
 \begin{align*}
-\Sigma_{X, b_s} &= \begin{pmatrix}
+\Sigma_{X, s} &= \begin{pmatrix}
 \Sigma_{X}, \Sigma_{S}', ..., \Sigma_{S}' \\
 \Sigma_{S}, \Sigma_{X}, ..., \Sigma_{S}' \\
 ... \\
 \Sigma_{S}, \Sigma_{S}, ..., \Sigma_{X}
 \end{pmatrix};
-\Sigma_{W, b_s} = \begin{pmatrix}
+\Sigma_{W, s} = \begin{pmatrix}
 \Sigma_{W}, \Sigma_{S}', ..., \Sigma_{S}' \\
 \Sigma_{S}, \Sigma_{W}, ..., \Sigma_{S}' \\
 ... \\
@@ -70,7 +70,9 @@ where we have defined $\Sigma_{X}$, $\Sigma{W}$, and $\Sigma_{S}$ previously.
 Let $\boldsymbol{\kappa} = \mathbf{\Sigma_W}^{-1}\mathbf{\Sigma_X}$. We then have that by the conditional normal distribution:
 
 \begin{align*}
-    \mathbb{E}[X \mid W, A = 1] &=  \boldsymbol{\upsilon}_1 + \boldsymbol{\kappa}^T(W - \boldsymbol{\upsilon}_1)
+    \mathbb{E}[X \mid W] &=  \boldsymbol{\upsilon}_1 + \boldsymbol{\kappa}^T(W - \boldsymbol{\upsilon}_1) \qquad \forall sc: A_{sc} = 1
 \end{align*}
 
 To estimate this quantity we need only additionally generate an estimate of $\Sigma_{S}$ in addition to the previous estimates: to do this we simply average together all the within-state cross-products $\hat{\Sigma}_{S} = n_1^{-1}\sum_{s=1}^m_1\sum_{c\ne d}W_{sc}W_{sd}^T$. We then replace the other quantities by their empirical counterparts to generate the adjustment set $\hat{X}_{A=1}^{cor}$.
+
+We do not use this adjustment for our application: in practice we find that it adds variability to the observed data. We speculate that this may be a function of the relatively small sample size of states. In simulations we also find that this adjustment adds quite a bit of variability to the final estimates (see Appendix~\ref{app:simstudy}). 
