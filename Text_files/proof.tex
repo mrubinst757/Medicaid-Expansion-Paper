@@ -1,6 +1,6 @@
 \section{Proofs}\label{ssec:proof}
 
-We divide our proofs into three sections: the first two consist of propositions and the third contains the proofs of the propositions. In the first section our propositions pertain to the performance of SBW under the classical measurement error model. Our key results are that the bias of the SBW estimator is equivalent to the bias of the OLS estimator and that regression-calibration techniques can be used in this setting to obtain consistent estimators in this setting. However, these results assume that the data are gaussian. We also show that if the data are not gaussian, the OLS estimator using regression-calibration remains consistent, while the SBW estimator may be biased. In our second section we consider the properties of the H-SBW objective when the true covariates $X$ are observed. We show that if our assumed correlation structure for the outcome errors is correct, H-SBW produces the minimum conditional-on-X variance estimator within the constraint set. We also show how a generalized form of H-SBW weights relate to the implied regression weights from Generalized Least Squares (GLS). We conclude by showing that H-SBW may yield biased estimates if we do not correctly model the dependence structure of the data. Section~\ref{app:AsecIII} contains all of the proofs.
+We divide our proofs into three sections: the first two consist of propositions and the third contains the proofs of the propositions. In the first section our propositions pertain to the performance of SBW under the classical measurement error model. Our key results are that the bias of the SBW estimator is equivalent to the bias of the OLS estimator and that regression-calibration techniques can be used in this setting to obtain consistent estimators. However, these results assume that the data are gaussian. We also show that if the data are not gaussian, the OLS estimator using regression-calibration remains consistent, while the SBW estimator may be biased. In our second section we consider the properties of the H-SBW objective when the true covariates $X$ are observed. We show that if our assumed correlation structure for the outcome errors is correct, H-SBW produces the minimum conditional-on-X variance estimator within the constraint set. We also show how a generalized form of H-SBW weights relate to the implied regression weights from Generalized Least Squares (GLS). We conclude by showing that H-SBW may yield biased estimates if we do not correctly model the dependence structure of the data. Section~\ref{app:AsecIII} contains all of the proofs.
 
 \subsection{SBW and classical measurement error}\label{app:AsecI}
 
@@ -33,12 +33,6 @@ where we have used the independence of the noise terms $\nu_{sc}$, and similarly
  \frac{1}{n_1} \sum_{A_{sc}=1} (W_{sc} - \bar{W}_1)(Y_{sc} - \bar{Y}_1)^T \rightarrow^p S_X \beta_1,
 \end{equation}
 where we have additionally used the linear model for $Y_{sc}$ given by \eqref{eqn:linmod}.
-
-% Without loss of generality, we assume that we observe $Y_{sc}$ (equivalently, the error term $\epsilon_{sc}$ can include mean zero measurement-error). We also assume that the errors in the outcome model and the measurement errors are jointly normal, independent from each other, and drawn iid, so that 
-
-% \begin{align}\label{eqn:cevoutcomemodel}
-% Y_{sc}^a = \alpha_a + X_{sc}^T\beta_a + \epsilon_{sc} & & \text{and} & & (\epsilon_{sc}, \nu_{sc}) \stackrel{\text{iid}}{\sim} \operatorname{MVN}\left(0, \left[\begin{array}{cc} \sigma_{\epsilon}^2 & 0 \\ 0 & \Sigma_{\nu} \end{array}\right] \right).
-% \end{align}
 
 We first consider estimation without adjustment for errors in covariates. 
 Proposition \ref{cl1} states that the unadjusted OLS and SBW estimators have equal bias, with the bias of the OLS estimator remaining unchanged if the gaussian assumption of \eqref{eqn:gaussiannoise} is removed.
@@ -97,8 +91,7 @@ Let (\ref{eqn:unconfoundedness}) - (\ref{eqn:Xgaussian}) and (\ref{eqn:simplific
 where $\hat{\kappa} = (\hat{\Sigma}_X + \hat{\Sigma}_{\nu})^{-1} \hat{\Sigma}_X$. Let $\hat{\gamma}$ be the weights that solve the SBW objective over the constraint set $\Gamma(\hat{X}_{A=1}, \bar{W}_0, 0)$, and let $\hat{\psi}^{1, \textup{adjusted}}_0 = \sum_{sc: A_{sc} = 1} \hat{\gamma}_{sc} Y_{sc}$ be the corresponding SBW estimator. This estimator is consistent for $\psi_0^1$ as $n_1 \to \infty$.
 \end{proposition}
 
-In (\ref{eqn:jackknife}) we propose a leave-one-state-out jackknife estimate of variance. Following 
-\cite{efron1981jackknife}, this estimate can be decomposed a conservatively biased estimate of the variance of $\hat{\psi}_0^{1, \textup{adjusted}}$ given a sample size of $(m_1-1)$ treated states, plus a heuristic adjustment to go from sample size $(m_1-1)$ to sample size $m_1$, when treating the observations of the control states as fixed.
+In (\ref{eqn:jackknife}) we propose a leave-one-state-out jackknife estimate of variance. Following \cite{efron1981jackknife}, this estimate can be decomposed a conservatively biased estimate of the variance of $\hat{\psi}_0^{1, \textup{adjusted}}$ given a sample size of $(m_1-1)$ treated states, plus a heuristic adjustment to go from sample size $(m_1-1)$ to sample size $m_1$, when treating the observations of the control states as fixed.
 
 \begin{proposition}\label{prop:jackknife}
 Let (\ref{eqn:unconfoundedness}) - (\ref{eqn:gaussiannoise}) hold, and additionally assume that $p_s$, the number of CPUMAs, is i.i.d. in the treated states. Let $\hat{\operatorname{Var}}(\hat{\psi}_0^{1, \textup{adjusted}}) = \frac{m_1-1}{m_1} \cdot \tilde{\operatorname{Var}}(\hat{\psi}_0^{1, \textup{adjusted}})$, where
@@ -147,6 +140,14 @@ may be biased for $\psi_0^1$, with estimation error given by
 which need not converge to zero unless $\bar{X}_Q \to \bar{X}_1$, $S_{XW_Q} \to S_X$, and $S_{W_Q} \to S_W$.
 \end{proposition}
 
+For such non-gaussian settings, Proposition \ref{cl7} shows that if the conditional expectations can be computed for the treated units (which may be computationally difficult or require strong modeling assumptions if the data is non-gaussian, or if dependencies exist between CPUMAs), then SBW yields unbiased estimates. 
+
+\begin{proposition}\label{cl7}
+    Let $\tilde{X}^*$ denote the conditional expectation,
+    \[\tilde{X}^*_{sc} = \mathbb{E}[X_{sc} | W, A_{sc}=1],\]
+    and consider the SBW estimator $\hat{\psi}_0^{1, \textup{sbw}}$ using weights $\hat{\gamma}^{sbw}$ that solve \eqref{eqn:SBWobjective} across $\Gamma(\tilde{X}^\star_{A=1}, \bar{X}_0, 0)$. This estimator is unbiased for $\psi_0^1$.
+\end{proposition}
+
 \begin{remark}
     While we have assumed that $\epsilon_{sc}=0$ for simplicity in our propositions, removing this assumption simply leads to the additional term $\sum_{sc: A_{sc} = 1}\gamma_{sc}\epsilon_{sc}$ in the error of the SBW estimator of $\psi_0^1$. This again has expectation zero, because the weights remain independent of the error $\epsilon_{sc}$ in the outcomes. Allowing non-zero $\epsilon_{sc}$ also adds a term to the estimator variance (conditional on $W$) equal to $\sigma^2_{\epsilon}\cdot \|\gamma^*\|^2$,    which does not change the variance bound given by Proposition \ref{prop:variance_rate}.
 \end{remark}
@@ -157,7 +158,29 @@ which need not converge to zero unless $\bar{X}_Q \to \bar{X}_1$, $S_{XW_Q} \to 
 \end{remark}
 
 \begin{remark}
-To see how Proposition \ref{cl9} implies that the adjusted SBW estimate may be biased in non-gaussian settings, we observe that as the set $Q$ in Proposition \ref{cl9} will depend on the values of the covariates $X$ and observation noise $\nu$, the values of $\{X_{sc}: sc \in Q\}$ and $\{\nu_{sc}: sc \in Q\}$ may differ systematically from their population, so that $\bar{X}_Q$, $S_{XW_Q}$ and $S_{W_Q}$ may not converge to their desired counterparts. While the expression for the estimation error given by (\ref{eqn:cl9.error}) is asymptotic, an exact formula is given in  \eqref{eqn:cl9.proof3} which is very similar; the only asymptotic approximations are the convergence of $\bar{W}_1$ to $\bar{X}_1$ and $\bar{W}_0$ to $\bar{X}_0$.
+As the proposition implies that $\hat{\operatorname{Var}}$ is conservatively biased only up the heuristic $(m_1-1)/m_1$ scaling term, it may be preferable to remove this term, inflating the variance estimate slightly. While Proposition \ref{prop:jackknife} considers the marginal variance of the estimator $\hat{\psi}_0^{1,\textup{adjusted}}$, a confidence interval using the conditional variance $\operatorname{Var}(\hat{\psi}_0^{1 \textup{adjusted}}|X)$ (see, e.g., \cite{buonaccorsi2010measurement}, who discuss using a modification of the parametric bootstrap for parameters estimated via OLS in this setting) may be of interest, potentially leading to smaller intervals and more precise inference. 
+\end{remark}
+
+
+\begin{remark}
+To see how Proposition \ref{cl9} implies that the adjusted SBW estimate may be biased in non-gaussian settings, we observe that as the set $Q$ in Proposition \ref{cl9} will depend on the values of the covariates $X$ and observation noise $\nu$, the values of $\{X_{sc}: sc \in Q\}$ and $\{\nu_{sc}: sc \in Q\}$ may differ systematically from their population, so that $\bar{X}_Q$, $S_{XW_Q}$ and $S_{W_Q}$ may not converge to their desired counterparts. While the expression for the estimation error given by (\ref{eqn:cl9.error}) is asymptotic, an exact formula is given in  \eqref{eqn:cl9.proof3} which is very similar; the only asymptotic approximations are the convergence of $\bar{W}_1$ to $\bar{X}_1$ and $\bar{W}_0$ to $\bar{X}_0$. Proposition \ref{cl7}, presented in the next section, suggests an approach to restore unbiased estimation for SBW and H-SBW in non-gaussian settings.
+\end{remark}
+
+\begin{remark}\label{remark:basis expansion}
+We describe a possible direction for future work that utilizes Proposition \ref{cl7}. Suppose that in lieu of equations  (\ref{eqn:additivenoise})-(\ref{eqn:Xgaussian}), we instead assume that $X_{sc}$ is a transformation of the covariate, so that $X_{sc} = \phi(U_{sc})$ for some transformation $\phi$, and that the untransformed $U_{sc}$ is observed with additive noise, so that $W_{sc} = U_{sc} + \nu_{sc}$. For example, to make the linear model (\ref{eqn:linmod}) more credible, $\phi(U_{sc})$ might denote a basis expansion applied to the survey sampled covariates for each unit. If, analogous to assumptions (\ref{eqn:gaussiannoise}) and (\ref{eqn:Xgaussian}), the original covariates $U_{sc}$ and measurement error $\nu_{sc}$ can be assumed to be iid gaussian, so that the treated units satisfy
+
+\begin{align*}
+    U_{sc} & \sim \mathcal{N}(v_1, \Sigma_{U|1}), & \nu_{sc} & \sim \mathcal{N}(0, \Sigma_{\nu}),
+\end{align*}
+then the posterior distribution of $U_{sc}$ given $W$ for the treated units will also be gaussian
+
+\[ U_{sc}|W_{sc} & \sim \mathcal{N}(\tilde{U}_{sc}, \Sigma_{\tilde{U}|1})\]
+where $\tilde{U}_{sc}$ and $\Sigma_{\tilde{U}|1}$ are given for the treated units by
+
+\begin{align*}
+\tilde{U}_{sc} & = v_{1} + \Sigma_{U|1} (\Sigma_{U|1} + \Sigma_{\nu})^{-1}(W_{sc} - v_1), & \Sigma_{\tilde{U}|1} & = \Sigma_{U|1} - \Sigma_{U|1} (\Sigma_{U|1} + \Sigma_{\nu})^{-1} \Sigma_{U|1},
+\end{align*}
+with analogous expressions for the control units. This suggests that if auxilliary data can be used to find $\Sigma_{U|1}$, $\Sigma_{U|0}$, and $\Sigma_{\nu}$ as before, then  $\tilde{X}^*_{sc} = \mathbb{E}[\phi(U_{sc})|W,A]$ could be estimated by using monte carlo methods. Specifically, for each unit $sc$ we can generate random variates $\{u_{i}\}$ that are i.i.d. normal with mean $\tilde{U}_{sc}$ and covariance $\Sigma_{\tilde{U}|A_{sc}}$, and take the average of $\{\phi(u_{i})\}$. Averaging $\tilde{X}^*_{A=0}$ would yield a consistent estimate for $\bar{X}_0$, which could be plugged into the SBW constraint set $\Gamma(\tilde{X}^*_{A=1}, \bar{X}_0, 0)$; by Proposition \ref{cl7} the resulting SBW weights would yield unbiased estimates.
 \end{remark}
 
 \subsection{Properties of H-SBW}\label{app:AsecII}
@@ -196,11 +219,10 @@ where $Z_{Q}$ is the matrix whose columns are $\{Z_i: i \in Q\}$, $\Omega_Q$ is 
 To lighten notation, we have used $Z_Q - \mu$ (a vector subtracted from a matrix) to mean $Z_Q - \mu{\bf 1}^T$, so that each column of $Z_{Q}$ is centered by $\mu$. 
 \end{remark}
 
-Proposition \ref{cl7} shows that if the conditional expectations can be computed for the treated units (which may be computationally difficult or require strong modeling assumptions if the data is non-gaussian, or if dependencies exist between CPUMAs), then H-SBW (which equals SBW when $\rho=0$) yields unbiased estimates. 
+Proposition \ref{cl7hsbw} simply states that the conclusion of Proposition \ref{cl7} holds not only for SBW, but for H-SBW as well.
 
-\begin{proposition}\label{cl7}
-    Let $\tilde{X}^*$ denote the conditional expectation,
-    \[\tilde{X}^*_{sc} = \mathbb{E}[X_{sc} | W, A_{sc}=1],\]
+\begin{proposition}\label{cl7hsbw}
+    Let $\tilde{X}^*$ be defined as in Proposition \ref{cl7}, 
     and consider the H-SBW estimator $\hat{\psi}_0^{1, \textup{hsbw}}$ using weights $\hat{\gamma}^{hsbw}$ that solve \eqref{eqn:hsbwobjective} across $\Gamma(\tilde{X}^\star_{A=1}, \bar{X}_0, 0)$. This estimator is unbiased for $\psi_0^1$.
 \end{proposition}
 
@@ -208,15 +230,15 @@ Proposition \ref{cl7} shows that if the conditional expectations can be computed
     In Proposition \ref{cl4}, we assumed the outcomes followed \eqref{eqn:linmod} and the constraints balanced the means of the covariates; however, we can allow for any outcome model and our balance constraints can include any function of the covariate distribution and this result still holds conditional on $X$ (though of course the estimator may be badly biased). The key assumption is that the variability in the estimates comes from the outcome model errors, which are assumed to be equicorrelated within state for known parameter $\rho$.
 \end{remark}
 
-\begin{remark}
+\begin{remark}\label{remark:obgls}
     Assuming that $(X_{sc}, W_{sc}) \mid A_{sc} = 1$ are Gaussian but dependent, Proposition \ref{cl7} implies that if we correctly model the correlations between the CPUMAs in our regression calibration step, we can use GLS or H-SBW without inducing asymptotic bias (assuming all of our models are correct). This is similar to the approach followed in \cite{huque2014impact}, who consider parameter estimation using GLS in the context of a one-dimensional spatially-correlated covariate measured with error. We also outline in Appendix~\ref{app:adjustmentdetails} a potential adjustment when we assume an equicorrelation structure among the covariates similar to what we have assumed for the outcome, and evaluate this adjustment in simulations in Appendix~\ref{app:simstudy}. 
     
-    Additionally, to be clear Proposition \ref{cl7} also implies implies that if we do not model the dependence structure, we cannot generally use the simple adjustment provided in \eqref{eqn:regcal} in combination with GLS to obtain asymptotically unbiased estimates. Intuitively this is because the implied weights from GLS depend on the covariance structure between the units, which is not correctly modeled in \eqref{eqn:regcal}. By contrast, Proposition \ref{cl5} shows that we safely can ignore such dependence in when using regression-calibration with OLS (as long as a probability limit exists for the empirical covariance matrix).
+    Additionally, to be clear Proposition \ref{cl7} also implies implies that if we do not model the dependence structure, we cannot generally use the simple adjustment provided in \eqref{eqn:regcal} in combination with GLS to obtain asymptotically unbiased estimates. Intuitively this is because the implied weights from GLS depend on the covariance structure between the units, which is not correctly modeled in \eqref{eqn:regcal}. By contrast, Proposition \ref{cl8} shows that we safely can ignore such dependence in when using regression-calibration with OLS (as long as a probability limit exists for the empirical covariance matrix).
 \end{remark}
 
-\begin{remark}
-    Perhaps surprisingly we find in our simulation study in Appendix~\ref{app:simstudy} that when the covariates are gaussian but dependent, the simple adjustment provided in \eqref{eqn:regcal} is sufficient to obtain an approximately unbiased estimate when using SBW. We conjecture that this is because the set $Q$ may have some limiting boundary. If true, the characterization of SBW weights as regression weights in Proposition~\ref{cl56} would imply that the SBW weight $\hat{\gamma}_{sc}^{sbw}$ is fixed conditional on input data point $W_{sc}$ asymptotically. 
-    The error of the estimator can therefore decompose as a function of $(X_{sc} - \tilde{X}_{sc})$, which is independent of $\hat{\gamma}_{sc}$ given $W_{sc}$. This implies that it would suffice to balance on $\tilde{X}_{A=1}$.
+\begin{remark}\label{remark:sbwspeculation}
+    Perhaps surprisingly we find in our simulation study in Appendix~\ref{app:simstudy} that when the covariates are gaussian but dependent, the simple adjustment provided in \eqref{eqn:regcal} is sufficient to obtain an approximately unbiased estimate when using SBW. We conjecture that this is because the set $Q$ may have some limiting boundary. If true, the characterization of SBW weights as regression weights in Proposition~\ref{cl56} would imply that the SBW weight $\gamma_{sc}^{sbw}$ is fixed conditional on input data point $W_{sc}$ asymptotically. 
+    The error of the estimator can therefore decompose as a function of $(X_{sc} - \tilde{X}_{sc})$, which is independent of $\gamma_{sc}^{sbw}$ given $W_{sc}$. This implies that it would suffice to balance on $\tilde{X}_{A=1}$.
 \end{remark}
 
 \subsection{Proofs}\label{app:AsecIII}
@@ -283,7 +305,7 @@ where \eqref{eqn:prop1.1} holds by \eqref{eqn:prop1.0}, and \eqref{eqn:prop1.2} 
 	& = \psi_0^1 + \left(\bar{X}_0 - \upsilon_1\right)^T(\kappa - I_q)\beta_1,  \label{eqn:prop1.10}
 \end{align}
 %
-where \eqref{eqn:prop1.4} holds by the assumed linear model for $Y_{sc}$ given by  \eqref{eqn:linmod}; \eqref{eqn:prop1.5} and \eqref{eqn:prop1.10} hold because the SBW algorithm enforces that $\sum \hat{\gamma}_{sc} W_{sc} = \bar{W}_0$, which has expectation $\bar{X}_0$, and because $\epsilon_{sc}$ is zero-mean and independent of $W_{sc}$ and hence independent of $\hat{\gamma}_{sc}$; \eqref{eqn:prop1.6} holds by definition of $\psi_0^1$ and the assumed linear model in \eqref{eqn:linmod}; \eqref{eqn:prop1.7} is the tower property of expectations; \eqref{eqn:prop1.8} follows because $\gamma_{sc}$ and $W_{sc}$ are deterministic given $W$; and \eqref{eqn:prop1.9} uses the expression for the conditional expectation given by \eqref{eqn:regcal}. It can be seen that \eqref{eqn:prop1.2} and \eqref{eqn:prop1.10} are equal, and hence show that $\hat{\psi}_0^{1,\textup{ols}}$ and $\hat{\psi}_0^{1, \textup{sbw}}$ have equal bias.
+where \eqref{eqn:prop1.4} holds by the assumed linear model for $Y_{sc}$ given by  \eqref{eqn:linmod}; \eqref{eqn:prop1.5} and \eqref{eqn:prop1.10} hold because the SBW algorithm enforces that $\sum \gamma_{sc} W_{sc} = \bar{W}_0$, which has expectation $\bar{X}_0$, and because $\epsilon_{sc}$ is zero-mean and independent of $W_{sc}$ and hence independent of $\gamma_{sc}$; \eqref{eqn:prop1.6} holds by definition of $\psi_0^1$ and the assumed linear model in \eqref{eqn:linmod}; \eqref{eqn:prop1.7} is the tower property of expectations; \eqref{eqn:prop1.8} follows because $\gamma_{sc}$ and $W_{sc}$ are deterministic given $W$; and \eqref{eqn:prop1.9} uses the expression for the conditional expectation given by \eqref{eqn:regcal}. It can be seen that \eqref{eqn:prop1.2} and \eqref{eqn:prop1.10} are equal, and hence show that $\hat{\psi}_0^{1,\textup{ols}}$ and $\hat{\psi}_0^{1, \textup{sbw}}$ have equal bias.
 
 It remains to show that the bias of the OLS estimator is unchanged if the gaussian assumption is relaxed so that \eqref{eqn:regcal} no longer holds. It follows from \eqref{eqn:prop1.beta} that $\hat{\beta}$ is asymptotically given by
 
@@ -333,15 +355,15 @@ To derive $\operatorname{Var}\left(\hat{\psi}_0^{1,\textup{ideal}} | W\right)$, 
 %
 where \eqref{eqn:prop:variance.1} follows from \eqref{eqn:sbwregcalerror}, \eqref{eqn:prop:variance.2} holds because the tuples $(X_{sc}, W_{sc})$ are i.i.d, and \eqref{eqn:prop:variance.3} holds because $\gamma_{sc}^*$ is fixed given $W$ and $(X_{sc}, W_{sc})$ are jointly normal. 
 
-To upper bound the conditional variance given by \eqref{eqn:variance}, we will construct a feasible solution $\gamma'$ to the SBW objective over the constraint set $\Gamma(\tilde{X}, \bar{X}_0, 0)$ such that $\|\gamma'\|^2 = O_P(n^{-1})$. As the optimal solution $\gamma^*$ satisfies $\|\gamma^*\|^2 \leq \|\gamma'\|^2$, the result follows.
+To upper bound the conditional variance given by \eqref{eqn:variance}, we will construct a feasible solution $\gamma'$ to the SBW objective over the constraint set $\Gamma(\tilde{X}, \bar{X}_0, 0)$ such that $\|\gamma'\|^2 = O_P(n_1^{-1})$. As the optimal solution $\gamma^*$ satisfies $\|\gamma^*\|^2 \leq \|\gamma'\|^2$, the result follows.
 
 Our construction is the following. Divide the $n_1$ treated units into $L = \lfloor n_1/n^{\text{sub}} \rfloor$ subsets of size $n^{\text{sub}}$, and a remainder subset. For the subsets $\ell=1,\ldots,L$, let $X^{(\ell)}$ denote its covariates, $\tilde{X}^{(\ell)}$ the conditional expectation $\mathbb{E}[X^{(\ell)}|W, A]$, and  $\gamma^{(\ell)}$ the solution to the SBW objective over the constraint set $\Gamma(\tilde{X}^{(\ell)}, \bar{X}_0, 0)$, with $\gamma^{(\ell)}=0$ if the constraint set is infeasible. As the units are assumed to be i.i.d., it follows that $\gamma^{(1)}, \ldots, \gamma^{(L)}$ are also i.i.d. Let $n^{\text{sub}}$ be large enough so that each $\gamma^{(\ell)}$ has positive probability of being non-zero. 
 
 Let $L'$ denote the number of subsets whose $\gamma^{(\ell)}$ is non-zero. As each non-zero weight vector $\gamma^{(\ell)}$ is feasible for $\Gamma(\tilde{X}^{(\ell)}, \bar{X}_0, 0)$, it can be seen that the concatenated vector $\gamma' = (\gamma^{(1)}/L', \ldots, \gamma^{(L)}/L', 0)$ is feasible for $\Gamma(\tilde{X},\bar{X}_0,0)$. As the weights $\gamma^{(\ell)}$ are i.i.d, it follows that $\| \gamma'\|^2$ which equals $\frac{1}{(L')^2} \sum_\ell \|\gamma_\ell\|^2$  converges in probability to $\frac{1}{L'} \mathbb{E}\|\gamma^{(1)}\|^2 = O_P(n_1^{-1})$, proving the bound on $\operatorname{Var}\left(\hat{\psi}_0^{1,\textup{ideal}} - \psi_0^1 | W\right)$.
 
-To show this rate also holds for $\operatorname{Var}\left(\hat{\psi}_0^{1,\textup{ideal}}\right)$, we can apply the law of total variance to $f = \hat{\psi}_0^{1,\textup{ideal}} - \psi_0^1 = \hat{\psi}_0^{1,\textup{ideal}},$
+To show this rate also holds for $\operatorname{Var}\left(\hat{\psi}_0^{1,\textup{ideal}}\right)$, we can apply the law of total variance to $f = \hat{\psi}_0^{1,\textup{ideal}} - \psi_0^1$, %= \hat{\psi}_0^{1,\textup{ideal}},$
 \[ \operatorname{Var}(f) = \underbrace{\mathbb{E}[\operatorname{Var}(f|W)]}_{(i)} + \underbrace{\operatorname{Var}(\mathbb{E}[f|W])}_{(ii)}, \]
-observing that $\mathbb{E}[f|W] = 0$ by Proposition \ref{cl2}, so that (ii) is zero. To show that term (i) is $O(n^{-1})$, we observe that as $\operatorname{Var}(f|W) = O_P(n^{-1})$ and is bounded (since $\gamma^*$ is non-negative and sums to 1), it follows that  $\mathbb{E}[ \operatorname{Var}(f|W)]$ must be $O(n^{-1})$ as well.
+observing that $\mathbb{E}[f|W] = 0$ by Proposition \ref{cl2}, so that (ii) is zero. To show that term (i) is $O(n_1^{-1})$, we observe that as $\operatorname{Var}(f|W) = O_P(n_1^{-1})$ and is bounded (since $\gamma^*$ is non-negative and sums to 1), it follows that  $\mathbb{E}[ \operatorname{Var}(f|W)]$ must be $O(n_1^{-1})$ as well.
 \end{proof}
 
 \begin{proof}[Proof of Proposition \ref{cl3}]
@@ -388,7 +410,7 @@ and hence that
 
 \begin{proof}[Proof of Proposition \ref{cl9}]
 
-We will use Proposition \ref{cl56} which is proved later in this section. To apply it, we let $\Omega = I$, $Z = \check{X}_{A=1}$, and $v = \bar{W}_0$. Using  $\check{X}_{sc} = \bar{W}_1 + \check{\kappa}^T(W_{sc} - \bar{W}_1)$, we find that 
+We will use Proposition \ref{cl6} which is proved later in this section. To apply it, we let $\Omega = I$, $Z = \check{X}_{A=1}$, and $v = \bar{W}_0$. Using  $\check{X}_{sc} = \bar{W}_1 + \check{\kappa}^T(W_{sc} - \bar{W}_1)$, we find that 
 \begin{align}
     \nonumber \mu & = \frac{1}{n_Q} \sum_{sc \in Q} \check{X}_{sc} \\
     \label{eqn:cl9.mu} & = \bar{W}_1 + \check{\kappa}^T(\bar{W}_Q - \bar{W}_1),
@@ -416,10 +438,20 @@ where \eqref{eqn:cl9.proof1} uses the expression for $\check{\gamma}$ given by (
 It can be seen that terms (i), (ii), and (iii) each go to zero if $S_{XW_Q} \to S_X$, $S_{W_Q} \to S_W$, and $\bar{X}_Q \to \bar{X}_1$, proving the result. 
 \end{proof}
 
+\begin{proof}[Proof of Propositions \ref{cl7} and \ref{cl7hsbw}]
+   It can be seen that the derivation of \eqref{eqn:sbwregcalerror} holds for the H-SBW weights $\hat{\gamma}^{hsbw}$ (which also equal SBW if $\rho=0$), and by similar steps it can be shown that 
+    
+    \begin{align*}
+        \hat{\psi}^{1, hsbw}_0 - \psi^1_0 = \sum_{sc: A_{sc} = 1}\hat{\gamma}^{hsbw}_{sc}(X_{sc} - \tilde{X}_{sc}^\star)^T\beta_1
+    \end{align*}
+Conditional on $W$, $\hat{\gamma}_{sc}$ is fixed and $X_{sc} - \tilde{X}_{sc}^*$ equals $X_{sc} - \mathbb{E}[X_{sc}|W, A=1]$ which has mean zero, proving the result.
+\end{proof}
+
+
 \begin{proof}[Proof of Proposition \ref{cl4}]
 \begin{align*}
-    Var[n_t^{-1}\sum_{s: A_s = 1}\sum_{c = 1}^{p_s}\gamma_{sc}Y_{sc} \mid X_{sc}, A_{sc}] &= n_t^{-2}\sum_{s: A_s = 1}[\sum_{c = 1}^{p_s}\gamma_{sc}^2(\sigma^2_{\epsilon} + \sigma^2_{\varepsilon}) + \sum_{c \ne d}\gamma_{sc}\gamma_{sd}\sigma^2_{\varepsilon}] \\
-    &\propto \sum_{s: A_s = 1}[\sum_{c = 1}^{p_s}\gamma_{sc}^2 + \sum_{c \ne d}\rho \gamma_{sc}\gamma_{sd}]
+    \operatorname{Var}\left( n_t^{-1}\sum_{s: A_s = 1}\sum_{c = 1}^{p_s}\gamma_{sc}Y_{sc} \mid X, A\right) &= n_t^{-2}\sum_{s: A_s = 1}\sum_{c = 1}^{p_s}\gamma_{sc}^2(\sigma^2_{\epsilon} + \sigma^2_{\varepsilon}) + \sum_{c \ne d}\gamma_{sc}\gamma_{sd}\sigma^2_{\varepsilon} \\
+    &\propto \sum_{s: A_s = 1}\sum_{c = 1}^{p_s}\gamma_{sc}^2 + \sum_{c \ne d}\rho \gamma_{sc}\gamma_{sd}
 \end{align*}
 %
 where the second line follows by dividing by $\sigma^2_{\epsilon} + \sigma^2_{\varepsilon}$. By definition of the H-SBW objective, which minimizes this function for known $\rho$, the H-SBW estimator must produce the minimum conditional-on-X variance estimator within the constraint set.
@@ -455,15 +487,52 @@ so that plugging into \eqref{eq:a1.least_norm} yields
  \end{equation*}
 proving the result.
 
+%\clearpage
+
+%\begin{proof}[Max's proof idea for dependent SBW]
+%Claim: even if data are dependent, for SBW it suffices to balance on $\tilde{X}_{sc} = \mathbb{E}[X_{sc} \mid W_{sc}]$ rather than $\mathbb{E}[X_{sc} \mid W]$. (need to rewrite as a formal statement). 
+
+%Proof: Will show that $\mathbb{E}[\sum \gamma_{sc}X_{sc}] = \sum \gamma_{sc} \mathbb{E}[X_{sc} \mid W_{sc}]$ for SBW weights $\gamma$ optimized across the constraint set $\Gamma(\tilde{X}, \bar{W}_0, 0)$.
+
+%Let $S$ denote a random variable denoting which state each CPUMA belongs to such that $S = s \Leftrightarrow X_i = X_{sc}$ where $c$ is an arbitrary index of CPUMAs within states. Therefore that $(X_i \mid S = s) = X_{sc}$. Moreover, assume that $X_{sc} \mid S = s \stackrel{iid}\sim N(\mu_s, \Sigma)$. Recall that $W_{sc} \mid X_{sc} \stackrel{iid}\sim N(X_{sc}, \Sigma_\nu)$. Then we have that:
+
+%\begin{align*}
+%    \mathbb{E}[\sum_{i=1}^{n_1} \gamma_iX_i] &= \mathbb{E}[\sum_{i=1}^{n_1} \mathbb{E}[\gamma_iX_i \mid S]] \\
+%    &= \mathbb{E}[\sum_{i=1}^{n_1} \mathbb{E}[\mathbb{E}[\gamma_iX_i \mid W, S] \mid S]] \\
+%    &= \mathbb{E}[\sum_{i=1}^{n_1} \mathbb{E}[\mathbb{E}[\gamma_iX_i \mid W_i, S] \mid S]] \\ %bc W are iid given S 
+%    &= \mathbb{E}[\sum_{i=1}^{n_1} \mathbb{E}[\mathbb{E}[\gamma_iX_i \mid W_i] \mid S]] \\ %bc optimization doesn't depend on S
+%    &= \mathbb{E}[\sum_{i=1}^{n_1} \mathbb{E}[\gamma_i\mathbb{E}[X_i \mid W_i] \mid S]] \\
+%    &= \mathbb{E}[\sum_{i=1}^{n_1} \mathbb{E}[\gamma_i\mathbb{E}[X_i \mid W_i]] \\
+%\end{align*}
+
+%In the case of SBW we have that $\mathbb{E}[\gamma \mid S] = \mathbb{E}[\gamma]$ (by noting that $S$ is not an input to the SBW objective):
+
+%\begin{align*}
+%    \implies \mathbb{E}[\sum_{i=1}^{n_1} \mathbb{E}[\gamma_i\mathbb{E}[X_i \mid W_i] \mid S]] &= %\mathbb{E}[\sum_{i=1}^{n_1} \gamma_i\mathbb{E}[\mathbb{E}[X_i \mid W_i] \mid S] \\
+%    &= \mathbb{E}[\sum_{i=1}^{n_1} \gamma_{i}\mathbb{E}[X_i \mid W_i]] \\
+%\end{align*}
+
+%More generally let $S$ denote a variable satisfying $X_i \mid S_i \stackrel{iid}\sim N(S_i, \Sigma)$. The logic above still holds.
+
+%This concludes the proof. Notice that for H-SBW:
+
+%\begin{align*}
+%    \mathbb{E}[\sum_{i=1}^{n_1} \gamma_iX_i] &= \mathbb{E}[\sum_{i=1}^{n_1} \mathbb{E}[\gamma_iX_i \mid S, W]] \\
+%    &= \mathbb{E}[\sum_{s=1}^{m_1}\sum_{c=1}^{p_s} \gamma_{sc} \mathbb{E}[X_{sc} \mid S = s, W]] \\
+%    &= \mathbb{E}[\sum_{s=1}^{m_1}\sum_{c=1}^{p_s} \gamma_{sc} \mathbb{E}[X_{sc} \mid W_s]]
+%\end{align*}
+%
+Where the second to last line holds by definition of $S$, and the final line holds because $X_{sc} \perp W_{s'c}$ for $s \ne s'$ and by again definition of $S$ (i.e. $S = s \Leftrightarrow X_i = X_{sc}$ and similarly for $W$).
+
+
+\begin{align*}
+    \mathbb{E}[\sum_{i=1}^{n_1} \gamma_iX_i] &= \mathbb{E}[\sum_{i=1}^{n_1} \mathbb{E}[\gamma_iX_i \mid W]] \\
+    &= \mathbb{E}[\sum_{s=1}^{m_1}\sum_{c=1}^{p_s} \gamma_{sc} \mathbb{E}[X_{sc} \mid S = s, W]] \\
+    &= \mathbb{E}[\sum_{s=1}^{m_1}\sum_{c=1}^{p_s} \gamma_{sc} \mathbb{E}[X_{sc} \mid W_s]]
+\end{align*}
+%
+
 \end{proof}    
     
-\begin{proof}[Proof of Proposition \ref{cl7}]
-   It can be seen that the derivation of \eqref{eqn:sbwregcalerror} holds for the H-SBW weights $\hat{\gamma}^{hsbw}$, and by similar steps it can be shown that 
-    
-    \begin{align*}
-        \hat{\psi}^{1, hsbw}_0 - \psi^1_0 = \sum_{sc: A_{sc} = 1}\hat{\gamma}^{hsbw}_{sc}(X_{sc} - \tilde{X}_{sc}^\star)^T\beta_1
-    \end{align*}
-Conditional on $W$, $\hat{\gamma}_{sc}$ is fixed and $X_{sc} - \tilde{X}_{sc}^*$ equals $X_{sc} - \mathbb{E}[X_{sc}|W, A=1]$ which has mean zero, proving the result.
-\end{proof}
 
 

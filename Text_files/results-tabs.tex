@@ -1,6 +1,14 @@
 \section{Additional Results}\label{app:allresults}
 
+This section contains additional results that were not displayed in the main paper.
+
 Table~\ref{tab:pretxpredfull} presents the full model validation results that also include estimators using the Oaxaca-Blinder OLS and GLS weights (see, e.g, \cite{kline2011oaxaca}), with the rows ordered by RMSE of the prediction errors. We find in general that these estimators perform quite poorly, again showing that the cost of extrapolation is quite high in our application. We see some particularly extreme numbers for the error using the heterogeneous adjustment in 2012: one reason for this may be because in practice that the heterogeneous adjustment is more likely to impute values that fall outside of the support of the data. In some cases we have found that these imputations are quite extreme. The estimators that extrapolate from the data are then more likely to fit to these values, leading to poor estimator performance overall. This result makes the heterogeneous adjustment potentially less desirable, particularly for estimators that allow extrapolation.
+
+Table~\ref{tab:confintmain} displays the point estimates and confidence intervals from all estimators we considered, including those using the ``heterogeneous adjustment.''
+
+Figure~\ref{fig:loostateplot} displays the change in our estimator when removing each state for all four of our estimators on the adjusted dataset (``homogeneous'') and the unadjusted dataset (``unadjusted'') for the primary dataset. Figure~\ref{fig:loostateplotc2} displays the same information when excluding the early expansion states. 
+
+Our final two tables (Tables~\ref{tab:loojackknifec1} and \ref{tab:loojackknifec2}) display each point estimate associated with each estimator in the leave-one-state-out jackknife.
 
 %\begin{table}[ht]
 %\caption{Estimator pre-treatment outcome prediction error}\label{tab:pretxpredfull}
@@ -63,8 +71,6 @@ Heterogeneous & OLS & -0.85 & -22.90 & 16.21 & 0.22 & -0.50 & 0.39 \\
 \end{longtable}
 \end{table}
 
-Table~\ref{tab:confintmain} displays the point estimates and confidence intervals from all estimators. 
-
 \begin{table}[h!]
 \centering
 \begin{threeparttable}
@@ -99,8 +105,6 @@ H-SBW & Homogeneous & -2.33 (-3.47, -1.19) & 0.01 & -2.09 (-3.15, -1.03) & 0.19 
 \end{threeparttable}
 \end{table}
 
-Figure~\ref{fig:loostateplot} displays the change in our estimator when removing each state for all four of our estimators on the adjusted dataset (``homogeneous'') and the unadjusted dataset (``unadjusted'') for the primary dataset. Figure~\ref{fig:loostateplotc2} displays the same information when excluding the early expansion states. 
-
 \begin{figure}[H]
 \begin{center}
     \caption{Leave-one-state-out point estimates minus primary estimate, primary dataset}
@@ -118,9 +122,6 @@ Figure~\ref{fig:loostateplot} displays the change in our estimator when removing
 \end{center}
 \subcaption{Colors reflect the magnitude of the difference in the estimates when subtracting the original estimate from the estimate that excludes the specified state. The values in the right panel are on the unadjusted data.}
 \end{figure}
-
-
-We display each point estimate associated with each estimator in the Tables~\ref{tab:loojackknifec1} and \ref{tab:loojackknifec2}.
 
 \begin{landscape}
 \captionsetup[table]{labelformat=empty,skip=1pt}

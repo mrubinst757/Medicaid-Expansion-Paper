@@ -1,8 +1,20 @@
 \section{Summary Statistics and Covariates}\label{app:sumstats}
 
-In this section we display summary statistics about the CPUMA-level datasets, and additional details about how we derive our initial (unadjusted) covariate estimates. The first two tables pertain to treatment assignment classifications within the dataset. Table~\ref{tab:txassign} lists the states that are in each group: the first two columns include the treatment states and control states in our primary analysis. The third column lists the treatment states for our sensitivity analysis that excludes ``early expansion'' states. The final column indicates states that were always excluded from the analysis. Table~\ref{tab:cpumasperstate} displays the total number of CPUMAs per state, as well as a column reiterating the state's treatment assignment and whether it was an early expansion state.
+In this section we display summary statistics about the CPUMA-level datasets. 
 
-The following tables display summary information about the expansion state data and the covarite adjustments detailed in Appendix~\ref{app:adjustmentdetails}. Table~\ref{tab:summarytab1} displays univariate summary statistics for the treated CPUMAs. We display the mean, interquartile range, and the range (as defined by the maximum value minus the minimum value) for the unadjusted dataset, the heterogeneous adjustment, and the homogeneous adjustment. We see that in general the covariate adjustments reduce the variability in the data. Table~\ref{tab:extreme1} displays the overall number of CPUMAs whose adjusted values fall outside of the range of the unadjusted data. We also calculate these adjustments when leaving out each state one at a time from the primary dataset to calculate our secondary variance estimates; these results are available on request. We conclude by providing more extensive details on how we derive CPUMA-level estimates from the ACS microdata.
+The first two tables pertain to treatment assignment classifications. Table~\ref{tab:txassign} lists the states that are assigned to each group: the first two columns include the treatment states and control states in our primary analysis. The third column lists the treatment states for our sensitivity analysis that excludes ``early expansion'' states. The final column indicates states that were always excluded from the analysis. 
+
+Table~\ref{tab:cpumasperstate} displays the total number of CPUMAs per state, as well as a column reiterating the state's treatment assignment and whether it was an early expansion state.
+
+The subsequent tables and figure display summary information about the expansion state data and the covariate adjustments detailed in Appendix~\ref{app:adjustmentdetails}. 
+
+Table~\ref{tab:summarytab1} displays univariate summary statistics for the treated CPUMAs. Specifically, the table displays mean, interquartile range, and the range (as defined by the maximum value minus the minimum value) for the unadjusted dataset, the heterogeneous adjustment, and the homogeneous adjustment. We see that the covariate adjustments generally reduce the variability relative to the unadjusted data. 
+
+Table~\ref{tab:extreme1} displays the frequency that the adjusted covariates fell outside of the support of the unadjusted dataset on our primary dataset. The frequency is comparable for either adjustment and the counts are low, supporting the use of the linear covariate adjustment outlined in \eqref{eqn:regcal}. We also calculate these adjustments excluding early expansion states; among both sets of sets, we also recalculate these adjustments excluding each state one at a time to calculate our variance estimates. These results are available on request. 
+
+Table~\ref{tab:timetrends} displays the trends in the outcome over time by treatment group. We use these estimates to compute the difference-in-differences estimator of the ETT in note \ref{footnote_did}. 
+
+Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset (including both treated and untreated units). We caution that these point estimates may be biased due to the measurement error in the covariates. Nevertheless, this matrix is useful for at least two reasons: first, assuming the correlations among the treated and untreated units are similar, the more heavily correlated the data the easier it should be to attain covariate balance (see, e.g., \cite{d2021overlap}). This matrix gives a general sense of how correlated the data are, even if the estimates are biased. Second, these correlations can suggest potential confounders by revealing which variables are most heavily associated with treatment assignment and the pre-treatment outcomes. For example, the plot shows a strong association between Republican governance and treatment, and a smaller association with pre-treatment outcomes. We can also examine associations between the variables and pre-treatment outcomes to get a sense of which variables may be important to the outcome model: for example, the plot shows strong associations between the pre-treatment uninsurance rates, though they are more weakly associated with treatment assignment. 
 
 \begin{table}[h!]
 \centering
@@ -17,8 +29,8 @@ AR, AZ, CA, CO, CT, HI, IA, IL, KY, MD, MI$^\textrm{a}$, MN, ND, NJ, NM, NV, OH,
      \vspace{1ex}
 
      {\raggedright $^\textrm{a}$ Expanded April 2014 \par \\
-    \raggedright $^\textrm{b}$ Excludes CA, CT, MN, NJ, WA \par \\
-     \raggedright $^\textrm{c}$ Expanded September 2014; included for adjustment estimates but not as a possible weight donor \par \\
+     \raggedright $^\textrm{b}$ Excludes CA, CT, MN, NJ, WA \par \\
+     \raggedright $^\textrm{c}$ Expanded September 2014; included for covariate adjustment estimates but not as a possible weight donor for treatment effect estimates \par \\
     \raggedright $^\textrm{d}$ Comparable coverage policies prior to 2014 \par}
 %\end{tabular}
 \end{table}
@@ -89,7 +101,7 @@ Delaware & DE & Excluded &   4 & No \\
 \caption{Univariate summary statistics on adjusted data \\ (Mean, IQR, Range)}\label{tab:summarytab1}
 \begin{tabular}{rllll}
   \hline
-Variable & No adjustment & Heterogeneous & Homogeneous \\ 
+Variable & Unadjusted & Heterogeneous & Homogeneous \\ 
   \hline
   Age: 19-29 Pct & (24.5, 6, 30.9) & (24.5, 5.9, 29) & (24.5, 5.9, 29) \\ 
   Age: 30-39 Pct & (20.9, 3.4, 20.9) & (20.9, 3.1, 19.1) & (20.9, 3.1, 19.4) \\ 
@@ -129,11 +141,9 @@ Student Pct & (11.7, 3.4, 29.5) & (11.7, 3.5, 28.1) & (11.7, 3.5, 28) \\
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:extreme1} displays the frequency that the adjusted covariates fell outside of the support of the unadjusted dataset for the treatment data. We see that that frequency is comparable for either adjustment and the counts are low. We also note that these tables include 4 CPUMAs from New Hampshire that we include when conducting the covariate adjustment procedure; however, we exclude New Hampshire from the pool of treated states when computing our weights.
-
 \begin{table}[h!]
 \centering
-    \caption{Frequency of ``extreme'' covariate adjustments}
+    \caption{Frequency of covariate adjustments falling outside the support of the unadjusted data}
     \label{tab:extreme1}
 \begin{tabular}{lll}
   \hline
@@ -173,8 +183,6 @@ Age: 19-29 Pct & 0 & 0 \\
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:timetrends} displays the trends in the outcome over time by treatment group. We use these estimates to compute the difference-in-differences estimator of the ETT in note \ref{footnote_did}. 
-
 \begin{table}[ht]
 \centering
 \caption{Mean uninsurance rates over time}\label{tab:timetrends}
@@ -189,8 +197,6 @@ Non-expansion & 21.84 & 22.97 & 22.72 & 22.41 & 22.01 & 19.07 \\
 \end{tabular}
 \end{table}
 
-Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset (including both treated and untreated units). We caution that these point estimates may be biased due to the measurement error in the covariates. Nevertheless, this matrix is useful for at least two reasons: first, assuming the correlations among the treated and untreated units are similar, the more heavily correlated the data the easier it should be to attain covariate balance (see, e.g., \cite{d2021overlap}). This matrix gives a general sense of how correlated the data are, even if the estimates are biased. Second, these correlations can suggest potential confounders by revealing which variables are most heavily associated with treatment assignment and the pre-treatment outcomes. For example, the plot shows a strong association between Republican governance and treatment, and a smaller association with pre-treatment outcomes. We can also examine associations between the variables and pre-treatment outcomes to get a sense of which variables may be important to the outcome model: for example, the plot shows strong associations between the pre-treatment uninsurance rates, though they are more weakly associated with treatment assignment. 
-
 \begin{figure}[h!]
 \begin{center}
     \caption{Correlation matrix: full data, unadjusted covariates}
@@ -198,7 +204,5 @@ Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for 
     \includegraphics[scale=0.25]{01_Plots/correlation-plot-c1-sigma-zero.png}
 \end{center}
 \end{figure}
-
-We conclude by detailing our initial (unadjusted) covariate estimation procedure using the ACS microdata. Because we are ultimately interested in calculating rates, each variable includes both numerator and denominator counts. For each CPUMA we estimate: the total non-elderly adult population for each year 2011-2014; the total labor force population (among non-elderly adults) for each year 2011-2013; and the total number of households averaged from 2011-2013. We also construct an average of the total non-elderly adult population from 2011-2013. These are our denominator variables. For our numerator counts, we estimate the total number of: females; whites; people of Hispanic ethnicity; people born outside of the United States; citizens; people with disabilities; married individuals; students; people with less than a high school education, high school degrees, some college, or college graduates or higher; people living under 138 percent of the FPL, between 139 and 299 percent, 300 and 499 percent, more than 500 percent, and who did not respond to the income survey question; people aged 19-29, 30-39, 40-49, 50-64; households with one, two, or three or more children, and households that did not respond about the number of children. We average these estimated counts from 2011-2013. For each individual year from 2011-2013, we then estimate the total number of people who were unemployed and uninsured at the time of the survey (calculated among all non-elderly adults and all non-elderly adults within the labor force, respectively). We divide the numerator totals by the corresponding denominator totals to estimate the percentage in each category. For the demographics, these include the average number of non-elderly adults from 2011-2013. For the time-varying variables, we use the corresponding year (where uninsurance rates are calculated as a fraction of the labor force rather than the non-elderly adult population). We also calculate the average non-elderly adult population growth and the average number of households to adults across 2011-2013. 
 
 \clearpage
