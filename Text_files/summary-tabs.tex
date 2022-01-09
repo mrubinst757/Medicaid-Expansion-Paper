@@ -6,15 +6,15 @@ The first two tables pertain to treatment assignment classifications. Table~\ref
 
 Table~\ref{tab:cpumasperstate} displays the total number of CPUMAs per state, as well as a column reiterating the state's treatment assignment and whether it was an early expansion state.
 
-The subsequent tables and figure display summary information about the expansion state data and the covariate adjustments detailed in Appendix~\ref{app:adjustmentdetails}. 
+The subsequent tables and figure display summary information about the expansion state data and the homogeneous and heterogeneous covariate adjustments detailed in Appendix~\ref{app:adjustmentdetails}. 
 
 Table~\ref{tab:summarytab1} displays univariate summary statistics for the treated CPUMAs. Specifically, the table displays mean, interquartile range, and the range (as defined by the maximum value minus the minimum value) for the unadjusted dataset, the heterogeneous adjustment, and the homogeneous adjustment. We see that the covariate adjustments generally reduce the variability relative to the unadjusted data. 
 
-Table~\ref{tab:extreme1} displays the frequency that the adjusted covariates fell outside of the support of the unadjusted dataset on our primary dataset. The frequency is comparable for either adjustment and the counts are low, supporting the use of the linear covariate adjustment outlined in \eqref{eqn:regcal}. We also calculate these adjustments excluding early expansion states; among both sets of sets, we also recalculate these adjustments excluding each state one at a time to calculate our variance estimates. These results are available on request. 
+Table~\ref{tab:extreme1} displays the frequency that the adjusted covariates fell outside of the support of the unadjusted dataset on our primary dataset. The frequency is comparable for either adjustment and the counts are low, supporting the use of the linear model outlined in \eqref{eqn:regcal}. We also calculate these adjustments excluding early expansion states; among both sets of sets, we also recalculate these adjustments excluding each state one at a time to calculate our variance estimates. These results are available on request. 
 
 Table~\ref{tab:timetrends} displays the trends in the outcome over time by treatment group. We use these estimates to compute the difference-in-differences estimator of the ETT in note \ref{footnote_did}. 
 
-Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset (including both treated and untreated units). We caution that these point estimates may be biased due to the measurement error in the covariates. Nevertheless, this matrix is useful for at least two reasons: first, assuming the correlations among the treated and untreated units are similar, the more heavily correlated the data the easier it should be to attain covariate balance (see, e.g., \cite{d2021overlap}). This matrix gives a general sense of how correlated the data are, even if the estimates are biased. Second, these correlations can suggest potential confounders by revealing which variables are most heavily associated with treatment assignment and the pre-treatment outcomes. For example, the plot shows a strong association between Republican governance and treatment, and a smaller association with pre-treatment outcomes. We can also examine associations between the variables and pre-treatment outcomes to get a sense of which variables may be important to the outcome model: for example, the plot shows strong associations between the pre-treatment uninsurance rates, though they are more weakly associated with treatment assignment. 
+Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset (including both treated and untreated units). We caution that these point estimates may be biased due to the measurement error in the covariates. Nevertheless, this matrix is useful for at least two reasons: first, assuming the correlations among the treated and untreated units are similar, the more heavily correlated the data the easier it should be to attain covariate balance (see, e.g., \cite{d2021overlap}). This matrix gives a general sense of how correlated the data are, even if the estimates are biased. Second, these correlations can suggest potential confounders by revealing which variables are most heavily associated with treatment assignment and the pre-treatment outcomes. For example, the plot shows a strong association between Republican governance and treatment assignment, and a smaller association between these variables with pre-treatment outcomes. The plot also illustrates strong associations between the pre-treatment uninsurance rates, though they are more weakly associated with treatment assignment. 
 
 \begin{table}[h!]
 \centering
@@ -44,6 +44,7 @@ State Full & State & Treatment & Number CPUMAs & Early Expansion \\
   \hline
 Delaware & DE & Excluded &   4 & No \\ 
   Massachusetts & MA & Excluded &  15 & No \\ 
+    New Hampshire & NH & Excluded $^\textrm{a}$ &   4 & No \\ 
   New York & NY & Excluded & 123 & No \\ 
   Vermont & VT & Excluded &   4 & No \\ 
   Arizona & AZ & Expansion &  11 & No \\ 
@@ -56,7 +57,6 @@ Delaware & DE & Excluded &   4 & No \\
   Maryland & MD & Expansion &  36 & No \\ 
   Michigan & MI & Expansion &  44 & No \\ 
   Nevada & NV & Expansion &   7 & No \\ 
-  New Hampshire & NH & Expansion &   4 & No \\ 
   New Mexico & NM & Expansion &   6 & No \\ 
   North Dakota & ND & Expansion &   2 & No \\ 
   Ohio & OH & Expansion &  44 & No \\ 
@@ -94,6 +94,9 @@ Delaware & DE & Excluded &   4 & No \\
   Wyoming & WY & Non-expansion &   2 & No \\ 
    \hline
 \end{tabular}
+     \vspace{1ex}
+     
+     {\raggedright $^\textrm{a}$ Included for covariate adjustment estimates but not as a possible weight donor for treatment effect estimates \par }
 \end{table}
 
 \begin{table}[h!]
@@ -126,9 +129,9 @@ Variable & Unadjusted & Heterogeneous & Homogeneous \\
   Inc Pov: 500 + Pct & (29.3, 18.5, 69.1) & (29.3, 18.5, 68.1) & (29.3, 18.5, 68) \\ 
   Married Pct & (50.7, 9.4, 45.1) & (50.7, 9, 44.1) & (50.7, 9.1, 44.2) \\ 
   Race: White Pct & (73.8, 25.4, 91.9) & (73.8, 25.5, 91.7) & (73.8, 25.5, 91.8) \\ 
-  Republican Governor 2013 & (31.1, 100, 100) & (31.1, 100, 100) & (31.1, 100, 100) \\ 
-  Republican Lower Leg Control 2013 & (24.1, 0, 100) & (24.1, 0, 100) & (24.1, 0, 100) \\ 
-  Republican Total Control 2013 & (19.8, 0, 100) & (19.8, 0, 100) & (19.8, 0, 100) \\ 
+  Republican Governor 2013 $^\textrm{a}$& (31.1, 100, 100) & (31.1, 100, 100) & (31.1, 100, 100) \\ 
+  Republican Lower Leg Control 2013 $^\textrm{a}$ & (24.1, 0, 100) & (24.1, 0, 100) & (24.1, 0, 100) \\ 
+  Republican Total Control 2013 $^\textrm{a}$ & (19.8, 0, 100) & (19.8, 0, 100) & (19.8, 0, 100) \\ 
 Student Pct & (11.7, 3.4, 29.5) & (11.7, 3.5, 28.1) & (11.7, 3.5, 28) \\ 
   Unemployed Pct 2011 & (10.2, 4.6, 25.5) & (10.2, 3.9, 23.8) & (10.2, 3.9, 22.5) \\ 
   Unemployed Pct 2012 & (9.4, 4.5, 28.3) & (9.4, 4.3, 23.6) & (9.4, 4.3, 23.5) \\ 
@@ -136,9 +139,14 @@ Student Pct & (11.7, 3.4, 29.5) & (11.7, 3.5, 28.1) & (11.7, 3.5, 28) \\
   Uninsured Pct 2011 & (19.6, 11.2, 59) & (19.7, 10.9, 51.8) & (19.6, 10.9, 52.5) \\ 
   Uninsured Pct 2012 & (19.4, 9.9, 50.6) & (19.4, 10.1, 49.7) & (19.4, 10.3, 50.2) \\ 
   Uninsured Pct 2013 & (19, 11.2, 49.9) & (19, 10.3, 48.2) & (19, 10.5, 48.7) \\ 
-  Urban Pct & (82.9, 31.3, 91.3) & (82.9, 31.3, 91.3) & (82.9, 31.3, 91.3) \\ 
+  Urban Pct $^\textrm{b}$ & (82.9, 31.3, 91.3) & (82.9, 31.3, 91.3) & (82.9, 31.3, 91.3) \\ 
    \hline
 \end{tabular}
+     \vspace{1ex}
+     
+     {\raggedright $^\textrm{a}$ Derived from National Conference of State Legislatures \par
+     $^\textrm{b}$ Derived from 2010 Census \par
+     }
 \end{table}
 
 \begin{table}[h!]

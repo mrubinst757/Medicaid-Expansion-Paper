@@ -2,7 +2,7 @@
 
 This section contains additional results that were not displayed in the main paper.
 
-Table~\ref{tab:pretxpredfull} presents the full model validation results that also include estimators using the Oaxaca-Blinder OLS and GLS weights (see, e.g, \cite{kline2011oaxaca}), with the rows ordered by RMSE of the prediction errors. We find in general that these estimators perform quite poorly, again showing that the cost of extrapolation is quite high in our application. We see some particularly extreme numbers for the error using the heterogeneous adjustment in 2012: one reason for this may be because in practice that the heterogeneous adjustment is more likely to impute values that fall outside of the support of the data. In some cases we have found that these imputations are quite extreme. The estimators that extrapolate from the data are then more likely to fit to these values, leading to poor estimator performance overall. This result makes the heterogeneous adjustment potentially less desirable, particularly for estimators that allow extrapolation.
+Table~\ref{tab:pretxpredfull} presents the full model validation results that also include estimators using the Oaxaca-Blinder OLS and GLS weights (see, e.g, \cite{kline2011oaxaca}), with the rows ordered by RMSE of the prediction errors. We find in general that these estimators perform quite poorly, again showing that the cost of extrapolation is quite high in our application. We see some particularly extreme numbers for the error using the heterogeneous adjustment in 2012: one reason for this may be because in practice that the heterogeneous adjustment is more likely to impute values that fall outside of the support of the data. In some cases we have found that these imputations are quite extreme. The estimators that extrapolate from the data are then more likely to fit negative weights to these values, leading to poor performance. This shows that the heterogeneous adjustment is potentially less desirable, particularly when used in combination with estimators that allow extrapolation.
 
 Table~\ref{tab:confintmain} displays the point estimates and confidence intervals from all estimators we considered, including those using the ``heterogeneous adjustment.''
 
@@ -84,23 +84,23 @@ Heterogeneous & OLS & -0.85 & -22.90 & 16.21 & 0.22 & -0.50 & 0.39 \\
   \hline
 Weight type & Adjustment & Estimate (95\% CI) & Difference & Estimate (95\% CI) & Difference \\ 
   \hline
-H-SBW & Homogeneous & -2.33 (-3.47, -1.19) & 0.01 & -2.09 (-3.15, -1.03) & 0.19 \\ 
-  H-SBW & Heterogeneous & -2.24 (-3.4, -1.08) & 0.10 & -2.06 (-3.26, -0.87) & 0.22 \\ 
-  H-SBW & None & -2.34 (-2.85, -1.82) & - & -2.28 (-2.82, -1.74) & - \\ 
-  BC-HSBW & Homogeneous & -2.05 (-3.22, -0.87) & 0.17 & -1.94 (-3.17, -0.72) & 0.28 \\ 
-  BC-HSBW & Heterogeneous & -1.98 (-3.13, -0.83) & 0.24 & -1.93 (-3.42, -0.45) & 0.29 \\ 
-  BC-HSBW & None & -2.22 (-2.87, -1.56) & - & -2.22 (-3.07, -1.38) & - \\ 
-  SBW & Homogeneous & -2.35 (-3.67, -1.03) & 0.04 & -2.05 (-3.1, -1.00) & 0.16 \\ 
-  SBW & Heterogeneous & -2.28 (-3.50, -1.05) & 0.11 & -2.03 (-3.24, -0.82) & 0.18 \\ 
-  SBW & None & -2.39 (-2.95, -1.83) & - & -2.21 (-2.71, -1.72) & - \\ 
-  BC-SBW & Homogeneous & -2.07 (-3.07, -1.06) & 0.13 & -1.99 (-3.22, -0.77) & 0.23 \\ 
-  BC-SBW & Heterogeneous & -2.00 (-3.00, -0.99) & 0.20 & -2.00 (-3.52, -0.47) & 0.23 \\ 
-  BC-SBW & None & -2.19 (-2.90, -1.49) & - & -2.23 (-3.05, -1.40) & - \\ 
+H-SBW & Homogeneous & -2.33 (-3.54, -1.11) & 0.01 & -2.09 (-3.24, -0.94) & 0.19 \\ 
+  H-SBW & Heterogeneous & -2.24 (-3.47, -1.00) & 0.10 & -2.06 (-3.36, -0.77) & 0.22 \\ 
+  H-SBW & None & -2.34 (-2.88, -1.79) & - & -2.28 (-2.87, -1.70) & - \\ 
+  BC-HSBW & Homogeneous & -2.05 (-3.30, -0.80) & 0.17 & -1.94 (-3.27, -0.61) & 0.28 \\ 
+  BC-HSBW & Heterogeneous & -1.98 (-3.21, -0.75) & 0.24 & -1.93 (-3.55, -0.32) & 0.29 \\ 
+  BC-HSBW & None & -2.22 (-2.91, -1.52) & - & -2.22 (-3.14, -1.31) & - \\ 
+  SBW & Homogeneous & -2.35 (-3.76, -0.95) & 0.04 & -2.05 (-3.19, -0.91) & 0.16 \\ 
+  SBW & Heterogeneous & -2.28 (-3.58, -0.98) & 0.11 & -2.03 (-3.35, -0.72) & 0.18 \\ 
+  SBW & None & -2.39 (-2.99, -1.79) & - & -2.21 (-2.75, -1.68) & - \\ 
+  BC-SBW & Homogeneous & -2.07 (-3.14, -1.00) & 0.13 & -1.99 (-3.33, -0.66) & 0.23 \\ 
+  BC-SBW & Heterogeneous & -2.00 (-3.07, -0.92) & 0.20 & -2.00 (-3.65, -0.34) & 0.23 \\ 
+  BC-SBW & None & -2.19 (-2.94, -1.45) & - & -2.23 (-3.12, -1.33) & - \\ 
    \hline
 \end{tabular}
     \begin{tablenotes}
       \item[] Note: ``Difference'' column reflects difference between adjusted and unadjusted estimators
-        \item[] Note: Confidence intervals are estimated using the leave-one-state-out jackknife and the standard normal quantiles.
+        \item[] Note: Confidence intervals are estimated using the leave-one-state-out jackknife and quantiles from t-distribution with $m_1 - 1$ degrees of freedom.
     \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -160,6 +160,9 @@ WV & -2.07 & -2.07 & -2.34 & -2.36 & -2.00 & -2.01 & -2.24 & -2.29 & -2.23 & -2.
  \hline
 \end{longtable}
 %\end{tabular}
+\begin{tablenotes}
+  Note: Row labeled ``All'' reflects the original estimate
+\end{tablenotes}
 \end{table}
 
 \captionsetup[table]{labelformat=empty,skip=1pt}
@@ -190,8 +193,10 @@ RI & -2.00 & -2.06 & -2.07 & -2.03 & -2.00 & -2.05 & -2.08 & -2.01 & -2.25 & -2.
 WV & -1.95 & -1.99 & -2.11 & -2.04 & -1.91 & -1.98 & -2.07 & -2.03 & -2.24 & -2.24 & -2.29 & -2.22 \\ 
  \hline
 \end{longtable}
+\begin{tablenotes}
+  Note: Row labeled ``All'' reflects the original estimate
+\end{tablenotes}
 \end{table}
-
 \end{landscape}
 
 \clearpage

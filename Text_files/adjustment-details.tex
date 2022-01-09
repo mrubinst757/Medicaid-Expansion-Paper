@@ -1,6 +1,6 @@
 \section{Covariate and Adjustment Details}\label{app:adjustmentdetails}
 
-We detail our estimation of the observed covariates $W$ and our adjusted covariates $\hat{X}$. 
+In this section we detail our estimation of the observed covariates $W$ and our adjusted covariates $\hat{X}$. 
 
 \subsection{Unadjusted covariate estimates}
 
@@ -8,7 +8,7 @@ To estimate our CPUMA-level covariates $W$ using the ACS microdata, we require e
 
 \subsection{Covariate adjustment}
 
-We now provide additional details about estimating $\tilde{X}$. We begin by estimating the unpooled unit-level covariance matrices $\Sigma_{\nu, sc}^{\text{raw}}$, the sampling variability for each CPUMA among the treated units, by using the individual replicate survey weights to generate $b = 80$ additional CPUMA-level datasets. We then compute:
+We provide additional details about estimating $\tilde{X}$. We begin by estimating the unpooled unit-level covariance matrices $\Sigma_{\nu, sc}^{\text{raw}}$, the sampling variability for each CPUMA among the treated units, by using the individual replicate survey weights to generate $b = 80$ additional CPUMA-level datasets. We then compute:
 
 \begin{equation}
 \hat{\Sigma}_{\nu, sc}^{\text{raw}} = \frac{4}{80}\sum_{b=1}^{80}(W_{b, sc} - \bar{W}_{sc})(W_{b, sc} - \bar{W}_{sc})^T
@@ -31,35 +31,35 @@ Define
 Notice that $\hat{\kappa}$ is a matrix of estimated coefficients of a linear regressions of the (unobserved) matrix $X_{sc}$ on (observed) matrix $W_{sc}$. We can then estimate $\mathbb{E}[X_{sc} \mid W_{sc}, A_{sc} = 1]$ using: 
 
 \begin{equation}\label{eqn:homogeneousadjustment}
-\hat{X}_{sc} = \hat{\mathbb{E}}[X_{sc} \mid W_{sc}, A_{sc}] = \bar{W}_1 + \hat{\kappa}^T(W_{sc} - \bar{W}_1) \forall sc: A_{sc} = 1
+\hat{X}_{sc} = \hat{\mathbb{E}}[X_{sc} \mid W_{sc}, A_{sc} = 1] = \bar{W}_1 + \hat{\kappa}^T(W_{sc} - \bar{W}_1) \forall sc: A_{sc} = 1
 \end{equation}
 
 We call this the ``homogeneous adjustment'' and denote the corresponding set of units in \eqref{eqn:homogeneousadjustment} $\hat{X}_{A=1}^{hom}$. This adjustment approximately aligns with the adjustments suggested by \cite{carroll2006measurement} and \cite{gleser1992importance}. This estimator for $\tilde{X}$ is consistent for $\mathbb{E}[X \mid W, A]$ if we assume, for example, that the measurement errors are homoskedastic (see, e.g., $\Sigma_{\nu, sc} = \Sigma_{\nu}$).\footnote{We can theoretically weaken this assumption to still obtain a consistent estimate (see, e.g., \cite{buonaccorsi2010measurement}).}
 
-To potentially improve upon this procedure, we also consider a second estimate that we call the ``heterogeneous adjustment.'' This adjustment accounts for the fact that some regions with large populations are estimated quite precisely, while regions with small populations are estimated much less precisely (additionally, for a given CPUMA, some covariates are measured using three years of data, and others only one). For this adjustment we model an individual-level $\Sigma_{\nu, sc}$ as a function of the sample sizes used to estimate each covariate. We call this $\Sigma_{\nu, sc}^m$ with the super-script $m$ denoting that this an individual-level covariance matrix that is assumed to come from a common model. 
+To potentially improve upon this procedure, we also consider a second estimate that we call the ``heterogeneous adjustment.'' This adjustment accounts for the fact that some regions with large populations are estimated quite precisely, while regions with small populations are estimated much less precisely (additionally, for a given CPUMA, some covariates are measured using three years of data, and others only one). For this adjustment we model an individual-level $\Sigma_{\nu, sc}$ as a function of the sample sizes used to estimate each covariate. 
 
-Specifically, let $s_{sc}$ be the q-dimensional vector of the sample sizes used to estimate each covariate value for a given CPUMA. Let $\odot$ reflect the Hadamard product, and $\oslash$ reflect Hadamard division. We assume that $\sqrt{s_{sc}} \odot \nu_{sc} \mid A_{sc} = 1 \sim N(0, \Sigma_{\nu})$. Let $S_{sc} = \sqrt{s_{sc}}\sqrt{s_{sc}}^T$. We then know that $\Sigma_{\nu, sc}^m = \Sigma_{\nu} \oslash S_{sc}$.
+Specifically, let $s_{sc}$ be the q-dimensional vector of the sample sizes used to estimate each covariate value for a given CPUMA. Let $\odot$ reflect the Hadamard product, and $\oslash$ reflect Hadamard division. We assume that $\sqrt{s_{sc}} \odot \nu_{sc} \mid A_{sc} = 1 \sim N(0, \Sigma_{\nu})$. Let $S_{sc} = \sqrt{s_{sc}}\sqrt{s_{sc}}^T$. We then know that $\Sigma_{\nu, sc} = \Sigma_{\nu} \oslash S_{sc}$.
 
-To estimate $\Sigma_{\nu, sc}^m$, we first pool our initial estimates of the CPUMA-level covariance matrices $\hat{\Sigma}_{\nu, sc}$ to generate $\hat{\Sigma}_{\nu} = n_1^{-1}\sum_{sc: A_s = 1} \matr{S}_{sc} \circ \hat{\Sigma}_{\nu, sc}$. We estimate $\hat{\Sigma}_{\nu, sc}^m = \hat{\Sigma}_{\nu} \oslash S_{sc}$. Using the same estimate of $\hat{\Sigma}_X$ as before, we calculate $\hat{\kappa}_{sc} = (\hat{\Sigma}_{X} + \hat{\Sigma}_{\nu, sc}^m)^{-1}\hat{\Sigma}_X$, which we use to estimate the heterogeneous adjustment. We call the corresponding set of estimates that use this adjustment $\hat{X}_{A=1}^{het}$.
+To estimate $\Sigma_{\nu, sc}^m$, we first pool our initial estimates of the CPUMA-level covariance matrices $\hat{\Sigma}_{\nu, sc}$ to generate $\hat{\Sigma}_{\nu} = n_1^{-1}\sum_{sc: A_s = 1} \matr{S}_{sc} \circ \hat{\Sigma}_{\nu, sc}$. We estimate $\hat{\Sigma}_{\nu, sc} = \hat{\Sigma}_{\nu} \oslash S_{sc}$. Using the same estimate of $\hat{\Sigma}_X$ as before, we calculate $\hat{\kappa}_{sc} = (\hat{\Sigma}_{X} + \hat{\Sigma}_{\nu, sc})^{-1}\hat{\Sigma}_X$, which we use to estimate the heterogeneous adjustment. We call the corresponding set of estimates that use this adjustment $\hat{X}_{A=1}^{het}$.
 
 This adjustment accounts for CPUMA-level variability in the measurement error, and should more greatly affect outlying values of imprecisely estimated covariates, while leaving precisely estimated covariates closer to their observed value in the dataset. Moreover, unlike using the original individual-level CPUMA estimates $\hat{\Sigma}_{\nu, sc}^{\text{raw}}$, we are able to use the full efficiency of using all units in the modeling. On the other hand, this model assumes that all differences in the sampling variability are due to the sample sizes, and assumes away heterogeneity due to heteroskedasticity. In our simulation results in Appendix~\ref{app:simstudy}, we also find that this estimator leads to bias if the measurement errors are in truth homoskedastic. 
 
-As a final adjustment we can also build on the homogeneous adjustment to account for the correlation structure of the data.\footnote{We use this adjustment in the simulation study in Appendix~\ref{app:simstudy}.} To motivate this adjustment we view the entire data among the treated states $X = (X_{11}, ..., X_{1p_1}, ..., X_{sp_s})$ as reflecting a single draw from the distribution $MVN(\boldsymbol{\upsilon}_1, \mathbf{\Sigma}_X)$, where $\boldsymbol{\upsilon}_1$ is a $qn_1$ dimensional vector that repeats the $q$ dimensional vector of means $\upsilon_1$ (defined previously) $n_1$ times. Conditional on $X$, $W = (W_{11}, ..., W_{1p_1}, ..., W_{sp_s})$ reflects a single draw from the distribution $N(X, \boldsymbol{\Sigma}_{\nu})$, where $\boldsymbol{\Sigma}_{\nu}$ is a diagonal matrix with $\Sigma_{\nu}$ in the diagonals. That is, we assume that the measurement errors are drawn independently across units with constant variance matrix $\Sigma_{\nu}$.
+As a final adjustment we can also build on the homogeneous adjustment to account for the correlation structure of the data. To motivate this adjustment we view the entire data among the treated states $X = (X_{11}, ..., X_{1p_1}, ..., X_{sp_s})$ as reflecting a single draw from the distribution $MVN(\boldsymbol{\upsilon}_1, \mathbf{\Sigma}_X)$, where $\boldsymbol{\upsilon}_1$ is a $qn_1$ dimensional vector that repeats the $q$ dimensional vector of means $\upsilon_1$ (defined previously) $n_1$ times. Conditional on $X$, $W = (W_{11}, ..., W_{1p_1}, ..., W_{sp_s})$ reflects a single draw from the distribution $N(X, \boldsymbol{\Sigma}_{\nu})$, where $\boldsymbol{\Sigma}_{\nu}$ is a diagonal matrix with $\Sigma_{\nu}$ in the diagonals. That is, we assume that the measurement errors are drawn independently across units with constant variance matrix $\Sigma_{\nu}$.
 
 We then let $\Sigma_S$ represent the correlation of different CPUMAs within the same state, which we assume is constant across all CPUMAs and states. 
 
 Let $\boldsymbol{\Sigma}_W = \boldsymbol{\Sigma}_X + \boldsymbol{\Sigma}_{\nu}$. $(X, W)$ are then jointly normal with common mean $\boldsymbol{\upsilon}_1$ covariance matrix $\boldsymbol{\Sigma}$: 
 
-\begin{align*}
+\begin{align}\label{eqn:xcormodel}
 \boldsymbol{\Sigma} &= \begin{pmatrix}
 \mathbf{\Sigma}_X & \mathbf{\Sigma}_X \\
 \mathbf{\Sigma}_X & \mathbf{\Sigma}_W
 \end{pmatrix} 
-\end{align*}
+\end{align}
 
 Notice that $\mathbf{\Sigma}_X$ and $\mathbf{\Sigma}_W$ are block-diagonal matrices with $qp_s$ by $qp_s$ blocks indexed by $s$ that we denote $\Sigma_{X, s}$ and $\Sigma_{W, s}$. Each element of these matrices contains the $q$ by $q$ matrices defined previously: 
 
-\begin{align*}
+\begin{align}\label{eqn:xcormodel2}
 \Sigma_{X, s} &= \begin{pmatrix}
 \Sigma_{X}, \Sigma_{S}, ..., \Sigma_{S} \\
 \Sigma_{S}, \Sigma_{X}, ..., \Sigma_{S} \\
@@ -72,15 +72,15 @@ Notice that $\mathbf{\Sigma}_X$ and $\mathbf{\Sigma}_W$ are block-diagonal matri
 ... \\
 \Sigma_{S}, \Sigma_{S}, ..., \Sigma_{W} \\
 \end{pmatrix}
-\end{align*}
+\end{align}
 %
 where we have defined $\Sigma_{X}$, $\Sigma_{W}$, and $\Sigma_{S}$ previously. 
 Let $\boldsymbol{\kappa} = \mathbf{\Sigma_W}^{-1}\mathbf{\Sigma_X}$. We then have that by the conditional normal distribution:
 
-\begin{align*}
-    \mathbb{E}[X \mid W] &=  \boldsymbol{\upsilon}_1 + \boldsymbol{\kappa}^T(W - \boldsymbol{\upsilon}_1) \qquad \forall sc: A_{sc} = 1
-\end{align*}
+\begin{align}\label{eqn:xcoradjust}
+    \mathbb{E}[X \mid W, A = 1] &=  \boldsymbol{\upsilon}_1 + \boldsymbol{\kappa}^T(W - \boldsymbol{\upsilon}_1) \qquad \forall sc: A_{sc} = 1
+\end{align}
 
-To estimate this quantity we need only additionally generate an estimate of $\Sigma_{S}$ in addition to the previous estimates: to do this we simply average together all the within-state cross-products $\hat{\Sigma}_{S} = n_1^{-1}\sum_{s=1}^{m_1}\sum_{c\ne d}W_{sc}W_{sd}^T$. We then replace the other quantities by their empirical counterparts to generate the adjustment set $\hat{X}_{A=1}^{cor}$.
+To estimate this quantity we need only additionally generate an estimate of $\Sigma_{S}$ in addition to the previous estimates: to do this we simply average together all the within-state cross-products $\hat{\Sigma}_{S} = \frac{1}{2(n(n - 1))}\sum_{s=1}^{m_1}\sum_{c < d}W_{sc}W_{sd}^T$. We then replace the other quantities by their empirical counterparts to generate the adjustment set $\hat{X}_{A=1}^{cor}$.
 
 We do not use this adjustment for our application: in practice we find that it adds substantial variability to the observed data, predicting values that frequently fall outside of the support of the original dataset. In simulations in Appendix~\ref{app:simstudy} we find that this adjustment adds quite a bit of variability to the final estimates given a $m_1 = 25$ states. 

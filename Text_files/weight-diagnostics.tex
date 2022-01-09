@@ -1,12 +1,12 @@
 \section{Weight Diagnostics}\label{app:weightdiagnostics}
 
-We provide additional information pertaining to the generation of the balancing weights and their properties.
+This section contains additional information pertaining to the generation of the balancing weights and their properties.
 
 Table~\ref{tab:toltable} displays each covariate with the targeted level of maximal imbalance $\delta$ when generating approximate balancing weights. All variables and tolerances are measured in percentage points.
 
 Table~\ref{tab:baltab1} displays the differences between the weighted mean covariate values of the expansion region and the mean of the non-expansion region for our primary dataset and with the early expansion states excluded (calculated using our the homogeneous covariate adjustments). The weights presented here are for the H-SBW estimator. The values under each column are in the following format: (unweighted difference, weighted difference). ``Primary'' and ``Early excluded'' refer to the primary dataset and those that exclude the early expansion states. ``Percent'' indicates that the differences displayed are in percentage points while ``Standardized'' indicates that the standardized mean differences are displayed. Additional results are available on request.
 
-Figure~\ref{fig:weightsbystatec1all} shows the weights summed by states for the H-SBW, BC-HSBW, SBW, and BC-HSBW weights on the primary dataset. The positive and negative weights are displayed separately. Figure~\ref{fig:weightsbystatec2all} displays the same plot excluding the early expansion states. These plots again show that H-SBW and BC-HSBW more evenly disperses the weights across states relative to SBW and BC-SBW, and also highlights the extent to which the weights extrapolate from each state for the bias-corrected estimators.
+Figure~\ref{fig:weightsbystatec1all} shows the weights summed by states for the H-SBW, BC-HSBW, SBW, and BC-HSBW weights on the primary dataset. The positive and negative weights are displayed separately and we standardize the weights to sum to 100. Figure~\ref{fig:weightsbystatec2all} displays the same plot excluding the early expansion states. These plots again show that H-SBW and BC-HSBW more evenly disperses the weights across states relative to SBW and BC-SBW, and also highlights the extent to which the weights extrapolate from each state for the bias-corrected estimators.
 
 We conclude by examining whether the H-SBW weights generated using the unadjusted data balance the adjusted covariates. While these metrics do not reflect the ``true'' imbalances, the comparison can provide some indication of whether the unadjusted weights are overfitting to noisy covariate measurements. Table~\ref{tab:balcomp} compares the imbalances among our pre-treatment outcomes using H-SBW weights generated on our unadjusted dataset applied to the adjusted (homogeneous) dataset. The ``Unweighted Difference'' column represents the raw difference in means, while the ``Weighted Difference'' column reflects the weighted difference that we calculate on the unadjusted dataset. The ``Homogeneous Diff'' column displays the weighted imbalance when applying the H-SBW weights to the dataset using the homogeneous adjustment, and similarly for ``Heterogeneous Diff.'' The weighted pre-treatment outcomes are approximately one percentage point lower than we desired in the two years prior to treatment using the heterogeneous adjustment, and -0.2 percentage points lower on average using the homogeneous adjustment. On the other hand, the naive difference suggests that the imbalance is only -0.05 percentage points. This result suggests that the unadjusted weights are overfitting to noisy covariates and may give an overly optimistic view of the covariate balance. 
 
@@ -61,7 +61,7 @@ Uninsured Pct 2011 & 0.05 \\
 \newpage
 
 \begin{landscape}
-\begin{table}[h!]\caption{Balance table: percent and standardized mean differences, H-SBW weights \\ (Weighted difference, Unweighted difference)}\label{tab:baltab1}
+\begin{table}[h!]\caption{Balance table: percent and standardized mean differences (H-SBW weights on primary dataset, homogeneous adjustment) \\ (Weighted difference, Unweighted difference)}\label{tab:baltab1}
 \centering
 \begin{threeparttable}\begin{tabular}{lllll}
   \hline
