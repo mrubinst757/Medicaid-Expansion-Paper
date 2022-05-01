@@ -16,23 +16,21 @@ Table~\ref{tab:timetrends} displays the trends in the outcome over time by treat
 
 Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset (including both treated and untreated units). We caution that these point estimates may be biased due to the measurement error in the covariates. Nevertheless, this matrix is useful for at least two reasons: first, assuming the correlations among the treated and untreated units are similar, the more heavily correlated the data the easier it should be to attain covariate balance (see, e.g., \cite{d2021overlap}). This matrix gives a general sense of how correlated the data are, even if the estimates are biased. Second, these correlations can suggest potential confounders by revealing which variables are most heavily associated with treatment assignment and the pre-treatment outcomes. For example, the plot shows a strong association between Republican governance and treatment assignment, and a smaller association between these variables with pre-treatment outcomes. The plot also illustrates strong associations between the pre-treatment uninsurance rates, though they are more weakly associated with treatment assignment. 
 
-\begin{table}[h!]
+\begin{table}[h!]\label{tab:txassign}\caption{Treatment assignment classification}
 \centering
-\caption{Treatment assignment classification}\label{tab:txassign}
-%\begin{tabular}
-\begin{tabularx}{\textwidth}{|X|X|X|X|}  \hline
-Treated states & Control states & Treated states (early expansion excluded$^\textrm{b}$) & Always excluded \\
-  \hline
-AR, AZ, CA, CO, CT, HI, IA, IL, KY, MD, MI$^\textrm{a}$, MN, ND, NJ, NM, NV, OH, OR, RI, WA, WV & AK, AL, FL, GA, ID, IN, KS, LA, ME, MO, MS, MT, NC, NE, OK, PA, SC, SD, TN, TX, UT, VA, WI, WY & AR, AZ, CO, HI, IA, IL, KY, MD, MI, ND, NM, NV, OH, OR, RI, WV & DE$^\textrm{d}$, MA$^\textrm{d}$, NH$^\textrm{c}$, NY$^\textrm{d}$, VT^$^\textrm{d}$, DC$^\textrm{d}$ \\ 
-   \hline
-\end{tabularx}
-     \vspace{1ex}
-
-     {\raggedright $^\textrm{a}$ Expanded April 2014 \par \\
-     \raggedright $^\textrm{b}$ Excludes CA, CT, MN, NJ, WA \par \\
-     \raggedright $^\textrm{c}$ Expanded September 2014; included for covariate adjustment estimates but not as a possible weight donor for treatment effect estimates \par \\
-    \raggedright $^\textrm{d}$ Comparable coverage policies prior to 2014 \par}
-%\end{tabular}
+\hline 
+\begin{tabularx}{\textwidth}{|X|X|X|X|} \\ 
+Treated states & Control states & Treated states (early expansion excluded$^\textrm{b}$) & Always excluded \\ 
+\hline
+AR, AZ, CA, CO, CT, HI, IA, IL, KY, MD, MI$^\textrm{a}$, MN, ND, NJ, NM, NV, OH, OR, RI, WA, WV & AK, AL, FL, GA, ID, IN, KS, LA, ME, MO, MS, MT, NC, NE, OK, PA, SC, SD, TN, TX, UT, VA, WI, WY & AR, AZ, CO, HI, IA, IL, KY, MD, MI, ND, NM, NV, OH, OR, RI, WV & DE$^\textrm{d}$, MA$^\textrm{d}$, NH$^\textrm{c}$, NY$^\textrm{d}$, VT$^\textrm{d}$, DC$^\textrm{d}$\\ 
+\hline 
+\end{tabularx} {
+     \vspace{1ex} }
+     {\raggedright $^\textrm{a}$ Expanded April 2014 \par 
+     \raggedright $^\textrm{b}$ Excludes CA, CT, MN, NJ, WA \par 
+     \raggedright $^\textrm{c}$ Expanded September 2014; included for covariate adjustment estimates but not as a possible weight donor for treatment effect estimates \par 
+    \raggedright $^\textrm{d}$ Comparable coverage policies prior to 2014 
+    \par}
 \end{table}
 
 \begin{table}[ht]
@@ -95,7 +93,7 @@ Delaware & DE & Excluded &   4 & No \\
    \hline
 \end{tabular}
      \vspace{1ex}
-     
+     \newline
      {\raggedright $^\textrm{a}$ Included for covariate adjustment estimates but not as a possible weight donor for treatment effect estimates \par }
 \end{table}
 
@@ -144,7 +142,7 @@ Student Pct & (11.7, 3.4, 29.5) & (11.7, 3.5, 28.1) & (11.7, 3.5, 28) \\
 \end{tabular}
      \vspace{1ex}
      
-     {\raggedright $^\textrm{a}$ Derived from National Conference of State Legislatures \par
+     {\raggedright $^\textrm{a}$ Derived from data obtained from National Conference of State Legislatures \par
      $^\textrm{b}$ Derived from 2010 Census \par
      }
 \end{table}
