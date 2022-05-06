@@ -81,6 +81,6 @@ Let $\boldsymbol{\kappa} = \mathbf{\Sigma_W}^{-1}\mathbf{\Sigma_X}$. We then hav
     \mathbb{E}[X \mid W, A = 1] &=  \boldsymbol{\upsilon}_1 + \boldsymbol{\kappa}^T(W - \boldsymbol{\upsilon}_1)  
 \end{align}
 
-To estimate this quantity we need only additionally generate an estimate of $\Sigma_B$ in addition to the previous estimates: to do this we simply average together all the within-state cross-products $\hat{\Sigma}_{B} = \frac{1}{2(n(n - 1))}\sum_{s: A_s = 1}\sum_{c < d}W_{sc}W_{sd}^T$. We then replace the other quantities by their empirical counterparts to generate the adjustment set $\hat{X}_{A=1}^{cor}$.
+To estimate this quantity we need only additionally generate an estimate of $\Sigma_B$ in addition to the previous estimates: to do this we simply average together all the within-state cross-products $\hat{\Sigma}_{B} = \frac{1}{m}\sum_{s: A_s = 1}\frac{2}{p_s[p_s - 1]}\sum_{c < d}(W_{sc} - \bar{W})(W_{sd} - \bar{W})^T$. We then replace the other quantities by their empirical counterparts to generate the adjustment set $\hat{X}_{A=1}^{cor}$.
 
 We do not use this adjustment for our application: in practice we find that it adds substantial variability to the observed data, predicting values that frequently fall outside of the support of the original dataset. In simulations in Appendix~\ref{app:simstudy} we find that this adjustment adds quite a bit of variability to the final estimates given a $m_1 = 25$ states. 
