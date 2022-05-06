@@ -1098,6 +1098,15 @@
         \@float{table}%
     }
     {\end@float}
+
+\renewenvironment{longtable}
+    {%
+        \let\@makecaption\@maketablecaption
+        \csname starttable@hook\endcsname
+        \@float{table}%
+    }
+    {\end@float}
+
 \renewenvironment{table*}
     {%
         \let\@makecaption\@maketablecaption
