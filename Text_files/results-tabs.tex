@@ -10,38 +10,36 @@ Figure~\ref{fig:loostateplot} displays the change in our estimator when removing
 
 Our final two tables (Tables~\ref{tab:loojackknifec1} and \ref{tab:loojackknifec2}) display each point estimate associated with each estimator in the leave-one-state-out jackknife.
 
-\begin{table}
+\begin{table}\caption{Estimator pre-treatment outcome RMSE (in \% points)}\label{tab:pretxpredfullcc}
 \centering
-\begin{threeparttable}\caption{Estimator pre-treatment outcome RMSE (in \% points)}\label{tab:pretxpredfullcc}
-\begin{tabular}{llrllr}
+\begin{tabular}{llrrllrr}
 \hline
-\multicolumn{3}{c}{Primary data} & \multicolumn{3}{c}{Early expansion 
+\multicolumn{4}{c}{Primary data} & \multicolumn{4}{c}{Early expansion 
  excluded} \\ 
  \hline
-% \cmidrule(lr){1-3} \cmidrule(lr){4-6}
-Sigma estimate & Estimator & RMSE & Sigma estimate & Estimator & RMSE \\ 
+% \cmidrule(lr){1-4} \cmidrule(lr){5-8}
+Sigma estimate & Estimator & Mean Error & RMSE & Sigma estimate & Estimator & Mean Error & RMSE \\ 
 \hline
-Homogeneous & SBW & 0.20 & Homogeneous & BC-HSBW & 0.07 \\ 
-Homogeneous & H-SBW & 0.23 & Homogeneous & BC-SBW & 0.12 \\ 
-Heterogeneous & SBW & 0.27 & Heterogeneous & BC-HSBW & 0.14 \\ 
-Heterogeneous & H-SBW & 0.36 & Heterogeneous & BC-SBW & 0.15 \\ 
-Homogeneous & BC-SBW & 0.39 & Homogeneous & H-SBW & 0.25 \\ 
-Heterogeneous & BC-SBW & 0.42 & Homogeneous & SBW & 0.26 \\ 
-Unadjusted & SBW & 0.56 & Heterogeneous & SBW & 0.28 \\ 
-Unadjusted & H-SBW & 0.57 & Heterogeneous & H-SBW & 0.29 \\ 
-Homogeneous & BC-HSBW & 0.58 & Heterogeneous & GLS & 0.29 \\ 
-Heterogeneous & BC-HSBW & 0.63 & Heterogeneous & OLS & 0.39 \\ 
-Unadjusted & BC-SBW & 0.88 & Unadjusted & SBW & 0.42 \\ 
-Unadjusted & OLS & 0.88 & Unadjusted & H-SBW & 0.46 \\ 
-Unadjusted & GLS & 0.89 & Unadjusted & BC-HSBW & 0.60 \\ 
-Unadjusted & BC-HSBW & 0.96 & Unadjusted & GLS & 0.63 \\ 
-Homogeneous & OLS & 1.50 & Unadjusted & OLS & 0.71 \\ 
-Homogeneous & GLS & 1.61 & Unadjusted & BC-SBW & 0.71 \\ 
-Heterogeneous & GLS & 12.47 & Homogeneous & GLS & 0.98 \\ 
-Heterogeneous & OLS & 16.21 & Homogeneous & OLS & 1.10 \\ 
+Homogeneous & SBW & -0.20 & 0.20 & Homogeneous & BC-HSBW & -0.02 & 0.07 \\ 
+Homogeneous & H-SBW & -0.23 & 0.23 & Homogeneous & BC-SBW & -0.03 & 0.12 \\ 
+Heterogeneous & SBW & -0.27 & 0.27 & Heterogeneous & BC-HSBW & -0.08 & 0.14 \\ 
+Heterogeneous & H-SBW & -0.35 & 0.36 & Heterogeneous & BC-SBW & -0.07 & 0.15 \\ 
+Homogeneous & BC-SBW & -0.39 & 0.39 & Homogeneous & H-SBW & 0.01 & 0.25 \\ 
+Heterogeneous & BC-SBW & -0.42 & 0.42 & Homogeneous & SBW & 0.07 & 0.26 \\ 
+Unadjusted & SBW & -0.56 & 0.56 & Heterogeneous & SBW & 0.04 & 0.28 \\ 
+Unadjusted & H-SBW & -0.57 & 0.57 & Heterogeneous & H-SBW & -0.04 & 0.29 \\ 
+Homogeneous & BC-HSBW & -0.58 & 0.58 & Heterogeneous & GLS & -0.02 & 0.29 \\ 
+Heterogeneous & BC-HSBW & -0.63 & 0.63 & Heterogeneous & OLS & -0.14 & 0.39 \\ 
+Unadjusted & BC-SBW & -0.88 & 0.88 & Unadjusted & SBW & -0.37 & 0.42 \\ 
+Unadjusted & OLS & -0.88 & 0.88 & Unadjusted & H-SBW & -0.43 & 0.46 \\ 
+Unadjusted & GLS & -0.89 & 0.89 & Unadjusted & BC-HSBW & -0.60 & 0.60 \\ 
+Unadjusted & BC-HSBW & -0.96 & 0.96 & Unadjusted & GLS & -0.61 & 0.63 \\ 
+Homogeneous & OLS & -1.48 & 1.50 & Unadjusted & OLS & -0.70 & 0.71 \\ 
+Homogeneous & GLS & -1.60 & 1.61 & Unadjusted & BC-SBW & -0.70 & 0.71 \\ 
+Heterogeneous & GLS & -9.39 & 12.47 & Homogeneous & GLS & 0.28 & 0.98 \\ 
+Heterogeneous & OLS & -11.88 & 16.21 & Homogeneous & OLS & 0.02 & 1.10 \\ 
  \hline
 \end{tabular}
-\end{threeparttable}
 \end{table}
 
 \begin{table}
@@ -134,7 +132,7 @@ H-SBW & Homogeneous & -2.33 (-3.54, -1.11) & 0.01 & -2.09 (-3.24, -0.94) & 0.19 
 \begin{table}[H]\caption{Leave one state out jackknife point estimates: all estimators, primary dataset}\label{tab:loojackknifec1}
 \centering
 %\begin{tabular}
-\begin{longtable}{lrrrr|rrrr|rrrr}
+\begin{tabular}{lrrrr|rrrr|rrrr}
 \hline
  & \multicolumn{4}{c}{Homogeneous} & \multicolumn{4}{c}{Heterogeneous} & \multicolumn{4}{c}{Unadjusted} \\ 
  \hline
@@ -164,7 +162,7 @@ RI & -2.09 & -2.08 & -2.34 & -2.34 & -2.01 & -2.01 & -2.22 & -2.26 & -2.25 & -2.
 WA & -2.02 & -2.06 & -2.26 & -2.32 & -1.99 & -2.03 & -2.24 & -2.31 & -2.19 & -2.16 & -2.26 & -2.34 \\ 
 WV & -2.07 & -2.07 & -2.34 & -2.36 & -2.00 & -2.01 & -2.24 & -2.29 & -2.23 & -2.21 & -2.34 & -2.40 \\ 
  \hline
-\end{longtable}
+\end{tabular}
 %\end{tabular}
 \begin{tablenotes}
   \item Note: Row labeled ``All'' reflects the original estimate
@@ -172,7 +170,7 @@ WV & -2.07 & -2.07 & -2.34 & -2.36 & -2.00 & -2.01 & -2.24 & -2.29 & -2.23 & -2.
 \end{table}
 
 \begin{table}\caption{Leave one state out jackknife point estimates: all estimators, early expansion excluded}\label{tab:loojackknifec2}
-\begin{longtable}{lrrrr|rrrr|rrrr}
+\begin{tabular}{lrrrr|rrrr|rrrr}
 \hline
  & \multicolumn{4}{c}{Homogeneous} & \multicolumn{4}{c}{Heterogeneous} & \multicolumn{4}{c}{Unadjusted} \\ 
  \hline
@@ -197,7 +195,7 @@ OR & -1.97 & -2.07 & -2.07 & -2.08 & -2.00 & -2.05 & -2.08 & -1.97 & -2.16 & -2.
 RI & -2.00 & -2.06 & -2.07 & -2.03 & -2.00 & -2.05 & -2.08 & -2.01 & -2.25 & -2.29 & -2.28 & -2.21 \\ 
 WV & -1.95 & -1.99 & -2.11 & -2.04 & -1.91 & -1.98 & -2.07 & -2.03 & -2.24 & -2.24 & -2.29 & -2.22 \\ 
  \hline
-\end{longtable}
+\end{tabular}
 \begin{tablenotes}
   \item Note: Row labeled ``All'' reflects the original estimate
 \end{tablenotes}

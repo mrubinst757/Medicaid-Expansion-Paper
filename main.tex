@@ -421,11 +421,13 @@ To further reduce these imbalances, we also augment these weights using ridge-re
 
 \subsection{Model validation}\label{sec:validation}
 
-We compare the performance of our models by repeating the covariate adjustments and calculating our procedure on 2009-2011 ACS data to predict 2012 outcomes, and similarly for 2010-2012 data to predict 2013 outcomes for the non-expansion states. We run this procedure using the primary dataset and excluding the early expansion states. Table~\ref{tab:pretxpred} displays the RMSE of these results, with the rows ordered by RMSE for each dataset. We see that the estimators trained on the covariate adjusted data perform substantially better than the unadjusted data and the estimators trained on the homogeneous adjustment outperform their counterparts on the heterogeneous adjustment. We therefore prioritize the results using the homogeneous adjustment. We also observe that H-SBW has comparable performance to SBW throughout.
+We compare the performance of our models by repeating the covariate adjustments and calculating our procedure on 2009-2011 ACS data to predict 2012 outcomes, and similarly for 2010-2012 data to predict 2013 outcomes for the non-expansion states. We run this procedure using the primary dataset and excluding the early expansion states. Table~\ref{tab:pretxpred} displays the mean error and RMSE of these results, with the rows ordered by RMSE for each dataset. We see that the estimators trained on the covariate adjusted data perform substantially better than the unadjusted data and the estimators trained on the homogeneous adjustment outperform their counterparts on the heterogeneous adjustment. We therefore prioritize the results using the homogeneous adjustment. We also observe that H-SBW has comparable performance to SBW throughout.
 
 Interestingly the bias-corrected estimators perform relatively poorly on the primary dataset, but are the best performing estimators when excluding early expansion states -- with RMSEs lower than any other estimator on the primary dataset. As the early expansion states include California, and Figure~\ref{fig:sbwvhsbw1} shows that the bias-corrected estimators extrapolate heavily from this state, the differences in these results suggest that preventing this extrapolation may improve the model's performance. While these results do not imply that the bias-corrected models will perform poorly when predicting $\psi^1_0$ in the post-treatment period on the primary dataset (or that they will perform especially well when excluding the early expansion states), it does highlight the dangers of extrapolation: linearity may approximately hold on the support of the data where we have sufficient covariate overlap, but beyond this region this may be a more costly assumption.\footnote{In Table~\ref{tab:pretxpredfull} in Appendix~\ref{app:allresults}, we also compare the performance against the implied regression weights from OLS and GLS. These weights exactly balance the observed covariates, but are almost always the worst performing estimators in the validation study on either dataset. This also illustrates the benefits of the regularization inherent in the bias-corrected weights.}
 
-\begin{longtable}{llrrllrr}\caption{Estimator pre-treatment outcome RMSE (in \% pts)}\label{tab:pretxpred}
+\begin{table}\caption{Estimator pre-treatment outcome RMSE (in \% pts)}\label{tab:pretxpred}
+\centering
+\begin{tabular}{llrrllrr}
 \hline
 \multicolumn{4}{c}{Primary data} & \multicolumn{4}{c}{Early expansion 
  excluded} \\ 
@@ -446,9 +448,10 @@ Heterogeneous & BC-HSBW & -0.63 & 0.63 & Unadjusted & H-SBW & -0.43 & 0.46 \\
 Unadjusted & BC-SBW & -0.88 & 0.88 & Unadjusted & BC-HSBW & -0.60 & 0.60 \\ 
 Unadjusted & BC-HSBW & -0.96 & 0.96 & Unadjusted & BC-SBW & -0.70 & 0.71 \\ 
  \hline
-\end{longtable}
+\end{tabular}
+\end{table}
 
-Finally, we observe that all estimators generated on the unadjusted dataset under-predict the true uninsurance rate. This may reflect a form of regression-to-the-mean caused by overfitting our weights to noisy covariate measurements. More formally, we can think of the uninsurance rates in time period $t$ in expansion and non-expansion regions as being drawn from separate distributions with means $(\upsilon_1, \upsilon_0)$, respectively, where $\upsilon_1 < \upsilon_0$. For simplicity assume that the only covariate in the outcome model at time $t$ is $Y_{sct-1}$. Under \eqref{eqn:linmod}, we obtain $Y_{sc} = Y_{sct} = \alpha_1 + \beta_1Y_{sct-1} + \epsilon_{sct} + \varepsilon_{st}$. The pre-treatment outcomes are likely positively correlated with the post-treatment outcomes, implying that $\beta_1 > 0$. Because $\upsilon_1 < \upsilon_0$, when reweighting the vector of noisy pre-treatment outcomes $J_{A=1}$ to $\upsilon_0$ the expected value of the weighted measurement error $\mathbb{E}[\sum_{A_{sc} = 1}\hat{\gamma}_{sc}\nu_{sct-1}]$ should be positive. In other words, our weights are likely to favor units with covariate measurements that are greater than their true covariate values. The expected value of the weighted pre-treament outcome will then be less than the target $\upsilon_0$. This implies that our estimates will be negatively biased, since $\mathbb{E}[\beta_1(\sum_{A_{sc} = 1}\hat{\gamma}_{sc}Y_{sct-1} - \upsilon_0)] \le 0$.\footnote{This phenomenon has also been discussed in the difference-in-differences and synthetic controls literature (see, e.g., \cite{daw2018matching}).} While our covariate adjustments are meant to eliminate this bias, in practice they appear more likely only to reduce it. Assuming these errors reflect a (slight) negative bias that will also hold for our estimates of $\psi^1_0$, we may expect that the true treatment effect is closer to zero than our estimates. 
+Finally, we observe that the mean errors for the estimators generated on the unadjusted dataset are all negative, reflecting that these estimates under-predict the true uninsurance rate (see also Table~\ref{tab:pretxpredfull} in Appendix~\ref{app:allresults}, which contains all results). This may reflect a form of regression-to-the-mean caused by overfitting our weights to noisy covariate measurements. More formally, we can think of the uninsurance rates in time period $t$ in expansion and non-expansion regions as being drawn from separate distributions with means $(\upsilon_1, \upsilon_0)$, respectively, where $\upsilon_1 < \upsilon_0$. For simplicity assume that the only covariate in the outcome model at time $t$ is $Y_{sct-1}$. Under \eqref{eqn:linmod}, we obtain $Y_{sc} = Y_{sct} = \alpha_1 + \beta_1Y_{sct-1} + \epsilon_{sct} + \varepsilon_{st}$. The pre-treatment outcomes are likely positively correlated with the post-treatment outcomes, implying that $\beta_1 > 0$. Because $\upsilon_1 < \upsilon_0$, when reweighting the vector of noisy pre-treatment outcomes $J_{A=1}$ to $\upsilon_0$ the expected value of the weighted measurement error $\mathbb{E}[\sum_{A_{sc} = 1}\hat{\gamma}_{sc}\nu_{sct-1}]$ should be positive. In other words, our weights are likely to favor units with covariate measurements that are greater than their true covariate values. The expected value of the weighted pre-treament outcome will then be less than the target $\upsilon_0$. This implies that our estimates will be negatively biased, since $\mathbb{E}[\beta_1(\sum_{A_{sc} = 1}\hat{\gamma}_{sc}Y_{sct-1} - \upsilon_0)] \le 0$.\footnote{This phenomenon has also been discussed in the difference-in-differences and synthetic controls literature (see, e.g., \cite{daw2018matching}).} While our covariate adjustments are meant to eliminate this bias, in practice they appear more likely only to reduce it. Assuming these errors reflect a (slight) negative bias that will also hold for our estimates of $\psi^1_0$, we may expect that the true treatment effect is closer to zero than our estimates. 
 
 \subsection{Primary Results}
 
@@ -456,9 +459,9 @@ Table~\ref{tab:mainresults} presents all of our estimates. Using H-SBW we estima
 
 Adding the bias-correction decreases the absolute magnitude of the estimates: we estimate effects of -2.05 (-3.30, -0.80) percentage points for BC-HSBW and -2.07 (-3.14, -1.00) percentage points for BC-SBW. This contrasts to our validation study, where the bias-corrected estimators tended to predict lower uninsurance rates than the other estimators. 
 
-\begin{table}[ht]
-\begin{longtable}{lllrlr}\caption{Primary results}\label{tab:mainresults} \\
- \hline
+\begin{table}[ht]\caption{Primary results}\label{tab:mainresults}
+\begin{tabular}{lllrlr} 
+\hline
  &  & \multicolumn{2}{c}{Primary data} & \multicolumn{2}{c}{Early expansion 
  excluded} \\
   \hline
@@ -474,7 +477,7 @@ H-SBW & Homogeneous & -2.33 (-3.54, -1.11) & 0.01 & -2.09 (-3.24, -0.94) & 0.19 
   BC-SBW & Homogeneous & -2.07 (-3.14, -1.00) & 0.13 & -1.99 (-3.33, -0.66) & 0.23 \\ 
   BC-SBW & Unadjusted & -2.19 (-2.94, -1.45) & - & -2.23 (-3.12, -1.33) & - \\    
   \hline
-\end{longtable}
+\end{tabular}
 \subcaption{``Difference'' column reflects difference between adjusted and unadjusted estimators}
 \end{table}
 
