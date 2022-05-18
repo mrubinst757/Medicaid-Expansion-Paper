@@ -13,7 +13,7 @@ We assume that equations (\ref{eqn:unconfoundedness}) - (\ref{eqn:Xgaussian}) ho
 noting that $\xi_{sc}=0$ implies $J_{sc} = Y_{sc}$. These assumptions imply that the data from the treated units are i.i.d., though for consistency of notation we continue to index the data by $s$ and $c$ and assume that the state-membership for each CPUMA is known. The covariate observations of the treated units can then be seen to have covariance matrix
 \[ \Sigma_{W|1} = \Sigma_{X|1} + \Sigma_\nu\]
 and the conditional expectation of $X_{sc}$ given $W_{sc}$ for the treated units can be seen to equal
-\[ \tilde{X}_{sc} = v_1 + \kappa^T (W_{sc} - v_1), \qquad \forall sc: A_{sc}=1\]
+\[ \tilde{X}_{sc} = v_1 + \kappa^\top (W_{sc} - v_1), \qquad \forall sc: A_{sc}=1\]
 where
 \[ \kappa = (\Sigma_{X|1} + \Sigma_{\nu})^{-1} \Sigma_{X|1}\]
 To ease notation, we abbreviate $\Sigma_X = \Sigma_{X \mid 1}$ and similarly $ \Sigma_W = \Sigma_{W \mid 1}$. 
@@ -21,16 +21,16 @@ To ease notation, we abbreviate $\Sigma_X = \Sigma_{X \mid 1}$ and similarly $ \
 In Propositions \ref{cl8}, \ref{cl9}, and part of Proposition \ref{cl1}, we will remove the Gaussian covariate assumption given by \eqref{eqn:Xgaussian}. In its place, we will instead consider the weaker assumption that the empirical covariance of $X$ has a limit $S_X$,
 
 \begin{equation}\label{eqn:limitX}
- \frac{1}{n_1} \sum_{A_{sc}=1} (X_{sc} - \bar{X}_1)(X_{sc} - \bar{X}_1)^T \rightarrow^p S_X
+ \frac{1}{n_1} \sum_{A_{sc}=1} (X_{sc} - \bar{X}_1)(X_{sc} - \bar{X}_1)^\top \rightarrow^p S_X
 \end{equation}
 which implies a similar limit $S_W$ for the noisy observations $W$,
 
 \begin{equation}\label{eqn:limitW}
- \frac{1}{n_1} \sum_{A_{sc}=1} (W_{sc} - \bar{W}_1)(W_{sc} - \bar{W}_1)^T \rightarrow^p S_W = S_X + \Sigma_{\nu}
+ \frac{1}{n_1} \sum_{A_{sc}=1} (W_{sc} - \bar{W}_1)(W_{sc} - \bar{W}_1)^\top \rightarrow^p S_W = S_X + \Sigma_{\nu}
 \end{equation}
 where we have used the independence of the noise terms $\nu_{sc}$, and similarly that 
 \begin{equation}\label{eqn:limitWY}
- \frac{1}{n_1} \sum_{A_{sc}=1} (W_{sc} - \bar{W}_1)(Y_{sc} - \bar{Y}_1)^T \rightarrow^p S_X \beta_1
+ \frac{1}{n_1} \sum_{A_{sc}=1} (W_{sc} - \bar{W}_1)(Y_{sc} - \bar{Y}_1)^\top \rightarrow^p S_X \beta_1
 \end{equation}
 where we have additionally used the linear model for $Y_{sc}$ given by \eqref{eqn:linmod}.
 
@@ -41,12 +41,12 @@ Proposition \ref{cl1} states that the unadjusted OLS and SBW estimators have equ
 Let (\ref{eqn:unconfoundedness}) - (\ref{eqn:Xgaussian}) and (\ref{eqn:simplifications}) hold.
 Let $(\hat{\alpha}, \hat{\beta})$ denote the unadjusted OLS estimator of $(\alpha_1, \beta_1)$, 
 \begin{equation}\label{eqn:prop1.beta}
-(\hat{\alpha}, \hat{\beta}) = \arg \min_{\alpha, \beta} \sum_{sc:A_{sc}=1} (Y_{sc} - \alpha -  W_{sc}^T\beta)^2
+(\hat{\alpha}, \hat{\beta}) = \arg \min_{\alpha, \beta} \sum_{sc:A_{sc}=1} (Y_{sc} - \alpha -  W_{sc}^\top\beta)^2
 \end{equation}
 which induces the OLS estimator of $\psi_0^1$ given by
 
 \begin{align*}
-\hat{\psi}^{1,\textup{ols}}_0 = \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T\hat{\beta}_1
+\hat{\psi}^{1,\textup{ols}}_0 = \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^\top\hat{\beta}_1
 \end{align*}
 %
 Let ${\gamma}$ denote the unadjusted SBW weights under exact balance, found by solving \eqref{eqn:SBWobjective} with constraint set $\Gamma( W_{A=1}, \bar{W}_0, 0)$, which induces the SBW estimator of $\psi_0^1$ given by
@@ -58,7 +58,7 @@ Let ${\gamma}$ denote the unadjusted SBW weights under exact balance, found by s
 Then the estimators $\hat{\psi}^{1, \textup{ols}}_0$ and $\hat{\psi}^{1, \textup{sbw}}_0$ have equal bias, satisfying
 
 \begin{align*}
-\mathbb{E}[\hat{\psi}_0^{1,\textup{ols}}] &= \mathbb{E}[\hat{\psi}^{1, \textup{sbw}}_0]  = \psi_0^1 + (\bar{X}_0 - \upsilon_1)^T(\mathbf{\kappa} - I_q)\beta
+\mathbb{E}[\hat{\psi}_0^{1,\textup{ols}}] &= \mathbb{E}[\hat{\psi}^{1, \textup{sbw}}_0]  = \psi_0^1 + (\bar{X}_0 - \upsilon_1)^\top(\mathbf{\kappa} - I_q)\beta
 \end{align*}
 Additionally, the bias of $\hat{\psi}_0^{1,\textup{ols}}$ is asymptotically unchanged if the gaussian covariate assumption given by \eqref{eqn:Xgaussian} is replaced by \eqref{eqn:limitX}.
 \end{proposition}
@@ -68,7 +68,7 @@ To study the SBW estimator with covariate adjustment, we first consider an ideal
 \begin{proposition}\label{cl2}
 Let (\ref{eqn:unconfoundedness}) - (\ref{eqn:Xgaussian}) and (\ref{eqn:simplifications}) hold. Let $\tilde{X}_{A=1}$ equal the conditional expectation of $X_{A=1}$ given $W$,
 
-\[ \tilde{X}_{sc} = \upsilon_1 + \kappa^T (W_{sc} - \upsilon_1), \qquad \forall sc: A_{sc} = 1\] let $\gamma^*$ be the solution to the SBW objective defined over the constraint set $\Gamma(\tilde{X}_{A=1}, \bar{X}_0, 0)$, and let $\hat{\psi}^{1, \textup{ideal}}_0$ be the SBW estimator $\sum_{sc: A_{sc} = 1}\gamma^\star_{sc}Y_{sc}$. This estimator is unbiased for $\psi_0^1$.
+\[ \tilde{X}_{sc} = \upsilon_1 + \kappa^\top (W_{sc} - \upsilon_1), \qquad \forall sc: A_{sc} = 1\] let $\gamma^*$ be the solution to the SBW objective defined over the constraint set $\Gamma(\tilde{X}_{A=1}, \bar{X}_0, 0)$, and let $\hat{\psi}^{1, \textup{ideal}}_0$ be the SBW estimator $\sum_{sc: A_{sc} = 1}\gamma^\star_{sc}Y_{sc}$. This estimator is unbiased for $\psi_0^1$.
 \end{proposition}
 
 Proposition \ref{prop:variance_rate} shows that the variance of this idealized SBW estimator goes to zero, implying consistency. 
@@ -76,7 +76,7 @@ Proposition \ref{prop:variance_rate} shows that the variance of this idealized S
 Let (\ref{eqn:unconfoundedness}) - (\ref{eqn:Xgaussian}) and (\ref{eqn:simplifications}) hold, and let $\gamma^*$ and $\hat{\psi}_0^{1, \textup{ideal}}$ be defined as in Proposition \ref{cl2}. Then the conditional variance of the estimation error is given by
 
 \begin{align*}
-\operatorname{Var}\left( \hat{\psi}_0^{1, \textup{ideal}} - \psi_0^1| W\right)  = \|\gamma^*\|^2 \cdot \beta_1^T(\Sigma_{X} - \Sigma_{X}\Sigma_{W}^{-1}\Sigma_{X})\beta_1
+\operatorname{Var}\left( \hat{\psi}_0^{1, \textup{ideal}} - \psi_0^1| W\right)  = \|\gamma^*\|^2 \cdot \beta_1^\top(\Sigma_{X} - \Sigma_{X}\Sigma_{W}^{-1}\Sigma_{X})\beta_1
 \end{align*}
 with $\operatorname{Var}\left( \hat{\psi}_0^{1, \textup{ideal}} - \psi_0^1| W\right)$ and $\operatorname{Var}(\hat{\psi}_0^{1,\textup{ideal}})$ both behaving as $O_P(n_1^{-1})$ as $n_1 \rightarrow \infty$.
 \end{proposition}
@@ -85,7 +85,7 @@ In practice, the idealized SBW estimator considered in Propositions \ref{cl2} an
 
 \begin{proposition}\label{cl3}
 Let (\ref{eqn:unconfoundedness}) - (\ref{eqn:Xgaussian}) and (\ref{eqn:simplifications}) hold. Given estimates $\hat{\Sigma}_X$ and $\hat{\Sigma}_\nu$ that are consistent for $\Sigma_X$ and $\Sigma_\nu$, let $\hat{X}_{A=1}$ be given by 
-\[ \hat{X}_{sc} = \bar{W}_1 + \hat{\kappa}^T(W_{sc} - \bar{W}_1), \]
+\[ \hat{X}_{sc} = \bar{W}_1 + \hat{\kappa}^\top(W_{sc} - \bar{W}_1), \]
 where $\hat{\kappa} = (\hat{\Sigma}_X + \hat{\Sigma}_{\nu})^{-1} \hat{\Sigma}_X$. Let $\hat{\gamma}$ be the weights that solve the SBW objective over the constraint set $\Gamma(\hat{X}_{A=1}, \bar{W}_0, 0)$, and let $\hat{\psi}^{1, \textup{adjusted}}_0 = \sum_{sc: A_{sc} = 1} \hat{\gamma}_{sc} Y_{sc}$ be the corresponding SBW estimator. This estimator is consistent for $\psi_0^1$ as $n_1 \to \infty$.
 \end{proposition}
 
@@ -109,9 +109,9 @@ As the gaussian covariate assumption given by \eqref{eqn:Xgaussian} is strong, i
 \begin{proposition}\label{cl8}
 Let (\ref{eqn:unconfoundedness}) - (\ref{eqn:gaussiannoise}), and (\ref{eqn:simplifications})- (\ref{eqn:limitX}) hold, with $S_X$ invertible. Let $(\check{\alpha}, \check{\beta})$ denote the adjusted OLS estimates of $(\alpha_1, \beta_1)$, solving
 
-\[ \min_{\alpha,\beta} \sum_{A_{sc}=1} (Y_{sc} - \alpha - \check{X}_{sc}^T \beta)^2 \]
-where $\check{X}_{sc} = \bar{W}_1 + \check{\kappa}^T(W_{sc} - \bar{W}_1)$ with $\check{\kappa} = (S_X + \Sigma_\nu)^{-1}S_X$. Then the adjusted OLS estimator of $\psi_0^1$ given by
-\[ \bar{Y}_1 - (\bar{W}_0 - \bar{W}_1)^T \check{\beta}\]
+\[ \min_{\alpha,\beta} \sum_{A_{sc}=1} (Y_{sc} - \alpha - \check{X}_{sc}^\top \beta)^2 \]
+where $\check{X}_{sc} = \bar{W}_1 + \check{\kappa}^\top(W_{sc} - \bar{W}_1)$ with $\check{\kappa} = (S_X + \Sigma_\nu)^{-1}S_X$. Then the adjusted OLS estimator of $\psi_0^1$ given by
+\[ \bar{Y}_1 - (\bar{W}_0 - \bar{W}_1)^\top \check{\beta}\]
 remains consistent if the gaussian assumption given by \eqref{eqn:gaussiannoise} is removed.
 \end{proposition}
 
@@ -123,16 +123,16 @@ Let the assumptions of Proposition \ref{cl8} hold. Let $\check{\gamma}$ solve th
 \[ Q = \{sc: \check{\gamma}_{sc} > 0\}\]
 with cardinality $n_Q = |Q|$, and let $\bar{W}_Q$ and $S_{W_Q}$ denote the empirical mean and covariance of $\{W_{sc}:sc \in Q\}$,
 
-\[ \bar{W}_Q = \frac{1}{n_Q}\sum_{sc \in Q} W_{sc},\qquad S_{W_Q} = \frac{1}{n_Q} \sum_{sc \in Q} (W_{sc} - \bar{W}_Q)(W_{sc} - \bar{W}_Q)^T\]
+\[ \bar{W}_Q = \frac{1}{n_Q}\sum_{sc \in Q} W_{sc},\qquad S_{W_Q} = \frac{1}{n_Q} \sum_{sc \in Q} (W_{sc} - \bar{W}_Q)(W_{sc} - \bar{W}_Q)^\top\]
 with $\bar{X}_Q$ the analogous empirical mean of $\{X_{sc}:sc \in Q\}$ and $S_{XW_Q}$ the empirical cross covariance,
-\[ S_{XW_Q} = \frac{1}{n_Q} \sum_{sc \in Q} (X_{sc} - \bar{X}_Q)(W_{sc} - \bar{W}_Q)^T\]
+\[ S_{XW_Q} = \frac{1}{n_Q} \sum_{sc \in Q} (X_{sc} - \bar{X}_Q)(W_{sc} - \bar{W}_Q)^\top\]
 Then if the gaussian assumption given by \eqref{eqn:gaussiannoise} is removed, the adjusted SBW estimator for $\psi_0^1$ given by 
 
 \[\sum_{A_{sc}=1} Y_{sc} \check{\gamma}_{sc}\]
 may be biased for $\psi_0^1$, with estimation error given by 
 
 \begin{align} 
-\nonumber \sum_{A_{sc}=1} Y_{sc} \check{\gamma}_{sc} - \psi_0^1 & = \beta_1^T\Big[(S_{XW_Q}S_{W_Q}^{-1}S_WS_X^{-1} - I)\bar{X}_0  + (\bar{X}_Q - S_{XW_Q}S_{W_Q}^{-1} S_W S_X^{-1} \bar{X}_1) \\
+\nonumber \sum_{A_{sc}=1} Y_{sc} \check{\gamma}_{sc} - \psi_0^1 & = \beta_1^\top\Big[(S_{XW_Q}S_{W_Q}^{-1}S_WS_X^{-1} - I)\bar{X}_0  + (\bar{X}_Q - S_{XW_Q}S_{W_Q}^{-1} S_W S_X^{-1} \bar{X}_1) \\
 & \hskip1cm {} - S_{XW_Q}S_{W_Q}^{-1}(\bar{X}_Q - \bar{X}_1)\Big](1 + o_P(1))  \label{eqn:cl9.error}
 \end{align}
 which need not converge to zero unless $\bar{X}_Q \to \bar{X}_1$, $S_{XW_Q} \to S_X$, and $S_{W_Q} \to S_W$.
@@ -191,29 +191,29 @@ Here we consider an H-SBW setting where $\nu_{sc}=0$ so that the true covariates
     is the minimum conditional-on-X variance estimator of $\psi_0^1$ within the constraint set $\Gamma(X_{A=1}, \bar{X}_0, \delta)$.
 \end{proposition}
 
-The SBW and H-SBW objective functions take the generic form $\gamma^T\Omega\gamma$: SBW takes $\Omega = I_n$, while H-SBW specifies an $\Omega$ that allows for homoskedastic errors with positive within-state equicorrelation. Analogous versions hence exist for any assumed covariance structure $\Omega$. Proposition \ref{cl56} highlights connections between this generic form and GLS, showing that when exact balance is possible we can express the generic form of the problem as the implied regression weights from GLS estimated on a subset of the data. Similar results connecting balancing weights to regression weights can be found throughout the literature. For example, see \cite{kline2011oaxaca}, \cite{ben2021augmented}, \cite{chattopadhyay2021implied}, who connect balancing weights to regression weights for OLS, ridge-regression, and weighted least-squares and two-stage-least-squares; our result adds by connecting balancing weights to regression weights for GLS.
+The SBW and H-SBW objective functions take the generic form $\gamma^\top\Omega\gamma$: SBW takes $\Omega = I_n$, while H-SBW specifies an $\Omega$ that allows for homoskedastic errors with positive within-state equicorrelation. Analogous versions hence exist for any assumed covariance structure $\Omega$. Proposition \ref{cl56} highlights connections between this generic form and GLS, showing that when exact balance is possible we can express the generic form of the problem as the implied regression weights from GLS estimated on a subset of the data. Similar results connecting balancing weights to regression weights can be found throughout the literature. For example, see \cite{kline2011oaxaca}, \cite{ben2021augmented}, \cite{chattopadhyay2021implied}, who connect balancing weights to regression weights for OLS, ridge-regression, and weighted least-squares and two-stage-least-squares; our result adds by connecting balancing weights to regression weights for GLS.
 
 \begin{proposition}\label{cl56}
 Let $\gamma^*$ solve the optimization problem
 
 \begin{equation}\label{eqn:a1.1}
- \min_\gamma \gamma^T \Omega \gamma \quad \text{ subject to } \quad  \sum_i \gamma_i Z_i = v,\ \sum_i \gamma_i = 1 \ \textup{ and } \gamma \geq 0%\gamma \in \Phi(Z, v, 0),
+ \min_\gamma \gamma^\top \Omega \gamma \quad \text{ subject to } \quad  \sum_i \gamma_i Z_i = v,\ \sum_i \gamma_i = 1 \ \textup{ and } \gamma \geq 0%\gamma \in \Phi(Z, v, 0),
 \end{equation}
 with $\Omega$ positive definite. Let $Q = \{i: \gamma^*_i > 0\}$ denote the indices of its non-zero entries. Then $\gamma^*$ also solves the problem
   
   \begin{equation}\label{eqn:a1.2}
-   \min_{\gamma}  \ \gamma^T \Omega \gamma  \quad \textup{subject to }\quad \sum_{i \in Q} \gamma_i Z_i = v,\ \sum_{i \in Q} \gamma_i = 1,\ \textup{ and }   \gamma_i = 0\  \forall\ i \not\in Q
+   \min_{\gamma}  \ \gamma^\top \Omega \gamma  \quad \textup{subject to }\quad \sum_{i \in Q} \gamma_i Z_i = v,\ \sum_{i \in Q} \gamma_i = 1,\ \textup{ and }   \gamma_i = 0\  \forall\ i \not\in Q
   \end{equation}
 and hence has non-zero entries $\gamma^*_Q = \{\gamma_i^*: i \in Q\}$ satisfying
  
  \begin{equation}\label{eqn:a1.3}
- \gamma^*_{Q} = \Omega_{Q}^{-1} (Z_{Q} - \mu)^T\left[ (Z_Q - \mu) \Omega_{Q}^{-1} (Z_Q - \mu)^T\right]^{-1} (v - \mu) + \frac{\Omega^{-1}_Q {\bf 1} }{{\bf 1}^T \Omega^{-1}_Q {\bf 1}}
+ \gamma^*_{Q} = \Omega_{Q}^{-1} (Z_{Q} - \mu)^\top\left[ (Z_Q - \mu) \Omega_{Q}^{-1} (Z_Q - \mu)^\top\right]^{-1} (v - \mu) + \frac{\Omega^{-1}_Q {\bf 1} }{{\bf 1}^\top \Omega^{-1}_Q {\bf 1}}
  \end{equation}
-where $Z_{Q}$ is the matrix whose columns are $\{Z_i: i \in Q\}$, $\Omega_Q$ is the submatrix of $\Omega$ whose rows and columns are in $Q$, ${\bf 1}$ is the column vector of ones, and $\mu$ is the vector $\frac{Z_{Q}\Omega_{Q}^{-1} {\bf 1}}{ {\bf 1}^T \Omega^{-1}_Q {\bf 1}}$. These weights are equivalent to the implied regression weights when running GLS on the subset $Q$.
+where $Z_{Q}$ is the matrix whose columns are $\{Z_i: i \in Q\}$, $\Omega_Q$ is the submatrix of $\Omega$ whose rows and columns are in $Q$, ${\bf 1}$ is the column vector of ones, and $\mu$ is the vector $\frac{Z_{Q}\Omega_{Q}^{-1} {\bf 1}}{ {\bf 1}^\top \Omega^{-1}_Q {\bf 1}}$. These weights are equivalent to the implied regression weights when running GLS on the subset $Q$.
 \end{proposition}
 
 \begin{remark}
-To lighten notation, we have used $Z_Q - \mu$ (a vector subtracted from a matrix) to mean $Z_Q - \mu{\bf 1}^T$, so that each column of $Z_{Q}$ is centered by $\mu$. 
+To lighten notation, we have used $Z_Q - \mu$ (a vector subtracted from a matrix) to mean $Z_Q - \mu{\bf 1}^\top$, so that each column of $Z_{Q}$ is centered by $\mu$. 
 \end{remark}
 
 \begin{remark}
@@ -245,7 +245,7 @@ Proposition \ref{cl7hsbw} simply states that the conclusion of Proposition \ref{
 We begin by establishing the following identity for our target parameter $\psi_0^1$ defined in \eqref{eqn:psi}.
 
 \begin{equation}\label{eqn:psi10_identity}
-\psi^1_0 = \mu_y + (\bar{X}_0 - \upsilon_1)^T\beta_1
+\psi^1_0 = \mu_y + (\bar{X}_0 - \upsilon_1)^\top\beta_1
 \end{equation}
 %
 where $\mu_y = \mathbb{E}[Y_{sc} \mid A_{sc} = 1]$ and $\upsilon_1 = \mathbb{E}[X_{sc} \mid A_{sc} = 1]$.
@@ -256,9 +256,9 @@ Using our causal and modeling assumptions we have that:
 \begin{align*}
 \mathbb{E}[Y_{sc}^1 \mid X_{sc}, A_{sc} = 0] &= \mathbb{E}[Y_{sc}^1 \mid X_{sc}, A_{sc} = 1] \\
 &= \mathbb{E}[Y_{sc} \mid X_{sc}, A_{sc} = 1] \\
-&= \alpha_1 + X_{sc}^T\beta_1 \\
-&= \mu_y + (X_{sc} - \upsilon_1)^T\beta \\
-&\implies \psi_0^1 = \mu_y + (\bar{X}_0 - \upsilon_1)^T\beta_1
+&= \alpha_1 + X_{sc}^\top\beta_1 \\
+&= \mu_y + (X_{sc} - \upsilon_1)^\top\beta \\
+&\implies \psi_0^1 = \mu_y + (\bar{X}_0 - \upsilon_1)^\top\beta_1
 \end{align*}
 %
 where the first equality follows from unconfoundedness, the second equality from consistency, the third from our parametric modeling assumptions, and the fourth by definition of $\alpha$. The final equation follows from averaging over the control units.
@@ -269,39 +269,39 @@ where the first equality follows from unconfoundedness, the second equality from
 It can be seen from \eqref{eqn:regcal} that for all $sc: A_{sc}=1$,
 
 \begin{align*}
-   X_{sc} &= v_1 + (W_{sc} - v_1)^T \kappa + \nu_{sc}'
+   X_{sc} &= v_1 + (W_{sc} - v_1)^\top \kappa + \nu_{sc}'
 \end{align*}
 where $\nu_{sc}' = X_{sc} - \mathbb{E}[X_{sc}|W,A=1]$ may be viewed as an independent zero-mean noise term. Plugging into \eqref{eqn:linmod} yields 
 
 \begin{align*}
-   Y_{sc} & = \alpha_1 + v_1^T (I - \kappa)\beta_1 + W_{sc}^T \kappa \beta_1 + \epsilon_{sc}'
+   Y_{sc} & = \alpha_1 + v_1^\top (I - \kappa)\beta_1 + W_{sc}^\top \kappa \beta_1 + \epsilon_{sc}'
 \end{align*}
-for $\epsilon_{sc}' = \beta_1^T\nu_{sc}' + \epsilon_{sc}$. It follows that the OLS estimate $\hat{\beta}$ given by \eqref{eqn:prop1.beta} satisfies \citep{gleser1992importance},
+for $\epsilon_{sc}' = \beta_1^\top\nu_{sc}' + \epsilon_{sc}$. It follows that the OLS estimate $\hat{\beta}$ given by \eqref{eqn:prop1.beta} satisfies \citep{gleser1992importance},
 
 \begin{equation}\label{eqn:prop1.0}
-\mathbb{E}[\hat{\beta}|W_{A=1}] = \kappa \beta_1, \qquad \text{and} \qquad \mathbb{E}[\bar{W}_1 \hat{\beta}] = \bar{X}_1 \kappa \beta_1
+\mathbb{E}[\hat{\beta}|W_{A=1}] = \kappa \beta_1, \qquad \text{and} \qquad \mathbb{E}[\bar{W}_1 \hat{\beta}] = v_1 \kappa \beta_1
 \end{equation}
 To show that $\hat{\psi}_0^{1,\textup{ols}}$ and $\hat{\psi}_0^{1, \textup{sbw}}$ have identical bias, we compute their expectations:
 
 \begin{align}
-\nonumber	\mathbb{E}[\hat{\psi}_0^{1,\textup{ols}}] &= \mathbb{E}[ \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T \hat{\beta}] \\
-	& = \bar{\mu}_y + (\bar{X}_0 - \upsilon_1)^T\kappa\beta_1 \label{eqn:prop1.1}\\
-	& = \psi_0^1 + (\bar{X}_0 - \upsilon_1)^T(\kappa - I_q)\beta_1 \label{eqn:prop1.2}
+\nonumber	\mathbb{E}[\hat{\psi}_0^{1,\textup{ols}}] &= \mathbb{E}[ \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^\top \hat{\beta}] \\
+	& = \bar{\mu}_y + (\bar{X}_0 - \upsilon_1)^\top\kappa\beta_1 \label{eqn:prop1.1}\\
+	& = \psi_0^1 + (\bar{X}_0 - \upsilon_1)^\top(\kappa - I_q)\beta_1 \label{eqn:prop1.2}
 \end{align}
 where \eqref{eqn:prop1.1} holds by \eqref{eqn:prop1.0}, and \eqref{eqn:prop1.2} holds by \eqref{eqn:psi10_identity}. We next derive the expected value of $\hat{\psi}^{1, \textup{sbw}}$:
 
 \begin{align}
 \nonumber	\mathbb{E}[\hat{\psi}_0^{1, \textup{sbw}}] & = \mathbb{E}\left[ \sum_{A_{sc} = 1} {\gamma}_{sc} Y_{sc}\right] \\
-	& = \mathbb{E}\left[ \sum_{A_{sc}=1} {\gamma}_{sc} \left(\alpha_1 + (W_{sc} - W_{sc} + X_{sc})^T \beta_1 + \epsilon_{sc}\right)\right] \label{eqn:prop1.4}\\
-\nonumber	& = \mathbb{E}\left[ \alpha_1 + \sum_{A_{sc} = 1} {\gamma}_{sc} W_{sc}^T \beta_1 + \sum_{A_{sc}=1} {\gamma}_{sc} (X_{sc} - W_{sc})^T \beta_1 + \sum_{A_{sc}=1} {\gamma}_{sc} \epsilon_{sc} \right] \\
-	& = \alpha_1 + \bar{X}_0^T\beta_1 + \mathbb{E}\left[ \sum_{A_{sc} = 1} {\gamma}_{sc}(X_{sc} - W_{sc})^T \beta_1\right] \label{eqn:prop1.5}\\
-	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1} {\gamma}_{sc}(X_{sc} - W_{sc})^T \beta_1 \right] \label{eqn:prop1.6} \\
-	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1} \mathbb{E}\left[ {\gamma}_{sc}(X_{sc} - W_{sc})^T \beta_1 | W \right] \right] \label{eqn:prop1.7} \\
-	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1}  {\gamma}_{sc} (\mathbb{E}[X_{sc}|W] - W_{sc})^T \beta_1 \right] \label{eqn:prop1.8} \\
-	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1}  {\gamma}_{sc} (\upsilon_1 + \kappa^T(W_{sc} - \upsilon_1) - W_{sc})^T \beta_1 \right] \label{eqn:prop1.9} \\
-\nonumber	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1}  {\gamma}_{sc} (W_{sc} - \upsilon_1)^T(\kappa - I)\beta_1 \right] \\
-\nonumber	& = \psi_0^1 + \left(\mathbb{E}\left[\sum_{A_{sc} = 1} {\gamma}_{sc} W_{sc}\right] - \upsilon_1\right)^T(\kappa - I)\beta_1  \\
-	& = \psi_0^1 + \left(\bar{X}_0 - \upsilon_1\right)^T(\kappa - I_q)\beta_1  \label{eqn:prop1.10}
+	& = \mathbb{E}\left[ \sum_{A_{sc}=1} {\gamma}_{sc} \left(\alpha_1 + (W_{sc} - W_{sc} + X_{sc})^\top \beta_1 + \epsilon_{sc}\right)\right] \label{eqn:prop1.4}\\
+\nonumber	& = \mathbb{E}\left[ \alpha_1 + \sum_{A_{sc} = 1} {\gamma}_{sc} W_{sc}^\top \beta_1 + \sum_{A_{sc}=1} {\gamma}_{sc} (X_{sc} - W_{sc})^\top \beta_1 + \sum_{A_{sc}=1} {\gamma}_{sc} \epsilon_{sc} \right] \\
+	& = \alpha_1 + \bar{X}_0^\top\beta_1 + \mathbb{E}\left[ \sum_{A_{sc} = 1} {\gamma}_{sc}(X_{sc} - W_{sc})^\top \beta_1\right] \label{eqn:prop1.5}\\
+	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1} {\gamma}_{sc}(X_{sc} - W_{sc})^\top \beta_1 \right] \label{eqn:prop1.6} \\
+	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1} \mathbb{E}\left[ {\gamma}_{sc}(X_{sc} - W_{sc})^\top \beta_1 | W \right] \right] \label{eqn:prop1.7} \\
+	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1}  {\gamma}_{sc} (\mathbb{E}[X_{sc}|W] - W_{sc})^\top \beta_1 \right] \label{eqn:prop1.8} \\
+	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1}  {\gamma}_{sc} (\upsilon_1 + \kappa^\top(W_{sc} - \upsilon_1) - W_{sc})^\top \beta_1 \right] \label{eqn:prop1.9} \\
+\nonumber	& = \psi_0^1 + \mathbb{E} \left[ \sum_{A_{sc} = 1}  {\gamma}_{sc} (W_{sc} - \upsilon_1)^\top(\kappa - I)\beta_1 \right] \\
+\nonumber	& = \psi_0^1 + \left(\mathbb{E}\left[\sum_{A_{sc} = 1} {\gamma}_{sc} W_{sc}\right] - \upsilon_1\right)^\top(\kappa - I)\beta_1  \\
+	& = \psi_0^1 + \left(\bar{X}_0 - \upsilon_1\right)^\top(\kappa - I_q)\beta_1  \label{eqn:prop1.10}
 \end{align}
 %
 where \eqref{eqn:prop1.4} holds by the assumed linear model for $Y_{sc}$ given by  \eqref{eqn:linmod}; \eqref{eqn:prop1.5} and \eqref{eqn:prop1.10} hold because the SBW algorithm enforces that $\sum \gamma_{sc} W_{sc} = \bar{W}_0$, which has expectation $\bar{X}_0$, and because $\epsilon_{sc}$ is zero-mean and independent of $W_{sc}$ and hence independent of $\gamma_{sc}$; \eqref{eqn:prop1.6} holds by definition of $\psi_0^1$ and the assumed linear model in \eqref{eqn:linmod}; \eqref{eqn:prop1.7} is the tower property of expectations; \eqref{eqn:prop1.8} follows because $\gamma_{sc}$ and $W_{sc}$ are deterministic given $W$; and \eqref{eqn:prop1.9} uses the expression for the conditional expectation given by \eqref{eqn:regcal}. It can be seen that \eqref{eqn:prop1.2} and \eqref{eqn:prop1.10} are equal, and hence show that $\hat{\psi}_0^{1,\textup{ols}}$ and $\hat{\psi}_0^{1, \textup{sbw}}$ have equal bias.
@@ -309,13 +309,13 @@ where \eqref{eqn:prop1.4} holds by the assumed linear model for $Y_{sc}$ given b
 It remains to show that the bias of the OLS estimator is unchanged if the gaussian assumption is relaxed so that \eqref{eqn:regcal} no longer holds. It follows from \eqref{eqn:prop1.beta} that $\hat{\beta}$ is asymptotically given by
 
     \begin{align*}
-    \hat{\beta} &= \left(\sum_{A_{sc}=1} (W_{sc} - \bar{W}_1)(W_{sc} - \bar{W}_1)^T \right)^{-1} \left(\sum_{A_{sc}=1} (W_{sc} - \bar{W}_1)(Y_{sc} - \bar{Y}_1)^T\right) \\
+    \hat{\beta} &= \left(\sum_{A_{sc}=1} (W_{sc} - \bar{W}_1)(W_{sc} - \bar{W}_1)^\top \right)^{-1} \left(\sum_{A_{sc}=1} (W_{sc} - \bar{W}_1)(Y_{sc} - \bar{Y}_1)^\top\right) \\
      & \rightarrow^p  (S_X + \Sigma_\nu)^{-1}S_X \beta_1 = \check{\kappa} \beta_1
     \end{align*}
 where we have used \eqref{eqn:limitW} and \eqref{eqn:limitWY}. Plugging into $\psi_0^{1,\textup{ols}}$ yields
 
 \begin{align*}    
-    \mathbb{E}[\hat{\psi}_0]^{1,\textup{ols}} = \mathbb{E}[ \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^T \hat{\beta}] \\
+    \mathbb{E}[\hat{\psi}_0]^{1,\textup{ols}} = \mathbb{E}[ \bar{Y}_1 + (\bar{W}_0 - \bar{W}_1)^\top \hat{\beta}] \\
     \rightarrow^p  \bar{\mu}_y + (\bar{X}_0 - \bar{X}_1)\check{\kappa} \beta_1
 \end{align*}
 from which the result follows by the same steps used to show \eqref{eqn:prop1.2}.
@@ -326,16 +326,16 @@ from which the result follows by the same steps used to show \eqref{eqn:prop1.2}
 Assuming $\epsilon_{sc} = 0$, by linearity we know that
 
 \begin{equation}\label{eqn:outcomerevised}
-Y_{sc} = \alpha_1 + \tilde{X}_{sc}^T\beta_1 + (X_{sc} - \tilde{X}_{sc})^T\beta_1 \qquad \forall sc: A_{sc} = 1
+Y_{sc} = \alpha_1 + \tilde{X}_{sc}^\top\beta_1 + (X_{sc} - \tilde{X}_{sc})^\top\beta_1 \qquad \forall sc: A_{sc} = 1
 \end{equation}
 
 We then have that:
 
 \begin{align}\nonumber
-    \hat{\psi}_0^{1,\textup{ideal}} - \psi_0^1 &= \sum_{sc: A_{sc} = 1}\gamma_{sc}^\star Y_{sc} - (\alpha_1 + \bar{X}_0^T\beta_1) \\
-    \nonumber &= \sum_{sc: A_{sc} = 1}\gamma_{sc}^\star\alpha_1 + \sum_{sc: A_{sc} = 1}\gamma_{sc}^\star\tilde{X}_{sc}^T\beta_1 \\ 
-    &+ \sum_{sc: A_{sc} = 1}\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^T\beta_1 - (\alpha_1 + \bar{X}_0^T\beta_1) \label{eqn:outcomerevised_proof1}\\
-    &= \sum_{sc: A_{sc} = 1}\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^T\beta_1\label{eqn:sbwregcalerror}
+    \hat{\psi}_0^{1,\textup{ideal}} - \psi_0^1 &= \sum_{sc: A_{sc} = 1}\gamma_{sc}^\star Y_{sc} - (\alpha_1 + \bar{X}_0^\top\beta_1) \\
+    \nonumber &= \sum_{sc: A_{sc} = 1}\gamma_{sc}^\star\alpha_1 + \sum_{sc: A_{sc} = 1}\gamma_{sc}^\star\tilde{X}_{sc}^\top\beta_1 \\ 
+    &+ \sum_{sc: A_{sc} = 1}\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^\top\beta_1 - (\alpha_1 + \bar{X}_0^\top\beta_1) \label{eqn:outcomerevised_proof1}\\
+    &= \sum_{sc: A_{sc} = 1}\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^\top\beta_1\label{eqn:sbwregcalerror}
 \end{align}
 where \eqref{eqn:outcomerevised_proof1} follows from \eqref{eqn:outcomerevised}, and \eqref{eqn:sbwregcalerror} holds since $\sum \gamma_{sc}^\star = 1$ and $\sum \gamma_{sc}^\star \tilde{X}_{sc} = \bar{X}_0$. Conditioned on $W$, it can be seen that $\gamma^*$ is fixed and $X_{sc} - \tilde{X}_{sc}$ has expectation zero; therefore, \eqref{eqn:sbwregcalerror} implies that the estimator is unbiased.
 \end{proof}
@@ -344,10 +344,10 @@ where \eqref{eqn:outcomerevised_proof1} follows from \eqref{eqn:outcomerevised},
 To derive $\operatorname{Var}\left(\hat{\psi}_0^{1,\textup{ideal}} | W\right)$, we use
 
 \begin{align}
-\operatorname{Var}\left(\hat{\psi}_0^{1,\textup{ideal}} - \psi_0^1 | W\right) &= \operatorname{Var}\left[\sum_{sc: A_{sc} = 1}\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^T\beta_1 \mid W\right] \label{eqn:prop:variance.1}\\
- &= \sum_{sc: A_{sc} = 1} \operatorname{Var}(\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^T\beta_1 \mid W) \label{eqn:prop:variance.2}\\
- &= \sum_{sc: A_{sc} = 1} \gamma_{sc}^{\star^2}\beta_1^T(\Sigma_{X} - \Sigma_{X}\Sigma_{W}^{-1}\Sigma_{X})\beta_1  \label{eqn:prop:variance.3}\\
-& = \|\gamma^*\|^2 \cdot \beta_1^T(\Sigma_{X} - \Sigma_{X}\Sigma_{W}^{-1}\Sigma_{X})\beta_1 \label{eqn:variance}
+\operatorname{Var}\left(\hat{\psi}_0^{1,\textup{ideal}} - \psi_0^1 | W\right) &= \operatorname{Var}\left[\sum_{sc: A_{sc} = 1}\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^\top\beta_1 \mid W\right] \label{eqn:prop:variance.1}\\
+ &= \sum_{sc: A_{sc} = 1} \operatorname{Var}(\gamma_{sc}^\star(X_{sc} - \tilde{X}_{sc})^\top\beta_1 \mid W) \label{eqn:prop:variance.2}\\
+ &= \sum_{sc: A_{sc} = 1} \gamma_{sc}^{\star^2}\beta_1^\top(\Sigma_{X} - \Sigma_{X}\Sigma_{W}^{-1}\Sigma_{X})\beta_1  \label{eqn:prop:variance.3}\\
+& = \|\gamma^*\|^2 \cdot \beta_1^\top(\Sigma_{X} - \Sigma_{X}\Sigma_{W}^{-1}\Sigma_{X})\beta_1 \label{eqn:variance}
 \end{align}
 %
 where \eqref{eqn:prop:variance.1} follows from \eqref{eqn:sbwregcalerror}, \eqref{eqn:prop:variance.2} holds because the tuples $(X_{sc}, W_{sc})$ are i.i.d, and \eqref{eqn:prop:variance.3} holds because $\gamma_{sc}^*$ is fixed given $W$ and $(X_{sc}, W_{sc})$ are jointly normal. 
@@ -368,20 +368,20 @@ Following Proposition~\ref{cl2}, assuming $\epsilon_{sc}=0$ we can decompose the
 
 \begin{align}
 \nonumber    \hat{\psi}^{1,\textup{adjusted}}_0 - \psi_0^1 &= \sum_{A_{sc}=1} \hat{\gamma}_{sc} Y_{sc} - \psi_0^1 \\
-    & = \sum_{A_{sc}=1} \hat{\gamma}_{sc} (\alpha_1 + X_{sc}^T \beta_1) - \psi_0^1 \label{eqn:cl3.1}\\
-    \nonumber & = \sum_{A_{sc}=1} \hat{\gamma}_{sc} (\alpha_1 + \hat{X}_{sc}^T \beta_1 + (X_{sc} - \hat{X}_{sc})^T \beta_1 ) - \psi_0^1 \\
-    \nonumber & = \alpha_1 + \sum_{A_{sc}=1} \hat{\gamma}_{sc} \hat{X}_{sc}^T \beta_1 + \sum_{A_{sc}=1} \hat{\gamma}_{sc}(X_{sc} - \hat{X}_{sc})^T \beta_1  - \psi_0^1 \\
-    & = \alpha_1 + \bar{W}_0^T \beta_1 + \sum_{A_{sc}=1} \hat{\gamma}_{sc}(X_{sc} - \hat{X}_{sc})^T \beta_1  - \psi_0^1 \label{eqn:cl3.4}\\
-    & = \underbrace{(\bar{X}_0 - \bar{W}_0)^T \beta_1}_{(i)} + \underbrace{\sum_{A_{sc}=1} \hat{\gamma}_{sc}(X_{sc} - \tilde{X}_{sc})^T \beta_1}_{(ii)} + \underbrace{\sum_{A_{sc}=1} \hat{\gamma}_{sc} (\tilde{X}_{sc} - \hat{X}_{sc})^T \beta_1}_{(iii)} \label{eqn:cl3.5}
+    & = \sum_{A_{sc}=1} \hat{\gamma}_{sc} (\alpha_1 + X_{sc}^\top \beta_1) - \psi_0^1 \label{eqn:cl3.1}\\
+    \nonumber & = \sum_{A_{sc}=1} \hat{\gamma}_{sc} (\alpha_1 + \hat{X}_{sc}^\top \beta_1 + (X_{sc} - \hat{X}_{sc})^\top \beta_1 ) - \psi_0^1 \\
+    \nonumber & = \alpha_1 + \sum_{A_{sc}=1} \hat{\gamma}_{sc} \hat{X}_{sc}^\top \beta_1 + \sum_{A_{sc}=1} \hat{\gamma}_{sc}(X_{sc} - \hat{X}_{sc})^\top \beta_1  - \psi_0^1 \\
+    & = \alpha_1 + \bar{W}_0^\top \beta_1 + \sum_{A_{sc}=1} \hat{\gamma}_{sc}(X_{sc} - \hat{X}_{sc})^\top \beta_1  - \psi_0^1 \label{eqn:cl3.4}\\
+    & = \underbrace{(\bar{X}_0 - \bar{W}_0)^\top \beta_1}_{(i)} + \underbrace{\sum_{A_{sc}=1} \hat{\gamma}_{sc}(X_{sc} - \tilde{X}_{sc})^\top \beta_1}_{(ii)} + \underbrace{\sum_{A_{sc}=1} \hat{\gamma}_{sc} (\tilde{X}_{sc} - \hat{X}_{sc})^\top \beta_1}_{(iii)} \label{eqn:cl3.5}
 \end{align}
 
-where \eqref{eqn:cl3.1} holds by \eqref{eqn:linmod}, \eqref{eqn:cl3.4} uses that $\sum \hat{\gamma}_{sc} \hat{X}_{sc} = \bar{W}_0$, and \eqref{eqn:cl3.5} uses that $\psi_{0}^1 = \alpha_1 + \bar{X}_0^T \beta_1$.
+where \eqref{eqn:cl3.1} holds by \eqref{eqn:linmod}, \eqref{eqn:cl3.4} uses that $\sum \hat{\gamma}_{sc} \hat{X}_{sc} = \bar{W}_0$, and \eqref{eqn:cl3.5} uses that $\psi_{0}^1 = \alpha_1 + \bar{X}_0^\top \beta_1$.
 
 We observe that term (i) goes to zero by the law of large numbers. Term (iii) goes to zero because $\|\hat{\gamma}\| \leq 1$ (since $\hat{\gamma} \geq 0$ and sums to 1), and because $\hat{X}$ converges to $\tilde{X}$ uniformly over all units as $\hat{\Sigma}_X$ and $\hat{\Sigma}_{\nu}$ converge. 
 
 To show that (ii) goes to zero, we will show that conditioned on $W$, (ii) is zero mean and has variance going to zero. Conditioned on $W$, $\hat{\gamma}$ is fixed; this implies that conditioned on $W$, term (ii) is zero-mean, and has conditional variance 
 
-\[ \|\hat{\gamma}\|^2 \cdot \beta_1^T(\Sigma_X - \Sigma_X\Sigma_W^{-1}\Sigma_X) \beta_1\]
+\[ \|\hat{\gamma}\|^2 \cdot \beta_1^\top(\Sigma_X - \Sigma_X\Sigma_W^{-1}\Sigma_X) \beta_1\]
 By a construction argument identical to one used in the proof of Proposition \ref{prop:variance_rate}, it can be shown that $\|\hat{\gamma}\|^2\rightarrow 0$, implying that the conditional variance goes to zero as well.
 \end{proof}
 
@@ -393,48 +393,48 @@ Let $U_s = \{(J_{sc}, W_{sc}): c = 1,\ldots,p_s\}$ denote the observed outcomes 
 Let $\mu$ denote 
 \[ \mu = \frac{1}{n_1} \sum_{A_{sc} = 1} \check{X}_{sc}\]
 so that
-\[ \check{X}_{sc} - \mu = \check{\kappa}^T(W_{sc} - \bar{W}_1)\]
+\[ \check{X}_{sc} - \mu = \check{\kappa}^\top(W_{sc} - \bar{W}_1)\]
 and hence that 
 \begin{align}
- \nonumber \check{\beta} &=  \left(\sum_{A_{sc}=1} (\check{X}_{sc} - \mu)(\check{X}_{sc} - \mu)^T\right)^{-1} \sum_{A_{sc}=1} (\check{X}_{sc} - \mu)(Y_{sc} - \bar{Y}_1) \\
- \nonumber & = \left(\sum_{A_{sc}=1} \check{\kappa}^T (W_{sc} - \bar{W}_1)(W_{sc} - \bar{W}_1)^T \check{\kappa}\right)^{-1} \sum_{A_{sc}=1} \check{\kappa}^T(W_{sc} - \bar{W}_1)(Y_{sc} - \bar{Y}_1) \\
- & \to^p (\check{\kappa}^T (S_X + \Sigma_\nu) \check{\kappa})^{-1} \check{\kappa}^T S_X \beta_1  \label{eqn:cl8.1}\\
+ \nonumber \check{\beta} &=  \left(\sum_{A_{sc}=1} (\check{X}_{sc} - \mu)(\check{X}_{sc} - \mu)^\top\right)^{-1} \sum_{A_{sc}=1} (\check{X}_{sc} - \mu)(Y_{sc} - \bar{Y}_1) \\
+ \nonumber & = \left(\sum_{A_{sc}=1} \check{\kappa}^\top (W_{sc} - \bar{W}_1)(W_{sc} - \bar{W}_1)^\top \check{\kappa}\right)^{-1} \sum_{A_{sc}=1} \check{\kappa}^\top(W_{sc} - \bar{W}_1)(Y_{sc} - \bar{Y}_1) \\
+ & \to^p (\check{\kappa}^\top (S_X + \Sigma_\nu) \check{\kappa})^{-1} \check{\kappa}^\top S_X \beta_1  \label{eqn:cl8.1}\\
  \nonumber 
  & = \check{\kappa}^{-1} (S_X + \Sigma_{\nu})^{-1} S_X \beta_1 \\
  \nonumber 
  & = \beta_1
  \end{align}
  where \eqref{eqn:cl8.1} follows by \eqref{eqn:limitW} and \eqref{eqn:limitWY}, and the last step follows from the definition of $\check{\kappa}$. It then follows that 
- \[ \bar{Y}_1 - (\bar{W}_0 - \bar{W}_1)^T \check{\beta} \to^p \alpha_1 + \bar{X}_0^T \beta_1 = \psi_0^1\]
+ \[ \bar{Y}_1 - (\bar{W}_0 - \bar{W}_1)^\top \check{\beta} \to^p \alpha_1 + \bar{X}_0^\top \beta_1 = \psi_0^1\]
  proving consistency.
 \end{proof}
 
 \begin{proof}[Proof of Proposition \ref{cl9}]
 
-We will use Proposition \ref{cl56} which is proved later in this section. To apply it, we let $\Omega = I$, $Z = \check{X}_{A=1}$, and $v = \bar{W}_0$. Using  $\check{X}_{sc} = \bar{W}_1 + \check{\kappa}^T(W_{sc} - \bar{W}_1)$, we find that 
+We will use Proposition \ref{cl56} which is proved later in this section. To apply it, we let $\Omega = I$, $Z = \check{X}_{A=1}$, and $v = \bar{W}_0$. Using  $\check{X}_{sc} = \bar{W}_1 + \check{\kappa}^\top(W_{sc} - \bar{W}_1)$, we find that 
 \begin{align}
     \nonumber \mu & = \frac{1}{n_Q} \sum_{sc \in Q} \check{X}_{sc} \\
-    \label{eqn:cl9.mu} & = \bar{W}_1 + \check{\kappa}^T(\bar{W}_Q - \bar{W}_1)
+    \label{eqn:cl9.mu} & = \bar{W}_1 + \check{\kappa}^\top(\bar{W}_Q - \bar{W}_1)
 \end{align}
-and hence that $\check{X}_{sc} - \mu = \check{\kappa}^T(W_{sc} - \bar{W}_Q)$. Plugging into \eqref{eqn:a1.3} yields 
+and hence that $\check{X}_{sc} - \mu = \check{\kappa}^\top(W_{sc} - \bar{W}_Q)$. Plugging into \eqref{eqn:a1.3} yields 
 
 \begin{align}
- \nonumber \check{\gamma}_{sc} & = \frac{1}{n_Q}(W_{sc} - \bar{W}_Q)^T \check{\kappa} (\check{\kappa}^T S_{W_Q} \kappa)^{-1}(\bar{W}_0 - \mu) + \frac{1}{n_Q} \\
- \label{eqn:cl9.proof.gamma}& = \frac{1}{n_Q}(W_{sc} - \bar{W}_Q)^T S_{W_Q}^{-1} \check{\kappa}^{-T}(\bar{W}_0 - \mu) + \frac{1}{n_Q} \qquad \forall \ sc \in Q
+ \nonumber \check{\gamma}_{sc} & = \frac{1}{n_Q}(W_{sc} - \bar{W}_Q)^\top \check{\kappa} (\check{\kappa}^\top S_{W_Q} \kappa)^{-1}(\bar{W}_0 - \mu) + \frac{1}{n_Q} \\
+ \label{eqn:cl9.proof.gamma}& = \frac{1}{n_Q}(W_{sc} - \bar{W}_Q)^\top S_{W_Q}^{-1} \check{\kappa}^{-T}(\bar{W}_0 - \mu) + \frac{1}{n_Q} \qquad \forall \ sc \in Q
 \end{align}
-As $Y_{sc} = \alpha_1 + \beta_1^T (\bar{X}_Q + X_{sc} - \bar{X}_Q)$ for the treated units, the SBW estimator of $\psi_0^1$ can be seen to equal
+As $Y_{sc} = \alpha_1 + \beta_1^\top (\bar{X}_Q + X_{sc} - \bar{X}_Q)$ for the treated units, the SBW estimator of $\psi_0^1$ can be seen to equal
 \begin{align}
-    \nonumber \sum_{A_{sc}=1} Y_{sc}\check{\gamma}_{sc} & = \sum_{A_{sc}=1} (\alpha_1 + \beta_1^T \bar{X}_Q) \check{\gamma}_{sc} + \sum_{A_{sc}=1}  \beta_1^T (X_{sc} - \bar{X}_Q)\check{\gamma}_{sc} \\
- \label{eqn:cl9.proof1}    & = (\alpha_1 + \beta_1^T \bar{X}_Q)\\
-    \nonumber & \hskip.5cm {} + \sum_{sc \in Q}  \beta_1^T(X_{sc} - \bar{X}_Q)\left[\frac{1}{n_Q} (W_{sc} - \bar{W}_Q)^T S_{W_Q}^{-1} \check{\kappa}^{-T}(\bar{W}_0 - \mu) +  \frac{1}{n_Q}\right] \\
-\label{eqn:cl9.proof2}    & = (\alpha_1 + \beta_1^T \bar{X}_Q)\\
-    \nonumber & \hskip.5cm {} +  \beta_1^TS_{XW_Q} S_{W_Q}^{-1} \check{\kappa}^{-T}(\bar{W}_0 - \mu) + \underbrace{\frac{1}{n_Q}\sum_{sc \in Q}   \beta_1^T (X_{sc} - \bar{X}_Q) }_{= 0} \\ 
-\label{eqn:cl9.proof3}    & = \alpha_1 + \beta_1^T \bar{X}_0 - \underbrace{(\beta_1^T \bar{X}_0 -  \beta_1^TS_{XW_Q} S_{W_Q}^{-1} \check{\kappa}^{-T}\bar{W}_0)}_{(i)} \\
-    \nonumber & \hskip.5cm {} + \underbrace{\beta_1^T (\bar{X}_Q - S_{XW_Q} S_{W_Q}^{-1} \check{\kappa}^{-T}\bar{W}_1)}_{(ii)} - \underbrace{\beta_1^TS_{X_Q}S_{W_Q}^{-1}(\bar{W}_Q - \bar{W}_1))}_{(iii)}\\
-\label{eqn:cl9.proof4}    & \to^p \psi_0^1 - \underbrace{\beta_1^T(I - S_{XW_Q}S_{W_Q}^{-1}S_WS_X^{-1})\bar{X}_0}_{(i)} \\
-    \nonumber & \hskip.5cm {} + \underbrace{\beta_1^T(\bar{X}_Q - S_{XW_Q}S_{W_Q}^{-1} S_W S_X^{-1} \bar{X}_1)}_{(ii)} - \underbrace{\beta_1^TS_{XW_Q}S_{W_Q}^{-1}(\bar{X}_Q - \bar{X}_1)}_{(iii)}
+    \nonumber \sum_{A_{sc}=1} Y_{sc}\check{\gamma}_{sc} & = \sum_{A_{sc}=1} (\alpha_1 + \beta_1^\top \bar{X}_Q) \check{\gamma}_{sc} + \sum_{A_{sc}=1}  \beta_1^\top (X_{sc} - \bar{X}_Q)\check{\gamma}_{sc} \\
+ \label{eqn:cl9.proof1}    & = (\alpha_1 + \beta_1^\top \bar{X}_Q)\\
+    \nonumber & \hskip.5cm {} + \sum_{sc \in Q}  \beta_1^\top(X_{sc} - \bar{X}_Q)\left[\frac{1}{n_Q} (W_{sc} - \bar{W}_Q)^\top S_{W_Q}^{-1} \check{\kappa}^{-T}(\bar{W}_0 - \mu) +  \frac{1}{n_Q}\right] \\
+\label{eqn:cl9.proof2}    & = (\alpha_1 + \beta_1^\top \bar{X}_Q)\\
+    \nonumber & \hskip.5cm {} +  \beta_1^\topS_{XW_Q} S_{W_Q}^{-1} \check{\kappa}^{-T}(\bar{W}_0 - \mu) + \underbrace{\frac{1}{n_Q}\sum_{sc \in Q}   \beta_1^\top (X_{sc} - \bar{X}_Q) }_{= 0} \\ 
+\label{eqn:cl9.proof3}    & = \alpha_1 + \beta_1^\top \bar{X}_0 - \underbrace{(\beta_1^\top \bar{X}_0 -  \beta_1^\topS_{XW_Q} S_{W_Q}^{-1} \check{\kappa}^{-T}\bar{W}_0)}_{(i)} \\
+    \nonumber & \hskip.5cm {} + \underbrace{\beta_1^\top (\bar{X}_Q - S_{XW_Q} S_{W_Q}^{-1} \check{\kappa}^{-T}\bar{W}_1)}_{(ii)} - \underbrace{\beta_1^\topS_{X_Q}S_{W_Q}^{-1}(\bar{W}_Q - \bar{W}_1))}_{(iii)}\\
+\label{eqn:cl9.proof4}    & \to^p \psi_0^1 - \underbrace{\beta_1^\top(I - S_{XW_Q}S_{W_Q}^{-1}S_WS_X^{-1})\bar{X}_0}_{(i)} \\
+    \nonumber & \hskip.5cm {} + \underbrace{\beta_1^\top(\bar{X}_Q - S_{XW_Q}S_{W_Q}^{-1} S_W S_X^{-1} \bar{X}_1)}_{(ii)} - \underbrace{\beta_1^\topS_{XW_Q}S_{W_Q}^{-1}(\bar{X}_Q - \bar{X}_1)}_{(iii)}
 \end{align}
-where \eqref{eqn:cl9.proof1} uses the expression for $\check{\gamma}$ given by (\ref{eqn:cl9.proof.gamma}; \eqref{eqn:cl9.proof2} follows by algebraic manipulations, and notes that $n_Q^{-1}\sum_{sc \in Q} (X_{sc} - \bar{X}_Q) = 0$; \eqref{eqn:cl9.proof3} adds and subtracts $\beta_1^T \bar{X}_0$,  substitutes for $\mu$ using (\ref{eqn:cl9.mu}), and groups the terms into (i), (ii), and (iii); and \eqref{eqn:cl9.proof4} substitutes for $\check{\kappa}$ and uses $\bar{W}_0 \to^p \bar{X}_0$ and $\bar{W}_1 \to^p \bar{X}_1$.
+where \eqref{eqn:cl9.proof1} uses the expression for $\check{\gamma}$ given by (\ref{eqn:cl9.proof.gamma}; \eqref{eqn:cl9.proof2} follows by algebraic manipulations, and notes that $n_Q^{-1}\sum_{sc \in Q} (X_{sc} - \bar{X}_Q) = 0$; \eqref{eqn:cl9.proof3} adds and subtracts $\beta_1^\top \bar{X}_0$,  substitutes for $\mu$ using (\ref{eqn:cl9.mu}), and groups the terms into (i), (ii), and (iii); and \eqref{eqn:cl9.proof4} substitutes for $\check{\kappa}$ and uses $\bar{W}_0 \to^p \bar{X}_0$ and $\bar{W}_1 \to^p \bar{X}_1$.
 
 It can be seen that terms (i), (ii), and (iii) each go to zero if $S_{XW_Q} \to S_X$, $S_{W_Q} \to S_W$, and $\bar{X}_Q \to \bar{X}_1$, proving the result. 
 \end{proof}
@@ -443,7 +443,7 @@ It can be seen that terms (i), (ii), and (iii) each go to zero if $S_{XW_Q} \to 
     We prove the result for H-SBW only, as letting $\rho=0$ includes SBW as a special case. Following the derivation of \eqref{eqn:sbwregcalerror} with the H-SBW weights $\tilde{\gamma}^{\textup{hsbw}*}$ in place of $\gamma^*$, it can be shown that: 
     
     \begin{align*}
-        \sum_{A_{sc}=1} Y_{sc} \tilde{\gamma}_{sc}^{\textup{hsbw}*} - \psi^1_0 = \sum_{sc: A_{sc} = 1}\tilde{\gamma}^{\textup{hsbw}*}_{sc}(X_{sc} - \tilde{X}_{sc}^\star)^T\beta_1
+        \sum_{A_{sc}=1} Y_{sc} \tilde{\gamma}_{sc}^{\textup{hsbw}*} - \psi^1_0 = \sum_{sc: A_{sc} = 1}\tilde{\gamma}^{\textup{hsbw}*}_{sc}(X_{sc} - \tilde{X}_{sc}^\star)^\top\beta_1
     \end{align*}
 Conditional on $W$ (and assuming that the correspondence between states and CPUMAs is known), $\tilde{\gamma}_{sc}^{\textup{hsbw}*}$ is fixed and $X_{sc} - \tilde{X}_{sc}^*$ equals $X_{sc} - \mathbb{E}[X_{sc}|W, A=1]$ which has mean zero, proving the result.
 \end{proof}
@@ -469,29 +469,29 @@ where the second line follows by dividing by $\sigma^2_{\epsilon} + \sigma^2_{\v
     
 To show \eqref{eqn:a1.3}, we observe that \eqref{eqn:a1.2} can be written as
 
-\[ \min_{\gamma_Q} \gamma_Q^T \Omega_Q \gamma_Q \quad \text{subject to} \quad Z_Q \gamma_Q = v \ \text{ and } \ {\bf 1}^T \gamma_Q = 1\] 
+\[ \min_{\gamma_Q} \gamma_Q^\top \Omega_Q \gamma_Q \quad \text{subject to} \quad Z_Q \gamma_Q = v \ \text{ and } \ {\bf 1}^\top \gamma_Q = 1\] 
 which can be rewritten as
 
-\[ \min_{\gamma_Q} \gamma_Q^T \Omega_Q \gamma_Q \quad \text{subject to} \quad \left[ \begin{array}{cr} Z_Q - \mu {\bf 1}^T\\ {\bf 1}^T \end{array}\right] \gamma_Q = \left[\begin{array}{cr} v - \mu & 1 \end{array}\right]\] 
-where we have subtracted $\mu{\bf 1}^T \gamma_Q$ (which equals $\mu$) from both sides of the constraint. This is a least norm problem, and when feasible has solution
+\[ \min_{\gamma_Q} \gamma_Q^\top \Omega_Q \gamma_Q \quad \text{subject to} \quad \left[ \begin{array}{cr} Z_Q - \mu {\bf 1}^\top\\ {\bf 1}^\top \end{array}\right] \gamma_Q = \left[\begin{array}{cr} v - \mu & 1 \end{array}\right]\] 
+where we have subtracted $\mu{\bf 1}^\top \gamma_Q$ (which equals $\mu$) from both sides of the constraint. This is a least norm problem, and when feasible has solution
 
 \begin{equation}\label{eq:a1.least_norm}
- \gamma_Q^* = \Omega^{-1}_Q A^T (A\Omega^{-1}_QA^T)^{-1} b
+ \gamma_Q^* = \Omega^{-1}_Q A^\top (A\Omega^{-1}_QA^\top)^{-1} b
 \end{equation}
-where $A = \left[ \begin{array}{cr} Z_Q - \mu {\bf 1}^T\\ {\bf 1}^T \end{array}\right]$ and $b = \left[\begin{array}{cr} v - \mu & 1 \end{array}\right]$. As $(Z_{Q} - \mu{\bf 1}^T)\Omega_Q^{-1} {\bf 1} = 0$, it follows that $A\Omega^{-1}A^T$ is block diagonal
+where $A = \left[ \begin{array}{cr} Z_Q - \mu {\bf 1}^\top\\ {\bf 1}^\top \end{array}\right]$ and $b = \left[\begin{array}{cr} v - \mu & 1 \end{array}\right]$. As $(Z_{Q} - \mu{\bf 1}^\top)\Omega_Q^{-1} {\bf 1} = 0$, it follows that $A\Omega^{-1}A^\top$ is block diagonal
 
-\[ A\Omega_Q^{-1}A^T = \left[\begin{array}{cc} (Z_Q - \mu)\Omega_Q^{-1} (Z_Q- \mu)^T & 0  \\ 0 & {\bf 1}^T \Omega^{-1}_Q{\bf 1}\end{array}\right] \]
+\[ A\Omega_Q^{-1}A^\top = \left[\begin{array}{cc} (Z_Q - \mu)\Omega_Q^{-1} (Z_Q- \mu)^\top & 0  \\ 0 & {\bf 1}^\top \Omega^{-1}_Q{\bf 1}\end{array}\right] \]
 so that plugging into \eqref{eq:a1.least_norm} yields
  \begin{equation*}
- \gamma^*_{Q} = \Omega_{Q}^{-1} (Z_{Q} - \mu)^T\left[ (Z_Q - \mu) \Omega_{Q}^{-1} (Z_Q - \mu)\right]^{-1} (v - \mu) + \frac{\Omega^{-1}_Q {\bf 1} }{{\bf 1}^T \Omega^{-1}_Q {\bf 1}}
+ \gamma^*_{Q} = \Omega_{Q}^{-1} (Z_{Q} - \mu)^\top\left[ (Z_Q - \mu) \Omega_{Q}^{-1} (Z_Q - \mu)\right]^{-1} (v - \mu) + \frac{\Omega^{-1}_Q {\bf 1} }{{\bf 1}^\top \Omega^{-1}_Q {\bf 1}}
  \end{equation*}
 
-This is equivalent to the implied regression weights for the estimate of $\beta^Tb$ using estimate of $\beta$ solving the GLS problem on the set $Q$ given an outcome vector $Y$, 
+This is equivalent to the implied regression weights for the estimate of $\beta^\topb$ using estimate of $\beta$ solving the GLS problem on the set $Q$ given an outcome vector $Y$, 
 \begin{align*}
-    \min_{\beta} (Y_Q - A^T\beta)\Omega_Q^{-1}(Y_Q - A^T\beta)^T
+    \min_{\beta} (Y_Q - A^\top\beta)\Omega_Q^{-1}(Y_Q - A^\top\beta)^\top
 \end{align*}
 %
-where $\hat{\beta} = (A\Omega_Q^{-1}A^T)^{-1}A\Omega_Q^{-1}Y_Q$, proving the result.
+where $\hat{\beta} = (A\Omega_Q^{-1}A^\top)^{-1}A\Omega_Q^{-1}Y_Q$, proving the result.
 
 %\clearpage
 \end{proof}

@@ -1,35 +1,30 @@
 \section{Summary Statistics and Covariates}\label{app:sumstats}
 
-In this section we display summary statistics about the CPUMA-level datasets. 
-
-The first two tables pertain to treatment assignment classifications. Table~\ref{tab:txassign} lists the states that are assigned to each group: the first two columns include the treatment states and control states in our primary analysis. The third column lists the treatment states for our sensitivity analysis that excludes ``early expansion'' states. The final column indicates states that were always excluded from the analysis. 
-
-Table~\ref{tab:cpumasperstate} displays the total number of CPUMAs per state, as well as a column reiterating the state's treatment assignment and whether it was an early expansion state.
+In this section we display summary statistics about the CPUMA-level datasets. The first two tables pertain to treatment assignment classifications. Table~\ref{tab:txassign} lists the states that are assigned to each group: the first two columns include the treatment states and control states in our primary analysis. The third column lists the treatment states for our sensitivity analysis that excludes ``early expansion'' states. The final column indicates states that were always excluded from the analysis. Table~\ref{tab:cpumasperstate} displays the total number of CPUMAs per state, as well as a column reiterating the state's treatment assignment and whether it was an early expansion state.
 
 The subsequent tables and figure display summary information about the expansion state data and the homogeneous and heterogeneous covariate adjustments detailed in Appendix~\ref{app:adjustmentdetails}. 
 
 Table~\ref{tab:summarytab1} displays univariate summary statistics for the treated CPUMAs. Specifically, the table displays mean, interquartile range, and the range (as defined by the maximum value minus the minimum value) for the unadjusted dataset, the heterogeneous adjustment, and the homogeneous adjustment. We see that the covariate adjustments generally reduce the variability relative to the unadjusted data. 
 
-Table~\ref{tab:extreme1} displays the frequency that the adjusted covariates fell outside of the support of the unadjusted dataset on our primary dataset. The frequency is comparable for either adjustment and the counts are low, supporting the use of the linear model outlined in \eqref{eqn:regcal}. We also calculate these adjustments excluding early expansion states; among both sets of sets, we also recalculate these adjustments excluding each state one at a time to calculate our variance estimates. These results are available on request. 
+Table~\ref{tab:extreme1} displays the frequency that the adjusted covariates fell outside of the support of the unadjusted dataset on our primary dataset. The frequency is comparable for either adjustment and the counts are low, supporting the use of the linear model outlined in \eqref{eqn:regcal}. We also calculate these adjustments excluding early expansion states, and recalculate these adjustments excluding each state one at a time to calculate our variance estimates, yielding different results with respect to the quality of the resulting adjustments. These results are available on request.
 
-Table~\ref{tab:timetrends} displays the trends in the outcome over time by treatment group. We use these estimates to compute the difference-in-differences estimator of the ETT in note \ref{footnote_did}. 
+Table~\ref{tab:timetrends} displays the trends in the outcome over time by treatment group. We use these estimates to compute the difference-in-differences estimator of the ETT in footnote \ref{footnote_did}. 
 
-Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset (including both treated and untreated units). We caution that these point estimates may be biased due to the measurement error in the covariates. Nevertheless, this matrix is useful for at least two reasons: first, assuming the correlations among the treated and untreated units are similar, the more heavily correlated the data the easier it should be to attain covariate balance (see, e.g., \cite{d2021overlap}). This matrix gives a general sense of how correlated the data are, even if the estimates are biased. Second, these correlations can suggest potential confounders by revealing which variables are most heavily associated with treatment assignment and the pre-treatment outcomes. For example, the plot shows a strong association between Republican governance and treatment assignment, and a smaller association between these variables with pre-treatment outcomes. The plot also illustrates strong associations between the pre-treatment uninsurance rates, though they are more weakly associated with treatment assignment. 
+Figure~\ref{fig:corrmatrix} displays the Pearson's correlation coefficients for the bivariate relationships between the covariates on the unadjusted dataset (including both treated and untreated units). These point estimates may be biased due to the measurement error in the covariates. Nevertheless, this matrix is useful for at least two reasons: first, assuming the correlations among the treated and untreated units are similar, the more heavily correlated the data the easier it should be to attain covariate balance (see, e.g., \cite{d2021overlap}). This matrix gives a general sense of how correlated the data are, even if the estimates are biased. Second, these correlations can suggest potential confounders by revealing which variables are most heavily associated with treatment assignment and the pre-treatment outcomes. For example, the plot shows a strong association between Republican governance and treatment assignment, and a smaller association between these variables with pre-treatment outcomes. The plot also illustrates strong associations between the pre-treatment uninsurance rates, though they are more weakly associated with treatment assignment. 
 
-\begin{table}[h!]\label{tab:txassign}\caption{Treatment assignment classification}
+\begin{table}[h!]\caption{Treatment assignment classification}\label{tab:txassign}
 \centering
 \hline 
-\begin{tabularx}{\textwidth}{|X|X|X|X|} \\ 
-Treated states & Control states & Treated states (early expansion excluded$^\textrm{b}$) & Always excluded \\ 
+\begin{tabularx}{\textwidth}{XXXX} \\ 
+Treated states & Control states & Early expansion states & Always excluded \\ 
 \hline
-AR, AZ, CA, CO, CT, HI, IA, IL, KY, MD, MI$^\textrm{a}$, MN, ND, NJ, NM, NV, OH, OR, RI, WA, WV & AK, AL, FL, GA, ID, IN, KS, LA, ME, MO, MS, MT, NC, NE, OK, PA, SC, SD, TN, TX, UT, VA, WI, WY & AR, AZ, CO, HI, IA, IL, KY, MD, MI, ND, NM, NV, OH, OR, RI, WV & DE$^\textrm{d}$, MA$^\textrm{d}$, NH$^\textrm{c}$, NY$^\textrm{d}$, VT$^\textrm{d}$, DC$^\textrm{d}$\\ 
+AR, AZ, CA, CO, CT, HI, IA, IL, KY, MD, MI$^\textrm{a}$, MN, ND, NJ, NM, NV, OH, OR, RI, WA, WV & AK, AL, FL, GA, ID, IN, KS, LA, ME, MO, MS, MT, NC, NE, OK, PA, SC, SD, TN, TX, UT, VA, WI, WY & CA, CT, MN, NJ, WA & DE$^\textrm{c}$, MA$^\textrm{c}$, NH$^\textrm{b}$, NY$^\textrm{c}$, VT$^\textrm{c}$, DC$^\textrm{c}$\\ 
 \hline 
 \end{tabularx} {
      \vspace{1ex} }
-     {\raggedright $^\textrm{a}$ Expanded April 2014 \par 
-     \raggedright $^\textrm{b}$ Excludes CA, CT, MN, NJ, WA \par 
-     \raggedright $^\textrm{c}$ Expanded September 2014; included for covariate adjustment estimates but not as a possible weight donor for treatment effect estimates \par 
-    \raggedright $^\textrm{d}$ Comparable coverage policies prior to 2014 
+     {\par \raggedright $^\textrm{a}$ Expanded April 2014 \par 
+     \raggedright $^\textrm{b}$ Expanded September 2014; included for covariate adjustment estimates but not as a possible weight donor for treatment effect estimates \par 
+    \raggedright $^\textrm{c}$ Comparable coverage policies prior to 2014 
     \par}
 \end{table}
 
@@ -99,7 +94,7 @@ Delaware & DE & Excluded &   4 & No \\
 
 \begin{table}[h!]
 \centering
-\caption{Univariate summary statistics on adjusted data \\ (Mean, IQR, Range)}\label{tab:summarytab1}
+\caption{Univariate summary statistics on adjusted data, primary dataset \\ (Mean, IQR, Range)}\label{tab:summarytab1}
 \begin{tabular}{rllll}
   \hline
 Variable & Unadjusted & Heterogeneous & Homogeneous \\ 
@@ -149,7 +144,7 @@ Student Pct & (11.7, 3.4, 29.5) & (11.7, 3.5, 28.1) & (11.7, 3.5, 28) \\
 
 \begin{table}[h!]
 \centering
-    \caption{Frequency of covariate adjustments falling outside the support of the unadjusted data}
+    \caption{Frequency of covariate adjustments falling outside the support of the unadjusted data \newline (primary dataset)}
     \label{tab:extreme1}
 \begin{tabular}{lll}
   \hline
@@ -191,13 +186,13 @@ Age: 19-29 Pct & 0 & 0 \\
 
 \begin{table}[ht]
 \centering
-\caption{Mean uninsurance rates over time}\label{tab:timetrends}
+\caption{Mean non-elderly adult uninsurance rates, 2009-2014}\label{tab:timetrends}
 \begin{tabular}{lrrrrrr}
   \hline
 Treatment Group & 2009 & 2010 & 2011 & 2012 & 2013 & 2014 \\ 
   \hline
 Non-expansion & 21.84 & 22.97 & 22.72 & 22.41 & 22.01 & 19.07 \\ 
-  Expansion (primary) & 19.52 & 20.20 & 19.63 & 19.42 & 19.01 & 14.02 \\ 
+  Expansion (primary dataset) & 19.52 & 20.20 & 19.63 & 19.42 & 19.01 & 14.02 \\ 
   Expansion (early excluded) & 19.40 & 20.08 & 19.21 & 19.01 & 18.55 & 13.64 \\ 
    \hline
 \end{tabular}
@@ -205,7 +200,7 @@ Non-expansion & 21.84 & 22.97 & 22.72 & 22.41 & 22.01 & 19.07 \\
 
 \begin{figure}[h!]
 \begin{center}
-    \caption{Correlation matrix: full data, unadjusted covariates}
+    \caption{Correlation matrix: full data, unadjusted covariates \newline (primary dataset)}
     \label{fig:corrmatrix}
     \includegraphics[scale=0.25]{01_Plots/correlation-plot-c1-sigma-zero.png}
 \end{center}
