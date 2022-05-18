@@ -378,10 +378,10 @@ We first present summary statistics regarding the variability of the pre-treatme
 
 \subsection{Covariate adjustment}
 
-Table~\ref{tab:adjust1} displays the effects of our covariate adjustment procedure on the variance of our pre-treatment outcomes among the expansion states. Although we most heavily prioritize balancing these covariates, they are also among the least precisely estimated (most of our other covariates average over multiple years of data). Table~\ref{tab:adjust1} displays the variance of each covariate on the unadjusted and adjusted datasets. Both the homogeneous and heterogeneous adjustments reduce the variability in the data by comparable amounts (see Section~\ref{ssec:methodsmsrment} for definitions of these adjustments). Intuitively, these adjustment reduce the likelihood that our balancing weights will fit to noise in the covariate measurements. These results are consistent across most of our other covariates. Tables containing distributional information for each covariate are available in Appendix~\ref{app:sumstats}. 
+Table~\ref{tab:adjust1} displays the sample variance of our pre-treatment outcomes among the expansion states using each covariate adjustment strategy (see Section~\ref{ssec:methodsmsrment} for definitions of these adjustments). Although we most heavily prioritize balancing these covariates, they are also among the least precisely estimated (most of our other covariates average over multiple years of data). Both the homogeneous and heterogeneous adjustments reduce the variability in the data by comparable amounts. Intuitively, these adjustment reduce the likelihood that our balancing weights will fit to noise in the covariate measurements. These results are consistent across most of our other covariates. Tables containing distributional information for each covariate are available in Appendix~\ref{app:sumstats}. 
 
 \begin{table}[ht]
-\caption{Sample variance on unadjusted and adjusted datasets, expansion states}\label{tab:adjust1}
+\caption{Pre-treatment outcome sample variance by adjustment strategy (primary dataset)}\label{tab:adjust1}
 \begin{tabular}{lrrr}
   \hline
 Variable & Unadjusted & Heterogeneous & Homogeneous \\ 
@@ -399,14 +399,14 @@ Figure~\ref{fig:loveplotc1a} displays the weighted and unweighted imbalances in 
 
 \begin{figure}[H]
 \begin{center}
-    \caption{Balance plot, primary dataset}\label{fig:loveplotc1a}
+    \caption{Balance plot, homogeneous adjustment (primary dataset)}\label{fig:loveplotc1a}
     \includegraphics[scale=0.45]{01_Plots/balance-plot-all-etu-c1.png}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
-    \caption{H-SBW versus BC-HSBW versus SBW, weights summed by state, primary dataset}
+    \caption{Weight comparison, weights summed by state (primary dataset)}
     \label{fig:sbwvhsbw1}
     \includegraphics[scale=0.55]{01_Plots/weights-by-state-sbw-hsbw-c1.png}
 \end{center}
@@ -420,7 +420,7 @@ We compare the performance of our models by repeating the covariate adjustments 
 
 Interestingly the bias-corrected estimators perform relatively poorly on the primary dataset, but are the best performing estimators when excluding early expansion states -- with RMSEs lower than any other estimator on the primary dataset. As the early expansion states include California, and Figure~\ref{fig:sbwvhsbw1} shows that the bias-corrected estimators extrapolate heavily from this state, the differences in these results suggest that preventing this extrapolation may improve the model's performance. While these results do not imply that the bias-corrected models will perform poorly when predicting $\psi^1_0$ in the post-treatment period on the primary dataset (or that they will perform especially well when excluding the early expansion states), it does highlight the dangers of extrapolation: linearity may approximately hold on the support of the data where we have sufficient covariate overlap, but beyond this region this may be a more costly assumption.\footnote{In Table~\ref{tab:pretxpredfull} in Appendix~\ref{app:allresults}, we also compare the performance against the implied regression weights from OLS and GLS. These weights exactly balance the observed covariates, but are almost always the worst performing estimators in the validation study on either dataset. This also illustrates the benefits of the regularization inherent in the bias-corrected weights.}
 
-\begin{table}\caption{Estimator pre-treatment outcome mean error and RMSE (in \% pts)}\label{tab:pretxpred}
+\begin{table}\caption{Estimator pre-treatment outcome mean prediction error and RMSE (in \% pts)}\label{tab:pretxpred}
 \centering
 \begin{tabular}{llrrllrr}
 \hline
@@ -454,10 +454,10 @@ Table~\ref{tab:mainresults} presents all of our estimates. Using H-SBW we estima
 
 Adding the bias-correction decreases the absolute magnitude of the estimates: we estimate effects of -2.05 (-3.30, -0.80) percentage points for BC-HSBW and -2.07 (-3.14, -1.00) percentage points for BC-SBW. This contrasts to our validation study, where the bias-corrected estimators tended to predict lower uninsurance rates than the other estimators (implying we might see larger absolute magnitude effect estimates).
 
-\begin{table}[ht]\caption{Primary results}\label{tab:mainresults}
+\begin{table}[ht]\caption{ETC estimates by weight type and adjustment strategy}\label{tab:mainresults}
 \begin{tabular}{lllrlr} 
 \hline
- &  & \multicolumn{2}{c}{Primary data} & \multicolumn{2}{c}{Early expansion 
+ &  & \multicolumn{2}{c}{Primary dataset} & \multicolumn{2}{c}{Early expansion 
  excluded} \\
   \hline
 Weights & Adjustment & Estimate  & Difference & Estimate & Difference\\ 
