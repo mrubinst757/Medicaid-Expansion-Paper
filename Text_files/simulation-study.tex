@@ -78,7 +78,7 @@ We then consider all 18 combinations of the following parameters:
     \item $\tau \in \{0.85, 0.9, 0.95\}$
 \end{itemize}
 
-For each parameterization we take 500 random samples of size $m_1 = 25$ states (with $n_1$ total CPUMAs that average around 450). For each sample we estimate a series of H-SBW weights that set $\delta = 0$ and the target $\upsilon_0 = (1, 1, 1)$. Let $\rho$ denote the assumed $\rho^\star$ in the H-SBW objective. We generate weights for all combinations of input datasets $Z$ and correlation-parameters $\rho$:
+For each parameterization we take 1000 random samples of size $m_1 = 25$ states (with $n_1$ total CPUMAs that average around 450). For each sample we estimate a series of H-SBW weights that set $\delta = 0$ and the target $\upsilon_0 = (1, 1, 1)$. Let $\rho$ denote the assumed $\rho^\star$ in the H-SBW objective. We generate weights for all combinations of input datasets $Z$ and correlation-parameters $\rho$:
 
 \begin{itemize}
     \item $Z \in \{W$, $X$, $\hat{X}^{hom}$, $\hat{X}^{hom}$, $\hat{X}^{cor}$\}
@@ -102,7 +102,7 @@ When attempting to mitigate this bias by using some estimate of $\mathbb{E}[X \m
     \caption{Simulation study: estimator bias}\label{fig:simbias}
     \label{fig:loveplotc1}
     \includegraphics[scale=0.5]{01_Plots/bias-plot.png}
-    \subcaption{Averaged across 500 simulations for each specification}
+    \subcaption{Averaged across 1000 simulations for each specification}
 \end{center}
 \end{figure}
 
@@ -117,7 +117,7 @@ These results also show that balancing on $\hat{X}^{cor}$ can lead to a much mor
     \caption{Simulation study: estimator variance}\label{fig:simvar}
     \label{fig:loveplotc1}
     \includegraphics[scale=0.5]{01_Plots/var-plot.png}
-    \subcaption{Averaged across 500 simulations for each specification}
+    \subcaption{Averaged across 1000 simulations for each specification}
 \end{center}
 \end{figure}
 
@@ -128,7 +128,7 @@ Figure~\ref{fig:simmse} displays the MSE of these estimators. The estimators gen
     \caption{Simulation study: estimator mean-square-error}\label{fig:simmse}
     \label{fig:loveplotc1}
     \includegraphics[scale=0.5]{01_Plots/mse-plot.png}
-    \subcaption{Averaged across 500 simulations for each specification}
+    \subcaption{Averaged across 1000 simulations for each specification}
 \end{center}
 \end{figure}
 
@@ -140,7 +140,7 @@ Figure~\ref{fig:simcoverage1} shows that using SBW ($\rho = 0$) we obtain approx
 \begin{center}
     \caption{Simulation study: jackknife coverage rates}\label{fig:simcoverage1}
     \includegraphics[scale=0.5]{01_Plots/coverage-plot-1.png}
-    \subcaption{Averaged across 500 simulations for each specification}
+    \subcaption{Averaged across 1000 simulations for each specification}
 \end{center}
 \end{figure}
 
@@ -150,7 +150,7 @@ Figure~\ref{fig:simcoverage2} compares the mean confidence interval lengths usin
 \begin{center}
     \caption{Confidence interval length}\label{fig:simcoverage2}
     \includegraphics[scale=0.5]{01_Plots/ci-length-plot.png}
-    \subcaption{Averaged across 500 simulations for each specification}
+    \subcaption{Averaged across 1000 simulations for each specification}
 \end{center}
 \end{figure}
 
