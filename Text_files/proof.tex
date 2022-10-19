@@ -89,7 +89,7 @@ Let (\ref{eqn:unconfoundedness}) - (\ref{eqn:Xgaussian}) and (\ref{eqn:simplific
 where $\hat{\kappa} = (\hat{\Sigma}_X + \hat{\Sigma}_{\nu})^{-1} \hat{\Sigma}_X$. Let $\hat{\gamma}$ be the weights that solve the SBW objective over the constraint set $\Gamma(\hat{X}_{A=1}, \bar{W}_0, 0)$, and let $\hat{\psi}^{1, \textup{adjusted}}_0 = \sum_{sc: A_{sc} = 1} \hat{\gamma}_{sc} Y_{sc}$ be the corresponding SBW estimator. This estimator is consistent for $\psi_0^1$ as $n_1 \to \infty$.
 \end{proposition}
 
-In (\ref{eqn:jackknife}) we propose a leave-one-state-out jackknife estimate of variance. Following \cite{efron1981jackknife}, this estimate can be decomposed a conservatively biased estimate of the variance of $\hat{\psi}_0^{1, \textup{adjusted}}$ given a sample size of $(m_1-1)$ treated states, plus a heuristic adjustment to go from sample size $(m_1-1)$ to sample size $m_1$, when treating the observations of the control states as fixed.
+In (\ref{eqn:jackknife}) we propose a leave-one-state-out jackknife estimate of variance. Following \citet{efron1981jackknife}, this estimate can be decomposed a conservatively biased estimate of the variance of $\hat{\psi}_0^{1, \textup{adjusted}}$ given a sample size of $(m_1-1)$ treated states, plus a heuristic adjustment to go from sample size $(m_1-1)$ to sample size $m_1$, when treating the observations of the control states as fixed.
 
 \begin{proposition}\label{prop:jackknife}
 Let (\ref{eqn:unconfoundedness}) - (\ref{eqn:Xgaussian}) hold, and additionally assume that $p_s$, the number of CPUMAs, is i.i.d. in the treated states. Let $\hat{\operatorname{Var}}(\hat{\psi}_0^{1, \textup{adjusted}}) = \frac{m_1-1}{m_1} \cdot \tilde{\operatorname{Var}}(\hat{\psi}_0^{1, \textup{adjusted}})$, where
@@ -155,7 +155,7 @@ Proposition \ref{cl7} shows that if the conditional expectations can be computed
 \end{remark}
 
 \begin{remark}
-As Proposition \ref{prop:jackknife} implies that $\hat{\operatorname{Var}}$ is conservatively biased only up the heuristic $(m_1-1)/m_1$ scaling term, it may be preferable to remove this scaling term entirely, inflating the variance estimate slightly. While the proposition considers the marginal variance of the estimator $\hat{\psi}_0^{1,\textup{adjusted}}$, a confidence interval using the conditional variance $\operatorname{Var}(\hat{\psi}_0^{1 \textup{adjusted}}|X)$ (see, e.g., \cite{buonaccorsi2010measurement}, who discuss using a modification of the parametric bootstrap for parameters estimated via OLS in this setting) may be of interest, potentially leading to smaller intervals and more precise inference. 
+As Proposition \ref{prop:jackknife} implies that $\hat{\operatorname{Var}}$ is conservatively biased only up the heuristic $(m_1-1)/m_1$ scaling term, it may be preferable to remove this scaling term entirely, inflating the variance estimate slightly. While the proposition considers the marginal variance of the estimator $\hat{\psi}_0^{1,\textup{adjusted}}$, a confidence interval using the conditional variance $\operatorname{Var}(\hat{\psi}_0^{1 \textup{adjusted}}|X)$ (see, e.g., \citet{buonaccorsi2010measurement}, who discuss using a modification of the parametric bootstrap for parameters estimated via OLS in this setting) may be of interest, potentially leading to smaller intervals and more precise inference. 
 \end{remark}
 
 
@@ -191,7 +191,7 @@ Here we consider an H-SBW setting where $\nu_{sc}=0$ so that the true covariates
     is the minimum conditional-on-X variance estimator of $\psi_0^1$ within the constraint set $\Gamma(X_{A=1}, \bar{X}_0, \delta)$.
 \end{proposition}
 
-The SBW and H-SBW objective functions take the generic form $\gamma^\top\Omega\gamma$: SBW takes $\Omega = I_n$, while H-SBW specifies an $\Omega$ that allows for homoskedastic errors with positive within-state equicorrelation. Analogous versions hence exist for any assumed covariance structure $\Omega$. Proposition \ref{cl56} highlights connections between this generic form and GLS, showing that when exact balance is possible we can express the generic form of the problem as the implied regression weights from GLS estimated on a subset of the data. Similar results connecting balancing weights to regression weights can be found throughout the literature. For example, see \cite{kline2011oaxaca}, \cite{ben2021augmented}, \cite{chattopadhyay2021implied}, who connect balancing weights to regression weights for OLS, ridge-regression, and weighted least-squares and two-stage-least-squares; our result adds by connecting balancing weights to regression weights for GLS.
+The SBW and H-SBW objective functions take the generic form $\gamma^\top\Omega\gamma$: SBW takes $\Omega = I_n$, while H-SBW specifies an $\Omega$ that allows for homoskedastic errors with positive within-state equicorrelation. Analogous versions hence exist for any assumed covariance structure $\Omega$. Proposition \ref{cl56} highlights connections between this generic form and GLS, showing that when exact balance is possible we can express the generic form of the problem as the implied regression weights from GLS estimated on a subset of the data. Similar results connecting balancing weights to regression weights can be found throughout the literature. For example, see \citet{kline2011oaxaca}, \citet{ben2021augmented}, \citet{chattopadhyay2021implied}, who connect balancing weights to regression weights for OLS, ridge-regression, and weighted least-squares and two-stage-least-squares; our result adds by connecting balancing weights to regression weights for GLS.
 
 \begin{proposition}\label{cl56}
 Let $\gamma^*$ solve the optimization problem
@@ -217,7 +217,7 @@ To lighten notation, we have used $Z_Q - \mu$ (a vector subtracted from a matrix
 \end{remark}
 
 \begin{remark}
-Removing the positivity constraint from the generic form of the SBW objective implies that the resulting weights are equivalent to the implied regression weights from GLS. This follows by noting that removing the positivity constraint from the SBW objective removes the solution's dependence on the set $Q$. This result is a natural generalization of the connections between the implied regression weights of OLS and SBW also noted by, for example, \cite{chattopadhyay2021implied}.
+Removing the positivity constraint from the generic form of the SBW objective implies that the resulting weights are equivalent to the implied regression weights from GLS. This follows by noting that removing the positivity constraint from the SBW objective removes the solution's dependence on the set $Q$. This result is a natural generalization of the connections between the implied regression weights of OLS and SBW also noted by, for example, \citet{chattopadhyay2021implied}.
 \end{remark}
 
 Proposition \ref{cl7hsbw} simply states that the conclusion of Proposition \ref{cl7} holds not only for SBW, but for H-SBW as well.
@@ -486,7 +486,7 @@ so that plugging into \eqref{eq:a1.least_norm} yields
  \gamma^*_{Q} = \Omega_{Q}^{-1} (Z_{Q} - \mu)^\top\left[ (Z_Q - \mu) \Omega_{Q}^{-1} (Z_Q - \mu)\right]^{-1} (v - \mu) + \frac{\Omega^{-1}_Q {\bf 1} }{{\bf 1}^\top \Omega^{-1}_Q {\bf 1}}
  \end{equation*}
 
-This is equivalent to the implied regression weights for the estimate of $\beta^\topb$ using estimate of $\beta$ solving the GLS problem on the set $Q$ given an outcome vector $Y$, 
+This is equivalent to the implied regression weights for the estimate of $\beta^\top b$ using estimate of $\beta$ solving the GLS problem on the set $Q$ given an outcome vector $Y$, 
 \begin{align*}
     \min_{\beta} (Y_Q - A^\top \beta)\Omega_Q^{-1}(Y_Q - A^\top \beta)^\top
 \end{align*}

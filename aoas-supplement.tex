@@ -1,0 +1,82 @@
+% Template for the submission to:
+%   The Annals of Applied Statistics    [AOAS]
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% In this template, the places where you   %%
+%% need to fill in your information are     %%
+%% indicated by '???'.                      %%
+%%                                          %%
+%% Please do not use \input{...} to include %%
+%% other tex files. Submit your LaTeX       %%
+%% manuscript as one .tex document.         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[aoas]{imsart}
+
+%% Packages
+\RequirePackage{amsthm,amsmath,amsfonts,amssymb,centernot,float,import,makeidx,subfiles, mathtools, epstopdf, hyperref, lscape, subcaption, accents, tabularx, threeparttable, varioref, longtable, graphicx}
+\RequirePackage{natbib}
+\usepackage{xr}
+\makeatletter
+\newcommand*{\addFileDependency}[1]{
+  \typeout{(#1)}
+  \@addtofilelist{#1}
+  \IfFileExists{#1}{}{\typeout{No file #1.}}
+}
+\makeatother
+
+\newcommand*{\myexternaldocument}[1]{
+    \externaldocument{#1}
+    \addFileDependency{#1.tex}
+    \addFileDependency{#1.aux}
+}
+
+\myexternaldocument{aoas-main}
+
+\usepackage[nokeyprefix]{refstyle}
+\startlocaldefs
+\theoremstyle{plain}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[axiom]{Claim}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}{Proposition}
+\newcommand{\matr}[1]{\mathbf{#1}} % undergraduate algebra version
+\newcommand{\mathbbm}[1]{\text{\usefont{U}{bbm}{m}{n}#1}} 
+\theoremstyle{remark}
+\newtheorem{remark}{remark}
+\endlocaldefs
+
+% put all the external documents here!
+
+\begin{document}
+
+\appendix
+
+\input{Text_files/proof}
+
+\clearpage
+
+\input{Text_files/adjustment-details}
+
+\clearpage
+
+\input{Text_files/summary-tabs}
+
+\clearpage
+
+\input{Text_files/weight-diagnostics}
+
+\clearpage
+
+\input{Text_files/results-tabs}
+
+\clearpage
+
+\input{Text_files/simulation-study}
+
+\bibliographystyle{imsart-nameyear} % Style BST file
+\bibliography{research.bib}       % Bibliography file (usually '*.bib')
+
+\end{document}
+ 

@@ -2321,7 +2321,6 @@ EXECUTE {begin.bib}
 
 EXECUTE {init.state.consts}
 
-
 ITERATE {call.type$}
 
 FUNCTION {end.bib}
